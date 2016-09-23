@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-namespace Fred.Manager
+namespace CCC.Manager
 {
     public class BaseManager : MonoBehaviour
     {

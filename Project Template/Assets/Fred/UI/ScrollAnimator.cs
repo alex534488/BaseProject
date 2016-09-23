@@ -6,7 +6,7 @@ using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
 
-namespace Fred.UI
+namespace CCC.UI
 {
     /// <summary>
     /// Control animation and automation ScrollRect position
