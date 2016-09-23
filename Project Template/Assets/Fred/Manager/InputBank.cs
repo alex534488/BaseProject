@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
+using UnityEngine.Events;
 
 namespace CCC.Manager
 {
@@ -11,6 +12,7 @@ namespace CCC.Manager
         private string name;
         private KeyCode keyCode;
         public bool openInInspector = false;
+        public UnityEvent onModify;
 
         public static bool CompareName(Key a, Key b)
         {
@@ -30,7 +32,11 @@ namespace CCC.Manager
         }
 
         public KeyCode GetKeyCode() { return keyCode; }
-        public void SetKeyCode(KeyCode keycode) { this.keyCode = keycode; }
+        public void SetKeyCode(KeyCode keycode)
+        {
+            this.keyCode = keycode;
+            onModify.Invoke();
+        }
         public string GetName() { return name; }
         public void SetName(string name)
         {
@@ -134,6 +140,8 @@ namespace CCC.Manager
             {
                 bank.keys.Add(new Key("", KeyCode.Asterisk)); // Add
             }
+
+            EditorUtility.SetDirty(target);
         }
     }
 }
