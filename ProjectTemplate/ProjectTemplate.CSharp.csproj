@@ -13,11 +13,13 @@
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Unity Subset v3.5</TargetFrameworkProfile>
-    <CompilerResponseFile></CompilerResponseFile>
+    <CompilerResponseFile>
+    </CompilerResponseFile>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>StandaloneWindows:5</UnityBuildTarget>
     <UnityVersion>5.4.0f3</UnityVersion>
-    <RootNamespace></RootNamespace>
+    <RootNamespace>
+    </RootNamespace>
     <LangVersion Condition=" '$(VisualStudioVersion)' != '10.0' ">4</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -64,26 +66,27 @@
     <Reference Include="DOTween">
       <HintPath>Assets\Demigiant\DOTween\DOTween.dll</HintPath>
     </Reference>
-    <Reference Include="DOTween50">
-      <HintPath>Assets\Demigiant\DOTween\DOTween50.dll</HintPath>
+    <Reference Include="DOTween43">
+      <HintPath>Assets\Demigiant\DOTween\DOTween43.dll</HintPath>
     </Reference>
     <Reference Include="DOTween46">
       <HintPath>Assets\Demigiant\DOTween\DOTween46.dll</HintPath>
     </Reference>
-    <Reference Include="DOTween43">
-      <HintPath>Assets\Demigiant\DOTween\DOTween43.dll</HintPath>
+    <Reference Include="DOTween50">
+      <HintPath>Assets\Demigiant\DOTween\DOTween50.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Demigiant\DOTween\Examples\Basics.cs" />
     <Compile Include="Assets\Demigiant\DOTween\Examples\Sequences.cs" />
-    <Compile Include="Assets\Fred\Manager\BaseManager.cs" />
-    <Compile Include="Assets\Fred\Manager\InputBank.cs" />
-    <Compile Include="Assets\Fred\Manager\InputManager.cs" />
-    <Compile Include="Assets\Fred\Manager\MasterManager.cs" />
-    <Compile Include="Assets\Fred\UI\ActionQueueScroller.cs" />
-    <Compile Include="Assets\Fred\UI\ScrollAnimator.cs" />
-    <Compile Include="Assets\Fred\Utility\ActionQueue.cs" />
+    <Compile Include="Assets\CCC\Manager\BaseManager.cs" />
+    <Compile Include="Assets\CCC\Manager\InputBank.cs" />
+    <Compile Include="Assets\CCC\Manager\InputManager.cs" />
+    <Compile Include="Assets\CCC\Manager\MasterManager.cs" />
+    <Compile Include="Assets\CCC\UI\ActionQueueScroller.cs" />
+    <Compile Include="Assets\CCC\UI\ScrollAnimator.cs" />
+    <Compile Include="Assets\CCC\Utility\ActionQueue.cs" />
+    <Compile Include="Assets\TestingScenes\Test scripts\test.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Demigiant\DOTween\DOTween.XML" />

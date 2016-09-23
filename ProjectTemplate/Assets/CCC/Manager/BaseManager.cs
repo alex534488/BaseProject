@@ -10,5 +10,10 @@ namespace CCC.Manager
         {
             DontDestroyOnLoad(gameObject);
         }
+
+        protected virtual void Init()
+        {
+
+        }
     }
 }
