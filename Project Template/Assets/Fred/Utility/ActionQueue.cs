@@ -14,6 +14,7 @@ namespace Fred.Utility
             public UnityAction action;
             public Transform target;
         }
+        public UnityEvent<int> OnHpLoss;
 
         List<Action> list;
         public UnityEvent onQueueCompleted;
@@ -25,6 +26,9 @@ namespace Fred.Utility
         {
             get
             {
+                int i;
+                OnHpLoss.AddListener(test);
+
                 return isPlaying;
             }
             private set
@@ -32,6 +36,8 @@ namespace Fred.Utility
                 isPlaying = value;
             }
         }
+
+        void test(int i) { }
 
         void Awake()
         {
