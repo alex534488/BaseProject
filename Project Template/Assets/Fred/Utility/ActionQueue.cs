@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEngine.Events;
 using System.Collections.Generic;
 
-namespace Fred.Utility
+namespace CCC.Utility
 {
     public class ActionQueue : MonoBehaviour
     {

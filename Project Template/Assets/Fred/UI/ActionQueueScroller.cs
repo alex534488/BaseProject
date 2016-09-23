@@ -2,9 +2,9 @@
 using System.Collections;
 using UnityEngine.UI;
 using UnityEngine.Events;
-using Fred.Utility;
+using CCC.Utility;
 
-namespace Fred.UI
+namespace CCC.UI
 {
     public class ActionQueueScroller : MonoBehaviour
     {

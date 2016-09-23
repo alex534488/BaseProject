@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 
-namespace Fred.Manager
+namespace CCC.Manager
 {
     [System.Serializable]
     public class Key
@@ -12,7 +12,7 @@ namespace Fred.Manager
         private KeyCode keyCode;
         public bool openInInspector = false;
 
-        public static bool Compare(Key a, Key b)
+        public static bool CompareName(Key a, Key b)
         {
             return a.name == b.name;
         }

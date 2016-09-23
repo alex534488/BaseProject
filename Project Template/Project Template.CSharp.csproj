@@ -80,6 +80,7 @@
     <Compile Include="Assets\Fred\Manager\BaseManager.cs" />
     <Compile Include="Assets\Fred\Manager\InputBank.cs" />
     <Compile Include="Assets\Fred\Manager\InputManager.cs" />
+    <Compile Include="Assets\Fred\Manager\MasterManager.cs" />
     <Compile Include="Assets\Fred\UI\ActionQueueScroller.cs" />
     <Compile Include="Assets\Fred\UI\ScrollAnimator.cs" />
     <Compile Include="Assets\Fred\Utility\ActionQueue.cs" />
