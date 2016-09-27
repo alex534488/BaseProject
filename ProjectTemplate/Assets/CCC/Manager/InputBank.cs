@@ -90,14 +90,14 @@ namespace CCC.Manager
         public string GetName() { return name; }
         public void SetName(string name)
         {
-            if(Application.isPlaying)
+            if (Application.isPlaying)
             {
                 Debug.LogError("Cannot modify the name of a Key in runtime.");
                 return;
             }
             this.name = name;
         }
-        
+
         public bool GetDown()
         {
             return Input.GetKeyDown(keyCode);
@@ -115,7 +115,7 @@ namespace CCC.Manager
     [CreateAssetMenu(menuName = "Input Bank"), System.Serializable]
     public class InputBank : ScriptableObject
     {
-        public static string defaultKeysPath =  "/defaultKeys.dat";
+        public static string defaultKeysPath = "/defaultKeys.dat";
         public static string playerKeysPath = "/playerKeys.dat";
         //public Dictionary<string, KeyCode> keys = new Dictionary<string, KeyCode>();
         public List<Key> keys;
@@ -123,7 +123,7 @@ namespace CCC.Manager
 
         public Key GetKeyByName(string name)
         {
-            foreach(Key key in keys)
+            foreach (Key key in keys)
             {
                 if (key.GetName() == name) return key;
             }
@@ -161,13 +161,13 @@ namespace CCC.Manager
         public void SaveAsDefaults()
         {
             save.keySaves = new List<KeySave>();
-            foreach(Key key in keys)
+            foreach (Key key in keys)
             {
                 save.Set(key);
             }
             SaveTo(Application.persistentDataPath + defaultKeysPath);
         }
-        
+
         public bool Load()
         {
             return LoadFrom(Application.persistentDataPath + playerKeysPath);
@@ -211,10 +211,10 @@ namespace CCC.Manager
                 save.CopyFrom(saveCopy);
 
                 //Apply class to 'keys'
-                foreach(KeySave keySave in save.keySaves)
+                foreach (KeySave keySave in save.keySaves)
                 {
                     Key key = GetKeyByName(keySave.keyName);
-                    if(key != null)  key.SetKeyCode(keySave.keycode);
+                    if (key != null) key.SetKeyCode(keySave.keycode);
                 }
 
                 return true;
@@ -232,13 +232,13 @@ namespace CCC.Manager
             InputBank bank = target as InputBank;
 
             //Create List
-            if(bank.keys == null)
+            if (bank.keys == null)
             {
                 bank.keys = new List<Key>();
             }
 
             //Keys
-            for(int i=0; i<bank.keys.Count; i++)
+            for (int i = 0; i < bank.keys.Count; i++)
             {
                 if (i >= bank.keys.Count) continue;
 
@@ -284,6 +284,7 @@ namespace CCC.Manager
             if (!Application.isPlaying && GUILayout.Button("Save as defaults"))
             {
                 bank.SaveAsDefaults();
+                AssetDatabase.SaveAssets();
                 Debug.LogWarning("Default keys saved to: " + Application.persistentDataPath + InputBank.defaultKeysPath);
             }
 
@@ -300,7 +301,7 @@ namespace CCC.Manager
             }
             GUILayout.EndHorizontal();
 
-            EditorUtility.SetDirty(target);
+            EditorUtility.SetDirty(bank);
         }
     }
 }
