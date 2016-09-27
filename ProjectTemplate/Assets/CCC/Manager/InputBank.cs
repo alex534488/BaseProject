@@ -1,11 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine.Events;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
 
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 namespace CCC.Manager
 {
     [System.Serializable]
@@ -59,8 +61,10 @@ namespace CCC.Manager
     [System.Serializable]
     public class Key
     {
-        private string name;
-        private KeyCode keyCode = KeyCode.Exclaim;
+        [SerializeField]
+        string name;
+        [SerializeField]
+        KeyCode keyCode = KeyCode.Exclaim;
         public bool openInInspector = false;
         public UnityEvent onModify = new UnityEvent();
 
@@ -112,7 +116,7 @@ namespace CCC.Manager
         }
     }
 
-    [CreateAssetMenu(menuName = "Input Bank"), System.Serializable]
+    [CreateAssetMenu(menuName = "Input Bank")]
     public class InputBank : ScriptableObject
     {
         public static string defaultKeysPath = "/defaultKeys.dat";
@@ -222,7 +226,8 @@ namespace CCC.Manager
             return false;
         }
     }
-
+    
+#if UNITY_EDITOR
     [CustomEditor(typeof(InputBank))]
     public class InputBankEditor : Editor
     {
@@ -304,4 +309,5 @@ namespace CCC.Manager
             EditorUtility.SetDirty(bank);
         }
     }
+#endif
 }

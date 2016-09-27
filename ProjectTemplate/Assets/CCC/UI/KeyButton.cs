@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor;
 using CCC.Manager;
 using UnityEngine.Events;
 using UnityEngine.UI;

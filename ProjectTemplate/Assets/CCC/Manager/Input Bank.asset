@@ -12,31 +12,49 @@ MonoBehaviour:
   m_Name: Input Bank
   m_EditorClassIdentifier: 
   keys:
-  - openInInspector: 1
+  - name: 
+    keyCode: 0
+    openInInspector: 1
     onModify:
       m_PersistentCalls:
         m_Calls: []
       m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
         PublicKeyToken=null
-  - openInInspector: 1
+  - name: 
+    keyCode: 0
+    openInInspector: 1
     onModify:
       m_PersistentCalls:
         m_Calls: []
       m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
         PublicKeyToken=null
-  - openInInspector: 1
+  - name: 
+    keyCode: 0
+    openInInspector: 1
     onModify:
       m_PersistentCalls:
         m_Calls: []
       m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
         PublicKeyToken=null
-  - openInInspector: 1
+  - name: 
+    keyCode: 0
+    openInInspector: 1
     onModify:
       m_PersistentCalls:
         m_Calls: []
       m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
         PublicKeyToken=null
-  - openInInspector: 0
+  - name: 
+    keyCode: 0
+    openInInspector: 0
+    onModify:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+  - name: 
+    keyCode: 0
+    openInInspector: 0
     onModify:
       m_PersistentCalls:
         m_Calls: []
