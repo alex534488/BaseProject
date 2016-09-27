@@ -112,7 +112,7 @@ namespace CCC.Manager
         }
     }
 
-    [CreateAssetMenu(menuName = "Input Bank")]
+    [CreateAssetMenu(menuName = "Input Bank"), System.Serializable]
     public class InputBank : ScriptableObject
     {
         public static string defaultKeysPath =  "/defaultKeys.dat";
@@ -160,11 +160,6 @@ namespace CCC.Manager
 
         public void SaveAsDefaults()
         {
-            if (Application.isPlaying)
-            {
-                Debug.LogError("Should not SaveAsDefaults while application is running.");
-                return;
-            }
             save.keySaves = new List<KeySave>();
             foreach(Key key in keys)
             {

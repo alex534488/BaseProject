@@ -7,12 +7,15 @@ namespace CCC.Manager
 {
     public class InputManager : BaseManager
     {
+        [SerializeField]
         private InputBank bank;
 
-        protected override void Init()
+        public override void Init()
         {
             base.Init();
+            bank.SaveAsDefaults();
             Load();
+            CompleteInit();
         }
 
         /// <summary>
