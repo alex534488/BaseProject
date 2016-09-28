@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 
 namespace CCC.Manager
 {
@@ -38,7 +39,7 @@ namespace CCC.Manager
             }
 
             DontDestroyOnLoad(this);
-
+            DOTween.Init();
             initComplete = false;
 
             foreach (BaseManager managerPrefab in managersPrefab)

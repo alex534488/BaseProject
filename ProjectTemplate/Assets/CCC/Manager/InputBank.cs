@@ -11,41 +11,6 @@ using UnityEditor;
 namespace CCC.Manager
 {
     [System.Serializable]
-    public class SaveClass
-    {
-        public List<KeySave> keySaves = new List<KeySave>();
-
-        public KeySave Get(Key key)
-        {
-            foreach (KeySave keySave in keySaves)
-            {
-                if (keySave.keyName == key.GetName()) return keySave;
-            }
-            return null;
-        }
-
-        public void Set(Key key)
-        {
-            //Vérifier si la save existe déjà, si oui, la remplacer
-            KeySave keySave = Get(key);
-            if (keySave == null)
-            {
-                keySave = new KeySave(key.GetName(), key.GetKeyCode());
-                keySaves.Add(keySave);
-            }
-            else
-            {
-                keySave.keycode = key.GetKeyCode();
-            }
-        }
-
-        public void CopyFrom(SaveClass save)
-        {
-            this.keySaves = save.keySaves;
-        }
-    }
-
-    [System.Serializable]
     public class KeySave
     {
         public string keyName;
@@ -119,6 +84,41 @@ namespace CCC.Manager
     [CreateAssetMenu(menuName = "Input Bank")]
     public class InputBank : ScriptableObject
     {
+        [System.Serializable]
+        public class SaveClass
+        {
+            public List<KeySave> keySaves = new List<KeySave>();
+
+            public KeySave Get(Key key)
+            {
+                foreach (KeySave keySave in keySaves)
+                {
+                    if (keySave.keyName == key.GetName()) return keySave;
+                }
+                return null;
+            }
+
+            public void Set(Key key)
+            {
+                //Vérifier si la save existe déjà, si oui, la remplacer
+                KeySave keySave = Get(key);
+                if (keySave == null)
+                {
+                    keySave = new KeySave(key.GetName(), key.GetKeyCode());
+                    keySaves.Add(keySave);
+                }
+                else
+                {
+                    keySave.keycode = key.GetKeyCode();
+                }
+            }
+
+            public void CopyFrom(SaveClass save)
+            {
+                this.keySaves = save.keySaves;
+            }
+        }
+
         public static string defaultKeysPath = "/defaultKeys.dat";
         public static string playerKeysPath = "/playerKeys.dat";
         //public Dictionary<string, KeyCode> keys = new Dictionary<string, KeyCode>();
@@ -202,6 +202,7 @@ namespace CCC.Manager
             BinaryFormatter bf = new BinaryFormatter();
             FileStream file = File.Open(path, FileMode.OpenOrCreate);
             bf.Serialize(file, save);
+            file.Close();
         }
 
         private bool LoadFrom(string path)
@@ -220,6 +221,7 @@ namespace CCC.Manager
                     Key key = GetKeyByName(keySave.keyName);
                     if (key != null) key.SetKeyCode(keySave.keycode);
                 }
+                file.Close();
 
                 return true;
             }
