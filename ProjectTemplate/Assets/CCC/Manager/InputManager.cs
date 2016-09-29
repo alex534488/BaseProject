@@ -26,11 +26,6 @@ namespace CCC.Manager
             bank.SetKey(key, to);
         }
 
-        public void SetDefault()
-        {
-
-        }
-
         /// <summary>
         /// Return TRUE if there is a conlfict.
         /// </summary>

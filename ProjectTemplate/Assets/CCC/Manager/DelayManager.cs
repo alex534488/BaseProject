@@ -18,8 +18,9 @@ namespace CCC.Manager
             manager.InstanceCallTo(action, delay, realTime);
         }
 
-        void Awake()
+        protected override void Awake()
         {
+            base.Awake();
             manager = this;
         }
 
