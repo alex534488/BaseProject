@@ -242,9 +242,9 @@
     <Compile Include="Assets\Game\EntityBehavior\Policier.cs" />
     <Compile Include="Assets\Game\EntityBehavior\States.cs" />
     <Compile Include="Assets\Game\EntityBehavior\StatesAttack.cs" />
-    <Compile Include="Assets\Game\EntityBehavior\StatesFlee.cs" />
     <Compile Include="Assets\Game\EntityBehavior\StatesFollow.cs" />
     <Compile Include="Assets\Game\EntityBehavior\StatesIdle.cs" />
+    <Compile Include="Assets\Game\EntityBehavior\StatesMoveTo.cs" />
     <Compile Include="Assets\Game\EntityBehavior\StatesPatrol.cs" />
     <Compile Include="Assets\Game\EntityBehavior\Zombie.cs" />
     <Compile Include="Assets\Game\OnEntityClick.cs" />

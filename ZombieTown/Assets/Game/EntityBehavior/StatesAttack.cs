@@ -1,10 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.Events;
 
 public class StatesAttack : States
 {
+    public Personnage target;
+    public UnityEvent onEnemyKilled;
 
-    public StatesAttack(MonoBehaviour personnage) : base(personnage)
+    public StatesAttack(Personnage personnage) : base(personnage)
     {
         nom = "Attack";
     }
@@ -16,11 +19,14 @@ public class StatesAttack : States
 
     public override void Update()
     {
-        // Idle, fait rien
+        if (target.LoseHP(personnage.damage))
+        {
+            onEnemyKilled.Invoke();
+        }
     }
 
     public override void Exit()
     {
-
+        onEnemyKilled.RemoveAllListeners();
     }
 }

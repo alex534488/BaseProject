@@ -1,12 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class StatesFlee : States
+public class StatesMoveTo : States
 {
 
-    public StatesFlee(MonoBehaviour personnage) : base(personnage)
+    public StatesMoveTo(MonoBehaviour personnage) : base(personnage)
     {
-        nom = "Flee";
+        nom = "MoveTo";
     }
 
     public override void Enter()

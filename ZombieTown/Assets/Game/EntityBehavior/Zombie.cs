@@ -4,7 +4,11 @@ using System.Collections.Generic;
 using UnityEngine.Events;
 
 public class Zombie : Personnage {
-    public GameObject sprite;
+
+    public bool starter = false;
+    public int XP = 0;
+    public int lvl = 1;
+    public int nbchiefs;
 
     // Use this for initialization
     void Start () {
@@ -13,8 +17,13 @@ public class Zombie : Personnage {
         hp = 10;
         movementSpeed = 0.5;
 
+        if(starter == true)
+        {
+            lvl = 5;
+        }
+
         // Behavior
-        onEnemyNearby.AddListener(Attack);
+        onEnemyNearby.AddListener(OnEnemyNearby);
         enemyTags = new List<string>(2);
         enemyTags.Add("Policier");
         enemyTags.Add("Civil");
@@ -25,8 +34,22 @@ public class Zombie : Personnage {
         
     }
 
-    void Attack()
+    void OnEnemyNearby()
     {
-        comportement.ChangeState(comportement.GetStatesByName("Attack"));
+        if(!(comportement.currentStates is StatesMoveTo))
+        {
+            comportement.ChangeState(comportement.GetStatesByName("Attack"));
+            (comportement.currentStates as StatesAttack).onEnemyKilled.AddListener(GainXP);
+        }
+    }
+
+    public void GainXP()
+    {
+        XP++;
+        if (XP == Mathf.CeilToInt(Mathf.Pow(lvl, 2) / 2))
+        {
+            lvl++;
+            XP = 0;
+        }
     }
 }

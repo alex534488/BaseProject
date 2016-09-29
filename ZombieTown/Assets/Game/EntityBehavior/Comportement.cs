@@ -6,7 +6,7 @@ public class Comportement{
     private List<States> states;
     public States currentStates;
 
-    public Comportement(MonoBehaviour personnage)
+    public Comportement(Personnage personnage)
     {
         states.Add(new StatesIdle(personnage));
     }
@@ -28,6 +28,11 @@ public class Comportement{
         newState.Enter();
     }
 
+    public void ChangeState(string name)
+    {
+        ChangeState(GetStatesByName(name));
+    }
+
     public States GetStatesByName(string name)
     {
         foreach (States etat in states) {
@@ -39,6 +44,5 @@ public class Comportement{
         Debug.LogError("Erreur 01: Incapable de trouver le States " + name);
         return null;
     }
-}
 
-// Debug.LogError("");
+}
