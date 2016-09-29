@@ -2,15 +2,14 @@
 using System.Collections;
 using System;
 using CCC.Manager;
+using CCC.Utility;
 
-public class TestScript : MonoBehaviour
+public class TestScript : SlowBehaviour
 {
-    void Awake()
+    public bool test;
+    protected override void SlowUpdate()
     {
-        MasterManager.Sync(Init);
-    }
-    void Init()
-    {
-        DelayManager.CallTo(delegate () { print("Helloworld."); }, 5 );
+        base.SlowUpdate();
+        print("hello");
     }
 }

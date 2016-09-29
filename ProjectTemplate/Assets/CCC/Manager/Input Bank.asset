@@ -28,8 +28,8 @@ MonoBehaviour:
         m_Calls: []
       m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
         PublicKeyToken=null
-  - name: 
-    keyCode: 0
+  - name: Teset
+    keyCode: 43
     openInInspector: 1
     onModify:
       m_PersistentCalls:
@@ -46,7 +46,7 @@ MonoBehaviour:
         PublicKeyToken=null
   - name: 
     keyCode: 0
-    openInInspector: 0
+    openInInspector: 1
     onModify:
       m_PersistentCalls:
         m_Calls: []
@@ -54,7 +54,7 @@ MonoBehaviour:
         PublicKeyToken=null
   - name: 
     keyCode: 0
-    openInInspector: 0
+    openInInspector: 1
     onModify:
       m_PersistentCalls:
         m_Calls: []

@@ -13,7 +13,7 @@ namespace CCC.Manager
         [HideInInspector]
         public bool initComplete = false;
 
-        void Awake()
+        protected virtual void Awake()
         {
             DontDestroyOnLoad(gameObject);
         }
