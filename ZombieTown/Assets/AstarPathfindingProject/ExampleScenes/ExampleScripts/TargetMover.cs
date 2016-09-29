@@ -16,6 +16,7 @@ namespace Pathfinding {
 		public LayerMask mask;
 
 		public Transform target;
+		RichAI[] ais;
 		AIPath[] ais2;
 		AILerp[] ais3;
 
@@ -28,6 +29,7 @@ namespace Pathfinding {
 		public void Start () {
 			//Cache the Main Camera
 			cam = Camera.main;
+			ais = FindObjectsOfType<RichAI>();
 			ais2 = FindObjectsOfType<AIPath>();
 			ais3 = FindObjectsOfType<AILerp>();
 
@@ -68,6 +70,12 @@ namespace Pathfinding {
 				target.position = newPosition;
 
 				if (onlyOnDoubleClick) {
+					if (ais != null) {
+						for (int i = 0; i < ais.Length; i++) {
+							if (ais[i] != null) ais[i].UpdatePath();
+						}
+					}
+
 					if (ais2 != null) {
 						for (int i = 0; i < ais2.Length; i++) {
 							if (ais2[i] != null) ais2[i].SearchPath();

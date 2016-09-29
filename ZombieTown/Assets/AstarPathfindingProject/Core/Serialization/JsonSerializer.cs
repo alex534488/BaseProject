@@ -318,6 +318,11 @@ namespace Pathfinding.Serialization {
 			bytes = output.ToArray();
 			output.Dispose();
 
+#if ASTARDEBUG
+			CompatFileStream fs = new CompatFileStream("output.zip", FileMode.Create);
+			fs.Write(bytes, 0, bytes.Length);
+			fs.Close();
+#endif
 
 			zip.Dispose();
 

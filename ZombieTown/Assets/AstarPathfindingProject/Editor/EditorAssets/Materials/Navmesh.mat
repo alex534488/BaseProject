@@ -15,65 +15,81 @@ Material:
   m_SavedProperties:
     serializedVersion: 2
     m_TexEnvs:
-    - first:
-        name: _BumpMap
-      second:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - first:
-        name: _DecalTex
-      second:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - first:
-        name: _MainTex
-      second:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 2, y: 2}
-        m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _MainTex
+        second:
+          m_Texture: {fileID: 0}
+          m_Scale: {x: 2, y: 2}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _BumpMap
+        second:
+          m_Texture: {fileID: 0}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _DecalTex
+        second:
+          m_Texture: {fileID: 0}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
     m_Floats:
-    - first:
-        name: _InvFade
-      second: 1
-    - first:
-        name: _Scale
-      second: -2.68
-    - first:
-        name: _Shininess
-      second: 0.7
+      data:
+        first:
+          name: _Scale
+        second: -2.68000007
+      data:
+        first:
+          name: _Shininess
+        second: .699999988
+      data:
+        first:
+          name: _InvFade
+        second: 1
     m_Colors:
-    - first:
-        name: _Amb
-      second: {r: 0, g: 1, b: 0.33381772, a: 1}
-    - first:
-        name: _Color
-      second: {r: 1, g: 1, b: 1, a: 0.209}
-    - first:
-        name: _EmisColor
-      second: {r: 0.2, g: 0.2, b: 0.2, a: 0}
-    - first:
-        name: _Emission
-      second: {r: 0, g: 0, b: 0, a: 1}
-    - first:
-        name: _Emmission
-      second: {r: 0.4744898, g: 0.4744898, b: 0.4744898, a: 1}
-    - first:
-        name: _FadeColor
-      second: {r: 0.6544118, g: 0.6544118, b: 0.6544118, a: 0.05882353}
-    - first:
-        name: _Low
-      second: {r: 1, g: 1, b: 1, a: 0.7}
-    - first:
-        name: _SpecColor
-      second: {r: 1, g: 1, b: 1, a: 1}
-    - first:
-        name: _Tint
-      second: {r: 1, g: 1, b: 1, a: 1}
-    - first:
-        name: _TintColor
-      second: {r: 0.5, g: 0.5, b: 0.5, a: 0.5}
+      data:
+        first:
+          name: _Color
+        second: {r: 1, g: 1, b: 1, a: .209000006}
+      data:
+        first:
+          name: _SpecColor
+        second: {r: 1, g: 1, b: 1, a: 1}
+      data:
+        first:
+          name: _Emission
+        second: {r: 0, g: 0, b: 0, a: 1}
+      data:
+        first:
+          name: _Tint
+        second: {r: 1, g: 1, b: 1, a: 1}
+      data:
+        first:
+          name: _FadeColor
+        second: {r: .654411793, g: .654411793, b: .654411793, a: .0588235296}
+      data:
+        first:
+          name: _TintColor
+        second: {r: .5, g: .5, b: .5, a: .5}
+      data:
+        first:
+          name: _EmisColor
+        second: {r: .200000003, g: .200000003, b: .200000003, a: 0}
+      data:
+        first:
+          name: _Amb
+        second: {r: 0, g: 1, b: .33381772, a: 1}
+      data:
+        first:
+          name: _Low
+        second: {r: 1, g: 1, b: 1, a: .699999988}
+      data:
+        first:
+          name: _Emmission
+        second: {r: .474489808, g: .474489808, b: .474489808, a: 1}
 --- !u!1002 &2100001
 EditorExtensionImpl:
   serializedVersion: 6

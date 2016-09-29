@@ -93,6 +93,10 @@ namespace Pathfinding {
 					dir = Vector3.zero;
 				}
 
+				if (rvoController != null) {
+					rvoController.Move(dir);
+					velocity = rvoController.velocity;
+				} else
 				if (controller != null) {
 					controller.SimpleMove(dir);
 					velocity = controller.velocity;
