@@ -28,6 +28,11 @@ public class Comportement{
         newState.Enter();
     }
 
+    public void ChangeState<T>() where T : States
+    {
+        ChangeState(GetStatesByType<T>());
+    }
+
     public void ChangeState(string name)
     {
         ChangeState(GetStatesByName(name));
@@ -42,6 +47,19 @@ public class Comportement{
             }
         }
         Debug.LogError("Erreur 01: Incapable de trouver le States " + name);
+        return null;
+    }
+
+    public States GetStatesByType<T>() where T : States
+    {
+        foreach (States etat in states)
+        {
+            if (etat is T)
+            {
+                return etat;
+            }
+        }
+        Debug.LogError("Erreur 01: Incapable de trouver le States ");
         return null;
     }
 
