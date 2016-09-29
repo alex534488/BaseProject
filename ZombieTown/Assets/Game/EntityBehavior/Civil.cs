@@ -11,8 +11,8 @@ public class Civil : Personnage
     void Start()
     {
         // Variables
-        damage = 2;
-        hp = 12;
+        damage = 0;
+        hp = 5;
         movementSpeed = 1;
 
         // Behavior

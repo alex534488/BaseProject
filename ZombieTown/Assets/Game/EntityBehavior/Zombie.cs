@@ -12,7 +12,6 @@ public class Zombie : Personnage {
 
     // Use this for initialization
     void Start () {
-        // Variables
         damage = 2;
         hp = 10;
         movementSpeed = 0.5;
@@ -48,7 +47,7 @@ public class Zombie : Personnage {
         XP++;
         if (XP == Mathf.CeilToInt(Mathf.Pow(lvl, 2) / 2))
         {
-            lvl++;
+            if(!((lvl+1)==5 && nbchiefs == 4)) { lvl++; }
             XP = 0;
         }
     }

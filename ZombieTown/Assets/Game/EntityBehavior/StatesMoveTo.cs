@@ -4,7 +4,7 @@ using System.Collections;
 public class StatesMoveTo : States
 {
 
-    public StatesMoveTo(MonoBehaviour personnage) : base(personnage)
+    public StatesMoveTo(Personnage personnage) : base(personnage)
     {
         nom = "MoveTo";
     }
