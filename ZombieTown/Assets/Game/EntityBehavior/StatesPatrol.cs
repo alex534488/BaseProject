@@ -4,7 +4,7 @@ using System.Collections;
 public class StatesPatrol : States
 {
 
-    public StatesPatrol(MonoBehaviour personnage) : base(personnage)
+    public StatesPatrol(Personnage personnage) : base(personnage)
     {
         nom = "Patrol";
     }

@@ -3,7 +3,7 @@ using System.Collections;
 
 public class StatesIdle : States {
 
-    public StatesIdle(MonoBehaviour personnage) : base(personnage)
+    public StatesIdle(Personnage personnage) : base(personnage)
     {
         nom = "Idle";
     }

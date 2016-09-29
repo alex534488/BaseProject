@@ -4,7 +4,7 @@ using System.Collections;
 public class StatesFollow : States
 {
 
-    public StatesFollow(MonoBehaviour personnage) : base(personnage)
+    public StatesFollow(Personnage personnage) : base(personnage)
     {
         nom = "Follow";
     }
