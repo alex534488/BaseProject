@@ -1,3 +1,6 @@
 ProjectTemplate/Temp/
 ProjectTemplate/Library/
 ProjectTemplate/.vs/
+*.info
+ZombieTown/Library/
+ZombieTown/Temp/
