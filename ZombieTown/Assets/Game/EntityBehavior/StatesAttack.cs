@@ -29,4 +29,9 @@ public class StatesAttack : States
     {
         onEnemyKilled.RemoveAllListeners();
     }
+
+    public void SetTarget(Personnage personnage)
+    {
+        target = personnage;
+    }
 }
