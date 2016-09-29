@@ -100,9 +100,9 @@ GameObject:
   - 4: {fileID: 63292594}
   - 33: {fileID: 63292593}
   - 23: {fileID: 63292592}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Map
-  m_TagString: Untagged
+  m_TagString: Map
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -167,7 +167,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 314787168}
   - 212: {fileID: 314787169}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -424,6 +424,57 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 2
+--- !u!1 &1697667617
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 1697667619}
+  - 114: {fileID: 1697667618}
+  m_Layer: 0
+  m_Name: RVOSim
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1697667618
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1697667617}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1764de1de43cc4d19af52679d3eaae06, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  doubleBuffering: 0
+  interpolation: 1
+  desiredSimulationFPS: 20
+  workerThreads: 2
+  qualityCutoff: 0.05
+  stepScale: 1.5
+  incompressibility: 30
+  wallThickness: 1
+  desiredVelocityWeight: 0.1
+  algorithm: 1
+  oversampling: 0
+--- !u!4 &1697667619
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1697667617}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 5.359667, y: -0.96933746, z: 0.36695433}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
 --- !u!1 &1735978312
 GameObject:
   m_ObjectHideFlags: 0
@@ -435,7 +486,9 @@ GameObject:
   - 114: {fileID: 1735978315}
   - 114: {fileID: 1735978314}
   - 114: {fileID: 1735978316}
-  m_Layer: 0
+  - 135: {fileID: 1735978317}
+  - 114: {fileID: 1735978318}
+  m_Layer: 8
   m_Name: TestGuy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -449,7 +502,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1735978312}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.419, y: 0, z: 0}
+  m_LocalPosition: {x: 0.58, y: 0, z: -0.031}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
@@ -527,6 +580,87 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   repathRate: 1
   moveNextDist: 1
+--- !u!135 &1735978317
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1735978312}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.1
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1735978318
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1735978312}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 845fb9306f4cfbc44b317b9da2cf6361, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onEnemyNearby:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  enemyTags: []
+  damage: 0
+  starter: 0
+  XP: 0
+  lvl: 1
+  nbchiefs: 0
+--- !u!1 &1933044715
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 1933044717}
+  - 114: {fileID: 1933044716}
+  m_Layer: 0
+  m_Name: MasterClicker
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1933044716
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1933044715}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f13370ea447a034081e5cf3047af98b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxDist: 15
+  zombieMask:
+    serializedVersion: 2
+    m_Bits: 256
+  copAndTerrainMask:
+    serializedVersion: 2
+    m_Bits: 1536
+--- !u!4 &1933044717
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1933044715}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 5.359667, y: -0.96933746, z: 0.36695433}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 3
 --- !u!1 &2045725122
 GameObject:
   m_ObjectHideFlags: 0

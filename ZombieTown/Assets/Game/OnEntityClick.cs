@@ -10,13 +10,18 @@ public class OnEntityClick : MonoBehaviour
     public GameObject selectAnimation;
     public bool clickable = false;
 
+    void Awake()
+    {
+        UnSelect();
+    }
+
     public void Select()
     {
-        //selectAnimation.SetActive(true);
+        if(selectAnimation != null) selectAnimation.SetActive(true);
     }
 
     public void UnSelect()
     {
-        //selectAnimation.SetActive(false);
+        if (selectAnimation != null) selectAnimation.SetActive(false);
     }
 }

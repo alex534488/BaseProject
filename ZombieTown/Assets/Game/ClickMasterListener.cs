@@ -14,8 +14,9 @@ public class ClickMasterListener : MonoBehaviour {
         {
             Collider col = CheckHit(zombieMask).collider;
 
-            currentlySelected.UnSelect();
-            currentlySelected = null;
+            UnSelect();
+            if (col == null) return;
+
             OnEntityClick entity = col.GetComponent<OnEntityClick>();
             if (entity != null && entity.clickable)
             {
@@ -27,18 +28,36 @@ public class ClickMasterListener : MonoBehaviour {
         {
             RaycastHit hit = CheckHit(copAndTerrainMask);
             Collider col = hit.collider;
+            if (col == null) return;
+            Personnage personnage = currentlySelected.GetComponent<Personnage>();
+            if (personnage == null) return;
 
             //MoveOrder
-            if(col.tag == "Map")
+            if (col.tag == "Map")
             {
-                print("move");
                 //Set to Move to
-                //currentlySelected.GetComponent<Personnage>().comportement.ChangeState();
+                print("move order");
+                personnage.comportement.ChangeState<StatesMoveTo>();
+                (personnage.comportement.currentStates as StatesMoveTo).SetTarget(hit.point);
             }
             else //AttackOrder
             {
                 //Set to Attack to
+                print("attack order");
+                currentlySelected.GetComponent<Personnage>().comportement.ChangeState<StatesAttack>();
+                (personnage.comportement.currentStates as StatesAttack).SetTarget(personnage);
             }
+
+            UnSelect();
+        }
+    }
+
+    void UnSelect()
+    {
+        if(currentlySelected != null)
+        {
+            currentlySelected.UnSelect();
+            currentlySelected = null;
         }
     }
 
