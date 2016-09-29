@@ -73,6 +73,18 @@
     <Reference Include="Pathfinding.JsonFx">
       <HintPath>Assets\AstarPathfindingProject\Plugins\JsonFx\Pathfinding.JsonFx.dll</HintPath>
     </Reference>
+    <Reference Include="DOTween50">
+      <HintPath>Assets\Demigiant\DOTween\DOTween50.dll</HintPath>
+    </Reference>
+    <Reference Include="DOTween">
+      <HintPath>Assets\Demigiant\DOTween\DOTween.dll</HintPath>
+    </Reference>
+    <Reference Include="DOTween46">
+      <HintPath>Assets\Demigiant\DOTween\DOTween46.dll</HintPath>
+    </Reference>
+    <Reference Include="DOTween43">
+      <HintPath>Assets\Demigiant\DOTween\DOTween43.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="ZombieTown.CSharp.Plugins.csproj">
@@ -172,7 +184,19 @@
     <Compile Include="Assets\CCC\Utility\ActionQueue.cs" />
     <Compile Include="Assets\CCC\Utility\SlowBehaviour.cs" />
     <Compile Include="Assets\CCC\Utility\TestScript.cs" />
-    <Compile Include="Assets\Game\Personnage.cs" />
+    <Compile Include="Assets\Demigiant\DOTween\Examples\Basics.cs" />
+    <Compile Include="Assets\Demigiant\DOTween\Examples\Sequences.cs" />
+    <Compile Include="Assets\Game\EntityBehavior\Civil.cs" />
+    <Compile Include="Assets\Game\EntityBehavior\Comportement.cs" />
+    <Compile Include="Assets\Game\EntityBehavior\Personnage.cs" />
+    <Compile Include="Assets\Game\EntityBehavior\Policier.cs" />
+    <Compile Include="Assets\Game\EntityBehavior\States.cs" />
+    <Compile Include="Assets\Game\EntityBehavior\StatesAttack.cs" />
+    <Compile Include="Assets\Game\EntityBehavior\StatesFlee.cs" />
+    <Compile Include="Assets\Game\EntityBehavior\StatesFollow.cs" />
+    <Compile Include="Assets\Game\EntityBehavior\StatesIdle.cs" />
+    <Compile Include="Assets\Game\EntityBehavior\StatesPatrol.cs" />
+    <Compile Include="Assets\Game\EntityBehavior\Zombie.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\AstarPathfindingProject\Editor\EditorAssets\Materials\Navmesh.shader" />
@@ -188,6 +212,12 @@
     <None Include="Assets\AstarPathfindingProject\Readme.txt" />
     <None Include="Assets\AstarPathfindingProject\Readme_upgrading.txt" />
     <None Include="Assets\AstarPathfindingProject\link.xml" />
+    <None Include="Assets\Demigiant\DOTween\DOTween.XML" />
+    <None Include="Assets\Demigiant\DOTween\DOTween43.xml" />
+    <None Include="Assets\Demigiant\DOTween\DOTween46.xml" />
+    <None Include="Assets\Demigiant\DOTween\DOTween50.xml" />
+    <None Include="Assets\Demigiant\DOTween\Editor\DOTweenEditor.XML" />
+    <None Include="Assets\Demigiant\DOTween\readme.txt" />
     <None Include="Assets\Standard Assets\CrossPlatformInput\CrossPlatformInputGuidelines.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2015\UnityVS.CSharp.targets" />
