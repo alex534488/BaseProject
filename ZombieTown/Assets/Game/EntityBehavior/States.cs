@@ -4,9 +4,9 @@ using System.Collections;
 public abstract class States{
 
     protected string nom;
-    protected MonoBehaviour personnage;
+    protected Personnage personnage;
 
-    public States(MonoBehaviour personnage)
+    public States(Personnage personnage)
     {
         this.personnage = personnage;
     }
@@ -22,7 +22,7 @@ public abstract class States{
 
     public abstract void Exit();
 
-    protected void MoveTo(Vector2 pos)
+    public void MoveTo(Vector3 pos)
     {
         // DO: deplacement du personnage a la nouvelle possition pos
     }

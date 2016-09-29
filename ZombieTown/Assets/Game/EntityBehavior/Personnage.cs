@@ -8,7 +8,7 @@ public class Personnage : MonoBehaviour {
     public UnityEvent onEnemyNearby;
     public List<string> enemyTags;
 
-    protected int damage;
+    public int damage;
     protected int hp;
     protected double movementSpeed;
 
@@ -21,7 +21,7 @@ public class Personnage : MonoBehaviour {
     {
         comportement.Update();
 
-        if(CheckEnemyNearby() == true)
+        if(CheckEnemyNearby())
         {
             onEnemyNearby.Invoke();
         }
@@ -30,6 +30,22 @@ public class Personnage : MonoBehaviour {
     private bool CheckEnemyNearby()
     {
         // DO: verifie la zone si les enemy tags sont la
+        // comportement.currentStates.target = Personnage
+        return true;
+    }
+
+    public bool LoseHP(int amount)
+    {
+        hp -= amount;
+
+        if (hp < 0) { return Die(); } // Dead
+
+        return false;
+    }
+
+    private bool Die()
+    {
+        // DO: Faire disparaitre le personnage
         return true;
     }
 }
