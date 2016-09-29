@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class Comportement{
-    private List<States> states;
+    private List<States> states = new List<States>();
     public States currentStates;
 
     public Comportement(Personnage personnage)

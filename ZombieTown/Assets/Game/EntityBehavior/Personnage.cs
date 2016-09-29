@@ -9,7 +9,7 @@ public class Personnage : MonoBehaviour {
     public List<string> enemyTags;
 
     public int damage;
-    protected int hp;
+    public int hp;
     protected double movementSpeed;
 
     void Start ()
