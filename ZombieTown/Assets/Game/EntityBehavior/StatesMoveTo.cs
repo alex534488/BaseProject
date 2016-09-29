@@ -3,7 +3,6 @@ using System.Collections;
 
 public class StatesMoveTo : States
 {
-
     public StatesMoveTo(Personnage personnage) : base(personnage)
     {
         nom = "MoveTo";
@@ -12,6 +11,11 @@ public class StatesMoveTo : States
     public override void Enter()
     {
 
+    }
+
+    public void SetTarget(Vector3 target)
+    {
+        MoveTo(target);
     }
 
     public override void Update()

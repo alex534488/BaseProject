@@ -12,7 +12,7 @@ public class Personnage : MonoBehaviour {
     public int hp;
     protected double movementSpeed;
 
-    void Start ()
+    void Awake ()
     {
         comportement = new Comportement(this);
     }
