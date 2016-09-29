@@ -4,12 +4,12 @@ using System;
 using CCC.Manager;
 using CCC.Utility;
 
-public class TestScript : SlowBehaviour
+public class TestScript : MonoBehaviour
 {
-    public bool test;
-    protected override void SlowUpdate()
+    void OnMouseDown()
     {
-        base.SlowUpdate();
-        print("hello");
+        Vector3 v3 = Input.mousePosition;
+        v3 = Camera.main.ScreenToWorldPoint(v3);
+        print("pos: " + v3);
     }
 }
