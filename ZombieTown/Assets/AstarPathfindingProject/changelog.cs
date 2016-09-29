@@ -1,21 +1,5 @@
 /** \page changelog Changelog
 
-- 3.8.2 (2016-02-29)
-	- Improvements
-		- DynamicGridObstacle now handles rotation and scaling better.
-		- Reduced allocations due to coroutines in DynamicGridObstacle.
-	- Fixes
-		- Fixed AstarPath.limitGraphUpdates not working properly most of the time.
-			In order to keep the most common behaviour after the upgrade, the value of this field will be reset to false when upgrading.
-		- Fixed DynamicGridObstacle not setting the correct bounds at start, so the first move of an object with the DynamicGridObstacle
-			component could leave some nodes unwalkable even though they should not be. Thanks Dima for reporting the bug.
-		- Fixed DynamicGridObstacle stopping to work after the GameObject it is attached to is deactivated and then activated again.
-		- Fixed RVOController not working after reloading the scene due to the C# '??' operator not being equivalent to checking
-			for '== null' (it doesn't use Unity's special comparison check). Thanks Khan-amil for reporting the bug.
-	- Changes
-		- Renamed AstarPath.limitGraphUpdates to AstarPath.batchGraphUpdates and AstarPath.maxGraphUpdateFreq to AstarPath.graphUpdateBatchingInterval.
-			Hopefully these new names are more descriptive. The documentation for the fields has also been improved slightly.
-
 - 3.8.1 (2016-02-17)
 	- Improvements
 		- The tag visualization mode for graphs can now use the custom list of colors
