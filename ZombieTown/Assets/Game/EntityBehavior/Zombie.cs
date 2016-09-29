@@ -11,7 +11,7 @@ public class Zombie : Personnage {
     public int nbchiefs;
 
     // Use this for initialization
-    void Start () {
+     void Start () {
         damage = 2;
         hp = 10;
         movementSpeed = 0.5;

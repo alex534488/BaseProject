@@ -3,17 +3,20 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class Comportement{
-    private List<States> states;
+    private List<States> states = new List<States>();
     public States currentStates;
 
     public Comportement(Personnage personnage)
     {
         states.Add(new StatesIdle(personnage));
+        states.Add(new StatesMoveTo(personnage));
+        states.Add(new StatesFollow(personnage));
+        states.Add(new StatesAttack(personnage));
+        states.Add(new StatesPatrol(personnage));
     }
 
-    // Use this for initialization
     void Start () {
-        currentStates = states[0]; // au debut, un personnage a un comportement Idle
+        ChangeState(0);
     }
 	
 	public void Update ()
@@ -23,9 +26,14 @@ public class Comportement{
 
     public void ChangeState(States newState)
     {
-        currentStates.Exit();
+        if(currentStates != null) currentStates.Exit();
         currentStates = newState;
         newState.Enter();
+    }
+
+    public void ChangeState(int index)
+    {
+        ChangeState(states[index]);
     }
 
     public void ChangeState<T>() where T : States
