@@ -43,7 +43,7 @@ public class ClickMasterListener : MonoBehaviour {
             {
                 //Set to Attack to
                 currentlySelected.GetComponent<Personnage>().comportement.ChangeState<StatesAttack>();
-                (personnage.comportement.currentStates as StatesAttack).SetTarget(personnage);
+                (personnage.comportement.currentStates as StatesAttack).Init(personnage);
             }
 
             UnSelect();

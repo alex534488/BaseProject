@@ -30,6 +30,6 @@ public abstract class States{
 
     public void Stop()
     {
-        // DO: Arrete de se deplacer reste a lendroit ou il est presentement.
+        personnage.GetComponent<MyAIPath>().CanMove(false);
     }
 }
