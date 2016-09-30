@@ -19,6 +19,7 @@ public class StatesAttack : States
     public void Init(Personnage target)
     {
         this.target = target;
+        LookAt(target.transform); // S'assure que le sprite regarde vers la cible
         if (Vector3.Distance(target.transform.position, personnage.gameObject.transform.position) > personnage.range)
         {
             MoveTo(target.transform.position);
@@ -27,7 +28,7 @@ public class StatesAttack : States
 
     public override void Enter()
     {
-        LookAt(); // S'assure que le sprite regarde vers la cible
+
     }
 
     public override void Update()

@@ -42,7 +42,7 @@ public class Personnage : MonoBehaviour {
     {
         // DO: verifie la zone si les enemy tags sont la
         // comportement.currentStates.target = Personnage
-        return true;
+        return false;
     }
 
     public bool LoseHP(int amount)
