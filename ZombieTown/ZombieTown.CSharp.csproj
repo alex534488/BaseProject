@@ -230,6 +230,7 @@
     <Compile Include="Assets\CCC\UI\KeyButton.cs" />
     <Compile Include="Assets\CCC\UI\ScrollAnimator.cs" />
     <Compile Include="Assets\CCC\Utility\ActionQueue.cs" />
+    <Compile Include="Assets\CCC\Utility\QuickSound.cs" />
     <Compile Include="Assets\CCC\Utility\SlowBehaviour.cs" />
     <Compile Include="Assets\CCC\Utility\TestScript.cs" />
     <Compile Include="Assets\Demigiant\DOTween\Examples\Basics.cs" />
@@ -240,6 +241,7 @@
     <Compile Include="Assets\Game\EntityBehavior\BaseAgent.cs" />
     <Compile Include="Assets\Game\EntityBehavior\Civil.cs" />
     <Compile Include="Assets\Game\EntityBehavior\Comportement.cs" />
+    <Compile Include="Assets\Game\EntityBehavior\Detector.cs" />
     <Compile Include="Assets\Game\EntityBehavior\MyAIPath.cs" />
     <Compile Include="Assets\Game\EntityBehavior\Personnage.cs" />
     <Compile Include="Assets\Game\EntityBehavior\Policier.cs" />
