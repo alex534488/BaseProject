@@ -5,13 +5,18 @@ using UnityEngine.Events;
 
 public class Zombie : Personnage {
 
-    public bool starter = false;
-    private int XP = 0;
+    public bool startsAsChief = false;
     public int lvl = 1;
     public int followersmax;
-    private int nbfollowers;
-    private static int nbchiefs;
-    public int nbchiefsmax;
+    
+    public int nbfollowers;
+
+    private static int nbchiefs = 0;
+    static public int nbchiefsmax = 4;
+
+    public int unclaimedLevelUps = 0;
+    private int XP = 0;
+    public UnityEvent onLevelUp = new UnityEvent();
 
     protected override void Awake () {
         base.Awake();
@@ -22,7 +27,7 @@ public class Zombie : Personnage {
         nbfollowers = 0;
 
         // Zombie initial
-        if(starter == true){ lvl = 5; } 
+        if(startsAsChief == true){ lvl = 5; } 
 
         // Set Initial Behaviors
 
@@ -42,34 +47,62 @@ public class Zombie : Personnage {
             comportement.ChangeState<StatesFollow>();
         }
     }
-	
-	void Update ()
+
+    void Update()
     {
-        
+        //TEMPORAIRE POUR TESTER
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            GainXP();
+        }
     }
 
     void OnEnemyNearby()
     {
-        if(!(comportement.currentStates is StatesMoveTo))
+        if(!(comportement.currentStates is StatesMoveTo) && !(comportement.currentStates is StatesAttack))
         {
-            comportement.ChangeState(comportement.GetStatesByName("Attack"));
-            (comportement.currentStates as StatesAttack).onHittingTarget.AddListener(Attack);
-            (comportement.currentStates as StatesAttack).onEnemyKilled.AddListener(GainXP);
+            comportement.ChangeState<StatesAttack>();
+            (comportement.currentStates as StatesAttack).onLauchingAttack.AddListener(Attack);
         }
     }
 
     void Attack()
     {
-        (comportement.currentStates as StatesAttack).target.LoseHP(damage);
+        if ((comportement.currentStates as StatesAttack).target.LoseHP(damage))
+        {
+            GainXP();
+            //Vérifier s'il y a un autre enemy, sinon -> idle
+        }
     }
 
     void GainXP()
     {
         XP++;
-        if (XP == Mathf.CeilToInt(Mathf.Pow(lvl, 2) / 2))
+        if (XP >= Mathf.CeilToInt(Mathf.Pow(lvl, 2) / 2))
         {
-            if(!((lvl+1)==5 && nbchiefs == nbchiefsmax)) { lvl++; }
-            XP = 0;
+            //LEVEL UP!
+            if(!((lvl+1)==5 && nbchiefs == nbchiefsmax))
+            {
+                lvl++;
+                XP = 0;
+
+                //Get Boosts if lvl >= 5
+                if(lvl > 5)
+                {
+                    unclaimedLevelUps++;
+                    onLevelUp.Invoke();
+                }
+            }
+            else  //CANT LEVEL UP!
+            {
+                XP--;
+            }
         }
+    }
+
+    public void ClaimLevelUp(LevelUp.Boost boost)
+    {
+        unclaimedLevelUps--;
+        //apply stats
     }
 }

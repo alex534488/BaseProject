@@ -256,6 +256,10 @@
     <Compile Include="Assets\Game\EntityBehavior\StatesMoveTo.cs" />
     <Compile Include="Assets\Game\EntityBehavior\Zombie.cs" />
     <Compile Include="Assets\Game\OnEntityClick.cs" />
+    <Compile Include="Assets\Game\UI\LevelUp.cs" />
+    <Compile Include="Assets\Game\UI\LevelUpChoice.cs" />
+    <Compile Include="Assets\Game\UI\LevelUpChoiceItem.cs" />
+    <Compile Include="Assets\Game\UI\PointerListener.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\AstarPathfindingProject\Editor\EditorAssets\Materials\Navmesh.shader" />

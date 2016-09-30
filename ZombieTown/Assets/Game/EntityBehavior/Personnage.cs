@@ -3,7 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.Events;
 
-public class Personnage : MonoBehaviour {
+public class Personnage : MonoBehaviour
+{
     public Comportement comportement;
     public UnityEvent onEnemyNearby;
     public List<string> enemyTags;
@@ -18,16 +19,16 @@ public class Personnage : MonoBehaviour {
         //Personnage nouveauPersonnage = Instantiate(character.gameObject).GetComponent<Personnage>();
     }
 
-    protected virtual void Awake ()
+    protected virtual void Awake()
     {
         comportement = new Comportement(this);
     }
-	
-	void Update ()
+
+    void Update()
     {
         comportement.Update();
 
-        if(CheckEnemyNearby())
+        if (CheckEnemyNearby())
         {
             onEnemyNearby.Invoke();
         }
@@ -46,14 +47,17 @@ public class Personnage : MonoBehaviour {
 
         print(hp);
 
-        if (hp < 0) { return Die(); } // Dead
+        if (hp < 0)
+        {
+            Die();
+            return true;
+        } // Dead
 
         return false;
     }
 
-    private bool Die()
+    private void Die()
     {
-        gameObject.SetActive(false);
-        return true;
+        Destroy(gameObject);
     }
 }
