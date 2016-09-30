@@ -36,14 +36,12 @@ public class ClickMasterListener : MonoBehaviour {
             if (col.tag == "Map")
             {
                 //Set to Move to
-                print("move order");
                 personnage.comportement.ChangeState<StatesMoveTo>();
-                (personnage.comportement.currentStates as StatesMoveTo).SetTarget(hit.point);
+                (personnage.comportement.currentStates as StatesMoveTo).Init(hit.point);
             }
             else //AttackOrder
             {
                 //Set to Attack to
-                print("attack order");
                 currentlySelected.GetComponent<Personnage>().comportement.ChangeState<StatesAttack>();
                 (personnage.comportement.currentStates as StatesAttack).SetTarget(personnage);
             }

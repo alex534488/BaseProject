@@ -68,12 +68,14 @@ public class BaseAgent : MonoBehaviour
 			rvoAgent.ObstacleTimeHorizon = obstacleTimeHorizon;
 		}
 #endif
-        SetTarget(-transform.position); // + transform.forward * 400);
+        //SetTarget(-transform.position); // + transform.forward * 400);
+        CanMove(false);
         controller = GetComponent<RVOController>();
     }
 
     public void SetTarget(Vector3 target)
     {
+        CanMove(true);
         this.target = target;
         RecalculatePath();
     }

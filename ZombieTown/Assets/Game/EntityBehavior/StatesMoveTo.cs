@@ -8,14 +8,14 @@ public class StatesMoveTo : States
         nom = "MoveTo";
     }
 
+    public void Init(Vector3 target)
+    {
+        MoveTo(target);
+    }
+
     public override void Enter()
     {
 
-    }
-
-    public void SetTarget(Vector3 target)
-    {
-        MoveTo(target);
     }
 
     public override void Update()

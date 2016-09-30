@@ -24,6 +24,6 @@ public abstract class States{
 
     public void MoveTo(Vector3 pos)
     {
-        // DO: deplacement du personnage a la nouvelle possition pos
+        personnage.GetComponent<MyAIPath>().SetTarget(pos);
     }
 }

@@ -238,6 +238,7 @@
     <Compile Include="Assets\Game\EntityBehavior\BaseAgent.cs" />
     <Compile Include="Assets\Game\EntityBehavior\Civil.cs" />
     <Compile Include="Assets\Game\EntityBehavior\Comportement.cs" />
+    <Compile Include="Assets\Game\EntityBehavior\MyAIPath.cs" />
     <Compile Include="Assets\Game\EntityBehavior\Personnage.cs" />
     <Compile Include="Assets\Game\EntityBehavior\Policier.cs" />
     <Compile Include="Assets\Game\EntityBehavior\States.cs" />
