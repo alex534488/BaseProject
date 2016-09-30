@@ -25,11 +25,13 @@ public abstract class States{
 
     public void MoveTo(Vector3 pos)
     {
-        personnage.GetComponent<MyAIPath>().SetTarget(pos);
+        if (personnage.GetComponent<MyAIPath>() != null)
+            personnage.GetComponent<MyAIPath>().SetTarget(pos);
     }
 
     public void Stop()
     {
+        if (personnage.GetComponent<MyAIPath>() != null)
         personnage.GetComponent<MyAIPath>().Stop();
     }
 }
