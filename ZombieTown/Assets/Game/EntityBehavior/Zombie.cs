@@ -16,9 +16,10 @@ public class Zombie : Personnage {
         hp = 10;
         movementSpeed = 0.5;
 
-        if(starter == true){ lvl = 5; } // Zombie initial
+        // Zombie initial
+        if (starter == true){ lvl = 5; } 
 
-        // Set Behavior
+        // Set Behaviors
         onEnemyNearby.AddListener(OnEnemyNearby);
         enemyTags = new List<string>(2);
         enemyTags.Add("Policier");

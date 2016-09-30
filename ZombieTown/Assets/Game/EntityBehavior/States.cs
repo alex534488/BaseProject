@@ -5,6 +5,7 @@ public abstract class States{
 
     protected string nom;
     protected Personnage personnage;
+    public Personnage target;
 
     public States(Personnage personnage)
     {
@@ -25,5 +26,10 @@ public abstract class States{
     public void MoveTo(Vector3 pos)
     {
         // DO: deplacement du personnage a la nouvelle possition pos
+    }
+
+    public void Stop()
+    {
+        // DO: Arrete de se deplacer reste a lendroit ou il est presentement.
     }
 }

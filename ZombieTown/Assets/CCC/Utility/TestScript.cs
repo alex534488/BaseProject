@@ -6,10 +6,16 @@ using CCC.Utility;
 
 public class TestScript : MonoBehaviour
 {
-    void OnMouseDown()
+    public GameObject bullet;
+    public int damage;
+    public float vitesse;
+
+    void Update()
     {
-        Vector3 v3 = Input.mousePosition;
-        v3 = Camera.main.ScreenToWorldPoint(v3);
-        print("pos: " + v3);
+        if (Input.GetMouseButtonDown(0))
+        {
+            // idle
+        }
+
     }
 }

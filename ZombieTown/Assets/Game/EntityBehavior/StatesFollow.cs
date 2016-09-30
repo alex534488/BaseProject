@@ -7,6 +7,7 @@ public class StatesFollow : States
     public StatesFollow(Personnage personnage) : base(personnage)
     {
         nom = "Follow";
+        this.personnage = personnage;
     }
 
     public override void Enter()

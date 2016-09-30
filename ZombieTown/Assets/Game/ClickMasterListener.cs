@@ -38,14 +38,14 @@ public class ClickMasterListener : MonoBehaviour {
                 //Set to Move to
                 print("move order");
                 personnage.comportement.ChangeState<StatesMoveTo>();
-                (personnage.comportement.currentStates as StatesMoveTo).SetTarget(hit.point);
+                (personnage.comportement.currentStates as StatesMoveTo).SetTarget(hit.collider.gameObject.GetComponent<Personnage>());
             }
             else //AttackOrder
             {
                 //Set to Attack to
                 print("attack order");
                 currentlySelected.GetComponent<Personnage>().comportement.ChangeState<StatesAttack>();
-                (personnage.comportement.currentStates as StatesAttack).SetTarget(personnage);
+                //(personnage.comportement.currentStates as StatesAttack).SetTarget(personnage);
             }
 
             UnSelect();

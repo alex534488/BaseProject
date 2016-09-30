@@ -38,8 +38,7 @@ public class Policier : Personnage
 
     void Shoot()
     {
-        Bullet launchedBullet = Instantiate(bullet.gameObject).GetComponent<Bullet>();
-        launchedBullet.Init(damage,,1);
+        Bullet.Shoot(damage, transform.forward, transform.position, bullet);
     }
 }
 

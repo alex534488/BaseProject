@@ -6,6 +6,7 @@ public class StatesMoveTo : States
     public StatesMoveTo(Personnage personnage) : base(personnage)
     {
         nom = "MoveTo";
+        this.personnage = personnage;
     }
 
     public override void Enter()
@@ -13,18 +14,22 @@ public class StatesMoveTo : States
 
     }
 
-    public void SetTarget(Vector3 target)
+    public void SetTarget(Personnage target)
     {
-        MoveTo(target);
+        this.target = target;
+        MoveTo(target.transform.position);
     }
 
     public override void Update()
     {
-        // Idle, fait rien
+        if(personnage.gameObject.transform.position == target.transform.position)
+        {
+            Exit();
+        }
     }
 
     public override void Exit()
     {
-
+        personnage.comportement.ChangeState<StatesIdle>();
     }
 }
