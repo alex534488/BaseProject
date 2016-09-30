@@ -30,6 +30,6 @@ public abstract class States{
 
     public void Stop()
     {
-        personnage.GetComponent<MyAIPath>().CanMove(false);
+        personnage.GetComponent<MyAIPath>().Stop();
     }
 }

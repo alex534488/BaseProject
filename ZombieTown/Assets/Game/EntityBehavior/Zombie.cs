@@ -13,7 +13,8 @@ public class Zombie : Personnage {
     private static int nbchiefs;
     public int nbchiefsmax;
 
-    void Awake () {
+    protected override void Awake () {
+        base.Awake();
         // Set Variables
         damage = 2;
         hp = 10;

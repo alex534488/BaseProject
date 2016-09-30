@@ -18,7 +18,7 @@ public class Personnage : MonoBehaviour {
         //Personnage nouveauPersonnage = Instantiate(character.gameObject).GetComponent<Personnage>();
     }
 
-    void Awake ()
+    protected virtual void Awake ()
     {
         comportement = new Comportement(this);
     }
