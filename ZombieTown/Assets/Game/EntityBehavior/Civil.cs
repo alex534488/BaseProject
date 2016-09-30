@@ -28,6 +28,6 @@ public class Civil : Personnage
 
     void Flee()
     {
-        comportement.ChangeState(comportement.GetStatesByName("Flee"));
+        //comportement.ChangeState(comportement.GetStatesByName("Flee"));
     }
 }
