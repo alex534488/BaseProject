@@ -22,17 +22,12 @@ public class Policier : Personnage
         enemyTags.Add("Zombie");
     }
 
-    void Update()
-    {
-
-    }
-
     void OnEnemyNearby()
     {
-        if (!(comportement.currentStates is StatesMoveTo))
+        if (!(comportement.currentStates is StatesAttack))
         {
-            comportement.ChangeState(comportement.GetStatesByName("Attack"));
-            (comportement.currentStates as StatesAttack).onHittingTarget.AddListener(Shoot);
+            comportement.ChangeState<StatesAttack>();
+            (comportement.currentStates as StatesAttack).onLauchingAttack.AddListener(Shoot);
         }
     }
 

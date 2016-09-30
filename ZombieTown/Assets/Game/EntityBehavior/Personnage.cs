@@ -22,16 +22,16 @@ public class Personnage : MonoBehaviour {
         //Personnage nouveauPersonnage = Instantiate(character.gameObject).GetComponent<Personnage>();
     }
 
-    protected virtual void Awake ()
+    protected virtual void Awake()
     {
         comportement = new Comportement(this);
     }
-	
-	void Update ()
+
+    void Update()
     {
         comportement.Update();
 
-        if(CheckEnemyNearby())
+        if (CheckEnemyNearby())
         {
             onEnemyNearby.Invoke();
         }
@@ -50,7 +50,11 @@ public class Personnage : MonoBehaviour {
 
         print(hp);
 
-        if (hp < 0) { return Die(); } // Dead
+        if (hp < 0)
+        {
+            Die();
+            return true;
+        } // Dead
 
         return false;
     }

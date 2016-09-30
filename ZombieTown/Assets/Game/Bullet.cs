@@ -41,8 +41,6 @@ public class Bullet : MonoBehaviour {
 
     void OnTriggerEnter(Collider collider)
     {
-        print("Hello");
-
         if ((mask.value & 1 << collider.gameObject.layer) != 0) { return; }
 
         Zombie zombie = collider.GetComponent<Zombie>();

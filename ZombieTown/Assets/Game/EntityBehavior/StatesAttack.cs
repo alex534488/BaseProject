@@ -5,8 +5,7 @@ using CCC.Manager;
 
 public class StatesAttack : States
 {
-    public UnityEvent onEnemyKilled;
-    public UnityEvent onHittingTarget;
+    public UnityEvent onLauchingAttack;
     private float cooldown = 0;
     private int skipupdate = 6;
     private int counter = 0;
@@ -48,15 +47,11 @@ public class StatesAttack : States
 
     public override void Exit()
     {
-        onEnemyKilled.RemoveAllListeners();
+
     }
 
     public void Hit()
     {
-        onHittingTarget.Invoke();
-        if (target.hp <= 0) // Only works on zombie
-        {
-            onEnemyKilled.Invoke();
-        }
+        onLauchingAttack.Invoke();
     }
 }
