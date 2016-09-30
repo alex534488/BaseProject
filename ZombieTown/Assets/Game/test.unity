@@ -183,6 +183,7 @@ GameObject:
   - 92: {fileID: 1304154697}
   - 124: {fileID: 1304154696}
   - 81: {fileID: 1304154695}
+  - 114: {fileID: 1304154700}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -258,6 +259,24 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
+--- !u!114 &1304154700
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1304154694}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ddde89826227f049a0aae4ed97afc03, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  margin: 20
+  speedCap: 15
+  xBounds: {x: -50, y: 50}
+  zBounds: {x: -50, y: 50}
+  zoomSpeed: 18
+  minSize: 5
+  maxSize: 50
 --- !u!1001 &1373529462
 Prefab:
   m_ObjectHideFlags: 0
@@ -296,6 +315,10 @@ Prefab:
     - target: {fileID: 4000012583744240, guid: b833661bf61a7434ba72874fecb6abf3, type: 2}
       propertyPath: m_RootOrder
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1000013029403412, guid: b833661bf61a7434ba72874fecb6abf3, type: 2}
+      propertyPath: m_Name
+      value: Zombie
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b833661bf61a7434ba72874fecb6abf3, type: 2}

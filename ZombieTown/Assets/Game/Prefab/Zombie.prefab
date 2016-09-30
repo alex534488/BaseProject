@@ -29,7 +29,7 @@ GameObject:
   - 114: {fileID: 114000012054760096}
   - 114: {fileID: 114000010494568354}
   m_Layer: 8
-  m_Name: TestGuy
+  m_Name: Zombie
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -262,7 +262,8 @@ MonoBehaviour:
   range: 0
   starter: 0
   lvl: 1
-  nbchiefs: 0
+  followersmax: 0
+  nbchiefsmax: 0
 --- !u!114 &114000013957729456
 MonoBehaviour:
   m_ObjectHideFlags: 1

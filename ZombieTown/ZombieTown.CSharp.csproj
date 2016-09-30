@@ -235,6 +235,7 @@
     <Compile Include="Assets\Demigiant\DOTween\Examples\Basics.cs" />
     <Compile Include="Assets\Demigiant\DOTween\Examples\Sequences.cs" />
     <Compile Include="Assets\Game\Bullet.cs" />
+    <Compile Include="Assets\Game\CameraMove.cs" />
     <Compile Include="Assets\Game\ClickMasterListener.cs" />
     <Compile Include="Assets\Game\EntityBehavior\BaseAgent.cs" />
     <Compile Include="Assets\Game\EntityBehavior\Civil.cs" />
