@@ -15,6 +15,9 @@ public class Civil : Personnage
         hp = 5;
         movementSpeed = 1;
 
+        // Set Initial Behaviors
+        comportement.ChangeState<StatesIdle>();
+
         // Behavior
         onEnemyNearby.AddListener(Flee);
         enemyTags = new List<string>(1);

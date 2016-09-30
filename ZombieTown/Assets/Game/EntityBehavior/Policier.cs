@@ -16,6 +16,9 @@ public class Policier : Personnage
         hp = 8;
         movementSpeed = 1;
 
+        // Set Initial Behaviors
+        comportement.ChangeState<StatesIdle>();
+
         // Set Behavior
         onEnemyNearby.AddListener(OnEnemyNearby);
         enemyTags = new List<string>(1);

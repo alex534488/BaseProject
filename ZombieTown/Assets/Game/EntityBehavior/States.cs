@@ -35,6 +35,6 @@ public abstract class States{
 
     public void LookAt()
     {
-
+        // target.gameObject.transform = personnage.GetComponent<MyAIPath>().lookTarget; // erreur a corriger
     }
 }

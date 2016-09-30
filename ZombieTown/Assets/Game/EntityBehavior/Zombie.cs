@@ -17,6 +17,7 @@ public class Zombie : Personnage {
     public int unclaimedLevelUps = 0;
     private int XP = 0;
     public UnityEvent onLevelUp = new UnityEvent();
+    public UnityEvent onChiefNearby = new UnityEvent();
 
     protected override void Awake () {
         base.Awake();
@@ -27,10 +28,10 @@ public class Zombie : Personnage {
         nbfollowers = 0;
 
         // Zombie initial
-        if(startsAsChief == true){ lvl = 5; } 
+        if(startsAsChief == true){ lvl = 5; }
 
         // Set Initial Behaviors
-
+        comportement.ChangeState<StatesIdle>();
 
         // Set Behaviors
         onEnemyNearby.AddListener(OnEnemyNearby);
@@ -43,13 +44,19 @@ public class Zombie : Personnage {
     {
         if(lvl < 5)
         {
+            onChiefNearby.AddListener(Follow);
             // Assigner le zombie a son chief
-            comportement.ChangeState<StatesFollow>();
+            
         }
     }
 
     void Update()
     {
+        if(comportement.currentStates is StatesIdle)
+        {
+            CheckChiefNearby();
+        }
+        
         //TEMPORAIRE POUR TESTER
         if (Input.GetKeyDown(KeyCode.Space))
         {
@@ -104,5 +111,17 @@ public class Zombie : Personnage {
     {
         unclaimedLevelUps--;
         //apply stats
+    }
+
+    void Follow()
+    {
+        comportement.ChangeState<StatesFollow>();
+        // changer la target du States pour le Chief
+    }
+
+    void CheckChiefNearby()
+    {
+        // Verifie s'il y a un chef zombie in-range
+        onChiefNearby.Invoke();
     }
 }

@@ -27,7 +27,7 @@ public class StatesAttack : States
 
     public override void Enter()
     {
-
+        LookAt(); // S'assure que le sprite regarde vers la cible
     }
 
     public override void Update()

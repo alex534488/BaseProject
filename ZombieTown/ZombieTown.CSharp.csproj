@@ -260,6 +260,8 @@
     <Compile Include="Assets\Game\UI\LevelUpChoice.cs" />
     <Compile Include="Assets\Game\UI\LevelUpChoiceItem.cs" />
     <Compile Include="Assets\Game\UI\PointerListener.cs" />
+    <Compile Include="Assets\Hopital.cs" />
+    <Compile Include="Assets\Walls.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\AstarPathfindingProject\Editor\EditorAssets\Materials\Navmesh.shader" />
