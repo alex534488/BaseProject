@@ -14,7 +14,7 @@ public class TestScript : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            // idle
+            Bullet.Shoot(damage, transform.forward, transform.position, bullet);
         }
 
     }
