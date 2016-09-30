@@ -3,6 +3,7 @@ using System.Collections;
 
 public class StatesFollow : States
 {
+    Vector3 position; // Position du zombie dans l'arme qui suit le chef
 
     public StatesFollow(Personnage personnage) : base(personnage)
     {
@@ -12,12 +13,15 @@ public class StatesFollow : States
 
     public override void Enter()
     {
-
+        position = target.transform.position; // Ajustement necessaire en fonction de l'arme
+        MoveTo(position); // Bouge jusqu'a une distance du chef
     }
 
     public override void Update()
     {
-        // Idle, fait rien
+        // Check if chief is too far
+            // if yes Move to correct position
+
     }
 
     public override void Exit()
