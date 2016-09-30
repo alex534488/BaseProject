@@ -32,4 +32,9 @@ public abstract class States{
     {
         personnage.GetComponent<MyAIPath>().Stop();
     }
+
+    public void LookAt()
+    {
+
+    }
 }
