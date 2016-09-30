@@ -4,6 +4,9 @@ using System.Collections;
 [RequireComponent(typeof(Camera))]
 public class CameraMove : MonoBehaviour {
 
+    public bool mouseInput = true;
+    public bool keyboardInput = true;
+
     [Header("Move")]
     public float margin = 20;
     public float speedCap = 10;
@@ -50,11 +53,23 @@ public class CameraMove : MonoBehaviour {
     {
         Vector3 pos = Input.mousePosition;
         Vector2 request = Vector2.zero;
-        if (pos.x < margin) request.x = -1;
-        else if (pos.x > Screen.width - margin) request.x = 1;
+        if (mouseInput)
+        {
+            if (pos.x < margin) request.x = -1;
+            else if (pos.x > Screen.width - margin) request.x = 1;
 
-        if (pos.y < margin) request.y = -1;
-        else if (pos.y > Screen.height - margin) request.y = 1;
+            if (pos.y < margin) request.y = -1;
+            else if (pos.y > Screen.height - margin) request.y = 1;
+        }
+        if (keyboardInput || Input.anyKey)
+        {
+
+            if (Input.GetKey(KeyCode.A)) request.x = -1;
+            else if (Input.GetKey(KeyCode.D)) request.x = 1;
+
+            if (Input.GetKey(KeyCode.S)) request.y = -1;
+            else if (Input.GetKey(KeyCode.W)) request.y = 1;
+        }
 
         if (request.x != 0 || request.y != 0) RequestMove(request);
     }

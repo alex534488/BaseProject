@@ -14,6 +14,7 @@ public class Personnage : MonoBehaviour {
 
     public int damage;
     public int hp;
+    public int maxHp;
     protected double movementSpeed;
     public int range;
 

@@ -68,6 +68,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   prefab: {fileID: 114000011996908438, guid: a5ed009474ffb8c43bec965b1947977d, type: 2}
+  verticalOffset: 35
 --- !u!222 &222000010628559780
 CanvasRenderer:
   m_ObjectHideFlags: 1
@@ -89,6 +90,6 @@ RectTransform:
   m_RootOrder: 0
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: -37.5}
   m_SizeDelta: {x: 145, y: 75}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_Pivot: {x: 0.5, y: 0}
