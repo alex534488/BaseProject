@@ -1,8 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
+using DG.Tweening;
 
 public class ClickMasterListener : MonoBehaviour {
 
+    public SpriteRenderer mapOrderVfx;
+    public SpriteRenderer attackOrderVfx;
     public float maxDist = 15;
     public LayerMask zombieMask;
     public LayerMask copAndTerrainMask;
@@ -38,15 +41,15 @@ public class ClickMasterListener : MonoBehaviour {
                 //Set to Move to
                 personnage.comportement.ChangeState<StatesMoveTo>();
                 (personnage.comportement.currentStates as StatesMoveTo).Init(hit.point);
+                OrderVFX(mapOrderVfx, hit.point + Vector3.up);
             }
             else //AttackOrder
             {
                 //Set to Attack to
                 currentlySelected.GetComponent<Personnage>().comportement.ChangeState<StatesAttack>();
                 (personnage.comportement.currentStates as StatesAttack).Init(personnage);
+                OrderVFX(attackOrderVfx, hit.point + Vector3.up);
             }
-
-            UnSelect();
         }
     }
 
@@ -57,6 +60,15 @@ public class ClickMasterListener : MonoBehaviour {
             currentlySelected.UnSelect();
             currentlySelected = null;
         }
+    }
+
+    void OrderVFX(SpriteRenderer prefab, Vector3 position)
+    {
+        SpriteRenderer sprite = Instantiate(mapOrderVfx.gameObject).GetComponent<SpriteRenderer>();
+        sprite.transform.position = position;
+        sprite.transform.localScale = Vector3.zero;
+        sprite.transform.DOScale(20, 1).SetEase(Ease.OutQuart);
+        sprite.DOFade(0, 1).SetEase(Ease.OutQuart).OnComplete(delegate() { Destroy(sprite.gameObject); });
     }
 
     RaycastHit CheckHit(LayerMask mask)
