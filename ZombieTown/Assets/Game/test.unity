@@ -478,9 +478,10 @@ Prefab:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 1000013029403412, guid: b833661bf61a7434ba72874fecb6abf3, type: 2}
-      propertyPath: m_Name
-      value: Zombie
+    - target: {fileID: 114000013346452424, guid: b833661bf61a7434ba72874fecb6abf3,
+        type: 2}
+      propertyPath: startsAsChief
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b833661bf61a7434ba72874fecb6abf3, type: 2}
