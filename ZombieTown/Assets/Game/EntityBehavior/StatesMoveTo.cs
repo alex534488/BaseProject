@@ -24,12 +24,12 @@ public class StatesMoveTo : States
     {
         if(personnage.gameObject.transform.position == target.transform.position)
         {
-            Exit();
+            personnage.comportement.ChangeState<StatesIdle>();
         }
     }
 
     public override void Exit()
     {
-        personnage.comportement.ChangeState<StatesIdle>();
+        
     }
 }
