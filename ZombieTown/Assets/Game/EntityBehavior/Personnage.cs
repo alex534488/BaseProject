@@ -62,7 +62,7 @@ public class Personnage : MonoBehaviour {
     private bool Die()
     {
         onDeath.Invoke(this);
-        gameObject.SetActive(false);
+        Destroy(gameObject);
         return true;
     }
 }
