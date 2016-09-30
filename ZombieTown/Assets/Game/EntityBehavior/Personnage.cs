@@ -13,22 +13,9 @@ public class Personnage : MonoBehaviour {
     protected double movementSpeed;
     public int range;
 
-    private static List<Personnage> inactivePersonnage = new List<Personnage>();
-
     public static void Spawn(GameObject character)
     {
-        Personnage nouveauPersonnage;
-        if (inactivePersonnage.Count == 0)
-        {
-            nouveauPersonnage = Instantiate(character.gameObject).GetComponent<Personnage>();
-        }
-        else
-        {
-            //nouveauPersonnage = inactivePersonnage[0];
-            //inactivePersonnage.RemoveAt(0);
-            //nouveauPersonnage.gameObject.SetActive(true);
-        }
-        //nouveauPersonnage.Awake();
+        //Personnage nouveauPersonnage = Instantiate(character.gameObject).GetComponent<Personnage>();
     }
 
     void Awake ()
