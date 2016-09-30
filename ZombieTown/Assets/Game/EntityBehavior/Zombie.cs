@@ -26,6 +26,7 @@ public class Zombie : Personnage {
 
         // Set Initial Behaviors
 
+
         // Set Behaviors
         onEnemyNearby.AddListener(OnEnemyNearby);
         enemyTags = new List<string>(2);
