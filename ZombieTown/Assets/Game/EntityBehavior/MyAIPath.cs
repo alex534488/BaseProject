@@ -141,6 +141,9 @@ public class MyAIPath : MonoBehaviour
     private bool startHasRun = false;
 
     public UnityEvent onTargetReached = new UnityEvent();
+    private bool arrived = false;
+
+    public Transform lookTarget = null;
 
     /** Initializes reference variables.
 	 * If you override this function you should in most cases call base.Awake () at the start of it.
@@ -148,10 +151,10 @@ public class MyAIPath : MonoBehaviour
     protected virtual void Awake()
     {
         seeker = GetComponent<Seeker>();
-        CanMove(false);
 
         //This is a simple optimization, cache the transform component lookup
         tr = transform;
+        Stop();
 
         //Cache some other components (not all are necessarily there)
         rvoController = GetComponent<RVOController>();
@@ -256,8 +259,10 @@ public class MyAIPath : MonoBehaviour
 
     public virtual void OnTargetReached()
     {
-        CanMove(false);
+        if (arrived) return;
+        Stop();
         onTargetReached.Invoke();
+        arrived = true;
     }
 
     /** Called when a requested path has finished calculation.
@@ -326,10 +331,10 @@ public class MyAIPath : MonoBehaviour
 
     public virtual Vector3 GetFeetPosition()
     {
-        if (rvoController != null)
-        {
-            return tr.position - Vector3.up * rvoController.height * 0.5f;
-        }
+        //if (rvoController != null)
+        //{
+        //    return tr.position - Vector3.up * rvoController.height * 0.5f;
+        //}
 
         return tr.position;
     }
@@ -341,7 +346,8 @@ public class MyAIPath : MonoBehaviour
         Vector3 dir = CalculateVelocity(GetFeetPosition());
 
         //Rotate towards targetDirection (filled in by CalculateVelocity)
-        RotateTowards(targetDirection);
+        if (!arrived) RotateTowards(targetDirection);
+        else if (lookTarget != null) RotateTowards(lookTarget.position - tr.position);
 
         if (rvoController != null)
         {
@@ -439,6 +445,7 @@ public class MyAIPath : MonoBehaviour
             //Send a move request, this ensures gravity is applied
             return Vector3.zero;
         }
+        arrived = false;
 
         Vector3 forward = tr.forward;
         float dot = Vector3.Dot(dir.normalized, forward);
@@ -509,12 +516,11 @@ public class MyAIPath : MonoBehaviour
 
     public void SetTarget(Vector3 target)
     {
-        CanMove(true);
         this.target = target;
     }
 
-    public void CanMove(bool state)
+    public void Stop()
     {
-        canMove = state;
+        target = tr.position;
     }
 }

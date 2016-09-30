@@ -143,8 +143,14 @@ MonoBehaviour:
   slowdownDistance: 0.6
   pickNextWaypointDist: 2
   forwardLook: 1
-  endReachedDistance: 0.6
-  closestOnPathCheck: 1
+  endReachedDistance: 0.8
+  closestOnPathCheck: 0
+  onTargetReached:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  lookTarget: {fileID: 0}
 --- !u!114 &114000010578436718
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -212,7 +218,7 @@ MonoBehaviour:
   wallAvoidFalloff: 1
   center: {x: 0, y: 0, z: 0}
   enableRotation: 1
-  rotationSpeed: 30
+  rotationSpeed: 10
   debug: 0
 --- !u!114 &114000012054760096
 MonoBehaviour:
@@ -252,8 +258,9 @@ MonoBehaviour:
       PublicKeyToken=null
   enemyTags: []
   damage: 0
+  hp: 0
+  range: 0
   starter: 0
-  XP: 0
   lvl: 1
   nbchiefs: 0
 --- !u!114 &114000013957729456
@@ -267,7 +274,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 691ec0d863cebed4c939a5a1e78e3820, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  character: {fileID: 114000013346452424}
+  zombie: {fileID: 114000013346452424}
   selectAnimation: {fileID: 1000013152653570}
   clickable: 1
 --- !u!135 &135000013699411654
