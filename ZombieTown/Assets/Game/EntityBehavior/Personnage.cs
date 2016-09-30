@@ -11,6 +11,7 @@ public class Personnage : MonoBehaviour {
     public int damage;
     public int hp;
     protected double movementSpeed;
+    public int range;
 
     private static List<Personnage> inactivePersonnage = new List<Personnage>();
 

@@ -45,7 +45,7 @@ public class ClickMasterListener : MonoBehaviour {
                 //Set to Attack to
                 print("attack order");
                 currentlySelected.GetComponent<Personnage>().comportement.ChangeState<StatesAttack>();
-                //(personnage.comportement.currentStates as StatesAttack).SetTarget(personnage);
+                (personnage.comportement.currentStates as StatesAttack).Init(hit.collider.gameObject.GetComponent<Personnage>());
             }
 
             UnSelect();

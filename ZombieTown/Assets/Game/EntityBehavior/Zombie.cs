@@ -6,7 +6,7 @@ using UnityEngine.Events;
 public class Zombie : Personnage {
 
     public bool starter = false;
-    public int XP = 0;
+    private int XP = 0;
     public int lvl = 1;
     public int nbchiefs;
 
@@ -17,7 +17,7 @@ public class Zombie : Personnage {
         movementSpeed = 0.5;
 
         // Zombie initial
-        if (starter == true){ lvl = 5; } 
+        if(starter == true){ lvl = 5; } 
 
         // Set Behaviors
         onEnemyNearby.AddListener(OnEnemyNearby);
