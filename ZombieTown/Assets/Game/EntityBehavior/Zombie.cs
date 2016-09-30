@@ -6,22 +6,20 @@ using UnityEngine.Events;
 public class Zombie : Personnage {
 
     public bool starter = false;
-    public int XP = 0;
+    private int XP = 0;
     public int lvl = 1;
     public int nbchiefs;
 
-    // Use this for initialization
-     void Start () {
+    void Start () {
+        // Set Variables
         damage = 2;
         hp = 10;
         movementSpeed = 0.5;
 
-        if(starter == true)
-        {
-            lvl = 5;
-        }
+        // Zombie initial
+        if(starter == true){ lvl = 5; } 
 
-        // Behavior
+        // Set Behaviors
         onEnemyNearby.AddListener(OnEnemyNearby);
         enemyTags = new List<string>(2);
         enemyTags.Add("Policier");
@@ -38,11 +36,17 @@ public class Zombie : Personnage {
         if(!(comportement.currentStates is StatesMoveTo))
         {
             comportement.ChangeState(comportement.GetStatesByName("Attack"));
+            (comportement.currentStates as StatesAttack).onHittingTarget.AddListener(Attack);
             (comportement.currentStates as StatesAttack).onEnemyKilled.AddListener(GainXP);
         }
     }
 
-    public void GainXP()
+    void Attack()
+    {
+        (comportement.currentStates as StatesAttack).target.LoseHP(damage);
+    }
+
+    void GainXP()
     {
         XP++;
         if (XP == Mathf.CeilToInt(Mathf.Pow(lvl, 2) / 2))

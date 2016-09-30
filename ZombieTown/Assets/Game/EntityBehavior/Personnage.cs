@@ -9,8 +9,27 @@ public class Personnage : MonoBehaviour {
     public List<string> enemyTags;
 
     public int damage;
-    protected int hp;
+    public int hp;
     protected double movementSpeed;
+    public int range;
+
+    private static List<Personnage> inactivePersonnage = new List<Personnage>();
+
+    public static void Spawn(GameObject character)
+    {
+        Personnage nouveauPersonnage;
+        if (inactivePersonnage.Count == 0)
+        {
+            nouveauPersonnage = Instantiate(character.gameObject).GetComponent<Personnage>();
+        }
+        else
+        {
+            //nouveauPersonnage = inactivePersonnage[0];
+            //inactivePersonnage.RemoveAt(0);
+            //nouveauPersonnage.gameObject.SetActive(true);
+        }
+        //nouveauPersonnage.Awake();
+    }
 
     void Awake ()
     {
@@ -38,6 +57,8 @@ public class Personnage : MonoBehaviour {
     {
         hp -= amount;
 
+        print(hp);
+
         if (hp < 0) { return Die(); } // Dead
 
         return false;
@@ -45,7 +66,7 @@ public class Personnage : MonoBehaviour {
 
     private bool Die()
     {
-        // DO: Faire disparaitre le personnage
+        gameObject.SetActive(false);
         return true;
     }
 }

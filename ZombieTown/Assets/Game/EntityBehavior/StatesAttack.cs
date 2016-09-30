@@ -1,15 +1,29 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.Events;
+using CCC.Manager;
 
 public class StatesAttack : States
 {
-    public Personnage target;
     public UnityEvent onEnemyKilled;
+    public UnityEvent onHittingTarget;
+    private float cooldown = 0;
+    private int skipupdate = 6;
+    private int counter = 0;
 
     public StatesAttack(Personnage personnage) : base(personnage)
     {
         nom = "Attack";
+        this.personnage = personnage;
+    }
+
+    public void Init(Personnage target)
+    {
+        this.target = target;
+        if (Vector3.Distance(target.transform.position, personnage.gameObject.transform.position) > personnage.range)
+        {
+            MoveTo(target.transform.position);
+        }
     }
 
     public override void Enter()
@@ -19,10 +33,17 @@ public class StatesAttack : States
 
     public override void Update()
     {
-        if (target.LoseHP(personnage.damage))
+        counter++;
+        if (counter <= skipupdate) return;
+
+        counter = 0;
+
+        if (Vector3.Distance(target.transform.position, personnage.gameObject.transform.position) <= personnage.range)
         {
-            onEnemyKilled.Invoke();
+            Stop();
+            if (cooldown >= 1) { Hit(); cooldown = 0; }
         }
+        cooldown += Time.deltaTime * skipupdate;
     }
 
     public override void Exit()
@@ -30,8 +51,12 @@ public class StatesAttack : States
         onEnemyKilled.RemoveAllListeners();
     }
 
-    public void SetTarget(Personnage personnage)
+    public void Hit()
     {
-        target = personnage;
+        onHittingTarget.Invoke();
+        if (target.hp <= 0) // Only works on zombie
+        {
+            onEnemyKilled.Invoke();
+        }
     }
 }

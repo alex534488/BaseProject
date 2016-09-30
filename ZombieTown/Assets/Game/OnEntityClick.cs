@@ -6,13 +6,21 @@ using UnityEngine.Events;
 public class OnEntityClick : MonoBehaviour
 { 
     // Personnage presentement selectionner
-    public Personnage character; // Personnage ou se trouve ce script
+    public Zombie zombie; // Personnage ou se trouve ce script
     public GameObject selectAnimation;
     public bool clickable = false;
 
     void Awake()
     {
         UnSelect();
+    }
+
+    void Update()
+    {
+        if(zombie.lvl >= 5)
+        {
+            clickable = true;
+        }
     }
 
     public void Select()

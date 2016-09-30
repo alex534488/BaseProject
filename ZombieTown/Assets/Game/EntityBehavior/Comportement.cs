@@ -12,7 +12,6 @@ public class Comportement{
         states.Add(new StatesMoveTo(personnage));
         states.Add(new StatesFollow(personnage));
         states.Add(new StatesAttack(personnage));
-        states.Add(new StatesPatrol(personnage));
     }
 
     void Start () {

@@ -16,7 +16,7 @@ public class Civil : Personnage
         movementSpeed = 1;
 
         // Behavior
-        onEnemyNearby.AddListener(Attack);
+        onEnemyNearby.AddListener(Flee);
         enemyTags = new List<string>(1);
         enemyTags.Add("Zombie");
     }
@@ -26,7 +26,7 @@ public class Civil : Personnage
 
     }
 
-    void Attack()
+    void Flee()
     {
         comportement.ChangeState(comportement.GetStatesByName("Flee"));
     }
