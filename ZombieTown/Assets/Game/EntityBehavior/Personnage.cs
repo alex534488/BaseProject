@@ -3,10 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.Events;
 
-public class Personnage : MonoBehaviour
-{
+public class Personnage : MonoBehaviour {
+
+    public class PersonnageEvent : UnityEvent<Personnage> { }
+
     public Comportement comportement;
-    public UnityEvent onEnemyNearby;
+    public PersonnageEvent onDeath = new PersonnageEvent();
+    public UnityEvent onEnemyNearby = new UnityEvent();
     public List<string> enemyTags;
 
     public int damage;
@@ -56,8 +59,10 @@ public class Personnage : MonoBehaviour
         return false;
     }
 
-    private void Die()
+    private bool Die()
     {
+        onDeath.Invoke(this);
         Destroy(gameObject);
+        return true;
     }
 }
