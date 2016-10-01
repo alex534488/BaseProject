@@ -11,10 +11,15 @@ public class StatesFollow : States
         this.personnage = personnage;
     }
 
+    public void Init(Personnage target)
+    {
+        this.target = target;
+        MoveTo(target.transform.position); // Bouge jusqu'a une distance du chef
+    }
+
     public override void Enter()
     {
-        position = target.transform.position; // Ajustement necessaire en fonction de l'arme
-        MoveTo(position); // Bouge jusqu'a une distance du chef
+
     }
 
     public override void Update()

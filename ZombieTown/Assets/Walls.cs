@@ -6,12 +6,23 @@ using CCC.Manager;
 
 public class Walls : Personnage {
 
-	// Use this for initialization
-	void Start ()
+    private int baseHp;
+
+    void Start()
+    {
+        baseHp = 100;
+    }
+
+	void OnEnable ()
     {
         damage = 0;
-        hp = 100;
+        hp = baseHp;
         range = 0;
 	}
+
+    public void GainHP(int level)
+    {
+        hp = baseHp * level;
+    }
 	
 }

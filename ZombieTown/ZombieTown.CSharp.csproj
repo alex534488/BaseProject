@@ -61,12 +61,6 @@
     <Reference Include="UnityEditor">
       <HintPath>Library\UnityAssemblies\UnityEditor.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEditor.iOS.Extensions.Xcode">
-      <HintPath>Library\UnityAssemblies\UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEditor.iOS.Extensions.Common">
-      <HintPath>Library\UnityAssemblies\UnityEditor.iOS.Extensions.Common.dll</HintPath>
-    </Reference>
     <Reference Include="Pathfinding.ClipperLib">
       <HintPath>Assets\AstarPathfindingProject\Plugins\Clipper\Pathfinding.ClipperLib.dll</HintPath>
     </Reference>
@@ -225,6 +219,7 @@
     <Compile Include="Assets\AstarPathfindingProject\Utilities\ProfileHelper.cs" />
     <Compile Include="Assets\AstarPathfindingProject\Utilities\UnityReferenceHelper.cs" />
     <Compile Include="Assets\AstarPathfindingProject\changelog.cs" />
+    <Compile Include="Assets\BaseMilitaire.cs" />
     <Compile Include="Assets\CCC\Manager\BaseManager.cs" />
     <Compile Include="Assets\CCC\Manager\DelayManager.cs" />
     <Compile Include="Assets\CCC\Manager\InputBank.cs" />
@@ -236,6 +231,7 @@
     <Compile Include="Assets\CCC\UI\KeyButton.cs" />
     <Compile Include="Assets\CCC\UI\ScrollAnimator.cs" />
     <Compile Include="Assets\CCC\Utility\ActionQueue.cs" />
+    <Compile Include="Assets\CCC\Utility\QuickSound.cs" />
     <Compile Include="Assets\CCC\Utility\SlowBehaviour.cs" />
     <Compile Include="Assets\CCC\Utility\TestScript.cs" />
     <Compile Include="Assets\Demigiant\DOTween\Examples\Basics.cs" />
@@ -246,6 +242,7 @@
     <Compile Include="Assets\Game\EntityBehavior\BaseAgent.cs" />
     <Compile Include="Assets\Game\EntityBehavior\Civil.cs" />
     <Compile Include="Assets\Game\EntityBehavior\Comportement.cs" />
+    <Compile Include="Assets\Game\EntityBehavior\Detector.cs" />
     <Compile Include="Assets\Game\EntityBehavior\MyAIPath.cs" />
     <Compile Include="Assets\Game\EntityBehavior\Personnage.cs" />
     <Compile Include="Assets\Game\EntityBehavior\Policier.cs" />
@@ -261,6 +258,8 @@
     <Compile Include="Assets\Game\UI\LevelUpChoiceItem.cs" />
     <Compile Include="Assets\Game\UI\PointerListener.cs" />
     <Compile Include="Assets\Hopital.cs" />
+    <Compile Include="Assets\SpawnPoint.cs" />
+    <Compile Include="Assets\Turret.cs" />
     <Compile Include="Assets\Walls.cs" />
   </ItemGroup>
   <ItemGroup>
