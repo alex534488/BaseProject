@@ -9,8 +9,8 @@ public class Personnage : MonoBehaviour {
 
     public Comportement comportement;
     public PersonnageEvent onDeath = new PersonnageEvent();
-    public UnityEvent onEnemyNearby = new UnityEvent();
     public List<string> enemyTags;
+    public Detector detector;
 
     public int damage;
     public int hp;
@@ -31,11 +31,6 @@ public class Personnage : MonoBehaviour {
     void Update()
     {
         comportement.Update();
-
-        if (CheckEnemyNearby())
-        {
-            onEnemyNearby.Invoke();
-        }
     }
 
     private bool CheckEnemyNearby()

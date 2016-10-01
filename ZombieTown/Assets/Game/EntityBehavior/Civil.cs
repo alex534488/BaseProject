@@ -17,20 +17,5 @@ public class Civil : Personnage
 
         // Set Initial Behaviors
         comportement.ChangeState<StatesIdle>();
-
-        // Behavior
-        onEnemyNearby.AddListener(Flee);
-        enemyTags = new List<string>(1);
-        enemyTags.Add("Zombie");
-    }
-
-    void Update()
-    {
-
-    }
-
-    void Flee()
-    {
-        //comportement.ChangeState(comportement.GetStatesByName("Flee"));
     }
 }

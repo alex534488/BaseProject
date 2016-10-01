@@ -5,10 +5,12 @@ using CCC.Utility;
 using UnityEngine.Events;
 
 [RequireComponent(typeof(SphereCollider))]
-public class Detector : MonoBehaviour {
-    
-    List<Personnage> allyList = new List<Personnage>();
-    List<Personnage> enemyList = new List<Personnage>();
+public class Detector : SlowBehaviour
+{
+
+    public List<Personnage> allyList = new List<Personnage>();
+    public List<Personnage> enemyList = new List<Personnage>();
+    List<Personnage> unapprovedUnits = new List<Personnage>();
 
     public LayerMask terrainMask;
 
@@ -21,25 +23,29 @@ public class Detector : MonoBehaviour {
     System.Type[] enemies;
     System.Type[] allies;
 
+    bool hasInit = false;
+    bool needAllyVision = false;
+    bool needEnemyVision = false;
+
     void Awake()
     {
-        Debug.LogWarning("Test, remove this!");
-        System.Type[] enemy =
-        {
-            typeof(Policier),
-            typeof(Civil)
-        };
-        System.Type[] ally =
-        {
-            typeof(Zombie)
-        };
-        Init(enemy, ally);
+        if (!hasInit) gameObject.SetActive(false);
     }
-    
-    public void Init(System.Type[] enemy, System.Type[] ally)
+
+    public void Init(System.Type[] enemy, bool needEnemyVision, System.Type[] ally, bool needAllyVision)
     {
+        gameObject.SetActive(true);
         this.enemies = enemy;
         this.allies = ally;
+        hasInit = true;
+        this.needAllyVision = needAllyVision;
+        this.needEnemyVision = needEnemyVision;
+    }
+
+    protected override void SlowUpdate()
+    {
+        base.SlowUpdate();
+        UpdateUnitLists();
     }
 
     public bool CanSee(Transform target)
@@ -57,6 +63,76 @@ public class Detector : MonoBehaviour {
         return GetClosestFrom(enemyList);
     }
 
+    void UpdateUnitLists()
+    {
+        //Check unapproved
+        for (int i=0; i<unapprovedUnits.Count; i++)
+        {
+            if (i >= unapprovedUnits.Count) break;
+
+            Personnage personnage = unapprovedUnits[i];
+
+            //si est un ennemi
+            if (IsIn(personnage.GetType(), enemies))
+            {
+                if (!needEnemyVision || CanSee(personnage.transform))
+                {
+                    enemyList.Add(personnage);
+                    unapprovedUnits.Remove(personnage);
+                    i--;
+                    onEnemyEnter.Invoke(personnage);
+                }
+            }
+            //Si est un allié
+            else if (IsIn(personnage.GetType(), allies))
+            {
+                if (!needAllyVision || CanSee(personnage.transform))
+                {
+                    allyList.Add(personnage);
+                    unapprovedUnits.Remove(personnage);
+                    i--;
+                    onAllyEnter.Invoke(personnage);
+                }
+            }
+            //N'est ni un allié ni un ennemi, on s'en fou de lui...
+            else unapprovedUnits.Remove(personnage);
+        }
+
+        //Check enemies
+        if (needEnemyVision)
+            for (int i = 0; i < enemyList.Count; i++)
+            {
+                if (i >= enemyList.Count) break;
+
+                Personnage enemy = enemyList[i];
+
+                if (!CanSee(enemy.transform))
+                {
+                    unapprovedUnits.Add(enemy);
+                    enemyList.Remove(enemy);
+                    onEnemyExit.Invoke(enemy);
+                    i--;
+                }
+            }
+
+        //Check allies
+        if (needAllyVision)
+            for (int i = 0; i < allyList.Count; i++)
+            {
+                if (i >= allyList.Count) break;
+
+                Personnage ally = allyList[i];
+
+                if (!CanSee(ally.transform))
+                {
+                    unapprovedUnits.Add(ally);
+                    allyList.Remove(ally);
+                    onAllyExit.Invoke(ally);
+                    i--;
+                }
+            }
+    }
+
     Personnage GetClosestFrom(List<Personnage> liste)
     {
         Personnage closest = null;
@@ -64,7 +140,7 @@ public class Detector : MonoBehaviour {
         foreach (Personnage personnage in liste)
         {
             float dist = (personnage.transform.position - transform.position).magnitude;
-            if(dist < smallestDist)
+            if (dist < smallestDist)
             {
                 closest = personnage;
                 smallestDist = dist;
@@ -78,18 +154,8 @@ public class Detector : MonoBehaviour {
         Personnage personnage = col.GetComponent<Personnage>();
         if (personnage == null) return;
 
-        if(IsIn(personnage.GetType(), enemies))
-        {
-            print("enemy in");
-            enemyList.Add(personnage);
-            onEnemyEnter.Invoke(personnage);
-        }
-        else if (IsIn(personnage.GetType(), allies))
-        {
-            print("ally in");
-            allyList.Add(personnage);
-            onAllyEnter.Invoke(personnage);
-        }
+        unapprovedUnits.Add(personnage);
+        UpdateUnitLists();
     }
 
     void OnTriggerExit(Collider col)
@@ -97,23 +163,24 @@ public class Detector : MonoBehaviour {
         Personnage personnage = col.GetComponent<Personnage>();
         if (personnage == null) return;
 
-        if (IsIn(personnage.GetType(), enemies))
+        if (enemyList.Contains(personnage))
         {
-            print("enemy out");
             enemyList.Remove(personnage);
             onEnemyExit.Invoke(personnage);
         }
-        else if (IsIn(personnage.GetType(), allies))
+        else if (allyList.Contains(personnage))
         {
-            print("ally out");
             allyList.Remove(personnage);
             onAllyExit.Invoke(personnage);
         }
+        else unapprovedUnits.Remove(personnage);
     }
 
     bool IsIn(System.Type type, System.Type[] array)
     {
-        for(int i=0; i<array.Length; i++)
+        if (array == null) return false;
+
+        for (int i = 0; i < array.Length; i++)
         {
             if (type == array[i]) return true;
         }
