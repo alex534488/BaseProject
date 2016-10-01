@@ -38,7 +38,7 @@ namespace CCC.Manager
                 return;
             }
 
-            DontDestroyOnLoad(this);
+            DontDestroyOnLoad(gameObject);
             DOTween.Init();
             initComplete = false;
 

@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.Events;
+using Pathfinding.RVO;
 
 public class Zombie : Personnage
 {
@@ -22,6 +23,8 @@ public class Zombie : Personnage
 
     [Header("Vfx")]
     public GameObject chiefVfx;
+    public Sprite chiefSprite;
+    public SpriteRenderer spriteRenderer;
 
     public UnityEvent onLevelUp = new UnityEvent();
     public UnityEvent onChiefNearby = new UnityEvent();
@@ -33,7 +36,7 @@ public class Zombie : Personnage
         hp = 10;
         movementSpeed = 0.5;
         nbfollowers = 0;
-        ChiefVfx(false);
+        if (chiefVfx != null) chiefVfx.SetActive(false);
 
         // Zombie initial
         if (startsAsChief == true) BecomeChief();
@@ -63,7 +66,10 @@ public class Zombie : Personnage
     void BecomeChief()
     {
         lvl = 5;
-        ChiefVfx(true);
+        spriteRenderer.sprite = chiefSprite;
+        if (chiefVfx != null) chiefVfx.SetActive(true);
+        if (GetComponent<RVOController>()) GetComponent<RVOController>().radius *= 1.35f; //grossie
+        transform.localScale *= 1.35f; // Grossie
     }
 
     void Update()
@@ -89,23 +95,25 @@ public class Zombie : Personnage
         XP++;
         if (XP >= Mathf.CeilToInt(Mathf.Pow(lvl, 2) / 2))
         {
-            //LEVEL UP!
-            if (!((lvl + 1) == 5 && nbchiefs == nbchiefsmax))
+            if(nbchiefs >= nbchiefsmax && lvl == 4) // Cant lvl up, too many chiefs
+            {
+                XP--;
+                return;
+            }
+
+            if(lvl >= 4) //Will be OR is already chief
+            {
+                if (!IsChief()) BecomeChief(); //Become a chief if you aren't
+                else lvl++;
+
+                unclaimedLevelUps++; //Get level up bonus
+                onLevelUp.Invoke();
+
+            }
+            else //Not a chief, nor will be
             {
                 lvl++;
                 XP = 0;
-
-                //Get Boosts if lvl >= 5
-                if (lvl > 5)
-                {
-                    ChiefVfx(true);
-                    unclaimedLevelUps++;
-                    onLevelUp.Invoke();
-                }
-            }
-            else  //CANT LEVEL UP!
-            {
-                XP--;
             }
         }
     }
@@ -123,9 +131,9 @@ public class Zombie : Personnage
         comportement.ChangeState<StatesFollow>();
     }
 
-    void ChiefVfx(bool state)
+    public bool IsChief()
     {
-        if (chiefVfx != null) chiefVfx.SetActive(state);
+        return lvl >= 5;
     }
 
     #region Events

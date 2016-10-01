@@ -67,7 +67,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1000014167388448
 GameObject:
   m_ObjectHideFlags: 0
@@ -105,7 +105,7 @@ Transform:
   m_GameObject: {fileID: 1000014167388448}
   m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.1, y: 0.1, z: 1}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1}
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
   m_Children:
   - {fileID: 4000011605963578}
@@ -117,8 +117,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000013029403412}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.58, y: 0.26, z: -0.031}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 5.7999997, y: 0.26, z: -0.31}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
@@ -134,7 +134,7 @@ Transform:
   m_GameObject: {fileID: 1000013152653570}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0.25, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 10, y: 10, z: 1}
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 4000012583744240}
@@ -247,7 +247,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 533427594e96f4344a2564c629ef0383, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  radius: 1
+  radius: 1.25
   maxSpeed: 20
   height: 1
   locked: 0
@@ -298,12 +298,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 845fb9306f4cfbc44b317b9da2cf6361, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  onEnemyNearby:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
-      PublicKeyToken=null
   enemyTags: []
+  detector: {fileID: 0}
   damage: 0
   hp: 0
   maxHp: 0
@@ -313,7 +309,9 @@ MonoBehaviour:
   followersmax: 0
   nbfollowers: 0
   unclaimedLevelUps: 0
-  chiefVfx: {fileID: 1000013235401000}
+  chiefVfx: {fileID: 0}
+  chiefSprite: {fileID: 21300000, guid: c514afe5c2dc24e4a9f7f72274027240, type: 3}
+  spriteRenderer: {fileID: 212000014053692900}
   onLevelUp:
     m_PersistentCalls:
       m_Calls: []
@@ -348,7 +346,7 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.1
+  m_Radius: 1.5
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!212 &212000012567195494
 SpriteRenderer:
@@ -445,7 +443,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: feb9e8314d9bd394b8965db8e116cdfa, type: 3}
-  m_Color: {r: 0.23594478, g: 0.7205882, b: 0, a: 1}
+  m_Sprite: {fileID: 21300000, guid: 64040a4870a78e44f8e097f37c8da54a, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
