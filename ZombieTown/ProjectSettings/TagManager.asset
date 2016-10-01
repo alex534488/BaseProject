@@ -7,6 +7,8 @@ TagManager:
   - Map
   - Hospital
   - Wall
+  - Turret
+  - Base Militaire
   layers:
   - Default
   - TransparentFX
@@ -17,9 +19,9 @@ TagManager:
   - 
   - 
   - Zombie
-  - Human
+  - Cop
   - Map
-  - Terrain
+  - Wall
   - 
   - 
   - 

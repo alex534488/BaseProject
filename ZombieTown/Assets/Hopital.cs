@@ -8,34 +8,30 @@ public class Hopital : MonoBehaviour {
     [Header("Spawn Point")]
     public Vector2 xBounds;
     public Vector2 zBounds;
+    public GameObject spawnPoint;
 
     [Header("Timer")]
     public float spawnTimer;                   // En secondes
     public float levelUpTimer;                 // En secondes
     public float defeatTimer;                  // En secondes
     public float cooldownTimer;                // En secondes
+    public float noMoreAttackTimer;            // En secondes
 
-    [Header("Prefab")]
-    public Policier prefabPolicier;
-
-    private List<Transform> listeMurs;         // Liste de la position des differents murs
-    private List<Policier> listePoliciers;     // Liste des policiers
-
-  
-
+    private List<Transform> listeMurs = new List<Transform>();         // Liste de la position des differents murs
+    private List<Policier> listePoliciers = new List<Policier>();     // Liste des policiers
+    
 
     private float activeSpawnTimer;            // Timer utilise pour gerer le spawn
     private float activeLevelUpTimer;          // Timer utilise pour gerer le level up du batiment
     private float activeDefeatTimer;           // Timer qui s'active lorsque un hopital atteint le niveau 5
     private float activeCooldownTimer;
+    private float activeAttackTimer;
 
-    private bool zoneControle;                 // True si la zone n'est pas attaque ou n'a pas perdu une bataille récemment
+    private bool zoneControle;                 // True si les policiers controlent la zone
     private bool zoneAttaque;                  // True si la zone est presentement attaque par le joueur
     private bool rechercheRemede;              // True si l'hopital est niveau 5 et recherche actuellement un remede
 
     private int currentLevel;                  // Le level actuel de l'hopital
-
-    
 
     void Start()
     {
@@ -66,17 +62,8 @@ public class Hopital : MonoBehaviour {
 
     void InitializeTimer()
     {
-        spawnTimer = spawnTimer * 1000;
         activeSpawnTimer = spawnTimer;
-
-        levelUpTimer = levelUpTimer * 1000;
         activeLevelUpTimer = levelUpTimer;
-
-        defeatTimer = defeatTimer * 1000;
-        activeDefeatTimer = defeatTimer;
-
-        cooldownTimer = cooldownTimer * 1000;
-        activeCooldownTimer = cooldownTimer;
     }
 
     void ResetBool()
@@ -88,16 +75,39 @@ public class Hopital : MonoBehaviour {
 
     void CheckTimer()
     {
-        if (activeSpawnTimer <= 0)
+        if (zoneAttaque == true)
         {
-            SpawnPolicier();
+            if (activeAttackTimer <= 0)
+                zoneAttaque = false;
         }
 
-        if (levelUpTimer <= 0)
+        else if (zoneControle == true)
         {
-            LevelUp();
-            ChangeSprite();
-            Warning();
+            if (activeSpawnTimer <= 0)
+            {
+                SpawnPolicier();
+                activeSpawnTimer = spawnTimer;
+            }
+
+            if (activeLevelUpTimer <= 0)
+            {
+                LevelUp();
+                ChangeSprite();
+                Warning();
+                activeLevelUpTimer = levelUpTimer;
+            }
+        }
+
+        else if (zoneControle == false)
+        {
+            if (activeCooldownTimer <= 0)
+            {
+                zoneControle = true;
+                InitializeTimer();
+                SpawnWalls();
+                SpawnPolicier();
+            }
+
         }
     }
 
@@ -112,6 +122,11 @@ public class Hopital : MonoBehaviour {
         {
             activeDefeatTimer = activeDefeatTimer - Time.deltaTime;
             CheckDefeat();
+        }
+
+        if (zoneAttaque == true)
+        {
+            activeAttackTimer = activeAttackTimer - Time.deltaTime;
         }
 
         if (zoneControle == false)
@@ -134,8 +149,9 @@ public class Hopital : MonoBehaviour {
     {
         if (activeDefeatTimer <= 0)
         {
-            if (zoneAttaque == true)
+            if (zoneAttaque == false)
             {
+                print("Defaite ! Un hôpital a réussi à développer un remède contre le virus ");
                 // Le joueur perd la partie puisque la zone n'est pas présentement attaqué par le joueur
             }
         }
@@ -147,6 +163,12 @@ public class Hopital : MonoBehaviour {
 
         if (currentLevel == 5)
             rechercheRemede = true;
+
+        for (int i = 0; i < listeMurs.Count; i++)
+        {
+            listeMurs[i].GetComponent<Walls>().GainHP(currentLevel);
+        }
+        
     }
 
     void ChangeSprite() // TO DO : Sprite du level display sur la croix de l'hopital 
@@ -159,7 +181,10 @@ public class Hopital : MonoBehaviour {
         if (currentLevel >= 3)
         {
             if (currentLevel == 5)
-                print("Un hôpital recherche présentement un remède contre le virus (Temps estimé : " + defeatTimer / 1000 + " secondes)");
+            {
+                print("Un hôpital vient d'atteindre le niveau 5 et recherche un remède contre le virus (Temps estimé : " + defeatTimer + " secondes)");
+                activeDefeatTimer = defeatTimer;
+            }
 
             else
                 print("Un Hopital vient d'atteindre le niveau " + currentLevel);
@@ -172,19 +197,40 @@ public class Hopital : MonoBehaviour {
         Policier unPolicier = unePersonne as Policier;
         listePoliciers.Remove(unPolicier);
 
-        if (listePoliciers.Count == 0)
-        {
-            zoneControle = false;
-        }
+        zoneAttaque = true;
+        activeAttackTimer = noMoreAttackTimer;
 
+        CheckControle(); // Permet de verifier si les policiers ont perdu le controle de la zone
     }
 
     void SpawnPolicier()
-    {
-        Vector2 randomPosition = new Vector2(Random.Range(-0.35f, 0.35f), Random.Range(-0.6f, -1.3f));
-        Policier unPolicier = (Instantiate(prefabPolicier.gameObject, randomPosition, Quaternion.identity) as GameObject).GetComponent<Policier>();
-        
+    {   
+        Policier unPolicier = (GetComponentInChildren<SpawnPoint>().SpawnObject("Policier")).GetComponent<Policier>();
         unPolicier.onDeath.AddListener(MortPolicier);
+    }
+
+    void SpawnWalls()
+    {
+        for (int i = 0; i < listeMurs.Count; i++)
+        {
+            listeMurs[i].gameObject.SetActive(true);
+        }
+    }
+
+    void CheckControle() // TO DO : Ajouter audio de demolition
+    {
+        if (listePoliciers.Count == 0)
+        {
+            for (int i = 0; i < listeMurs.Count; i++)
+            {
+                listeMurs[i].gameObject.SetActive(false); // Demoli les murs restants
+                // Play audio destruction
+            }
+
+            zoneControle = false;
+            activeCooldownTimer = cooldownTimer;
+            currentLevel = 0;
+        }
     }
 }
 

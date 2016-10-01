@@ -219,6 +219,7 @@
     <Compile Include="Assets\AstarPathfindingProject\Utilities\ProfileHelper.cs" />
     <Compile Include="Assets\AstarPathfindingProject\Utilities\UnityReferenceHelper.cs" />
     <Compile Include="Assets\AstarPathfindingProject\changelog.cs" />
+    <Compile Include="Assets\BaseMilitaire.cs" />
     <Compile Include="Assets\CCC\Manager\BaseManager.cs" />
     <Compile Include="Assets\CCC\Manager\DelayManager.cs" />
     <Compile Include="Assets\CCC\Manager\InputBank.cs" />
@@ -257,6 +258,8 @@
     <Compile Include="Assets\Game\UI\LevelUpChoiceItem.cs" />
     <Compile Include="Assets\Game\UI\PointerListener.cs" />
     <Compile Include="Assets\Hopital.cs" />
+    <Compile Include="Assets\SpawnPoint.cs" />
+    <Compile Include="Assets\Turret.cs" />
     <Compile Include="Assets\Walls.cs" />
   </ItemGroup>
   <ItemGroup>
