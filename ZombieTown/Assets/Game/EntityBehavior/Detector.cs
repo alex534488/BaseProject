@@ -53,14 +53,14 @@ public class Detector : SlowBehaviour
         return !Physics.Linecast(target.position, transform.position, terrainMask);
     }
 
-    public Personnage GetClosestAlly()
+    public Personnage GetClosestAlly(System.Type filter = null)
     {
-        return GetClosestFrom(allyList);
+        return GetClosestFrom(allyList, filter);
     }
 
-    public Personnage GetClosestEnemy()
+    public Personnage GetClosestEnemy(System.Type filter = null)
     {
-        return GetClosestFrom(enemyList);
+        return GetClosestFrom(enemyList, filter);
     }
 
     void UpdateUnitLists()
@@ -133,12 +133,16 @@ public class Detector : SlowBehaviour
             }
     }
 
-    Personnage GetClosestFrom(List<Personnage> liste)
+    Personnage GetClosestFrom(List<Personnage> liste, System.Type filter)
     {
+
         Personnage closest = null;
         float smallestDist = Mathf.Infinity;
         foreach (Personnage personnage in liste)
         {
+            if (filter != null && personnage.GetType() != filter)
+                continue;
+
             float dist = (personnage.transform.position - transform.position).magnitude;
             if (dist < smallestDist)
             {
