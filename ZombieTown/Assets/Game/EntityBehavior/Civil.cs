@@ -6,6 +6,7 @@ using UnityEngine.Events;
 public class Civil : Personnage
 {
     public GameObject sprite;
+    public Vector2 mapSize;
 
     // Use this for initialization
     void Start()
@@ -18,4 +19,6 @@ public class Civil : Personnage
         // Set Initial Behaviors
         comportement.ChangeState<StatesIdle>();
     }
+
+
 }
