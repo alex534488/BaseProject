@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine.Events;
 using CCC.Manager;
 
-public class Turrets : Personnage
+public class Turret : Personnage
 {
     private int baseHp;
     private int baseDamage;
