@@ -42,7 +42,11 @@ public class Personnage : MonoBehaviour {
 
     public bool LoseHP(int amount)
     {
-        hp -= amount;
+        if (this.GetComponent<Zombie>() != null)
+            hp = hp - amount + this.GetComponent<Zombie>().masterChief.GetComponent<Zombie>().bonusHp;
+
+        else
+            hp -= amount;
 
         print(hp);
 
@@ -57,8 +61,13 @@ public class Personnage : MonoBehaviour {
 
     private bool Die()
     {
-        onDeath.Invoke(this);
+        OnDeath();
         Destroy(gameObject);
         return true;
+    }
+
+    protected virtual void OnDeath()
+    {
+        onDeath.Invoke(this);
     }
 }
