@@ -5,11 +5,6 @@ using UnityEngine.Events;
 
 public class Hopital : MonoBehaviour {
 
-    [Header("Spawn Point")]
-    public Vector2 xBounds;
-    public Vector2 zBounds;
-    public GameObject spawnPoint;
-
     [Header("Timer")]
     public float spawnTimer;                   // En secondes
     public float levelUpTimer;                 // En secondes
