@@ -41,7 +41,7 @@ public class Personnage : MonoBehaviour {
     private bool CheckEnemyNearby()
     {
         // DO: verifie la zone si les enemy tags sont la
-        // comportement.currentStates.target = Personnage
+        // Important : comportement.currentStates.target = Personnage
         return false;
     }
 

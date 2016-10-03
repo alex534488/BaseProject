@@ -42,15 +42,12 @@ public class Policier : Personnage
 
     void OnEnemyEnter(Personnage personnage)
     {
-        //to do: Entre en mode d'attaque
-
-        //J'ai mis cette ligne en commentaire parce qu'il y avait un bug et je testais d'autre shit
-
-        //if (!(comportement.currentStates is StatesAttack))
-        //{
-        //    comportement.ChangeState<StatesAttack>();
-        //    (comportement.currentStates as StatesAttack).onLauchingAttack.AddListener(Shoot);
-        //}
+        if (!(comportement.currentStates is StatesAttack))
+        {
+            comportement.ChangeState<StatesAttack>();
+            (comportement.currentStates as StatesAttack).Init(personnage);
+            (comportement.currentStates as StatesAttack).onLauchingAttack.AddListener(Shoot);
+        }
     }
 }
 
