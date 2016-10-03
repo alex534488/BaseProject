@@ -33,6 +33,8 @@ public class StatesAttack : States
 
     public override void Update()
     {
+        if(target == null) { personnage.comportement.ChangeState<StatesIdle>(); }
+
         counter++;
         if (counter <= skipupdate) return;
 
