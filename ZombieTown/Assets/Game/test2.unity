@@ -108,7 +108,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!23 &736684283
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -224,11 +224,23 @@ MonoBehaviour:
   enemyTags: []
   damage: 0
   hp: 10
+  maxHp: 0
   range: 0
-  starter: 0
+  startsAsChief: 0
   lvl: 1
   followersmax: 0
-  nbchiefsmax: 0
+  nbfollowers: 0
+  unclaimedLevelUps: 0
+  onLevelUp:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  onChiefNearby:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
 --- !u!23 &744347613
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -517,7 +529,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bullet: {fileID: 1043313722}
-  damage: 1
+  damage: 11
   vitesse: 1
 --- !u!23 &1449092061
 MeshRenderer:
