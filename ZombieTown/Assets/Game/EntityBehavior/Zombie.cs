@@ -93,8 +93,13 @@ public class Zombie : Personnage
 
     void Attack() // Modifié
     {
+        int totaldamage;
 
-        int totaldamage = masterChief.GetComponent<Zombie>().bonusDmg + damage;
+        if (masterChief != null)
+            totaldamage = masterChief.GetComponent<Zombie>().bonusDmg + damage;
+
+        else
+            totaldamage = damage;
 
         if ((comportement.currentStates as StatesAttack).target.LoseHP(totaldamage))
         {
@@ -147,7 +152,8 @@ public class Zombie : Personnage
 
     void HealOnKill() // Modifie
     {
-        hp = hp + masterChief.GetComponent<Zombie>().bonusHeal;
+        if (masterChief != null)
+            hp = hp + masterChief.GetComponent<Zombie>().bonusHeal;
     }
 
     public void ClaimLevelUp(LevelUp.Boost boost) // Modifie et TO DO : Augmenter vitesse des goules et du chef
