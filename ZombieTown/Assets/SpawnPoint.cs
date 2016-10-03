@@ -23,7 +23,7 @@ public class SpawnPoint : MonoBehaviour
     {
         spawnpointPosition3D = GetComponent<Transform>().position;
 
-        spawnScale = GetComponent<Transform>().lossyScale;
+        spawnScale = GetComponent<Transform>().localScale * 10;
 
         spawnIntervalle_X = (spawnScale.x / 2);
         spawnIntervalle_Z= (spawnScale.z / 2);
