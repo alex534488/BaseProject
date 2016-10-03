@@ -9,6 +9,10 @@ public class School : MonoBehaviour
     public float minimumSpawnTimer;
     public float maximumSpawnTimer;
 
+    [Header("Spawn")]
+    public int nombrePoliciers;
+    public int nombreCivils;
+
     private float activeSpawnTimer;            // Timer utilise pour gerer le spawn
 
     private List<Civil> listeCivil = new List<Civil>();
@@ -27,25 +31,60 @@ public class School : MonoBehaviour
 
         if (activeSpawnTimer <= 0)
         {
-            SpawnCivil();
-            SpawnPolicier();
+            SpawnEntities();
         }
 	}
 
-    void SpawnCivil()
+    void SpawnEntities()
     {
         Civil unCivil = (GetComponentInChildren<SpawnPoint>().SpawnObject("Civil")).GetComponent<Civil>();
-        unCivil.GetComponent<Comportement>().ChangeState<StatesMoveTo>();
-
-        // Ajouter fonction aleatoire
-        Vector3 awayPosition = new Vector3(unCivil.mapSize.x, 0, unCivil.mapSize.y);
-
-        (unCivil.GetComponent<Comportement>().currentStates as StatesMoveTo).Init(awayPosition);
+        Vector3 awayPosition = RandomPosition(unCivil);
         listeCivil.Add(unCivil);
+
+        for (int i=0; i < nombreCivils - 1; i++)
+        {
+            unCivil = (GetComponentInChildren<SpawnPoint>().SpawnObject("Civil")).GetComponent<Civil>();
+            listeCivil.Add(unCivil);
+        }
+
+        foreach (Civil civil in listeCivil)
+        {
+            civil.GetComponent<Comportement>().ChangeState<StatesMoveTo>();
+            (civil.GetComponent<Comportement>().currentStates as StatesMoveTo).Init(awayPosition);
+        }
+
+        for (int i=0; i < nombrePoliciers; i++)
+        {
+            Policier unPolicier = (GetComponentInChildren<SpawnPoint>().SpawnObject("Policier")).GetComponent<Policier>();
+            unPolicier.GetComponent<Comportement>().ChangeState<StatesFollow>();
+
+            int j = i;
+
+            if (j >= nombreCivils)
+                j = 0;
+      
+            (unPolicier.GetComponent<Comportement>().currentStates as StatesFollow).Init(listeCivil[j]);
+        }
     }
 
-    void SpawnPolicier()
+    Vector3 RandomPosition(Civil unCivil)
     {
-        Policier unPolicier = (GetComponentInChildren<SpawnPoint>().SpawnObject("Policier")).GetComponent<Policier>();
+        float max_x = unCivil.mapSize.x;
+        float max_y = 0;
+        float max_z = unCivil.mapSize.y;
+
+        int random = Random.Range(0, 2);
+
+        if (random == 0)
+        {
+            Vector3 randomPosition = new Vector3(max_x, 0, Random.Range(-max_y, max_y));
+            return randomPosition;
+        }
+
+        else
+        {
+            Vector3 randomPosition = new Vector3(Random.Range(-max_x, max_x), 0, max_y);
+            return randomPosition;
+        }
     }
 }

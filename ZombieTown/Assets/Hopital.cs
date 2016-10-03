@@ -11,6 +11,7 @@ public class Hopital : MonoBehaviour {
     public float defeatTimer;                  // En secondes
     public float cooldownTimer;                // En secondes
     public float noMoreAttackTimer;            // En secondes
+    public LoseTimer prefab;
 
     private List<Transform> listeMurs = new List<Transform>();         // Liste de la position des differents murs
     private List<Policier> listePoliciers = new List<Policier>();     // Liste des policiers
@@ -179,6 +180,8 @@ public class Hopital : MonoBehaviour {
             {
                 print("Un hôpital vient d'atteindre le niveau 5 et recherche un remède contre le virus (Temps estimé : " + defeatTimer + " secondes)");
                 activeDefeatTimer = defeatTimer;
+
+                LoseTimer.NewTimer(prefab, defeatTimer);
             }
 
             else
