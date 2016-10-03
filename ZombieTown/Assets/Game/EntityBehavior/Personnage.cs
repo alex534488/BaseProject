@@ -42,15 +42,15 @@ public class Personnage : MonoBehaviour {
 
     public bool LoseHP(int amount)
     {
-        if (this.GetComponent<Zombie>().masterChief != null)
-            hp = hp - amount + this.GetComponent<Zombie>().masterChief.GetComponent<Zombie>().bonusHp;
+        if (this.GetComponent<Zombie>() != null)
+            hp = hp - amount; //+ this.GetComponent<Zombie>().masterChief.GetComponent<Zombie>().bonusHp;
 
         else
             hp -= amount;
 
         print(hp);
 
-        if (hp < 0)
+        if (hp <= 0)
         {
             Die();
             return true;
