@@ -155,6 +155,8 @@ public class Detector : SlowBehaviour
 
     void OnTriggerEnter(Collider col)
     {
+        if (col.transform == transform.parent) return;
+
         Personnage personnage = col.GetComponent<Personnage>();
         if (personnage == null) return;
 

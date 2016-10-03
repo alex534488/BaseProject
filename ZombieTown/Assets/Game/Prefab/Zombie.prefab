@@ -11,6 +11,23 @@ Prefab:
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 1000013029403412}
   m_IsPrefabParent: 1
+--- !u!1 &1000012296363398
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 4000013687543620}
+  - 135: {fileID: 135000011119446378}
+  - 114: {fileID: 114000014210769260}
+  m_Layer: 8
+  m_Name: Detector
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1000013029403412
 GameObject:
   m_ObjectHideFlags: 0
@@ -110,7 +127,7 @@ Transform:
   m_Children:
   - {fileID: 4000011605963578}
   m_Father: {fileID: 4000012583744240}
-  m_RootOrder: 0
+  m_RootOrder: 1
 --- !u!4 &4000012583744240
 Transform:
   m_ObjectHideFlags: 1
@@ -118,10 +135,11 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000013029403412}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 5.7999997, y: 0.26, z: -0.31}
+  m_LocalPosition: {x: 5.7999997, y: 0.5, z: -0.31}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
+  - {fileID: 4000013687543620}
   - {fileID: 4000011993281780}
   - {fileID: 4000012809827262}
   m_Father: {fileID: 0}
@@ -138,7 +156,20 @@ Transform:
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 4000012583744240}
-  m_RootOrder: 1
+  m_RootOrder: 2
+--- !u!4 &4000013687543620
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000012296363398}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_Children: []
+  m_Father: {fileID: 4000012583744240}
+  m_RootOrder: 0
 --- !u!54 &54000012432480270
 Rigidbody:
   m_ObjectHideFlags: 1
@@ -299,16 +330,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyTags: []
-  detector: {fileID: 0}
-  damage: 0
-  hp: 0
-  maxHp: 0
-  range: 0
+  detector: {fileID: 114000014210769260}
+  damage: 2
+  hp: 10
+  maxHp: 10
+  range: 5
   startsAsChief: 1
   lvl: 1
-  followersmax: 0
+  followersmax: 5
   nbfollowers: 0
   unclaimedLevelUps: 0
+  masterChief: {fileID: 0}
   chiefVfx: {fileID: 0}
   chiefSprite: {fileID: 21300000, guid: c514afe5c2dc24e4a9f7f72274027240, type: 3}
   spriteRenderer: {fileID: 212000014053692900}
@@ -322,6 +354,10 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
       PublicKeyToken=null
+  bonusHp: 0
+  bonusSpeed: 0
+  bonusDmg: 0
+  bonusHeal: 0
 --- !u!114 &114000013957729456
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -336,6 +372,36 @@ MonoBehaviour:
   zombie: {fileID: 114000013346452424}
   selectAnimation: {fileID: 1000013152653570}
   clickable: 1
+--- !u!114 &114000014210769260
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000012296363398}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: abc4e6834b3015c41be94f040db2210d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skippedUpdates: 5
+  skippedFixedUpdates: 5
+  allyList: []
+  enemyList: []
+  terrainMask:
+    serializedVersion: 2
+    m_Bits: 4096
+--- !u!135 &135000011119446378
+SphereCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000012296363398}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 25
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!135 &135000013699411654
 SphereCollider:
   m_ObjectHideFlags: 1

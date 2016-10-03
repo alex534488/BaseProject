@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+[System.Serializable]
 public class StatesFollow : States
 {
     Vector3 position; // Position du zombie dans l'arme qui suit le chef

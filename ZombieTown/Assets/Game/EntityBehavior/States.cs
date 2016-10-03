@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+[System.Serializable]
 public abstract class States
 {
-
     protected string nom;
     protected Personnage personnage;
     protected MyAIPath aiPath;

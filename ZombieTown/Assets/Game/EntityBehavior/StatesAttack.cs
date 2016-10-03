@@ -3,9 +3,10 @@ using System.Collections;
 using UnityEngine.Events;
 using CCC.Manager;
 
+[System.Serializable]
 public class StatesAttack : States
 {
-    public UnityEvent onLauchingAttack;
+    public UnityEvent onLauchingAttack = new UnityEvent();
     private float cooldown = 0;
     private int skipupdate = 6;
     private int counter = 0;
@@ -20,7 +21,7 @@ public class StatesAttack : States
     {
         this.target = target;
         LookAt(target.transform); // S'assure que le sprite regarde vers la cible
-        if (Vector3.Distance(target.transform.position, personnage.gameObject.transform.position) > personnage.range)
+        if (Vector3.Distance(target.transform.position, personnage.gameObject.transform.position) > personnage.attackRange)
         {
             MoveTo(target.transform.position);
         }
@@ -38,7 +39,7 @@ public class StatesAttack : States
 
         counter = 0;
 
-        if (Vector3.Distance(target.transform.position, personnage.gameObject.transform.position) <= personnage.range)
+        if (Vector3.Distance(target.transform.position, personnage.gameObject.transform.position) <= personnage.attackRange)
         {
             Stop();
             if (cooldown >= 1) { Hit(); cooldown = 0; }
@@ -48,7 +49,7 @@ public class StatesAttack : States
 
     public override void Exit()
     {
-
+        onLauchingAttack.RemoveAllListeners();
     }
 
     public void Hit()

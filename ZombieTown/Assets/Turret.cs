@@ -19,7 +19,7 @@ public class Turret : Personnage
     {
         damage = baseDamage;
         hp = baseHp;
-        range = 1;
+        attackRange = 1;
     }
 
     void BonusStats(int a)

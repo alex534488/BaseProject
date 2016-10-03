@@ -260,7 +260,7 @@ public class MyAIPath : MonoBehaviour
     public virtual void OnTargetReached()
     {
         if (arrived) return;
-        Stop();
+        //Stop();
         onTargetReached.Invoke();
         arrived = true;
     }

@@ -17,7 +17,7 @@ public class Walls : Personnage {
     {
         damage = 0;
         hp = baseHp;
-        range = 0;
+        attackRange = 0;
 	}
 
     public void GainHP(int level)

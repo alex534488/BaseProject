@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
+[System.Serializable]
 public class Comportement{
     private List<States> states = new List<States>();
     public States currentStates;
@@ -20,26 +21,28 @@ public class Comportement{
         currentStates.Update();
 	}
 
-    public void ChangeState(States newState)
+    public States ChangeState(States newState)
     {
+        Debug.Log("Enter state: " + newState.getNom());
         if(currentStates != null) currentStates.Exit();
         currentStates = newState;
         newState.Enter();
+        return currentStates;
     }
 
-    public void ChangeState(int index)
+    public States ChangeState(int index)
     {
-        ChangeState(states[index]);
+        return ChangeState(states[index]);
     }
 
-    public void ChangeState<T>() where T : States
+    public States ChangeState<T>() where T : States
     {
-        ChangeState(GetStatesByType<T>());
+        return ChangeState(GetStatesByType<T>());
     }
 
-    public void ChangeState(string name)
+    public States ChangeState(string name)
     {
-        ChangeState(GetStatesByName(name));
+        return ChangeState(GetStatesByName(name));
     }
 
     public States GetStatesByName(string name)

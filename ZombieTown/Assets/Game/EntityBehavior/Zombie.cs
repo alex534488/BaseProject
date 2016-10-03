@@ -8,9 +8,6 @@ public class Zombie : Personnage
 {
     public bool startsAsChief = false;
     public int lvl = 1;
-    public int followersmax;
-
-    public int nbfollowers;
 
     public System.Type[] enemies;
 
@@ -21,8 +18,7 @@ public class Zombie : Personnage
     private int XP = 0;
 
     [Header("Chief")]
-    public GameObject masterChief;
-    private List<Personnage> listFollower = new List<Personnage>();
+    public Zombie masterChief;
 
     [Header("Vfx")]
     public GameObject chiefVfx;
@@ -44,7 +40,6 @@ public class Zombie : Personnage
         damage = 2;
         hp = 10;
         movementSpeed = 0.5;
-        nbfollowers = 0;
         if (chiefVfx != null) chiefVfx.SetActive(false);
 
         // Zombie initial
@@ -78,8 +73,9 @@ public class Zombie : Personnage
         spriteRenderer.sprite = chiefSprite;
         if (chiefVfx != null) chiefVfx.SetActive(true);
         if (GetComponent<RVOController>()) GetComponent<RVOController>().radius *= 1.35f; //grossie
-        transform.localScale *= 1.35f; // Grossie
-        masterChief = this.gameObject;
+        if (GetComponent<SphereCollider>()) GetComponent<SphereCollider>().radius *= 1.35f; //grossie
+        if (spriteRenderer) spriteRenderer.transform.localScale *= 1.35f; //grossie
+        masterChief = this;
     }
 
     void Update()
@@ -96,7 +92,7 @@ public class Zombie : Personnage
         int totaldamage;
 
         if (masterChief != null)
-            totaldamage = masterChief.GetComponent<Zombie>().bonusDmg + damage;
+            totaldamage = masterChief.bonusDmg + damage;
 
         else
             totaldamage = damage;
@@ -116,7 +112,11 @@ public class Zombie : Personnage
 
             else
             {
-                comportement.ChangeState<StatesIdle>();
+                if(masterChief != null && !IsChief())
+                {
+                    Follow(masterChief);
+                }
+                else comportement.ChangeState<StatesIdle>();
             }
             
         }
@@ -153,7 +153,8 @@ public class Zombie : Personnage
     void HealOnKill() // Modifie
     {
         if (masterChief != null)
-            hp = hp + masterChief.GetComponent<Zombie>().bonusHeal;
+            hp = hp + masterChief.bonusHeal;
+        //Heal de base ?
     }
 
     public void ClaimLevelUp(LevelUp.Boost boost) // Modifie et TO DO : Augmenter vitesse des goules et du chef
@@ -182,7 +183,7 @@ public class Zombie : Personnage
 
             case LevelUp.Types.CarryAmount:
                 {
-                    nbfollowers = nbfollowers + (int)boost.amount;
+                    maxFollowers += (int)boost.amount;
                     LookForNewFollowers();
                     break;
                 }
@@ -194,16 +195,12 @@ public class Zombie : Personnage
                 }
 
         }
-
-        //apply stats
     }
 
-    public void Follow(Personnage chief) // Modifié
+    public override void Follow(Personnage chief)
     {
-        comportement.ChangeState<StatesFollow>();
-
-        //to do: mettre le chief comme target
-        (comportement.currentStates as StatesFollow).Init(masterChief.GetComponent<Personnage>());
+        if(chief is Zombie) masterChief = chief as Zombie;
+        base.Follow(chief);
     }
 
     public bool IsChief()
@@ -211,33 +208,15 @@ public class Zombie : Personnage
         return lvl >= 5;
     }
 
-    public bool IsRoom() // Modifie
-    {
-        if (listFollower.Count < followersmax)
-            return true;
-
-        else
-            return false;
-    }
-
-    public void NewFollower(Personnage newFollower) // Modifie
-    {
-        newFollower.comportement.ChangeState<StatesFollow>();
-        (newFollower.comportement.currentStates as StatesFollow).Init(this.GetComponent<Personnage>());
-        newFollower.GetComponent<Zombie>().masterChief = this.gameObject;
-    }
-
-    public void LookForNewFollowers() // Modifie
+    public void LookForNewFollowers()
     {
         foreach (Personnage ally in detector.allyList)
         {
             if (!listFollower.Contains(ally))
             {
-                listFollower.Add(ally);
-                NewFollower(ally);
+                AddFollower(ally);
 
-                if (listFollower.Count >= nbfollowers)
-                    return;
+                if (IsFull()) return;
             }
         }
     }
@@ -246,50 +225,45 @@ public class Zombie : Personnage
 
     void OnEnemyEnter(Personnage personnage) // Modifie
     {
-        //to do: Entre en mode d'attaque
+        if (!(personnage is Policier)) return;
+
+        Policier policier = personnage as Policier;
 
         if (!(comportement.currentStates is StatesMoveTo) && !(comportement.currentStates is StatesAttack))
         {
-            comportement.ChangeState<StatesAttack>();
-            (comportement.currentStates as StatesAttack).onLauchingAttack.AddListener(Attack);
+            StatesAttack state = (comportement.ChangeState<StatesAttack>() as StatesAttack);
+            state.onLauchingAttack.AddListener(Attack);
+            state.Init(policier);
         }
     }
 
     void OnAllyEnter(Personnage personnage) // Modifié
     {
-        if (IsChief() && IsRoom())
+        if (!(personnage is Zombie)) return;
+
+        Zombie zombie = personnage as Zombie;
+
+        if (IsChief() && !IsFull())
         {
-            //to do: si t'es un chief, demande lui de te follow
-
-            if (personnage.GetComponent<Zombie>().masterChief == null && !personnage.GetComponent<Zombie>().IsChief())           
+            if (zombie.masterChief == null && !zombie.IsChief())           
             {
-                listFollower.Add(personnage);
-                personnage.onDeath.AddListener(OnFollowerDeath);
-
-                NewFollower(personnage);
+                AddFollower(personnage);
             }
         }   
     }
 
-    void OnFollowerDeath(Personnage follower) // Modifie
+    protected override void OnFollowerDeath(Personnage follower) // Modifie
     {
-        listFollower.Remove(follower);
+        base.OnFollowerDeath(follower);
 
-        //Compare la liste de tes followers avec la liste de tes alliés en range dans 'detector' ajoute qq1 à tes followers si nécessaire
         LookForNewFollowers();
-      
     }
 
-    protected override void OnDeath() // Modifié
+    protected override void OnChiefDeath(Personnage chief)
     {
-        base.OnDeath();
+        base.OnChiefDeath(chief);
 
-        foreach (Personnage follower in listFollower)
-        {
-            follower.onDeath.RemoveListener(OnFollowerDeath);
-            follower.GetComponent<Zombie>().masterChief = null;
-        }
-
+        masterChief = null;
     }
 
     #endregion

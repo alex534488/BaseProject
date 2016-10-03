@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+[System.Serializable]
 public class StatesMoveTo : States
 {
     public StatesMoveTo(Personnage personnage) : base(personnage)
