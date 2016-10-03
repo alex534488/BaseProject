@@ -78,8 +78,9 @@ public class Zombie : Personnage
         masterChief = this;
     }
 
-    void Update()
+    protected override void Update()
     {
+        base.Update();
         //TEMPORAIRE POUR TESTER
         if (Input.GetKeyDown(KeyCode.Space))
         {

@@ -23,7 +23,6 @@ public class Comportement{
 
     public States ChangeState(States newState)
     {
-        Debug.Log("Enter state: " + newState.getNom());
         if(currentStates != null) currentStates.Exit();
         currentStates = newState;
         newState.Enter();

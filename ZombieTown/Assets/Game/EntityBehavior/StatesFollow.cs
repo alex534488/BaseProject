@@ -13,11 +13,11 @@ public class StatesFollow : States
         this.personnage = personnage;
     }
 
-    public void Init(Personnage target, int nb)
+    public void Init(Personnage target)
     {
         this.target = target;
-        this.target.onFollowerChange.AddListener(SetOffset);
-        SetOffset();
+        this.target.onFollowerListChange.AddListener(SetOffset);
+        SetOffset(target);
     }
 
     public override void Enter()
@@ -27,7 +27,7 @@ public class StatesFollow : States
 
     public override void Update()
     {
-        pos = this.target.gameObject.transform.position + offset;
+        pos = target.transform.position + offset;
 
         MoveTo(pos);
     }
@@ -37,27 +37,47 @@ public class StatesFollow : States
 
     }
 
-    public void SetOffset()
+    public void SetOffset(Personnage chief)
     {
-        int nb = 0; // **** A changer
+        int nb = chief.listFollower.IndexOf(personnage);
 
         offset = GetOffset(nb);
 
-        pos = this.target.gameObject.transform.position + offset;
+        pos = target.transform.position + offset;
     }
 
     static Vector3 GetOffset(int nb)
     {
-        int etage = nb / 6;
-        float distance = etage * 2 + 2;
+        int etage = GetEtage(nb);
+        float distance = etage * 5;
         float x = 0, z = 1;
+        float newX, newZ;
         float angle;
 
-        angle = (nb % 6) * (Mathf.PI * 2 / 6);
+        int membreSurEtage = etage * 6;
+        angle = (nb % membreSurEtage) * (Mathf.PI * 2 / membreSurEtage);
 
-        x = x * Mathf.Cos(angle) - z * Mathf.Sin(angle);
-        z = x * Mathf.Sin(angle) + z * Mathf.Cos(angle);
+        float randomness = 0.15f;
 
-        return new Vector3(x,0,z)*distance;
+        angle *= Random.Range(1-randomness, 1 + randomness);
+        distance *= Random.Range(1 - randomness, 1 + randomness);
+
+        newX = x * Mathf.Cos(angle) - z * Mathf.Sin(angle);
+        newZ = x * Mathf.Sin(angle) + z * Mathf.Cos(angle);
+
+        return new Vector3(newX, 0, newZ) *distance;
+    }
+
+    static int GetEtage(int nb)
+    {
+        int nm = 0;
+        for(int i=1; i<10000; i++)
+        {
+            nm += i * 6;
+            if (nm > nb) return i;
+        }
+        return 10000;
     }
 }
+
+//personne total : (6 * n) + !

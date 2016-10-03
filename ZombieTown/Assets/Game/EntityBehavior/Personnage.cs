@@ -18,9 +18,8 @@ public class Personnage : MonoBehaviour {
     protected double movementSpeed;
     public float attackRange;
     public int maxFollowers = -1;
-
-    [SerializeField]
-    protected List<Personnage> listFollower = new List<Personnage>();
+    
+    public List<Personnage> listFollower = new List<Personnage>();
     public PersonnageEvent onFollowerListChange = new PersonnageEvent();
 
     public static void Spawn(GameObject character)
@@ -33,7 +32,7 @@ public class Personnage : MonoBehaviour {
         comportement = new Comportement(this);
     }
 
-    void Update()
+    protected virtual void Update()
     {
         comportement.Update();
     }
@@ -87,7 +86,7 @@ public class Personnage : MonoBehaviour {
     {
         listFollower.Add(follower);
         follower.Follow(this);
-        onFollowerListChange.Invoke(follower);
+        onFollowerListChange.Invoke(this);
     }
 
     protected void RemoveFollower(Personnage follower)
@@ -96,7 +95,7 @@ public class Personnage : MonoBehaviour {
 
         follower.UnFollow(this);
         listFollower.Remove(follower);
-        onFollowerListChange.Invoke(follower);
+        onFollowerListChange.Invoke(this);
     }
 
     public virtual void Follow(Personnage chief)
