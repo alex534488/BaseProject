@@ -522,5 +522,6 @@ public class MyAIPath : MonoBehaviour
     public void Stop()
     {
         target = tr.position;
+        path = null;
     }
 }

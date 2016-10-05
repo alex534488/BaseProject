@@ -13,6 +13,7 @@ public class StatesIdle : States {
     public override void Enter()
     {
         Stop();
+        personnage.OnIdle();
     }
 
     public override void Update()

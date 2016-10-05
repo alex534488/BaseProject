@@ -135,7 +135,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000013029403412}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 5.7999997, y: 0.5, z: -0.31}
+  m_LocalPosition: {x: 7.1, y: 0.5, z: -22.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
@@ -334,7 +334,7 @@ MonoBehaviour:
   damage: 2
   hp: 10
   maxHp: 10
-  attackRange: 0
+  attackRange: 5
   maxFollowers: -1
   listFollower: []
   startsAsChief: 1

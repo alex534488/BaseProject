@@ -64,7 +64,7 @@ Transform:
   m_GameObject: {fileID: 1000012497561730}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.6077314, y: -4.327782, z: 0.1}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2.5, y: 2.5, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 4000012461271050}
@@ -81,11 +81,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84008102657d1f44293972230c8a9e04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  vitesse: 50
+  vitesse: 65
   mask:
     serializedVersion: 2
     m_Bits: 5376
-  timelapse: 60
+  timeAlive: 4
 --- !u!212 &212000012778090154
 SpriteRenderer:
   m_ObjectHideFlags: 1

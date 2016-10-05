@@ -29,7 +29,7 @@ public class Zombie : Personnage
     public UnityEvent onChiefNearby = new UnityEvent();
 
     [Header("Bonus")]
-    public int bonusHp;
+    public int armor;
     public int bonusSpeed;
     public int bonusDmg;
     public int bonusHeal;
@@ -67,7 +67,7 @@ public class Zombie : Personnage
         }
     }
 
-    void BecomeChief() // Modifie
+    void BecomeChief()
     {
         lvl = 5;
         spriteRenderer.sprite = chiefSprite;
@@ -88,8 +88,11 @@ public class Zombie : Personnage
         }
     }
 
-    void Attack() // Modifié
+    public override void Attack()
     {
+        base.Attack();
+        print("attack!");
+
         int totaldamage;
 
         if (masterChief != null)
@@ -166,7 +169,7 @@ public class Zombie : Personnage
         {
             case LevelUp.Types.Hp:
                 {
-                    bonusHp = bonusHp + (int)boost.amount;
+                    armor = armor + (int)boost.amount;
                     break;
                 }
 
@@ -222,9 +225,24 @@ public class Zombie : Personnage
         }
     }
 
+    public override bool LoseHP(int amount)
+    {
+        if (masterChief != null) amount -= masterChief.armor;
+        return base.LoseHP(amount);
+    }
+
     #region Events
 
-    void OnEnemyEnter(Personnage personnage) // Modifie
+    public override void OnIdle()
+    {
+        base.OnIdle();
+        if(detector.enemyList.Count > 0)
+        {
+            AttackState(detector.GetClosestEnemy());
+        }
+    }
+
+    void OnEnemyEnter(Personnage personnage) 
     {
         if (!(personnage is Policier)) return;
 
@@ -232,13 +250,11 @@ public class Zombie : Personnage
 
         if (!(comportement.currentStates is StatesMoveTo) && !(comportement.currentStates is StatesAttack))
         {
-            StatesAttack state = (comportement.ChangeState<StatesAttack>() as StatesAttack);
-            state.onLauchingAttack.AddListener(Attack);
-            state.Init(policier);
+            AttackState(policier);
         }
     }
 
-    void OnAllyEnter(Personnage personnage) // Modifié
+    void OnAllyEnter(Personnage personnage) 
     {
         if (!(personnage is Zombie)) return;
 
@@ -253,7 +269,7 @@ public class Zombie : Personnage
         }   
     }
 
-    protected override void OnFollowerDeath(Personnage follower) // Modifie
+    protected override void OnFollowerDeath(Personnage follower) 
     {
         base.OnFollowerDeath(follower);
 

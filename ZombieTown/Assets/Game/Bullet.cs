@@ -10,7 +10,7 @@ public class Bullet : MonoBehaviour {
     public LayerMask mask;
     private static List<Bullet> inactiveBullets = new List<Bullet>();
     private float timer = 0;
-    public float timelapse = 60;
+    public float timeAlive = 4;
 
     public static void Shoot(int damage, Vector3 direction, Vector3 position, GameObject bulletprefab)
     {
@@ -49,14 +49,14 @@ public class Bullet : MonoBehaviour {
         }
         transform.position += transform.forward * distance;
 
-        if(timer >= timelapse)
+        if(timer >= timeAlive)
         {
             gameObject.SetActive(false);
             inactiveBullets.Add(this);
             timer = 0;
         } else
         {
-            timer++;
+            timer+=Time.deltaTime;
         }
 	}
 
@@ -66,9 +66,9 @@ public class Bullet : MonoBehaviour {
 
         if(col != null)
         {
-            Zombie zombie = col.GetComponent<Zombie>();
+            Personnage personnage = col.GetComponent<Personnage>();
 
-            if (zombie != null) { zombie.LoseHP(damage); }
+            if (personnage != null) { personnage.LoseHP(damage); }
         }
 
         gameObject.SetActive(false);

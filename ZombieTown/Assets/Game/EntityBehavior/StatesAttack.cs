@@ -25,7 +25,6 @@ public class StatesAttack : States
         {
             MoveTo(target.transform.position);
         }
-
     }
 
     public override void Enter()
@@ -35,18 +34,20 @@ public class StatesAttack : States
 
     public override void Update()
     {
-        if(target == null) { personnage.comportement.ChangeState<StatesIdle>(); }
+        if(target == null) { personnage.comportement.ChangeState<StatesIdle>(); return; }
 
         counter++;
         if (counter <= skipupdate) return;
 
         counter = 0;
 
-        if (Vector3.Distance(target.transform.position, personnage.gameObject.transform.position) <= personnage.attackRange)
+        if (Vector3.Distance(target.transform.position, personnage.transform.position) <= personnage.attackRange)
         {
             Stop();
             if (cooldown >= 1) { Hit(); cooldown = 0; }
         }
+        else MoveTo(target.transform.position);
+
         cooldown += Time.deltaTime * skipupdate;
     }
 

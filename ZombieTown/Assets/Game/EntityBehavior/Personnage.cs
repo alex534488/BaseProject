@@ -3,7 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.Events;
 
-public class Personnage : MonoBehaviour {
+public class Personnage : MonoBehaviour
+{
 
     public class PersonnageEvent : UnityEvent<Personnage> { }
 
@@ -12,13 +13,13 @@ public class Personnage : MonoBehaviour {
     public List<string> enemyTags;
     public Detector detector;
 
-    public int damage;
-    public int hp;
-    public int maxHp;
-    protected double movementSpeed;
-    public float attackRange;
+    public int damage = 1;
+    public int hp = 10;
+    public int maxHp = 10;
+    protected double movementSpeed = 1;
+    public float attackRange = 5;
     public int maxFollowers = -1;
-    
+
     public List<Personnage> listFollower = new List<Personnage>();
     public PersonnageEvent onFollowerListChange = new PersonnageEvent();
 
@@ -44,20 +45,9 @@ public class Personnage : MonoBehaviour {
         return false;
     }
 
-    public bool LoseHP(int amount)
+    public virtual bool LoseHP(int amount)
     {
-        //vv CECI N'EST PAS BON!!! Il ne faut jamais qu'une classe de base (ex: point) fasse des test et des manipulation en rapport à une sous-classe (point coloré)
-        if (!(this is Zombie))
-        {
-            if ((this as Zombie).masterChief != null)
-                hp = hp - amount + this.GetComponent<Zombie>().masterChief.GetComponent<Zombie>().bonusHp;
-
-            else
-                hp = hp - amount;
-        }
-
-        else
-            hp -= amount;
+        hp -= amount;
 
         print(hp);
 
@@ -119,6 +109,22 @@ public class Personnage : MonoBehaviour {
     protected virtual void OnFollowerDeath(Personnage follower) // Modifie
     {
         RemoveFollower(follower);
+    }
+
+    public virtual void OnIdle()
+    {
+
+    }
+
+    public virtual void AttackState(Personnage target)
+    {
+        StatesAttack state = (comportement.ChangeState<StatesAttack>() as StatesAttack);
+        state.onLauchingAttack.AddListener(Attack);
+        state.Init(target);
+    }
+    public virtual void Attack()
+    {
+
     }
 
     public virtual bool IsFull()

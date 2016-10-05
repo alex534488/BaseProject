@@ -10,12 +10,7 @@ public class Policier : Personnage
     
     // Use this for initialization
     void Start()
-    {
-        // Set Variables
-        damage = 3;
-        hp = 8;
-        movementSpeed = 1;
-        
+    {        
         //Setup detector
         if (detector != null)
         {
