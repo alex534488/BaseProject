@@ -17,7 +17,7 @@ public class OnEntityClick : MonoBehaviour
 
     void Update()
     {
-        if(zombie.lvl >= 5)
+        if(zombie.IsChief())
         {
             clickable = true;
         }

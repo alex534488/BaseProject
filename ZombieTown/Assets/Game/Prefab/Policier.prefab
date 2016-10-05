@@ -275,9 +275,10 @@ MonoBehaviour:
   damage: 0
   hp: 10
   maxHp: 10
-  range: 22
+  attackRange: 0
+  maxFollowers: -1
   listFollower: []
-  bullet: {fileID: 0}
+  bullet: {fileID: 1000012497561730, guid: dc7ee9365a4a43447a039c641412bd4f, type: 2}
 --- !u!114 &114000012476592630
 MonoBehaviour:
   m_ObjectHideFlags: 1

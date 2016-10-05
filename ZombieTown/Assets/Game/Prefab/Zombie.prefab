@@ -334,11 +334,11 @@ MonoBehaviour:
   damage: 2
   hp: 10
   maxHp: 10
-  range: 5
+  attackRange: 0
+  maxFollowers: -1
+  listFollower: []
   startsAsChief: 1
   lvl: 1
-  followersmax: 5
-  nbfollowers: 0
   unclaimedLevelUps: 0
   masterChief: {fileID: 0}
   chiefVfx: {fileID: 0}
@@ -371,7 +371,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   zombie: {fileID: 114000013346452424}
   selectAnimation: {fileID: 1000013152653570}
-  clickable: 1
+  clickable: 0
 --- !u!114 &114000014210769260
 MonoBehaviour:
   m_ObjectHideFlags: 1
