@@ -81,12 +81,18 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\CCC\AI\Character.cs" />
+    <Compile Include="Assets\CCC\AI\Detector.cs" />
+    <Compile Include="Assets\CCC\AI\Personnage.cs" />
+    <Compile Include="Assets\CCC\AI\States.cs" />
+    <Compile Include="Assets\CCC\AI\StatesIdle.cs" />
     <Compile Include="Assets\CCC\Manager\BaseManager.cs" />
     <Compile Include="Assets\CCC\Manager\DelayManager.cs" />
     <Compile Include="Assets\CCC\Manager\InputBank.cs" />
     <Compile Include="Assets\CCC\Manager\InputManager.cs" />
     <Compile Include="Assets\CCC\Manager\MasterManager.cs" />
     <Compile Include="Assets\CCC\Manager\SoundManager.cs" />
+    <Compile Include="Assets\CCC\Projectiles.cs" />
     <Compile Include="Assets\CCC\UI\ActionQueueScroller.cs" />
     <Compile Include="Assets\CCC\UI\DisplayKeys.cs" />
     <Compile Include="Assets\CCC\UI\KeyButton.cs" />
