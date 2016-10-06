@@ -88,10 +88,9 @@ public class Zombie : Personnage
         }
     }
 
-    public override void Attack()
+    public override void OnAttack()
     {
-        base.Attack();
-        print("attack!");
+        base.OnAttack();
 
         int totaldamage;
 

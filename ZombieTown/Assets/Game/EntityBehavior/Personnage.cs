@@ -119,10 +119,10 @@ public class Personnage : MonoBehaviour
     public virtual void AttackState(Personnage target)
     {
         StatesAttack state = (comportement.ChangeState<StatesAttack>() as StatesAttack);
-        state.onLauchingAttack.AddListener(Attack);
+        state.onLauchingAttack.AddListener(OnAttack);
         state.Init(target);
     }
-    public virtual void Attack()
+    public virtual void OnAttack()
     {
 
     }

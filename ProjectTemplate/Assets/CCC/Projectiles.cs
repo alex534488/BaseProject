@@ -4,8 +4,9 @@ using System.Collections.Generic;
 
 public class Projectiles : MonoBehaviour {
 
+    //À retravailler pour rendre encore plus générique et facile d'utilisation
+
     private Vector3 direction;
-    private int damage;
     public float vitesse;
     public LayerMask mask; // Le projectile ne doit pas frapper ceci
     private static List<Projectiles> inactiveProjectiles = new List<Projectiles>();
@@ -13,7 +14,7 @@ public class Projectiles : MonoBehaviour {
     public float timeAlive = 4; // Cooldown
 
     // Fonction appeler par des classes externes pour tirer
-    public static void Shoot(int damage, Vector3 direction, Vector3 position, GameObject projectileprefab)
+    public static void Shoot(Vector3 direction, Vector3 position, GameObject projectileprefab)
     {
         Projectiles launchedProjectiles;
         if (inactiveProjectiles.Count == 0)
@@ -25,12 +26,11 @@ public class Projectiles : MonoBehaviour {
             launchedProjectiles = inactiveProjectiles[0];
             inactiveProjectiles.RemoveAt(0);
         }
-        launchedProjectiles.Init(damage, direction, position);
+        launchedProjectiles.Init(direction, position);
     }
 
-    public void Init(int damage, Vector3 direction, Vector3 position)
+    public void Init(Vector3 direction, Vector3 position)
     {
-        this.damage = damage;
         this.direction = direction;
         transform.rotation = Quaternion.LookRotation(direction, Vector3.up);
         transform.position = position;
