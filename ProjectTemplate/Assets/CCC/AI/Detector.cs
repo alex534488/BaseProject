@@ -77,8 +77,7 @@ public class Detector : SlowBehaviour
             {
                 if (!needEnemyVision || CanSee(personnage.transform))
                 {
-                    enemyList.Add(personnage);
-                    unapprovedUnits.Remove(personnage);
+                    AddTo(unapprovedUnits, enemyList, personnage);
                     i--;
                     onEnemyEnter.Invoke(personnage);
                 }
@@ -88,14 +87,13 @@ public class Detector : SlowBehaviour
             {
                 if (!needAllyVision || CanSee(personnage.transform))
                 {
-                    allyList.Add(personnage);
-                    unapprovedUnits.Remove(personnage);
+                    AddTo(unapprovedUnits, allyList, personnage);
                     i--;
                     onAllyEnter.Invoke(personnage);
                 }
             }
             //N'est ni un allié ni un ennemi, on s'en fou de lui...
-            else unapprovedUnits.Remove(personnage);
+            else Remove(personnage);
         }
 
         //Check enemies
@@ -108,8 +106,7 @@ public class Detector : SlowBehaviour
 
                 if (!CanSee(enemy.transform))
                 {
-                    unapprovedUnits.Add(enemy);
-                    enemyList.Remove(enemy);
+                    AddTo(enemyList,unapprovedUnits,enemy);
                     onEnemyExit.Invoke(enemy);
                     i--;
                 }
@@ -125,8 +122,7 @@ public class Detector : SlowBehaviour
 
                 if (!CanSee(ally.transform))
                 {
-                    unapprovedUnits.Add(ally);
-                    allyList.Remove(ally);
+                    AddTo(allyList,unapprovedUnits, ally);
                     onAllyExit.Invoke(ally);
                     i--;
                 }
@@ -160,7 +156,7 @@ public class Detector : SlowBehaviour
         Personnage personnage = col.GetComponent<Personnage>();
         if (personnage == null) return;
 
-        unapprovedUnits.Add(personnage);
+        AddTo(unapprovedUnits, personnage);
         UpdateUnitLists();
     }
 
@@ -169,17 +165,7 @@ public class Detector : SlowBehaviour
         Personnage personnage = col.GetComponent<Personnage>();
         if (personnage == null) return;
 
-        if (enemyList.Contains(personnage))
-        {
-            enemyList.Remove(personnage);
-            onEnemyExit.Invoke(personnage);
-        }
-        else if (allyList.Contains(personnage))
-        {
-            allyList.Remove(personnage);
-            onAllyExit.Invoke(personnage);
-        }
-        else unapprovedUnits.Remove(personnage);
+        Remove(personnage);
     }
 
     bool IsIn(System.Type type, System.Type[] array)
@@ -192,4 +178,25 @@ public class Detector : SlowBehaviour
         }
         return false;
     }
+
+    void AddTo(List<Personnage> from, List<Personnage> list, Personnage personnage)
+    {
+        from.Remove(personnage);
+        list.Add(personnage);
+    }
+
+    void AddTo(List<Personnage> list, Personnage personnage)
+    {
+        list.Add(personnage);
+        personnage.onDeath.AddListener(Remove);
+    }
+
+    void Remove(Personnage personnage)
+    {
+        personnage.onDeath.RemoveListener(Remove);
+        if (allyList.Remove(personnage)) return;
+        if (enemyList.Remove(personnage)) return;
+        unapprovedUnits.Remove(personnage);
+    }
+
 }

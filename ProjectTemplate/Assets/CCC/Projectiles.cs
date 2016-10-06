@@ -10,7 +10,7 @@ public class Projectiles : MonoBehaviour {
     public LayerMask mask; // Le projectile ne doit pas frapper ceci
     private static List<Projectiles> inactiveProjectiles = new List<Projectiles>();
     private float timer = 0;
-    public float timelapse = 60; // Cooldown
+    public float timeAlive = 4; // Cooldown
 
     // Fonction appeler par des classes externes pour tirer
     public static void Shoot(int damage, Vector3 direction, Vector3 position, GameObject projectileprefab)
@@ -48,14 +48,14 @@ public class Projectiles : MonoBehaviour {
         }
         transform.position += transform.forward * distance;
 
-        if(timer >= timelapse)
+        if(timer >= timeAlive)
         {
             gameObject.SetActive(false);
             inactiveProjectiles.Add(this);
             timer = 0;
         } else
         {
-            timer++;
+            timer += Time.deltaTime;
         }
 	}
 

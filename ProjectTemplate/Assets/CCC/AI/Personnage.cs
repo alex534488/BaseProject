@@ -15,8 +15,8 @@ public class Personnage : MonoBehaviour {
     public Detector detector;
 
     // Attributs
-    public int damage;
-    public int hp;
+    public int damage = 1;
+    public int hp = 10;
 
     // Apparence (Prefab)
     public GameObject sprite;

@@ -9,20 +9,15 @@ public class Character : Personnage
     // ex: public float aurasize;
 
     // Evennements
-    // ex: public UnityEvent onZombieNearby;
+    // ex: public UnityEvent onEnemyNearby;
 
-    // Use this for initialization
     void Start()
     {
-        // Set Variables
-        damage = 1;
-        hp = 1;
-
         // Set Initial Behaviors
         ChangeState<StatesIdle>();
 
         // Setup Entity detector
-        /* Ex: 2D Detector Version
+        /* 2D Detector Version
         if (detector != null)
         {
             System.Type[] enemies =
