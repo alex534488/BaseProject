@@ -6,7 +6,7 @@ using UnityEngine.Events;
 
 public class Empire : IUpdate {
 
-    public int nbVillage;
+    public int nbVillage = 12;
 
     List<Village> listVillage = new List<Village>();
     Capitale capitale;

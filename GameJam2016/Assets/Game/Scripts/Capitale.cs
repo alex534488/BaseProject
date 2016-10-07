@@ -14,9 +14,12 @@ public class Capitale : Village {
     {
         this.empire = empire;
         this.id = id;
+
         or = capitaleOr;
         nourriture = capitaleNourriture;
         army = capitaleArmy;
+
+        lord = new Seigneur(this);
     }
 	
 	public override void Update () // es ce que le override rajoute ou remplace?
