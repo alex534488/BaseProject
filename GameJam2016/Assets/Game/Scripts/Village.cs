@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public abstract class Village :  {
+public abstract class Village : IUpdate {
 
     public int or = 10;
     public int nourriture = 20;
@@ -19,7 +19,7 @@ public abstract class Village :  {
 	    
 	}
 	
-	void Update ()
+	public void Update ()
     {
 	    if(nourriture <= 0)
         {
