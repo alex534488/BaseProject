@@ -15,14 +15,19 @@ public class Barbare : IUpdate
     private int probabiliteSoldat = 50;
     private int probabiliteBarbare = 50;
 
+    private int waitForAttack = 0;
 
     void Start(){}
 
-    public void Update() {}
+    public void Update()
+    {
+
+    }
 
     void AskTarget() // Retourne le village frontiere avec le moins de soldats disponibles
     {
-        actualTarget = theWorld.GiveTarget(); 
+        actualTarget = theWorld.GiveTarget();
+        //actualTarget.BeingAttack(this);
     }
 
     void WaitForAttack(int nbTours) // Attend un certain nombre de tours avant de attaquer
@@ -35,12 +40,10 @@ public class Barbare : IUpdate
     void SpawnEnnemy(int nbUnites)
     {
         nbBarbares = nbBarbares + nbUnites;
-    }
+    } // Ajoute X barbares au force disponible
 
     void TakeDecision()
     {
-        // Recupere le nombre de soldats disponible dans le village
-
         // Si le barbare ne possede pas au moins 1 tiers des unites total disponible, il ne va simplement pas attaquer
         // Exemple 1 : 50 barbares - 100 soldats = 150 unites totales -> 50 sur 150 = 33% -> Attaque
         // Exemple 2 : 30 barbares - 100 soldats = 130 unites totales -> 30 sur 130 = 23% -> Retraite
@@ -64,7 +67,7 @@ public class Barbare : IUpdate
         //                         Si le nombre de soldat ennemi est plus grand que 0, EstAttaque()
         //                         Boucle jusqua ce que un des deux clans perdent
 
-        // nbSoldats = Village.army;
+        nbSoldats = actualTarget.army;
         nbUnites = nbSoldats + nbBarbares;
 
         if (nbBarbares / nbUnites >= 1 / 3)
@@ -75,7 +78,7 @@ public class Barbare : IUpdate
 
         else
             Retraite();
-    }
+    } // Prend la decision de attaquer le village ou non selon les effectifs
 
     void Retraite()
     {
