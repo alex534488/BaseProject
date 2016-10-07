@@ -1,14 +1,25 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Capitale : MonoBehaviour {
+public class Capitale : Village {
 
-	// Use this for initialization
+    public int capitaleOr = 10;
+    public int capitaleNourriture = 20;
+    public int capitaleArmy = 5;
+    public int bonheur = 100;
+
+    public Capitale(Empire empire) : base(empire)
+    {
+        this.empire = empire;
+        or = capitaleOr;
+        nourriture = capitaleNourriture;
+        army = capitaleArmy;
+}
+
 	void Start () {
 	
 	}
 	
-	// Update is called once per frame
 	void Update () {
 	
 	}
