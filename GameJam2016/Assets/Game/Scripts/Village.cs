@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
+using UnityEngine.Events;
 
 public class Village : IUpdate {
     // Identifiant du village
@@ -25,6 +27,7 @@ public class Village : IUpdate {
 
     public Empire empire;
     public Seigneur lord;
+    public Barbare barbares;
 
     public Village(Empire empire, int id)
     {
@@ -54,6 +57,8 @@ public class Village : IUpdate {
 	}
 
     public void DestructionVillage(){ empire.DeleteVillage(this); }
+
+    public void BeingAttack(Barbare attaquant) { isAttacked = true; }
 
     // Fonction modifiant les attributs
 

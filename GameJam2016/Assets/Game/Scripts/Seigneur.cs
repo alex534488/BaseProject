@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
+using UnityEngine.Events;
 
 public class Seigneur : IUpdate {
 
@@ -7,7 +9,7 @@ public class Seigneur : IUpdate {
 
     // Seuil de tolerance permis par le seigneur
     private int seuilNourriture;
-    private int seuilGold;
+    private int seuilGold; // or minimale permis, correspond au coutNourriture de village
     private int seuilArmy;
 
     public Seigneur(Village village)
@@ -15,41 +17,45 @@ public class Seigneur : IUpdate {
         this.village = village;
         seuilNourriture = village.nourrirPopulation;
         seuilGold = village.coutNourriture;
-        //seuilArmy = A determiner; 
+        seuilArmy = 10; 
     }
-
-	void Start ()
-    {
-	
-	}
 	
 	public void Update ()
     {
         if (village.isDestroyed) Death();
+
+        if (village.isAttacked)
+        {
+
+        }
         
         if (village.nourriture < seuilNourriture) NeedFood();
         if (village.or < seuilGold) NeedGold();
-        //if (village.army < seuilArmy) NeedArmy();
+        if (village.army < seuilArmy) NeedArmy(seuilArmy - village.army);
     }
 
     void Death()
     {
         village.DestructionVillage();
-        // this meurt
+        // DO: this meurt
     }
 
     void NeedFood()
     {
-
+        if (village.or < seuilGold) NeedGold();
+        village.or -= village.coutNourriture;
+        village.nourriture += village.nourrirPopulation;
     }
 
     void NeedGold()
     {
-
+        // va voir la capitale pour de l'or
     }
 
-    void NeedArmy()
+    void NeedArmy(int amount)
     {
-
+        if (village.or < village.coutArmy) NeedGold();
+        village.or -= village.coutArmy * amount;
+        village.army += amount;
     }
 }
