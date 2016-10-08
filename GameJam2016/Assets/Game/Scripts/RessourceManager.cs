@@ -2,11 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public enum Ressource_Type
-{
-    gold, food, army, happiness
-}
-
 public class RessourceManager : IUpdate {
 
     private List<Village> listeVillage;
