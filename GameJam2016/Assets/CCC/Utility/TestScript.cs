@@ -4,12 +4,22 @@ using System;
 using CCC.Manager;
 using CCC.Utility;
 
-public class TestScript : SlowBehaviour
+public class TestScript : MonoBehaviour
 {
-    public bool test;
-    protected override void SlowUpdate()
+    
+    public void testVillageMap()
     {
-        base.SlowUpdate();
-        print("hello");
+        Empire emp = new Empire();
+        Capitale cap = new Capitale(emp,12);
+        Village[] tab = new Village[12];
+        for(int i=0;i<12;i++)
+        {
+            tab[i] = new Village(emp,i);
+        }
+
+        VillageMap temp  =new VillageMap(cap, tab);
+        temp.testPrint();
+
     }
+    
 }
