@@ -262,7 +262,7 @@ public class RequestManager : MonoBehaviour
         List<Dialog.Choix> listeChoix = new List<Dialog.Choix>();
         listeChoix.Add(new Dialog.Choix("Des mets exotiques venant des quatre coins du globe ?", delegate () { Empire.instance.capitale.AddFood(8); }));
         listeChoix.Add(new Dialog.Choix("De l'or en grandes quantité ?", delegate () { Empire.instance.capitale.AddGold(16); }));
-        listeChoix.Add(new Dialog.Choix("Des vêtements de soies pour le peuple ?", delegate () { Empire.instance.capitale.bonheur += 8; }));
+        listeChoix.Add(new Dialog.Choix("Des vêtements de soies pour le peuple ?", delegate () { Empire.instance.capitale.AddBonheur(8); }));
         Request request = new Request(listMessage, listeChoix);
         return request;
     }
@@ -274,10 +274,10 @@ public class RequestManager : MonoBehaviour
         listMessage.Add("Lagarefix : Empereur, je viens de revenir d'un petit village gaulois qui résiste encore et toujours à l'envahisseur grâce à la potion magique.");
         listMessage.Add("ls n'ont pas voulu me partager le secret la potion, mais ils mon offert des graines de blé de qualité exceptionnel !");
         List<Dialog.Choix> listeChoix = new List<Dialog.Choix>();
-        listeChoix.Add(new Dialog.Choix("Parfait ! Faite pousser ce blé !", delegate () { Empire.instance.capitale.capitaleNourriture += 1; }));
+        listeChoix.Add(new Dialog.Choix("Parfait ! Faite pousser ce blé !", delegate () { Empire.instance.capitale.productionNourriture += 1; }));
         listeChoix.Add(new Dialog.Choix("C'est intolérable, préparer une armée pour détruire ce village ! Et n'oubliez pas de faire pousser ce blé !"
             , delegate () {
-                 Empire.instance.capitale.DecreaseArmy(6); Empire.instance.capitale.capitaleNourriture += 1;
+                 Empire.instance.capitale.DecreaseArmy(6); Empire.instance.capitale.productionNourriture += 1;
                  listRandomRequest.Remove(potionEvent2); listRandomRequest.Add(PotionEvent3());
             }));
         Request request = new Request(listMessage, listeChoix);
