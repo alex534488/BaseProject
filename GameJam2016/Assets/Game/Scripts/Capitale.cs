@@ -50,13 +50,13 @@ public class Capitale : Village {
 
     }
 
-    void DecreaseBonheur(int amount) { bonheur -= amount; }
+    public void DecreaseBonheur(int amount) { bonheur -= amount; }
 
-    void AddBonheur(int amount) { bonheur += amount; }
+    public void AddBonheur(int amount) { bonheur += amount; }
 
-    void DecreaseChariot(int amount) { nbCharriot -= amount; }
+    public void DecreaseChariot(int amount) { nbCharriot -= amount; }
 
-    void AddChariot(int amount) { nbCharriot += amount; }
+    public void AddChariot(int amount) { nbCharriot += amount; }
 
     public void SendScout()
     {
