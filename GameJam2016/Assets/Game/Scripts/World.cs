@@ -6,11 +6,12 @@ public class World : IUpdate {
 
     public static World main;
     public Empire empire;
+    public BarbareManager barbareManager;
 
-	public void Start ()
+    public List<Barbare> listBarbare = new List<Barbare>();
+
+	void Start ()
     {
-        if (main == null) main = this;
-
         empire = new Empire();
         empire.Start();
     }
@@ -27,7 +28,7 @@ public class World : IUpdate {
 
         foreach (Village leVillage in empire.listVillage)
         {
-            if (leVillage.army <= minimalArmy) // && Village est une frontiere
+            if (leVillage.army <= minimalArmy && leVillage.isFrontier)
             {
                 bestTarget = leVillage;
                 minimalArmy = leVillage.army;

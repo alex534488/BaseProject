@@ -6,6 +6,8 @@ using UnityEngine.Events;
 
 public class Empire : IUpdate {
 
+    public static Empire instance;
+
     public int nbVillage = 12;
 
     List<string> nomvillage = new List<string>{ "BREMA", "GOSLARIA", "TREMONIA", "BRUXELLAE", "HAUNIAE", "HISPALIS", "CHRISTINEA", "LUTETIA", "PARTISCUM", "MONAECUM", "AMSTELODAMUM", "EBURACUM" };
@@ -15,12 +17,16 @@ public class Empire : IUpdate {
     public Capitale capitale;
     public VillageMap map;
 
-    public int valeurNouriture = 1;
-    public int valeurOr = 4;
-    public int valeurSoldat = 8;
+    public int valeurNouriture = 2;
+    public int valeurOr = 1;
+    public int valeurSoldat = 4;
 
 	public void Start ()
     {
+        if (instance == null)
+        {
+            instance = this;
+        }
         for (int i = 0; i < nbVillage; i++)
         {
             listVillage.Add(new Village(this,i, nomvillage[i], nomseigneur[i])); // le village numero 0 correspond a listVillage[0]

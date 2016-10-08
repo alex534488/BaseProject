@@ -23,26 +23,15 @@ public class Village : IUpdate {
     #endregion
 
     #region Valeurs Initiales
-    public int or = 50;
-    public int nourriture = 50;
-    public int army = 10;
-    public int reputation = 10;
-    #endregion
-
-    // Modifier le cout de la nourriture et des armees
-    #region Cout Des Ressources En Or 
-    public int coutNourriture = 25; // pour 15 (peut varier) - correspond au montant exact pour nourrir la population
-    public int costArmy = 15; // pour 1 (peut varier)
-    #endregion
-
-    #region Depense de Nourriture
-    public int nourrirArmy = 0;
-    public int nourrirPopulation = 15;
+    public int or = 10;
+    public int nourriture = 40;
+    public int army = 5;
+    public int reputation = 100;
     #endregion
 
     #region Production 
-    public int productionOr = 2;
-    public int productionNourriture = 1;
+    public int productionOr = 1;
+    public int productionNourriture = 5;
     public int productionArmy = 0;
     #endregion
 
@@ -53,8 +42,8 @@ public class Village : IUpdate {
     #endregion
 
     #region Taxes
-    public int taxeOr = 20;
-    public int taxeNourriture = 10;
+    public int taxeOr = 1;
+    public int taxeNourriture = 5;
     public int taxeArmy = 0;
     #endregion
 
@@ -66,6 +55,11 @@ public class Village : IUpdate {
 
     public int random = 0;
 
+    public int coutNourriture;
+    public int costArmy;
+    public int nourrirArmy;
+
+
     public Village(Empire empire, int id, string nomvillage, string nomseigneur)
     {
         this.empire = empire;
@@ -76,6 +70,8 @@ public class Village : IUpdate {
         int valO = empire.valeurOr;
         int valS = empire.valeurSoldat;
 
+        coutNourriture = empire.valeurNouriture;
+        costArmy = empire.valeurSoldat;
 
         int nbPointProduction = 30;
 
@@ -87,29 +83,24 @@ public class Village : IUpdate {
                 productionArmy += 1;
                 nbPointProduction -= valS;
             }
-            else if (nbPointProduction >= valO && choixRng < 0.3)
-            {
-                productionOr += 1;
-                nbPointProduction -= valO;
-            }
-            else if (nbPointProduction >= valN)
+            else if (nbPointProduction >= valN && choixRng < 0.3)
             {
                 productionNourriture += 1;
                 nbPointProduction -= valN;
             }
+            else if (nbPointProduction >= valO)
+            {
+                productionOr += 1;
+                nbPointProduction -= valO;
+            }
+            
         }
 
-        // Ressource de depart aleatoire
-        AddGold((int)(Random.value * 100));
-        AddFood((int)(Random.value * 100));
-        AddArmy((int)(Random.value * 10));
-        AddReputation((int)(Random.value * 10));
         AddGold(productionOr*4);
         AddFood(productionNourriture*4);
         AddArmy(productionArmy*4);
 
-        // Nouveau random constant pour l'update des ressources
-        random = (int)(Random.value * 100);
+        taxeArmy = productionArmy;
 
         lord = new Seigneur(this);
         this.lord.nom = nomseigneur;
@@ -119,15 +110,20 @@ public class Village : IUpdate {
     {
         random = (int)(Random.value * 100);
 
-        nourrirArmy = 2 * army;
+        nourrirArmy = army;
 
         UpdateResources();
-
-        lord.Update();
 
         UpdateCost();
 
         UpdateTaxes();
+
+        lord.Update();
+
+        if(nourriture<0 || isDestroyed)
+        {
+            DestructionVillage();
+        }    
 	}
 
     #region Attack
@@ -158,23 +154,21 @@ public class Village : IUpdate {
 
     // To do : Change or remove random
     #region Updates 
-    void UpdateResources()
+    protected void UpdateResources()
     {
-        // Ajout de resources aleatoire
-        if (productionOr > 0) AddGold(productionOr * random);
-        if (productionOr < 0) DecreaseGold(productionOr * random);
-
-        if (productionNourriture > 0) AddFood(productionNourriture * random);
-        if (productionNourriture < 0) DecreaseFood(productionNourriture * random);
+        or += productionOr;
+        nourriture += productionNourriture;
+        army += productionArmy;
+       
     } // To do : Change or remove random
 
-    void UpdateCost() // To do : Change or remove random
+    protected void UpdateCost() // To do : Change or remove random
     {
-        if (nourrirPopulation < 0) AddFood(nourrirPopulation * random);
-        if (nourrirPopulation > 0) DecreaseFood(nourrirArmy * random + nourrirPopulation * random);
+        nourriture -= army;
     }
 
-    void UpdateTaxes()
+    //Paid Taxes
+    protected void UpdateTaxes()
     {
         Transfer(this, empire.capitale, Ressource_Type.gold, taxeOr);
         Transfer(this, empire.capitale, Ressource_Type.food, taxeNourriture);
