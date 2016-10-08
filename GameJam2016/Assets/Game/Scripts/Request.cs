@@ -44,6 +44,6 @@ public class Request {
 
     public void DoRequest()
     {
-        Dialog.DisplayText(message,choix);
+        Dialog.DisplayText(message, choix,RequestManager.DoNextRequest);
     }
 }

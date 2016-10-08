@@ -25,8 +25,6 @@ public class RequestManager : MonoBehaviour {
         GetRandomRequest(10);
 
         listRequest[0].DoRequest();
-        listRequest.Remove(listRequest[0]);
-        //Dialog.
     }
 
     public static void SendRequest(Request request)
@@ -43,6 +41,7 @@ public class RequestManager : MonoBehaviour {
         */
     }
 
+
     void GetRandomRequest(int amount)
     {
         for (int i = 0; i < amount; i++)
@@ -53,10 +52,10 @@ public class RequestManager : MonoBehaviour {
         }
     }
 
-    void DoNextRequest()
+    public static void DoNextRequest()
     {
-        listRequest[0].DoRequest();
-        listRequest.Remove(listRequest[0]);
+        requestManager.listRequest.Remove(requestManager.listRequest[0]);
+        requestManager.listRequest[0].DoRequest();
     }
 
     void CreateRandomRequest()
