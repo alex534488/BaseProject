@@ -15,9 +15,9 @@ public class Empire : IUpdate {
     public Capitale capitale;
     public VillageMap map;
 
-    public int valeurNouriture = 1;
-    public int valeurOr = 4;
-    public int valeurSoldat = 8;
+    public int valeurNouriture = 2;
+    public int valeurOr = 1;
+    public int valeurSoldat = 4;
 
 	public void Start ()
     {

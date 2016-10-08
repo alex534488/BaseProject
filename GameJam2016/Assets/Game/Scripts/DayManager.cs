@@ -33,7 +33,7 @@ public class DayManager : MonoBehaviour{
     public void LaunchedDay()
     {
         nbJour++;
-        currentday.GetComponentInChildren<Text>().text = "Jour " + nbJour;
+        if(currentday != null)currentday.GetComponentInChildren<Text>().text = "Jour " + nbJour;
 
         theWorld.Update(); // Update le monde
         
