@@ -1,24 +1,27 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class DayManager : IUpdate {
+public class DayManager : MonoBehaviour{
 
     public World theWorld;
+    public RequestManager requestManager;
 
-	// Use this for initialization
 	void Start ()
     {
-	
+        requestManager.Start();
 	}
 	
-	// Update is called once per frame
 	public void Update ()
     {
-
-
-        theWorld.Update();
-
+        requestManager.onWaitingForRequest.Invoke();
+        
+        // Display Bouton Next Day
 	}
+
+    public void NextDay()
+    {
+        theWorld.Update();
+    }
 
 
 
