@@ -77,7 +77,7 @@ public class Capitale : Village {
 
         foreach (Village village in empire.listVillage)
         {
-            foreach(Barbare barbare in theWorld.listBarbare)
+            foreach(Barbare barbare in theWorld.barbareManager.listeBarbare)
             {
                 if ((barbare.actualTarget == village) && village.barbares.nbBarbares > village.army)
                 {

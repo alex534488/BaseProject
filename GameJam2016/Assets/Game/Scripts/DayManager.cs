@@ -62,7 +62,7 @@ public class DayManager : MonoBehaviour{
 
     void ButtonScout()
     {
-        theWorld.empire.capitale.SendScout();
+        theWorld.empire.capitale.SendScout(theWorld);
     }
 
     void Test()

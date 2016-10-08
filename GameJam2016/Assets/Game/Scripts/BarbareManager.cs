@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class BarbareManager : MonoBehaviour {
 
-    List<Barbare> listeBarbare = new List<Barbare>();
+    public List<Barbare> listeBarbare = new List<Barbare>();
 
     public void Initialize()
     {
