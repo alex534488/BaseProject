@@ -10,6 +10,7 @@ public class World : IUpdate {
 
 	public void Start ()
     {
+        main = this;
         empire = new Empire();
         empire.Start();
     }

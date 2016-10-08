@@ -11,7 +11,7 @@ public enum Ressource_Type
 public struct Ligne
 {
     public int total;
-    public int production;
+    public int profit;
     public int taxe;
 }
 
@@ -23,14 +23,14 @@ public class Village : IUpdate {
     #endregion
 
     #region Valeurs Initiales
-    public int or = 10;
-    public int nourriture = 40;
+    public int or = 20;
+    public int nourriture = 10;
     public int army = 5;
     public int reputation = 100;
     #endregion
 
     #region Production 
-    public int productionOr = 1;
+    public int productionOr = 10;
     public int productionNourriture = 5;
     public int productionArmy = 0;
     #endregion
@@ -39,12 +39,6 @@ public class Village : IUpdate {
     public bool isAttacked = false;
     public bool isDestroyed = false;
     public bool isFrontier = false;
-    #endregion
-
-    #region Taxes
-    public int taxeOr = 1;
-    public int taxeNourriture = 5;
-    public int taxeArmy = 0;
     #endregion
 
     #region Classes
@@ -78,12 +72,8 @@ public class Village : IUpdate {
         while(nbPointProduction >0)
         {
             float choixRng = Random.value;
-            if(nbPointProduction>= valS && choixRng<0.1)
-            {
-                productionArmy += 1;
-                nbPointProduction -= valS;
-            }
-            else if (nbPointProduction >= valN && choixRng < 0.3)
+
+            if (nbPointProduction >= valN && choixRng < 0.3)
             {
                 productionNourriture += 1;
                 nbPointProduction -= valN;
@@ -100,8 +90,6 @@ public class Village : IUpdate {
         AddFood(productionNourriture*4);
         AddArmy(productionArmy*4);
 
-        taxeArmy = productionArmy;
-
         lord = new Seigneur(this);
         this.lord.nom = nomseigneur;
     }
@@ -115,8 +103,6 @@ public class Village : IUpdate {
         UpdateResources();
 
         UpdateCost();
-
-        UpdateTaxes();
 
         lord.Update();
 
@@ -166,14 +152,7 @@ public class Village : IUpdate {
     {
         nourriture -= army;
     }
-
-    //Paid Taxes
-    protected void UpdateTaxes()
-    {
-        Transfer(this, empire.capitale, Ressource_Type.gold, taxeOr);
-        Transfer(this, empire.capitale, Ressource_Type.food, taxeNourriture);
-        Transfer(this, empire.capitale, Ressource_Type.army, taxeArmy);
-    }
+    
     #endregion 
 
     #region Interaction avec UI
@@ -233,74 +212,33 @@ public class Village : IUpdate {
         }
     }
 
-    public Ligne GetInfos(Ressource_Type ressource)
+    public int GetBilan(Ressource_Type type)
     {
-        switch (ressource)
+        switch (type)
         {
-            case Ressource_Type.gold:
-                {
-                    Ligne uneLigne = new Ligne();
-
-                    uneLigne.total = or;
-                    uneLigne.production = productionOr;
-                    uneLigne.taxe = taxeOr;
-
-                    return uneLigne;
-                }
-
-            case Ressource_Type.food:
-                {
-                    Ligne uneLigne = new Ligne();
-
-                    uneLigne.total = nourriture;
-                    uneLigne.production = productionNourriture;
-                    uneLigne.taxe = taxeNourriture;
-
-                    return uneLigne;
-                }
-
             default:
+                return 0;
             case Ressource_Type.army:
-                {
-                    Ligne uneLigne = new Ligne();
-
-                    uneLigne.total = army;
-                    uneLigne.production = productionArmy;
-                    uneLigne.taxe = taxeArmy;
-
-                    return uneLigne;
-                }  
-        }   
-
-    }
-
-    public int ModifyTaxe(Ressource_Type ressource, int amount)
-    {
-        switch(ressource)
-        {
-            case Ressource_Type.gold:
-                {
-                    // if (taxeOr > 0)
-                        taxeOr = taxeOr + amount;
-                    return taxeOr;
-                }
-
+                return productionArmy;
             case Ressource_Type.food:
-                {
-                    // if (taxeNourriture > 0)
-                        taxeNourriture = taxeNourriture + amount;
-                    return taxeNourriture;
-                }
-
-            default:
-            case Ressource_Type.army:
-                {
-                    // if (taxeArmy > 0)
-                        taxeArmy= taxeArmy + amount;
-                    return taxeArmy;
-                }
+                return (army * nourrirArmy) - productionNourriture;
+            case Ressource_Type.gold:
+                return productionOr;
         }
-           
+    }
+    public int GetTotal(Ressource_Type type)
+    {
+        switch (type)
+        {
+            default:
+                return 0;
+            case Ressource_Type.army:
+                return army;
+            case Ressource_Type.food:
+                return nourriture;
+            case Ressource_Type.gold:
+                return or;
+        }
     }
 
     #endregion
