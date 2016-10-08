@@ -53,7 +53,7 @@ public class Seigneur : IUpdate {
         int foodneeded = village.nourrirPopulation + village.nourrirArmy;
         int goldneed = seuilGold*Mathf.RoundToInt(foodneeded/village.coutNourriture);
 
-        GoAskEmperor("Nourriture", foodneeded);
+        GoAskEmperor(Ressource_Type.food, foodneeded);
 
         if (village.or < goldneed) NeedGold(goldneed);
         village.or -= goldneed;
@@ -64,29 +64,32 @@ public class Seigneur : IUpdate {
     {
         if (!alreadyAsk)
         {
-            GoAskEmperor("Or", -1);
+            GoAskEmperor(Ressource_Type.gold, -1);
         }
     }
 
     void NeedArmy(int amount)
     {
-        GoAskEmperor("Army", amount);
+        GoAskEmperor(Ressource_Type.army, amount);
 
         if (village.or < village.costArmy) NeedGold(village.costArmy);
         village.or -= village.costArmy * amount;
         village.army += amount;
     }
 
-    void GoAskEmperor(string resource, int amount)
+    void GoAskEmperor(Ressource_Type resource, int amount)
     {
         switch (resource)
         {
-            case "Nourriture":
-                // envoie un messager a l'emperor pour lui signaler qu'il a besoin de bouffes
-            case "Or":
-                // envoie un messager a l'emperor pour lui signaler qu'il a besoin d'or
-            case "Army":
-                // envoie un messager a l'emperor pour lui signaler qu'il a besoin d'argent
+            case Ressource_Type.gold:
+                RequestManager.SendRequest(new Request(resource,amount));
+                return;
+            case Ressource_Type.food:
+                RequestManager.SendRequest(new Request(resource, amount));
+                return;
+            case Ressource_Type.army:
+                RequestManager.SendRequest(new Request(resource, amount));
+                return;
             default:
                 return;
         }

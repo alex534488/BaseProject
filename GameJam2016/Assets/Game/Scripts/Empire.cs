@@ -32,6 +32,7 @@ public class Empire : IUpdate {
         {
             village.Update();
         }
+        capitale.Update();
     }
 
     public void DeleteVillage(Village destroyedVillage)
