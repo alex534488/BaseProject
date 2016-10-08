@@ -58,7 +58,7 @@ public class Village : IUpdate {
 
     public void DestructionVillage(){ empire.DeleteVillage(this); }
 
-    public void BeingAttack(Barbare attaquant) { isAttacked = true; }
+    public void BeingAttack(Barbare attaquant) { isAttacked = true; barbares = attaquant; }
 
     // Fonction modifiant les attributs
 
