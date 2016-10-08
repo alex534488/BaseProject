@@ -3,7 +3,6 @@ using System.Collections;
 
 public class Barbare : IUpdate
 {
-
     public World theWorld;
     private Village actualTarget;
     private bool batailleEnCours = false;
@@ -21,20 +20,22 @@ public class Barbare : IUpdate
 
     public void Update()
     {
+        SpawnEnnemy(2);
 
+        if (actualTarget != null)
+        {
+            waitForAttack = waitForAttack - 1;
+
+            if (waitForAttack <= 0)
+                TakeDecision();
+        }
     }
 
     void AskTarget() // Retourne le village frontiere avec le moins de soldats disponibles
     {
         actualTarget = theWorld.GiveTarget();
-        //actualTarget.BeingAttack(this);
-    }
-
-    void WaitForAttack(int nbTours) // Attend un certain nombre de tours avant de attaquer
-    {
-        // Ajoute un Listener sur la fonction de fin de tour
-        // Chaque fois que elle se declenche, decroit le compteur de 1
-        TakeDecision(); // Appelle la fonction TakeDecision qui determinera si les barbares attaqueront le village;
+        actualTarget.BeingAttack(this);
+        WaitForAttack(5);
     }
 
     void SpawnEnnemy(int nbUnites)
@@ -42,8 +43,25 @@ public class Barbare : IUpdate
         nbBarbares = nbBarbares + nbUnites;
     } // Ajoute X barbares au force disponible
 
+    void WaitForAttack(int nbTours)
+    {
+        waitForAttack = nbTours;
+    } // Initialise le nombre de tour avant que les barbares passent a lattaque
+
     void TakeDecision()
     {
+        nbSoldats = actualTarget.army;
+        nbUnites = nbSoldats + nbBarbares;
+
+        if (nbBarbares / nbUnites >= 1 / 3)
+        {
+            CalculProbabilite();
+            Bataille();
+        }
+
+        else
+            Retraite();
+
         // Si le barbare ne possede pas au moins 1 tiers des unites total disponible, il ne va simplement pas attaquer
         // Exemple 1 : 50 barbares - 100 soldats = 150 unites totales -> 50 sur 150 = 33% -> Attaque
         // Exemple 2 : 30 barbares - 100 soldats = 130 unites totales -> 30 sur 130 = 23% -> Retraite
@@ -67,24 +85,14 @@ public class Barbare : IUpdate
         //                         Si le nombre de soldat ennemi est plus grand que 0, EstAttaque()
         //                         Boucle jusqua ce que un des deux clans perdent
 
-        nbSoldats = actualTarget.army;
-        nbUnites = nbSoldats + nbBarbares;
 
-        if (nbBarbares / nbUnites >= 1 / 3)
-        {
-            CalculProbabilite();
-            Bataille();
-        }
-
-        else
-            Retraite();
     } // Prend la decision de attaquer le village ou non selon les effectifs
 
     void Retraite()
     {
         // Definit un nouveau village cible. Il peut s'agir du même village sans aucun problème.
         AskTarget(); 
-    }
+    } // Lorsque les barbares decident de ne pas attaquer le village en question
 
     void AttaqueBarbare()
     {
@@ -94,9 +102,9 @@ public class Barbare : IUpdate
 
         if (probabiliteBarbare >= randomNumber)
             nbSoldats = nbSoldats - 1;
-    }
+    } // Lorsque une unite barbare attaque
 
-    void AttaqueSoldat()
+    void AttaqueSoldat() // Lorsque une unite soldat attaque
     {
         float randomNumber;
 
@@ -104,7 +112,7 @@ public class Barbare : IUpdate
 
         if (probabiliteSoldat >= randomNumber)
             nbBarbares = nbBarbares - 1;
-    }
+    } 
 
     void CalculProbabilite()
     {
@@ -122,7 +130,7 @@ public class Barbare : IUpdate
             probabiliteSoldat= pourcentageSoldat - pourcentageBarbare + 50;
             probabiliteBarbare = 50;
         }
-    }
+    } // Determine la probabilite des barbares et des soldats concernant leur capacite a tuer une unite ennemie
 
     void VictoireBarbare() // TO DO : Effet de la victoire des barbares
     {
@@ -150,6 +158,6 @@ public class Barbare : IUpdate
 
         if (batailleEnCours == true)
             Bataille();
-    }
+    } // Boucle qui se termine lorsque un des deux clans ne possedent plus de unites
 
 }
