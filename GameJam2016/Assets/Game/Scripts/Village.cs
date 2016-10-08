@@ -45,22 +45,25 @@ public class Village : IUpdate {
     public int productionArmy = 0;
     #endregion
 
-    public int random = 0;
-
-    // Conditions
+    #region Conditions
     public bool isAttacked = false;
     public bool isDestroyed = false;
     public bool isFrontier = false;
+    #endregion
 
-    // Taxes
+    #region Taxes
     public int taxeOr = 20;
     public int taxeNourriture = 10;
     public int taxeArmy = 0;
+    #endregion
 
-    // Classes
+    #region Classes
     public Empire empire;
     public Seigneur lord;
     public Barbare barbares;
+    #endregion
+
+    public int random = 0;
 
     public Village(Empire empire, int id, string nomvillage, string nomseigneur)
     {
@@ -91,14 +94,19 @@ public class Village : IUpdate {
         lord.Update();
 
         UpdateCost();
+
+        UpdateTaxes();
 	}
 
+    #region Attack
     public void DestructionVillage(){ empire.DeleteVillage(this); }
 
     public void BeingAttack(Barbare attaquant) { isAttacked = true; barbares = attaquant; }
 
-    // Fonction modifiant les attributs
+    public void OnBecomesFrontier() { isFrontier = true; }
+    #endregion
 
+    #region Fonctions modifiant les attributs
     void DecreaseGold(int amount){ or -= amount; }
 
     void AddGold(int amount){ or += amount; }
@@ -110,7 +118,10 @@ public class Village : IUpdate {
     void DecreaseArmy(int amount){ army -= amount; }
 
     void AddArmy(int amount){ army += amount; }
+    #endregion
 
+    // To do : Change or remove random
+    #region Updates 
     void UpdateResources()
     {
         // Ajout de resources aleatoire
@@ -121,17 +132,19 @@ public class Village : IUpdate {
         if (productionNourriture < 0) DecreaseFood(productionNourriture * random);
     } // To do : Change or remove random
 
-    void UpdateCost()
+    void UpdateCost() // To do : Change or remove random
     {
-        Transfer(this, empire.capitale, Ressource_Type.gold, taxeOr);
-        Transfer(this, empire.capitale, Ressource_Type.food, taxeNourriture);
-        Transfer(this, empire.capitale, Ressource_Type.army, taxeArmy);
-
         if (nourrirPopulation < 0) AddFood(nourrirPopulation * random);
         if (nourrirPopulation > 0) DecreaseFood(nourrirArmy * random + nourrirPopulation * random);
     }
 
-    public void OnBecomesFrontier() { isFrontier = true; }
+    void UpdateTaxes()
+    {
+        Transfer(this, empire.capitale, Ressource_Type.gold, taxeOr);
+        Transfer(this, empire.capitale, Ressource_Type.food, taxeNourriture);
+        Transfer(this, empire.capitale, Ressource_Type.army, taxeArmy);
+    }
+    #endregion 
 
     #region Interaction avec UI
     public static void Transfer(Village source, Village destinataire, Ressource_Type ressource, int amount)
@@ -258,5 +271,4 @@ public class Village : IUpdate {
     }
 
     #endregion
-
 }
