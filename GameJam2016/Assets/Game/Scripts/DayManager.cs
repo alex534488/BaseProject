@@ -7,6 +7,7 @@ public class DayManager : MonoBehaviour{
     public static DayManager main;
 
     public Button nextDayButton;
+    public Button currentday;
     public World theWorld;
     public RequestManager requestManager;
 
@@ -22,13 +23,13 @@ public class DayManager : MonoBehaviour{
         // INTRODUCTION
 
         requestManager.OnCompletionOfRequests.AddListener(OnAllRequestComplete);
-        nextDayButton.onClick.AddListener(NextDay);
+        nextDayButton.onClick.AddListener(LaunchedDay);
     }
 
-    public void NextDay()
+    public void LaunchedDay()
     {
         nbJour++;
-        print("JOUR " + nbJour);
+        if(currentday != null)currentday.GetComponentInChildren<Text>().text = "Jour " + nbJour;
 
         theWorld.Update(); // Update le monde
         
@@ -37,7 +38,6 @@ public class DayManager : MonoBehaviour{
 
         // Debute la phase des requetes
         PhaseRequete(); 
-
     }
 
     public void PhaseRequete()

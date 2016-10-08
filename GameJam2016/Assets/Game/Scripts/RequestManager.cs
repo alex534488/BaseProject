@@ -168,6 +168,7 @@ public class RequestManager : MonoBehaviour
 
 
         ///////////////////////////////////////////////////////////////////
+
         listMessage = new List<string>();
         listMessage.Add("Amenophis : Empereur, je suis marchand en quête de financement pour ma prochaine expéditions.");
         listMessage.Add("J'aurai besoin de vivre ou de marins pour pouvoir lancer un expédition commerciale.");
@@ -177,7 +178,7 @@ public class RequestManager : MonoBehaviour
         listeChoix.Add(new Dialog.Choix("Je vous offre les marins nécessaires à votre expédition !", delegate () { }));
         listeChoix.Add(new Dialog.Choix("Malheureusement je ne peux fiancer votre expédition pour le moment.", delegate () { }));
         request = new Request(listMessage, listeChoix);
-        listRequest.Add(request);
+        listRandomRequest.Add(request);
 
 
 
@@ -191,7 +192,7 @@ public class RequestManager : MonoBehaviour
         listeChoix.Add(new Dialog.Choix("Intéressante proposition. Prévenez vos ''amis'', j'accepte leur offre.", delegate () { }));
         listeChoix.Add(new Dialog.Choix("Jamais l'armée romaine n'acceptera des mercenaires sans loyauté en son sein. ", delegate () { }));
         request = new Request(listMessage, listeChoix);
-        listRequest.Add(request);
+        listRandomRequest.Add(request);
 
 
         ///////////////////////////////////////////////////////////////////
@@ -204,7 +205,7 @@ public class RequestManager : MonoBehaviour
         listeChoix.Add(new Dialog.Choix("Bien sur, voici des financements qui devrait vous aider dans cette quête.", delegate () { }));
         listeChoix.Add(new Dialog.Choix("Cette potion magique ne peut être ! Abandonnez vos recherches !", delegate () { }));
         request = new Request(listMessage, listeChoix);
-        listRequest.Add(request);
+        listRandomRequest.Add(request);
 
 
         ///////////////////////////////////////////////////////////////////
@@ -217,7 +218,7 @@ public class RequestManager : MonoBehaviour
         listeChoix.Add(new Dialog.Choix("Achetez-lui des mets exotiques pour la population.", delegate () { }));
         listeChoix.Add(new Dialog.Choix("Nous n'avons rien à lui acheter.", delegate () { }));
         request = new Request(listMessage, listeChoix);
-        listRequest.Add(request);
+        listRandomRequest.Add(request);
 
 
         ///////////////////////////////////////////////////////////////////
@@ -230,7 +231,7 @@ public class RequestManager : MonoBehaviour
         listeChoix.Add(new Dialog.Choix("Vendez-lui la moitié de nos resserve !", delegate () { }));
         listeChoix.Add(new Dialog.Choix("Dite lui que Rome à besoins de cette nourriture.", delegate () { }));
         request = new Request(listMessage, listeChoix);
-        listRequest.Add(request);
+        listRandomRequest.Add(request);
 
 
         ///////////////////////////////////////////////////////////////////
@@ -243,12 +244,10 @@ public class RequestManager : MonoBehaviour
         listeChoix.Add(new Dialog.Choix("Je suis certain que la population sera ravie de participer à des travaux forcés dans une nouvelle mine !", delegate () { }));
         listeChoix.Add(new Dialog.Choix("Les barbares sont aux portes de l'empire et vous vous voulez creuser des trous ? Non !", delegate () { }));
         request = new Request(listMessage, listeChoix);
-        listRequest.Add(request);
+        listRandomRequest.Add(request);
 
 
         ///////////////////////////////////////////////////////////////////
-
-
 
     }
 }

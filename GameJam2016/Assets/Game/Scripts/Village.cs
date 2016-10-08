@@ -96,6 +96,7 @@ public class Village : IUpdate {
             }
             
         }
+
         AddGold(productionOr*4);
         AddFood(productionNourriture*4);
         AddArmy(productionArmy*4);
@@ -135,21 +136,21 @@ public class Village : IUpdate {
     #endregion
 
     #region Fonctions modifiant les attributs
-    void DecreaseGold(int amount){ or -= amount; }
+    public void DecreaseGold(int amount){ or -= amount; }
 
-    void AddGold(int amount){ or += amount; }
+    public void AddGold(int amount){ or += amount; }
 
-    void DecreaseFood(int amount){ nourriture -= amount; }
+    public void DecreaseFood(int amount){ nourriture -= amount; }
 
-    void AddFood(int amount){ nourriture += amount; }
+    public void AddFood(int amount){ nourriture += amount; }
 
-    void DecreaseArmy(int amount){ army -= amount; }
+    public void DecreaseArmy(int amount){ army -= amount; }
 
-    void AddArmy(int amount){ army += amount; }
+    public void AddArmy(int amount){ army += amount; }
 
-    void DecreaseReputation(int amount) { army -= amount; }
+    public void DecreaseReputation(int amount) { army -= amount; }
 
-    void AddReputation(int amount) { army += amount; }
+    public void AddReputation(int amount) { army += amount; }
     #endregion
 
     // To do : Change or remove random
