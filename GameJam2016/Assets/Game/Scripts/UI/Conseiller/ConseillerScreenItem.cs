@@ -9,13 +9,15 @@ public class ConseillerScreenItem : MonoBehaviour
     public Color negativeColor = Color.red;
     public Color positiveColor = Color.green;
     public Text cityName;
-    public Button upButton;
-    public Button downButton;
+    public SliderColor slider; 
+    [Header("Buttons")]
+    public ToggleGameObject sendPanel;
+    public Button sendButton;
+    public InputField sendField;
+    public Button requestButton;
     [Header("Texts")]
     public Text totalText;
     public Text prodText;
-    public Text taxeText;
-    public Text bilanText;
 
 
     Village village;
@@ -25,8 +27,8 @@ public class ConseillerScreenItem : MonoBehaviour
 
     void Awake()
     {
-        upButton.onClick.AddListener(OnUpClick);
-        downButton.onClick.AddListener(OnDownClick);
+        sendButton.onClick.AddListener(OnSendClick);
+        requestButton.onClick.AddListener(OnRequestClick);
     }
 
     public void Display(Village village, Ressource_Type type)
@@ -36,29 +38,34 @@ public class ConseillerScreenItem : MonoBehaviour
 
         cityName.text = village.nom;
 
-        ligne = village.GetInfos(type);
-
-        UpdateTexts();
+        UpdateDisplay();
     }
 
-    void UpdateTexts()
+    void UpdateDisplay()
     {
+        ligne = village.GetInfos(type);
+
+        
         totalText.text = "" + ligne.total;
+        print("change prod amount ! + slider color");
+        //slider.UpdateSlider(reputation);
         prodText.text = "" + ligne.production;
-        taxeText.text = "" + ligne.taxe;
-        bilanText.text = "" + (ligne.production - ligne.taxe);
         bg.color = (ligne.production - ligne.taxe > 0) ? positiveColor : negativeColor;
     }
 
-    void OnUpClick()
+    void OnSendClick()
     {
-        ligne.taxe = village.ModifyTaxe(type, 1);
-        UpdateTexts();
+        print("send cariage");
+        //SendCarriage
+        int sendAmount = System.Convert.ToInt32(sendField.text);
+        UpdateDisplay();
+        sendPanel.ToggleActive();
     }
 
-    void OnDownClick()
+    void OnRequestClick()
     {
-        ligne.taxe = village.ModifyTaxe(type, -1);
-        UpdateTexts();
+        print("request cariage");
+        //SendCarriage
+        UpdateDisplay();
     }
 }
