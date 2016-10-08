@@ -71,10 +71,37 @@ public class Village : IUpdate {
         this.id = id;
         this.nom = nomvillage;
 
+        int valN = empire.valeurNouriture;
+        int valO = empire.valeurOr;
+        int valS = empire.valeurSoldat;
+
+
+        int nbPointProduction = 30;
+
+        while(nbPointProduction >0)
+        {
+            float choixRng = Random.value;
+            if(nbPointProduction>= valS && choixRng<0.1)
+            {
+                productionArmy += 1;
+                nbPointProduction -= valS;
+            }
+            else if (nbPointProduction >= valO && choixRng < 0.3)
+            {
+                productionOr += 1;
+                nbPointProduction -= valO;
+            }
+            else if (nbPointProduction >= valN)
+            {
+                productionNourriture += 1;
+                nbPointProduction -= valN;
+            }
+        }
+
         // Ressource de depart aleatoire
-        AddGold((int)(Random.value * 100));
-        AddFood((int)(Random.value * 100));
-        AddArmy((int)(Random.value * 10));
+        AddGold(productionOr*4);
+        AddFood(productionNourriture*4);
+        AddArmy(productionArmy*4);
 
         // Nouveau random constant pour l'update des ressources
         random = (int)(Random.value * 100);
