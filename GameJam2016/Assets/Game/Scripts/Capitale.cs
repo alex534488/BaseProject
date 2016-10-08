@@ -33,7 +33,21 @@ public class Capitale : Village {
 	
 	public override void Update () // es ce que le override rajoute ou remplace?
     {
-        base.Update();
+
+
+        if (nourriture < 0 || bonheur < 0 || isDestroyed)
+        {
+            DestructionVillage();
+        }
+        nourrirArmy = army;
+
+        UpdateResources();
+
+        UpdateCost();
+
+        UpdateTaxes();
+
+
     }
 
     void DecreaseBonheur(int amount) { bonheur -= amount; }

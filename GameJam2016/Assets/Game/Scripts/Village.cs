@@ -154,7 +154,7 @@ public class Village : IUpdate {
 
     // To do : Change or remove random
     #region Updates 
-    void UpdateResources()
+    protected void UpdateResources()
     {
         or += productionOr;
         nourriture += productionNourriture;
@@ -162,13 +162,13 @@ public class Village : IUpdate {
        
     } // To do : Change or remove random
 
-    void UpdateCost() // To do : Change or remove random
+    protected void UpdateCost() // To do : Change or remove random
     {
         nourriture -= army;
     }
 
     //Paid Taxes
-    void UpdateTaxes()
+    protected void UpdateTaxes()
     {
         Transfer(this, empire.capitale, Ressource_Type.gold, taxeOr);
         Transfer(this, empire.capitale, Ressource_Type.food, taxeNourriture);
