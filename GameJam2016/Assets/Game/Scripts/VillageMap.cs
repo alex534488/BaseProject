@@ -30,9 +30,31 @@ public class VillageMap {
             return false;
         }
 
+        public int nbConnection()
+        {
+            int i = 0;
+            if(connection[(int)direction.East]!=null)
+            {
+                i++;
+            }
+            if (connection[(int)direction.West] != null)
+            {
+                i++;
+            }
+            if (connection[(int)direction.South] != null)
+            {
+                i++;
+            }
+            if (connection[(int)direction.North] != null)
+            {
+                i++;
+            }
+            return i;
+        }
+
         public void addConnection(Noeud voisin, direction dir)
         {
-            if (connection[(int)dir] != null)
+            if (connection[(int)dir] == null)
             {
                 connection[(int)dir] = voisin;
             }
@@ -47,16 +69,16 @@ public class VillageMap {
                 switch (dir)
                 {
                     case direction.East:
-                        connection[(int)dir].suppConnection(direction.West);
+                        temp.suppConnection(direction.West);
                         break;
                     case direction.West:
-                        connection[(int)dir].suppConnection(direction.East);
+                        temp.suppConnection(direction.East);
                         break;
                     case direction.North:
-                        connection[(int)dir].suppConnection(direction.South);
+                        temp.suppConnection(direction.South);
                         break;
                     case direction.South:
-                        connection[(int)dir].suppConnection(direction.North);
+                        temp.suppConnection(direction.North);
                         break;
                 }
             }
@@ -157,6 +179,25 @@ public class VillageMap {
         return ret;
     }
 
+    public void removeVillage(Village villageIn)
+    {
+        for(int x=0;x<mapSize;x++)
+        {
+            for(int y = 0;y<mapSize;y++)
+            {
+                if(map[x][y]!=null && map[x][y].getVillage()==villageIn)
+                {
+                    map[x][y].suppConnection(direction.North);
+                    map[x][y].suppConnection(direction.South);
+                    map[x][y].suppConnection(direction.East);
+                    map[x][y].suppConnection(direction.West);
+                    map[x][y] = null;
+                    allVillage.Remove(villageIn);
+                }
+            }
+        }
+    }
+
     public void testPrint()
     {
         for(int x=0;x<mapSize;x++)
@@ -166,7 +207,7 @@ public class VillageMap {
             {
                 if(map[x][y]!=null)
                 {
-                    tempStr += map[x][y].getVillage().army;
+                    tempStr += map[x][y].nbConnection();
                 }
                 else
                 {
