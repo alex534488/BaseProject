@@ -1,18 +1,30 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class Barbare : IUpdate
 {
     public World theWorld;
-    private Village actualTarget;
+    public float facteur = 1.2f;
+    public int delay = 5;
+
+    private Village nextTarget = null;
+    public Village actualTarget = null;
 
     private bool batailleEnCours = false;
     private int waitForAttack = 0;
 
     #region Nombre de units
-    public int nbBarbares;
-    private int nbSoldats;
-    private int nbUnites;
+    public int nbBarbares = 0;
+
+    private int nbUnites = 0;
+
+    private int totalBarbare = 0;
+    private int totalSoldats = 0;
+
+    private int barbareRestant = 0;
+    private int soldatRestant = 0;
+
     public int spawnRate = 1;
     #endregion
 
@@ -23,7 +35,7 @@ public class Barbare : IUpdate
 
     void Start(){}
 
-    public void Update()
+    public void Update() 
     {
         if (actualTarget != null)
         {
@@ -34,38 +46,75 @@ public class Barbare : IUpdate
         }
 
         else
+        {
             SpawnEnnemy(spawnRate);
+            AmIStrongEnough();
+        }
+
     }
 
     #region Gestion
 
     void AskTarget() // Retourne le village frontiere avec le moins de soldats disponibles
     {
-        actualTarget = theWorld.GiveTarget();
-        actualTarget.BeingAttack(this);
-        WaitForAttack(5);
+        nextTarget = theWorld.GiveTarget();
+
+        AmIStrongEnough();
     }
 
-    void SpawnEnnemy(int nbUnites)
+    void AmIStrongEnough()
+    {
+        if (nbBarbares >= nextTarget.army * facteur)
+        {
+            actualTarget = nextTarget;
+            actualTarget.BeingAttack(this);
+            WaitForAttack(delay);
+        }
+    }
+
+    void SpawnEnnemy(int nbUnites) // Ajoute X barbares au force disponible 
     {
         nbBarbares = nbBarbares + nbUnites;
-    } // Ajoute X barbares au force disponible
+    } 
 
-    void WaitForAttack(int nbTours)
+    void WaitForAttack(int nbTours) // Initialise le nombre de tour avant que les barbares passent a lattaque 
     {
         waitForAttack = nbTours;
-    } // Initialise le nombre de tour avant que les barbares passent a lattaque
+    } 
 
+    void ResetValues()
+    {
+        nbBarbares = barbareRestant;       // Met a jour le nombre de barbares restant dans le clan
+        actualTarget.army = soldatRestant; // Met a jour la valeur de soldats dans Village
+
+        totalBarbare = 0;
+        totalSoldats = 0;
+
+        nbUnites = 0;
+
+        barbareRestant = 0;
+        soldatRestant = 0;
+
+        nextTarget = null;
+        actualTarget = null;
+
+        batailleEnCours = false;
+    }
     #endregion
 
     #region Combat
 
     void TakeDecision()
     {
-        nbSoldats = actualTarget.army;
-        nbUnites = nbSoldats + nbBarbares;
+        soldatRestant = actualTarget.army;
+        barbareRestant = nbBarbares;
 
-        if (nbBarbares / nbUnites >= 1 / 3)
+        nbUnites = soldatRestant + barbareRestant;
+
+        totalBarbare = nbBarbares;
+        totalSoldats = soldatRestant;
+
+        if (barbareRestant / nbUnites >= 1 / 3)
         {
             CalculProbabilite();
             Bataille();
@@ -113,17 +162,18 @@ public class Barbare : IUpdate
         randomNumber = Random.Range(0, 101);
 
         if (probabiliteBarbare >= randomNumber)
-            nbSoldats = nbSoldats - 1;
+            soldatRestant = soldatRestant- 1;
+
     } // Lorsque une unite barbare attaque
 
-    void AttaqueSoldat() // Lorsque une unite soldat attaque
+    void AttaqueSoldat() // Lorsque une unite soldat attaque 
     {
         float randomNumber;
 
         randomNumber = Random.Range(0f, 100f);
 
         if (probabiliteSoldat >= randomNumber)
-            nbBarbares = nbBarbares - 1;
+            barbareRestant = barbareRestant - 1;
     } 
 
     void CalculProbabilite()
@@ -144,28 +194,57 @@ public class Barbare : IUpdate
         }
     } // Determine la probabilite des barbares et des soldats concernant leur capacite a tuer une unite ennemie
 
-    void VictoireBarbare() // TO DO : Effet de la victoire des barbares
+    void VictoireBarbare() 
     {
-        // Effets de la victoire des Barbares
-        batailleEnCours = false;
+        actualTarget.isAttacked = false;
+        actualTarget.isDestroyed = true;
+
+        List<string> listeLigne = new List<string>();
+        List<Dialog.Choix> listeChoix = null;
+
+        string string1 = " Mon seigneur, je vous apporte le rapport de combat du village " + actualTarget.nom + "\n" + " * Le messager vous remet le papyrus sur lequel se lit : * ";
+        string string2 = " Barbares éliminées: " + (totalBarbare - barbareRestant) + "\n" + " Soldats éliminés: " + (totalSoldats - soldatRestant) + "\n" + " Soldat restant: " + (soldatRestant) + "\n" + " Le village " + actualTarget.nom + " a succombé à l'invasion de barbares";
+
+        ResetValues();
+
+        listeLigne.Add(string1);
+        listeLigne.Add(string2);
+
+        Request rapportCombat= new Request(listeLigne, listeChoix);
+
+        RequestManager.SendRequest(rapportCombat);
     }
 
-    void VictoireSoldat() // TO DO : Effet de la victoire des soldats
+    void VictoireSoldat()
     {
-        // Effets de la victoire des Soldats
-        batailleEnCours = false;
+        actualTarget.isAttacked = false;
+
+        List<string> listeLigne = new List<string>();
+        List<Dialog.Choix> listeChoix = null;
+
+        string string1 = " Mon seigneur, je vous apporte le rapport de combat du village " + actualTarget.nom + "\n" + " * Le messager vous remet le papyrus sur lequel se lit : * ";
+        string string2 = " Barbares éliminées: " + (totalBarbare - barbareRestant) + "\n" + " Soldats éliminés: " + (totalSoldats - soldatRestant) + "\n" + " Soldat restant: " + (soldatRestant) + "\n" + " Le village " + actualTarget.nom + " a repoussé avec succès l'invasion de barbares";
+
+        ResetValues();
+
+        listeLigne.Add(string1);
+        listeLigne.Add(string2);
+
+        Request rapportCombat = new Request(listeLigne, listeChoix);
+
+        RequestManager.SendRequest(rapportCombat);
     }
 
     void Bataille()
     {
         AttaqueBarbare();
 
-        if (nbSoldats <= 0)
+        if (soldatRestant <= 0)
             VictoireBarbare();
 
         AttaqueSoldat();
 
-        if (nbBarbares <= 0)
+        if (barbareRestant <= 0)
             VictoireSoldat();
 
         if (batailleEnCours == true)

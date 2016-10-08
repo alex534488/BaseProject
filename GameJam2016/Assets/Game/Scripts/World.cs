@@ -9,8 +9,6 @@ public class World : IUpdate {
     public BarbareManager barbareManager;
     public CarriageManager carriageManager;
 
-    public List<Barbare> listBarbare = new List<Barbare>();
-
 	public void Start ()
     {
         main = this;

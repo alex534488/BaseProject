@@ -23,12 +23,16 @@ public class BarbareManager : MonoBehaviour {
         listeBarbare.Add(unBarbare);
     }
 
-    public void NombreTotalBarbare()
+    public int NombreTotalBarbare()
     {
+        int barbareTotal = 0;
+
         for (int i = 0; i<listeBarbare.Count; i++)
         {
-
+            barbareTotal = barbareTotal + listeBarbare[i].nbBarbares;
         }
+
+        return barbareTotal;
     }
 	
 }
