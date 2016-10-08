@@ -26,6 +26,7 @@ public class Village : IUpdate {
     public int or = 50;
     public int nourriture = 50;
     public int army = 10;
+    public int reputation = 10;
     #endregion
 
     // Modifier le cout de la nourriture et des armees
@@ -71,10 +72,41 @@ public class Village : IUpdate {
         this.id = id;
         this.nom = nomvillage;
 
+        int valN = empire.valeurNouriture;
+        int valO = empire.valeurOr;
+        int valS = empire.valeurSoldat;
+
+
+        int nbPointProduction = 30;
+
+        while(nbPointProduction >0)
+        {
+            float choixRng = Random.value;
+            if(nbPointProduction>= valS && choixRng<0.1)
+            {
+                productionArmy += 1;
+                nbPointProduction -= valS;
+            }
+            else if (nbPointProduction >= valO && choixRng < 0.3)
+            {
+                productionOr += 1;
+                nbPointProduction -= valO;
+            }
+            else if (nbPointProduction >= valN)
+            {
+                productionNourriture += 1;
+                nbPointProduction -= valN;
+            }
+        }
+
         // Ressource de depart aleatoire
         AddGold((int)(Random.value * 100));
         AddFood((int)(Random.value * 100));
         AddArmy((int)(Random.value * 10));
+        AddReputation((int)(Random.value * 10));
+        AddGold(productionOr*4);
+        AddFood(productionNourriture*4);
+        AddArmy(productionArmy*4);
 
         // Nouveau random constant pour l'update des ressources
         random = (int)(Random.value * 100);
@@ -107,17 +139,21 @@ public class Village : IUpdate {
     #endregion
 
     #region Fonctions modifiant les attributs
-    void DecreaseGold(int amount){ or -= amount; }
+    public void DecreaseGold(int amount){ or -= amount; }
 
-    void AddGold(int amount){ or += amount; }
+    public void AddGold(int amount){ or += amount; }
 
-    void DecreaseFood(int amount){ nourriture -= amount; }
+    public void DecreaseFood(int amount){ nourriture -= amount; }
 
-    void AddFood(int amount){ nourriture += amount; }
+    public void AddFood(int amount){ nourriture += amount; }
 
-    void DecreaseArmy(int amount){ army -= amount; }
+    public void DecreaseArmy(int amount){ army -= amount; }
 
-    void AddArmy(int amount){ army += amount; }
+    public void AddArmy(int amount){ army += amount; }
+
+    public void DecreaseReputation(int amount) { army -= amount; }
+
+    public void AddReputation(int amount) { army += amount; }
     #endregion
 
     // To do : Change or remove random

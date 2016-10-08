@@ -2,24 +2,19 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class World : MonoBehaviour {
+public class World : IUpdate {
 
     public static World main;
     public Empire empire;
 
-    void Awake()
+	public void Start ()
     {
         if (main == null) main = this;
-    }
 
-	// Use this for initialization
-	void Start ()
-    {
         empire = new Empire();
         empire.Start();
     }
 
-    // Update is called once per frame
     public void Update()
     {
         empire.Update();
@@ -41,8 +36,4 @@ public class World : MonoBehaviour {
 
         return bestTarget;
     }
-
-    
-
-
 }
