@@ -5,6 +5,7 @@ using System.Collections.Generic;
 public class RessourceManager : IUpdate {
 
     private List<Village> listeVillage;
+    private List<Ligne> tableauRessource;
 
     public Transform masterVillage;
 
@@ -13,30 +14,36 @@ public class RessourceManager : IUpdate {
         gold, food, army, happiness
     }
 
-    struct Stats
+    public struct Stats
     {
-        string nom;
-        int nombre;
+        public string nom;
+        public int nombre;
     }
 
-    struct Ligne
+    public struct Ligne
     {
-        string nomVille;
-        List<Stats> listeStats;
+        public string nomVille;
+        public List<Stats> listeStats;
     }
 
-    // Use this for initialization
 	void Start ()
     {
         for (int i = 0; i < masterVillage.childCount; i++)
         {
             listeVillage.Add(masterVillage.GetChild(i).GetComponent<Village>());
+            listeVillage[i].nom = tableauRessource[i].nomVille;
         }
     }
 	
-	// Update is called once per frame
 	public void Update ()
     {
-	
+        int i = 0;
+
+        foreach (Village unVillage in listeVillage)
+        {
+            tableauRessource[i].
+        }
+
+
 	}
 }
