@@ -6,20 +6,21 @@ public class World : MonoBehaviour {
 
     public static World main;
     public Empire empire;
+    public BarbareManager barbareManager;
+
+    public List<Barbare> listBarbare = new List<Barbare>();
 
     void Awake()
     {
         if (main == null) main = this;
     }
 
-	// Use this for initialization
 	void Start ()
     {
         empire = new Empire();
         empire.Start();
     }
 
-    // Update is called once per frame
     public void Update()
     {
         empire.Update();
@@ -32,7 +33,7 @@ public class World : MonoBehaviour {
 
         foreach (Village leVillage in empire.listVillage)
         {
-            if (leVillage.army <= minimalArmy) // && Village est une frontiere
+            if (leVillage.army <= minimalArmy && leVillage.isFrontier)
             {
                 bestTarget = leVillage;
                 minimalArmy = leVillage.army;
