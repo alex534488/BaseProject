@@ -25,7 +25,7 @@ public class EstimationEmpire : IUpdate {
 
         int nbVillages = unEmpire.listVillage.Count;
         int nbSoldats = 0;
-        int nbBarbares = 0;
+        int nbBarbares = unWorld.barbareManager.NombreTotalBarbare();
        
         for (int i=0; i< nbVillages;i++)
         {
@@ -37,7 +37,7 @@ public class EstimationEmpire : IUpdate {
         return ((float)estimation/150);
     }
 
-    private void EstimationVillage (Village leVillage, int estimation, int nbSoldats) // To do : Enlever commentaires 
+    private void EstimationVillage (Village leVillage, int estimation, int nbSoldats)
     {
         if (leVillage.isDestroyed == true)
         {
@@ -57,7 +57,7 @@ public class EstimationEmpire : IUpdate {
 
         int bilanGold = leVillage.or;
 
-        int reputation = 0; // leVillage.lord.reputation;
+        int reputation = leVillage.reputation;
 
         if (reputation <= 75)
         {
@@ -76,7 +76,7 @@ public class EstimationEmpire : IUpdate {
 
         if (leVillage.isAttacked == true)
         {
-            int barbareVillage = 0; // leVillage.lord.seuilarmy
+            int barbareVillage = leVillage.lord.seuilArmy;
 
             int differenceForce = soldatVillage - barbareVillage;
 
