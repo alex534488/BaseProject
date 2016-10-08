@@ -10,10 +10,11 @@ public class DayManager : MonoBehaviour{
     public Button nextDayButton;
     public Button currentday;
     public Button scoutButton;
-    public Button testButton;
+    public Button sendcarriage;
 
     public World theWorld;
     public RequestManager requestManager;
+    public CarriageManager carriageManager;
 
     public int nbJour = 0;
 
@@ -29,7 +30,7 @@ public class DayManager : MonoBehaviour{
         requestManager.OnCompletionOfRequests.AddListener(OnAllRequestComplete);
         nextDayButton.onClick.AddListener(LaunchedDay);
         scoutButton.onClick.AddListener(ButtonScout);
-        testButton.onClick.AddListener(Test);
+        sendcarriage.onClick.AddListener(Test);
     }
 
     public void LaunchedDay()
@@ -38,9 +39,12 @@ public class DayManager : MonoBehaviour{
         if(currentday != null)currentday.GetComponentInChildren<Text>().text = "Jour " + nbJour;
 
         theWorld.Update(); // Update le monde
+        carriageManager.NewDay();
         
         // Desactive les boutons temporairement
         nextDayButton.GetComponent<Button>().interactable = false;
+        scoutButton.GetComponent<Button>().interactable = false;
+        sendcarriage.GetComponent<Button>().interactable = false;
 
         // Debute la phase des requetes
         PhaseRequete(); 

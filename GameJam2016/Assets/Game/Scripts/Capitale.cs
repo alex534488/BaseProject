@@ -33,32 +33,47 @@ public class Capitale : Village {
 	
 	public override void Update ()
     {
-        base.Update();
+
+
+        if (nourriture < 0 || bonheur < 0 || isDestroyed)
+        {
+            DestructionVillage();
+        }
+        nourrirArmy = army;
+
+        UpdateResources();
+
+        UpdateCost();
+
     }
 
-    void DecreaseBonheur(int amount) { bonheur -= amount; }
+    public void DecreaseBonheur(int amount) { bonheur -= amount; }
 
-    void AddBonheur(int amount) { bonheur += amount; }
+    public void AddBonheur(int amount) { bonheur += amount; }
 
-    void DecreaseChariot(int amount) { nbCharriot -= amount; }
+    public void DecreaseChariot(int amount) { nbCharriot -= amount; }
 
-    void AddChariot(int amount) { nbCharriot += amount; }
+    public void AddChariot(int amount) { nbCharriot += amount; }
 
-    public void SendScout()
+    public void SendScout(World theWorld)
     {
         DecreaseGold(empire.capitale.coutScout);
-        /* Le systeme de bataille et de barbares n'interagit pas assez avec le world pour pouvoir faire un scout fonctionnel
+
         foreach (Village village in empire.listVillage)
         {
-            if (village.isAttacked && village.barbares.nbBarbares > village.army)
+            foreach(Barbare barbare in theWorld.listBarbare)
             {
-                if (!village.lord.alreadyAsk)
+                if ((barbare.actualTarget == village) && village.barbares.nbBarbares > village.army)
                 {
-                    RequestManager.SendRequest(new Request(village.lord, Ressource_Type.army, village.barbares.nbBarbares - village.army));
+                    if (!village.lord.alreadyAsk)
+                    {
+                        RequestManager.SendRequest(new Request(village.lord, Ressource_Type.army, village.barbares.nbBarbares - village.army));
+                    }
                 }
             }
+           
         }
-        */
+
         // Le scout revient dans X tours?
     }
 

@@ -34,10 +34,12 @@ public class CarriageManager : MonoBehaviour
                             listCarriage.Remove(carriage);
                         }
                     }
-
                 }
-                carriage.delay--;
+                (carriage.provenance as Capitale).nbCharriot++;
+                listCarriage.Remove(carriage);
+                return;
             }
+            carriage.delay--;
         }
     }
 
