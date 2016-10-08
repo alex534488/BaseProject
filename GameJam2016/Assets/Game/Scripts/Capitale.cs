@@ -45,9 +45,6 @@ public class Capitale : Village {
 
         UpdateCost();
 
-        UpdateTaxes();
-
-
     }
 
     void DecreaseBonheur(int amount) { bonheur -= amount; }

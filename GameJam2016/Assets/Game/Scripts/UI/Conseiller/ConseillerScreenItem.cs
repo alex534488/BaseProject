@@ -17,13 +17,11 @@ public class ConseillerScreenItem : MonoBehaviour
     public Button requestButton;
     [Header("Texts")]
     public Text totalText;
-    public Text prodText;
+    public Text bilanText;
 
 
     Village village;
     Ressource_Type type;
-
-    Ligne ligne;
 
     void Awake()
     {
@@ -43,14 +41,12 @@ public class ConseillerScreenItem : MonoBehaviour
 
     void UpdateDisplay()
     {
-        ligne = village.GetInfos(type);
-
-        
-        totalText.text = "" + ligne.total;
+        totalText.text = "" + village.GetTotal(type);
         print("change prod amount ! + slider color");
         //slider.UpdateSlider(reputation);
-        prodText.text = "" + ligne.production;
-        bg.color = (ligne.production - ligne.taxe > 0) ? positiveColor : negativeColor;
+        int bilan = village.GetBilan(type);
+        bilanText.text = "" + bilan;
+        bg.color = (bilan > 0) ? positiveColor : negativeColor;
     }
 
     void OnSendClick()

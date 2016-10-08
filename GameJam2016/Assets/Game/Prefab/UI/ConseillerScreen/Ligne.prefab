@@ -580,13 +580,13 @@ MonoBehaviour:
   negativeColor: {r: 1, g: 0, b: 0, a: 0.19607843}
   positiveColor: {r: 1, g: 1, b: 1, a: 0.19607843}
   cityName: {fileID: 114000011559722246}
-  slider: {fileID: 0}
+  slider: {fileID: 114000011037156058}
   sendPanel: {fileID: 114000012941497192}
   sendButton: {fileID: 114000010279457136}
   sendField: {fileID: 114000011943076974}
   requestButton: {fileID: 114000012815471562}
   totalText: {fileID: 114000013363681556}
-  prodText: {fileID: 114000012691098138}
+  bilanText: {fileID: 114000012691098138}
 --- !u!114 &114000011037156058
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -964,7 +964,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: Profit
+  m_Text: Bilan
 --- !u!222 &1824119147
 CanvasRenderer:
   m_ObjectHideFlags: 0
