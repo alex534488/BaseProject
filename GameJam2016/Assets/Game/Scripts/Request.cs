@@ -14,22 +14,22 @@ public class Request {
         switch (resource)
         {
             case Ressource_Type.gold:
-                message.Add("...");
-                choix.Add(new Dialog.Choix("Choix 1:...", delegate () { }));
-                choix.Add(new Dialog.Choix("Choix 2:...", delegate () { }));
-                choix.Add(new Dialog.Choix("Choix 3:...", delegate () { }));
+                message.Add("Bla Gold Bla");
+                choix.Add(new Dialog.Choix("Choix 1: Donner ben du gold", delegate () { }));
+                choix.Add(new Dialog.Choix("Choix 2: Donner un peu de gold", delegate () { }));
+                choix.Add(new Dialog.Choix("Choix 3: Fuck you", delegate () { }));
                 return;
             case Ressource_Type.food:
-                message.Add("...");
-                choix.Add(new Dialog.Choix("Choix 1:...", delegate () { }));
-                choix.Add(new Dialog.Choix("Choix 2:...", delegate () { }));
-                choix.Add(new Dialog.Choix("Choix 3:...", delegate () { }));
+                message.Add("Bla Food Bla");
+                choix.Add(new Dialog.Choix("Choix 1: Donner ben du bouffe", delegate () { }));
+                choix.Add(new Dialog.Choix("Choix 2: Donner un peu de bouffe", delegate () { }));
+                choix.Add(new Dialog.Choix("Choix 3: Fuck you", delegate () { }));
                 return;
             case Ressource_Type.army:
-                message.Add("...");
-                choix.Add(new Dialog.Choix("Choix 1:...", delegate () { }));
-                choix.Add(new Dialog.Choix("Choix 2:...", delegate () { }));
-                choix.Add(new Dialog.Choix("Choix 3:...", delegate () { }));
+                message.Add("Bla Army Bla");
+                choix.Add(new Dialog.Choix("Choix 1: Donner ben des gars", delegate () { }));
+                choix.Add(new Dialog.Choix("Choix 2: Donner un peu de gars", delegate () { }));
+                choix.Add(new Dialog.Choix("Choix 3: Fuck you", delegate () { }));
                 return;
             default:
                 return;
@@ -44,6 +44,6 @@ public class Request {
 
     public void DoRequest()
     {
-        Dialog.DisplayText(message,choix);
+        Dialog.DisplayText(message, choix,RequestManager.DoNextRequest);
     }
 }
