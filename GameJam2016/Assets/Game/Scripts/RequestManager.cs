@@ -12,7 +12,7 @@ public class RequestManager : MonoBehaviour {
     List<Request> listRandomRequest = new List<Request>();
     public UnityEvent onWaitingForRequest = new UnityEvent();
 
-    public void Start()
+    void Start()
     {
         CreateRandomRequest();
         onWaitingForRequest.AddListener(GetRequests);
@@ -24,9 +24,9 @@ public class RequestManager : MonoBehaviour {
 
         GetRandomRequest(10);
 
-        request.DoRequest();
-        request.choosen = false;
-        listRequest.Remove(request);
+        listRequest[0].DoRequest();
+        listRequest.Remove(listRequest[0]);
+        //Dialog.
     }
 
     public static void SendRequest(Request request)
@@ -55,10 +55,8 @@ public class RequestManager : MonoBehaviour {
 
     void DoNextRequest()
     {
-        Request current = listRequest[0];
-        current.DoRequest();
-        current.choosen = false;
-        listRequest.Remove(current);
+        listRequest[0].DoRequest();
+        listRequest.Remove(listRequest[0]);
     }
 
     void CreateRandomRequest()
