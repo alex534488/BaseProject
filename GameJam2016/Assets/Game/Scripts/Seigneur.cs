@@ -32,7 +32,6 @@ public class Seigneur : IUpdate {
 	
 	public void Update ()
     {
-
         if (village.isAttacked)
         {
             seuilArmy = village.barbares.nbBarbares;
@@ -118,10 +117,10 @@ public class Seigneur : IUpdate {
         switch (resource)
         {
             case Ressource_Type.gold:
-                RequestManager.SendRequest(new Request(this,resource,amount));
+                
                 return;
             case Ressource_Type.food:
-                RequestManager.SendRequest(new Request(this,resource, amount));
+                
                 return;
             case Ressource_Type.army:
                 RequestManager.SendRequest(new Request(this,resource, amount));
@@ -131,8 +130,8 @@ public class Seigneur : IUpdate {
         }
     }
 
-    public void EmperorAsking(Ressource_Type resource, int amount)
+    public void EmperorSendingCart()
     {
-
+        
     }
 }

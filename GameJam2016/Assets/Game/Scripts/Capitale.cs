@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
+using UnityEngine.Events;
 
 public class Capitale : Village {
 
@@ -14,10 +16,8 @@ public class Capitale : Village {
 
     // Trade
     public int nbCharriot = 3;
-    public int nbTour;
-
-    // Bonheur
-    public int productionBonheur = 1;
+    public int nbTour = 2;
+    List<Carriage> listCarriage = new List<Carriage>();
 
     public Capitale(Empire empire, int id) : base(empire,id, "ROME", null)
     {
@@ -34,14 +34,15 @@ public class Capitale : Village {
 	public override void Update () // es ce que le override rajoute ou remplace?
     {
         base.Update();
-
-        if(productionBonheur > 0) AddBonheur(productionBonheur * random);
-        if (productionBonheur < 0) DecreaseBonheur(productionBonheur * random);
     }
 
     void DecreaseBonheur(int amount) { bonheur -= amount; }
 
     void AddBonheur(int amount) { bonheur += amount; }
+
+    void DecreaseChariot(int amount) { nbCharriot -= amount; }
+
+    void AddChariot(int amount) { nbCharriot += amount; }
 
     public void SendScout()
     {
@@ -63,18 +64,19 @@ public class Capitale : Village {
 
     void RequestVillage(Village village, Ressource_Type resource, int amount)
     {
-        nbCharriot--;
-
         switch (resource)
         {
             case Ressource_Type.gold:
                 DecreaseGold(amount);
+                //village.lord.EmperorAsking(resource, amount, nbTour, false);
                 return;
             case Ressource_Type.food:
                 DecreaseFood(amount);
+                //village.lord.EmperorAsking(resource, amount, nbTour, false);
                 return;
             case Ressource_Type.army:
                 DecreaseArmy(amount);
+                //village.lord.EmperorAsking(resource, amount, nbTour, false);
                 return;
             default:
                 return;
@@ -83,7 +85,22 @@ public class Capitale : Village {
 
     void GiveVillage(Village village, Ressource_Type resource, int amount)
     {
-        nbCharriot--;
-
+        switch (resource)
+        {
+            case Ressource_Type.gold:
+                DecreaseGold(amount);
+                //village.lord.EmperorAsking(resource, amount, nbTour, true);
+                return;
+            case Ressource_Type.food:
+                DecreaseFood(amount);
+                //village.lord.EmperorAsking(resource, amount, nbTour, true);
+                return;
+            case Ressource_Type.army:
+                DecreaseArmy(amount);
+                //village.lord.EmperorAsking(resource, amount, nbTour, true);
+                return;
+            default:
+                return;
+        }
     }
 }
