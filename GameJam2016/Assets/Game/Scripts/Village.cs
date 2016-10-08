@@ -29,7 +29,6 @@ public class Village : IUpdate {
     public int reputation = 100;
     #endregion
 
-
     #region Production 
     public int productionOr = 1;
     public int productionNourriture = 5;
