@@ -3,20 +3,28 @@ using System.Collections;
 using UnityEngine.UI;
 using System.Collections.Generic;
 
-public class ConseillerScreenItem : MonoBehaviour {
-
-    public GameObject statPrefab;
+public class ConseillerScreenItem : MonoBehaviour
+{
+    public Image bg;
+    public Color negativeColor = Color.red;
+    public Color positiveColor = Color.green;
     public Text cityName;
-    public RectTransform statContainer;
     public Button upButton;
     public Button downButton;
+    [Header("Texts")]
+    public Text totalText;
+    public Text prodText;
+    public Text taxeText;
+    public Text bilanText;
+
 
     Village village;
     Ressource_Type type;
 
+    Ligne ligne;
+
     void Awake()
     {
-        statPrefab.gameObject.SetActive(false);
         upButton.onClick.AddListener(OnUpClick);
         downButton.onClick.AddListener(OnDownClick);
     }
@@ -28,27 +36,29 @@ public class ConseillerScreenItem : MonoBehaviour {
 
         cityName.text = village.nom;
 
-        for(int i=0; i<3; i++)
-        {
-            Text text = Instantiate(statPrefab.gameObject).GetComponentInChildren<Text>();
-            //text.text = "" + stat;
-            text.transform.SetParent(statContainer, false);
-        }
-        //foreach(int stat in village.stats)
-        //{
-        //    Text text = Instantiate(statPrefab.gameObject).GetComponent<Text>();
-        //    text.text = "" + stat;
-        //    text.transform.SetParent(statContainer, false);
-        //}
+        ligne = village.GetInfos(type);
+
+        UpdateTexts();
+    }
+
+    void UpdateTexts()
+    {
+        totalText.text = "" + ligne.total;
+        prodText.text = "" + ligne.production;
+        taxeText.text = "" + ligne.taxe;
+        bilanText.text = "" + (ligne.production - ligne.taxe);
+        bg.color = (ligne.production - ligne.taxe > 0) ? positiveColor : negativeColor;
     }
 
     void OnUpClick()
     {
-        // ++ taxe
+        ligne.taxe = village.ModifyTaxe(type, 1);
+        UpdateTexts();
     }
 
     void OnDownClick()
     {
-        // -- taxe
+        ligne.taxe = village.ModifyTaxe(type, -1);
+        UpdateTexts();
     }
 }
