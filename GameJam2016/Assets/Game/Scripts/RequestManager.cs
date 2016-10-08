@@ -12,7 +12,7 @@ public class RequestManager : MonoBehaviour {
     List<Request> listRandomRequest = new List<Request>();
     public UnityEvent onWaitingForRequest = new UnityEvent();
 
-    void Start()
+    public void Start()
     {
         CreateRandomRequest();
         onWaitingForRequest.AddListener(GetRequests);
