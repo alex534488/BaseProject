@@ -130,8 +130,21 @@ public class Seigneur : IUpdate {
         }
     }
 
-    public void EmperorSendingCart()
+    public bool CanYouGive(Ressource_Type resource, int amount)
     {
-        
+        switch (resource)
+        {
+            case Ressource_Type.gold:
+                if (village.or < amount) return false;
+                else return true;
+            case Ressource_Type.food:
+                if (village.nourriture < amount) return false;
+                else return true;
+            case Ressource_Type.army:
+                if (village.army < amount) return false;
+                else return true;
+            default:
+                return false;
+        }
     }
 }

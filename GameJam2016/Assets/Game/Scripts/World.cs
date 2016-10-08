@@ -7,6 +7,7 @@ public class World : IUpdate {
     public static World main;
     public Empire empire;
     public BarbareManager barbareManager;
+    public CarriageManager carriageManager;
 
 	public void Start ()
     {

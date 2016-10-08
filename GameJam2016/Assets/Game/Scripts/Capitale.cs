@@ -38,7 +38,7 @@ public class Capitale : Village {
         lord = new Seigneur(this);
     }
 	
-	public override void Update () // es ce que le override rajoute ou remplace?
+	public override void Update ()
     {
 
 
@@ -71,64 +71,31 @@ public class Capitale : Village {
 
     public void AddChariot(int amount) { nbCharriot += amount; }
 
-    public void SendScout()
+    public void SendScout(World theWorld)
     {
         DecreaseGold(empire.capitale.coutScout);
-        /* Le systeme de bataille et de barbares n'interagit pas assez avec le world pour pouvoir faire un scout fonctionnel
+
         foreach (Village village in empire.listVillage)
         {
-            if (village.isAttacked && village.barbares.nbBarbares > village.army)
+            foreach(Barbare barbare in theWorld.listBarbare)
             {
-                if (!village.lord.alreadyAsk)
+                if ((barbare.actualTarget == village) && village.barbares.nbBarbares > village.army)
                 {
-                    RequestManager.SendRequest(new Request(village.lord, Ressource_Type.army, village.barbares.nbBarbares - village.army));
+                    if (!village.lord.alreadyAsk)
+                    {
+                        RequestManager.SendRequest(new Request(village.lord, Ressource_Type.army, village.barbares.nbBarbares - village.army));
+                    }
                 }
             }
+           
         }
-        */
+
         // Le scout revient dans X tours?
     }
 
-    void RequestVillage(Village village, Ressource_Type resource, int amount)
+    public void SendCartToVillage(Village destination, Ressource_Type resource, int amount)
     {
-        switch (resource)
-        {
-            case Ressource_Type.gold:
-                DecreaseGold(amount);
-                //village.lord.EmperorAsking(resource, amount, nbTour, false);
-                return;
-            case Ressource_Type.food:
-                DecreaseFood(amount);
-                //village.lord.EmperorAsking(resource, amount, nbTour, false);
-                return;
-            case Ressource_Type.army:
-                DecreaseArmy(amount);
-                //village.lord.EmperorAsking(resource, amount, nbTour, false);
-                return;
-            default:
-                return;
-        }
-    }
-
-    void GiveVillage(Village village, Ressource_Type resource, int amount)
-    {
-        switch (resource)
-        {
-            case Ressource_Type.gold:
-                DecreaseGold(amount);
-                //village.lord.EmperorAsking(resource, amount, nbTour, true);
-                return;
-            case Ressource_Type.food:
-                DecreaseFood(amount);
-                //village.lord.EmperorAsking(resource, amount, nbTour, true);
-                return;
-            case Ressource_Type.army:
-                DecreaseArmy(amount);
-                //village.lord.EmperorAsking(resource, amount, nbTour, true);
-                return;
-            default:
-                return;
-        }
+         CarriageManager.SendCarriage(new Carriage(nbTour, destination,resource,amount));
     }
 
     static private Request EventBonheur1()

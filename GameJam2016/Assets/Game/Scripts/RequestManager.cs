@@ -43,7 +43,6 @@ public class RequestManager : MonoBehaviour
         requestManager.listRequest.Remove(requestManager.listRequest[0]);
         if(requestManager.listRequest.Count <= 0)
         {
-            //requestManager.listRequest.Clear();
             requestManager.OnCompletionOfRequests.Invoke();
             return;
         }
