@@ -113,6 +113,7 @@ public class VillageMap {
 
         placeVillage(tabVillage);
         makeConnection();
+        updateFrontVillage();
     }
 
     //Prend une liste de village et les place sur la carte logique.
@@ -170,7 +171,7 @@ public class VillageMap {
         {
             for(int y=0;y<mapSize;y++)
             {
-                if(map[x][y].isFront())
+                if(map[x][y] != null && map[x][y].isFront())
                 {
                     ret.Add(map[x][y].getVillage());
                 }
@@ -196,6 +197,16 @@ public class VillageMap {
                 }
             }
         }
+        updateFrontVillage();
+    }
+
+    private void updateFrontVillage()
+    {
+        List<Village> list = getFrontVillage();
+        foreach(Village vil in list)
+        {
+            vil.isFrontier = true;
+        }
     }
 
     public void testPrint()
@@ -207,7 +218,7 @@ public class VillageMap {
             {
                 if(map[x][y]!=null)
                 {
-                    tempStr += map[x][y].nbConnection();
+                    tempStr += map[x][y].getVillage().isFrontier;
                 }
                 else
                 {

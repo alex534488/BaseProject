@@ -19,6 +19,8 @@ public class TestScript : MonoBehaviour
 
         VillageMap temp  =new VillageMap(cap, tab);
         temp.testPrint();
+        temp.removeVillage(tab[3]);
+        temp.testPrint();
 
     }
     
