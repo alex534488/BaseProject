@@ -10,7 +10,7 @@ public class World : IUpdate {
 
     public List<Barbare> listBarbare = new List<Barbare>();
 
-	void Start ()
+	public void Start ()
     {
         empire = new Empire();
         empire.Start();
