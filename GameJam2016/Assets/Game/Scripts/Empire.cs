@@ -15,7 +15,7 @@ public class Empire : IUpdate {
     public Capitale capitale;
     public VillageMap map;
 
-	void Start ()
+	public void Start ()
     {
         for (int i = 0; i < nbVillage; i++)
         {
