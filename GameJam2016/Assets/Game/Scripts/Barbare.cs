@@ -5,16 +5,20 @@ public class Barbare : IUpdate
 {
     public World theWorld;
     private Village actualTarget;
-    private bool batailleEnCours = false;
 
+    private bool batailleEnCours = false;
+    private int waitForAttack = 0;
+
+    #region Nombre de units
     public int nbBarbares;
     private int nbSoldats;
     private int nbUnites;
+    #endregion
 
+    #region Probabilites
     private int probabiliteSoldat = 50;
     private int probabiliteBarbare = 50;
-
-    private int waitForAttack = 0;
+    #endregion
 
     void Start(){}
 
@@ -30,6 +34,8 @@ public class Barbare : IUpdate
                 TakeDecision();
         }
     }
+
+    #region Gestion
 
     void AskTarget() // Retourne le village frontiere avec le moins de soldats disponibles
     {
@@ -47,6 +53,10 @@ public class Barbare : IUpdate
     {
         waitForAttack = nbTours;
     } // Initialise le nombre de tour avant que les barbares passent a lattaque
+
+    #endregion
+
+    #region Combat
 
     void TakeDecision()
     {
@@ -91,7 +101,7 @@ public class Barbare : IUpdate
     void Retraite()
     {
         // Definit un nouveau village cible. Il peut s'agir du même village sans aucun problème.
-        AskTarget(); 
+        AskTarget();
     } // Lorsque les barbares decident de ne pas attaquer le village en question
 
     void AttaqueBarbare()
@@ -159,5 +169,7 @@ public class Barbare : IUpdate
         if (batailleEnCours == true)
             Bataille();
     } // Boucle qui se termine lorsque un des deux clans ne possedent plus de unites
+
+    #endregion
 
 }
