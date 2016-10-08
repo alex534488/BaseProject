@@ -81,6 +81,10 @@ public class Dialog : MonoBehaviour
         if (isInDialog) return;
 
         isInDialog = true;
+
+        queue = new List<object>();
+        currentDialogTexts = new List<DialogText>();
+
         currentDialogBox = Instantiate(dialogBoxPrefab.gameObject).GetComponent<DialogBox>();
         currentDialogBox.transform.SetParent(transform, false);
         currentDialogBox.button.onClick.AddListener(OnBoxClick);
