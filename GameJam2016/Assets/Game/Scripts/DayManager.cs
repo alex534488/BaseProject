@@ -30,7 +30,7 @@ public class DayManager : MonoBehaviour{
         requestManager.OnCompletionOfRequests.AddListener(OnAllRequestComplete);
         nextDayButton.onClick.AddListener(LaunchedDay);
         if(scoutButton != null) scoutButton.onClick.AddListener(ButtonScout);
-        sendcarriage.onClick.AddListener(Test);
+        if (scoutButton != null) sendcarriage.onClick.AddListener(Test);
     }
 
     public void LaunchedDay()
