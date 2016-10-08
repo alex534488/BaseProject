@@ -10,8 +10,10 @@ public class Empire : IUpdate {
 
     List<string> nomvillage = new List<string>{ "BREMA", "GOSLARIA", "TREMONIA", "BRUXELLAE", "HAUNIAE", "HISPALIS", "CHRISTINEA", "LUTETIA", "PARTISCUM", "MONAECUM", "AMSTELODAMUM", "EBURACUM" };
     List<string> nomseigneur = new List<string> { "Maximus", "Tullus", "Lucius", "Marcus", "Valentinus", "Decimus ", "Caeso", "Septimus", "Sextus", "Tiberius", "Faustus", "Octavius" };
-    List<Village> listVillage = new List<Village>();
+
+    public List<Village> listVillage = new List<Village>();
     Capitale capitale;
+    VillageMap map;
 
 	void Start ()
     {
@@ -20,6 +22,8 @@ public class Empire : IUpdate {
             listVillage.Add(new Village(this,i, nomvillage[i], nomseigneur[i])); // le village numero 0 correspond a listVillage[0]
         }
         capitale = new Capitale(this,0);
+
+        map = new VillageMap(capitale, listVillage.ToArray());
 	}
 	
 	public void Update ()
@@ -33,5 +37,6 @@ public class Empire : IUpdate {
     public void DeleteVillage(Village destroyedVillage)
     {
         listVillage.Remove(destroyedVillage);
+        map.removeVillage(destroyedVillage);
     }
 }
