@@ -70,7 +70,6 @@ public class Village : IUpdate {
         this.empire = empire;
         this.id = id;
         this.nom = nomvillage;
-        this.lord.nom = nomseigneur;
 
         // Ressource de depart aleatoire
         AddGold((int)(Random.value * 100));
@@ -81,6 +80,7 @@ public class Village : IUpdate {
         random = (int)(Random.value * 100);
 
         lord = new Seigneur(this);
+        this.lord.nom = nomseigneur;
     }
 	
 	public virtual void Update ()
