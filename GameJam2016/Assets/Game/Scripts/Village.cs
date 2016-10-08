@@ -51,7 +51,7 @@ public class Village : IUpdate {
 
     public int coutNourriture;
     public int costArmy;
-    public int nourrirArmy;
+    public int armyFoodCost = 1;
 
 
     public Village(Empire empire, int id, string nomvillage, string nomseigneur)
@@ -67,7 +67,7 @@ public class Village : IUpdate {
         coutNourriture = empire.valeurNouriture;
         costArmy = empire.valeurSoldat;
 
-        int nbPointProduction = 30;
+        int nbPointProduction = 10;
 
         while(nbPointProduction >0)
         {
@@ -98,7 +98,7 @@ public class Village : IUpdate {
     {
         random = (int)(Random.value * 100);
 
-        nourrirArmy = army;
+        //armyFoodCost = army;
 
         UpdateResources();
 
@@ -150,7 +150,7 @@ public class Village : IUpdate {
 
     protected void UpdateCost() // To do : Change or remove random
     {
-        nourriture -= army;
+        nourriture -= army * armyFoodCost;
     }
     
     #endregion 
@@ -221,7 +221,7 @@ public class Village : IUpdate {
             case Ressource_Type.army:
                 return productionArmy;
             case Ressource_Type.food:
-                return (army * nourrirArmy) - productionNourriture;
+                return productionNourriture - (army * armyFoodCost);
             case Ressource_Type.gold:
                 return productionOr;
         }

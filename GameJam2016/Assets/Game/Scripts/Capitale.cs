@@ -40,13 +40,10 @@ public class Capitale : Village {
 	
 	public override void Update ()
     {
-
-
         if (nourriture < 0 || bonheur < 0 || isDestroyed)
         {
             DestructionVillage();
         }
-        nourrirArmy = army;
 
         UpdateResources();
 

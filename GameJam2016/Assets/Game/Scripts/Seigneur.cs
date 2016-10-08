@@ -25,8 +25,8 @@ public class Seigneur : IUpdate {
     public Seigneur(Village village)
     {
         this.village = village;
-        seuilNourriture = village.nourrirArmy;
-        seuilGold = village.coutNourriture * village.nourrirArmy;
+        seuilNourriture = village.armyFoodCost;
+        seuilGold = village.coutNourriture * village.armyFoodCost;
         seuilArmy = 0; 
     }
 	
@@ -39,7 +39,7 @@ public class Seigneur : IUpdate {
             seuilArmy += Random.Range(-incertitude, incertitude+1);
         }
 
-        seuilNourriture = village.nourrirArmy;
+        seuilNourriture = village.armyFoodCost;
         seuilGold = village.coutNourriture * seuilNourriture;
 
         alreadyAsk = false;

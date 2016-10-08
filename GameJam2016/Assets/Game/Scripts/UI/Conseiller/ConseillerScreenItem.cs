@@ -46,7 +46,7 @@ public class ConseillerScreenItem : MonoBehaviour
         //slider.UpdateSlider(reputation);
         int bilan = village.GetBilan(type);
         bilanText.text = "" + bilan;
-        bg.color = (bilan > 0) ? positiveColor : negativeColor;
+        bg.color = (bilan >= 0) ? positiveColor : negativeColor;
     }
 
     void OnSendClick()
