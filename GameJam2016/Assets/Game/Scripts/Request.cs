@@ -9,10 +9,14 @@ public class Request {
 
     List<string> message = new List<string>();
     List<Dialog.Choix> choix = new List<Dialog.Choix>();
+    
     public bool choosen = false;
+    public int delay;
 
     public Request(Seigneur messager,Ressource_Type resource, int amount)
     {
+        this.messager = messager;
+
         switch (resource)
         {
             case Ressource_Type.gold:

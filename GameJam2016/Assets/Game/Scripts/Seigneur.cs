@@ -17,10 +17,10 @@ public class Seigneur : IUpdate {
     // Seuil de tolerance permis par le seigneur
     private int seuilNourriture;
     private int seuilGold; // or minimale permis, correspond au coutNourriture de village
-    private int seuilArmy;
+    public int seuilArmy;
 
     // Es ce que le seigneur a deja demander a l'emperor
-    private bool alreadyAsk = false;
+    public bool alreadyAsk = false;
 
     public Seigneur(Village village)
     {
@@ -32,7 +32,6 @@ public class Seigneur : IUpdate {
 	
 	public void Update ()
     {
-
         if (village.isAttacked)
         {
             seuilArmy = village.barbares.nbBarbares;
@@ -118,10 +117,10 @@ public class Seigneur : IUpdate {
         switch (resource)
         {
             case Ressource_Type.gold:
-                RequestManager.SendRequest(new Request(this,resource,amount));
+                
                 return;
             case Ressource_Type.food:
-                RequestManager.SendRequest(new Request(this,resource, amount));
+                
                 return;
             case Ressource_Type.army:
                 RequestManager.SendRequest(new Request(this,resource, amount));
@@ -129,5 +128,10 @@ public class Seigneur : IUpdate {
             default:
                 return;
         }
+    }
+
+    public void EmperorSendingCart()
+    {
+        
     }
 }
