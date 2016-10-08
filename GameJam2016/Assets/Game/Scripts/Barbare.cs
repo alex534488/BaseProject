@@ -13,6 +13,7 @@ public class Barbare : IUpdate
     public int nbBarbares;
     private int nbSoldats;
     private int nbUnites;
+    public int spawnRate = 1;
     #endregion
 
     #region Probabilites
@@ -24,8 +25,6 @@ public class Barbare : IUpdate
 
     public void Update()
     {
-        SpawnEnnemy(2);
-
         if (actualTarget != null)
         {
             waitForAttack = waitForAttack - 1;
@@ -33,6 +32,9 @@ public class Barbare : IUpdate
             if (waitForAttack <= 0)
                 TakeDecision();
         }
+
+        else
+            SpawnEnnemy(spawnRate);
     }
 
     #region Gestion
