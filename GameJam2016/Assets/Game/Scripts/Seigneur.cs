@@ -25,8 +25,8 @@ public class Seigneur : IUpdate {
     public Seigneur(Village village)
     {
         this.village = village;
-        seuilNourriture = village.nourrirPopulation;
-        seuilGold = village.coutNourriture;
+        seuilNourriture = village.nourrirArmy;
+        seuilGold = village.coutNourriture * village.nourrirArmy;
         seuilArmy = 0; 
     }
 	
@@ -40,12 +40,13 @@ public class Seigneur : IUpdate {
             seuilArmy += Random.Range(-incertitude, incertitude+1);
         }
 
-        seuilNourriture = village.nourrirPopulation + village.nourrirArmy;
+        seuilNourriture = village.nourrirArmy;
+        seuilGold = village.coutNourriture * seuilNourriture;
 
         alreadyAsk = false;
 
         if (village.or < seuilGold) NeedGold(seuilGold); 
-        else if (village.nourriture < seuilNourriture) NeedFood();
+        else if (village.nourriture < seuilNourriture) NeedFood(seuilNourriture);
         else if (village.army < seuilArmy) NeedArmy(seuilArmy - village.army);
         // else tout va bien alors proposition d'investissement possible
     }
@@ -55,14 +56,13 @@ public class Seigneur : IUpdate {
         // DO: this meurt
     }
 
-    void NeedFood()
+    void NeedFood(int amount)
     {
-        int foodneeded = village.nourrirPopulation + village.nourrirArmy;
-        int goldneed = seuilGold*Mathf.RoundToInt(foodneeded/village.coutNourriture);
+        int goldneed = seuilGold*Mathf.RoundToInt(amount/village.coutNourriture);
 
         if (!alreadyAsk)
         {
-            GoAskEmperor(Ressource_Type.food, foodneeded);
+            GoAskEmperor(Ressource_Type.food, amount);
             alreadyAsk = true;
         }
 
@@ -71,11 +71,11 @@ public class Seigneur : IUpdate {
             if (village.or < goldneed) NeedGold(goldneed);
             if (village.or > goldneed) {
                 village.or -= goldneed;
-                village.nourriture += foodneeded;
+                village.nourriture += amount;
             } 
         } else {
             village.or -= goldneed;
-            village.nourriture += foodneeded;
+            village.nourriture += amount;
         }
     }
 
