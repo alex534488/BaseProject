@@ -4,16 +4,15 @@ using System.Collections.Generic;
 
 public class World : MonoBehaviour {
 
+    public Transform masterVillage;
     private List<Village> listeVillage;
 
 	// Use this for initialization
 	void Start ()
     {
-        Transform transformVillage = this.transform.Find("Villages");
-
-        for (int i =0; i < transformVillage.childCount;i++)
+        for (int i = 0; i < masterVillage.childCount; i++)
         {
-            listeVillage.Add(transformVillage.GetChild(i).GetComponent<Village>());
+            listeVillage.Add(masterVillage.GetChild(i).GetComponent<Village>());
         }
     }
 

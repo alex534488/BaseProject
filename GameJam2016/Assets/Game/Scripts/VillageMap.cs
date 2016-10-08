@@ -205,7 +205,10 @@ public class VillageMap {
         List<Village> list = getFrontVillage();
         foreach(Village vil in list)
         {
-            vil.isFrontier = true;
+            if(vil.isFrontier == false)
+            {
+                vil.OnBecomesFrontier();
+            }  
         }
     }
 

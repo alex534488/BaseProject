@@ -14,7 +14,7 @@ public class TestScript : MonoBehaviour
         Village[] tab = new Village[12];
         for(int i=0;i<12;i++)
         {
-            tab[i] = new Village(emp,i);
+            tab[i] = new Village(emp,i,"Hey");
         }
 
         VillageMap temp  =new VillageMap(cap, tab);
