@@ -32,6 +32,12 @@ public class Village : IUpdate {
     public bool isDestroyed = false;
     public bool isFrontier = false;
 
+    // Taxes
+    public int taxeOr = 20;
+    public int taxeNourriture = 10;
+    public int taxeArmy = 0;
+
+    // Classes
     public Empire empire;
     public Seigneur lord;
     public Barbare barbares;
@@ -97,6 +103,10 @@ public class Village : IUpdate {
 
     void UpdateCost()
     {
+        empire.capitale.or -= taxeOr;
+        empire.capitale.nourriture -= taxeNourriture;
+        empire.capitale.army -= taxeArmy;
+
         if (nourrirPopulation < 0) AddFood(nourrirPopulation * random);
         if (nourrirPopulation > 0) DecreaseFood(nourrirArmy * random + nourrirPopulation * random);
     }

@@ -12,8 +12,8 @@ public class Empire : IUpdate {
     List<string> nomseigneur = new List<string> { "Maximus", "Tullus", "Lucius", "Marcus", "Valentinus", "Decimus ", "Caeso", "Septimus", "Sextus", "Tiberius", "Faustus", "Octavius" };
 
     public List<Village> listVillage = new List<Village>();
-    Capitale capitale;
-    VillageMap map;
+    public Capitale capitale;
+    public VillageMap map;
 
 	void Start ()
     {
