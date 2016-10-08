@@ -23,14 +23,14 @@ public class Village : IUpdate {
     #endregion
 
     #region Valeurs Initiales
-    public int or = 10;
-    public int nourriture = 40;
+    public int or = 20;
+    public int nourriture = 10;
     public int army = 5;
     public int reputation = 100;
     #endregion
 
     #region Production 
-    public int productionOr = 1;
+    public int productionOr = 10;
     public int productionNourriture = 5;
     public int productionArmy = 0;
     #endregion
@@ -72,12 +72,8 @@ public class Village : IUpdate {
         while(nbPointProduction >0)
         {
             float choixRng = Random.value;
-            if(nbPointProduction>= valS && choixRng<0.1)
-            {
-                productionArmy += 1;
-                nbPointProduction -= valS;
-            }
-            else if (nbPointProduction >= valN && choixRng < 0.3)
+
+            if (nbPointProduction >= valN && choixRng < 0.3)
             {
                 productionNourriture += 1;
                 nbPointProduction -= valN;
