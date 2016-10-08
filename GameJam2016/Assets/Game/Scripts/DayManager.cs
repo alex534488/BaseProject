@@ -10,6 +10,7 @@ public class DayManager : MonoBehaviour{
     public Button nextDayButton;
     public Button currentday;
     public Button scoutButton;
+    public Button testButton;
 
     public World theWorld;
     public RequestManager requestManager;
@@ -28,6 +29,7 @@ public class DayManager : MonoBehaviour{
         requestManager.OnCompletionOfRequests.AddListener(OnAllRequestComplete);
         nextDayButton.onClick.AddListener(LaunchedDay);
         scoutButton.onClick.AddListener(ButtonScout);
+        testButton.onClick.AddListener(Test);
     }
 
     public void LaunchedDay()
@@ -57,5 +59,10 @@ public class DayManager : MonoBehaviour{
     void ButtonScout()
     {
         theWorld.empire.capitale.SendScout();
+    }
+
+    void Test()
+    {
+        theWorld.empire.capitale.SendCartToVillage(theWorld.empire.listVillage[0], Ressource_Type.gold, 10);
     }
 }

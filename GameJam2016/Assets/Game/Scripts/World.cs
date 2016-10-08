@@ -7,10 +7,11 @@ public class World : IUpdate {
     public static World main;
     public Empire empire;
     public BarbareManager barbareManager;
+    public CarriageManager carriageManager;
 
     public List<Barbare> listBarbare = new List<Barbare>();
 
-	void Start ()
+	public void Start ()
     {
         empire = new Empire();
         empire.Start();

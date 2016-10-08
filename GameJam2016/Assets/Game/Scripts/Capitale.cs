@@ -31,7 +31,7 @@ public class Capitale : Village {
         lord = new Seigneur(this);
     }
 	
-	public override void Update () // es ce que le override rajoute ou remplace?
+	public override void Update ()
     {
         base.Update();
     }
@@ -62,45 +62,8 @@ public class Capitale : Village {
         // Le scout revient dans X tours?
     }
 
-    void RequestVillage(Village village, Ressource_Type resource, int amount)
+    public void SendCartToVillage(Village destination, Ressource_Type resource, int amount)
     {
-        switch (resource)
-        {
-            case Ressource_Type.gold:
-                DecreaseGold(amount);
-                //village.lord.EmperorAsking(resource, amount, nbTour, false);
-                return;
-            case Ressource_Type.food:
-                DecreaseFood(amount);
-                //village.lord.EmperorAsking(resource, amount, nbTour, false);
-                return;
-            case Ressource_Type.army:
-                DecreaseArmy(amount);
-                //village.lord.EmperorAsking(resource, amount, nbTour, false);
-                return;
-            default:
-                return;
-        }
-    }
-
-    void GiveVillage(Village village, Ressource_Type resource, int amount)
-    {
-        switch (resource)
-        {
-            case Ressource_Type.gold:
-                DecreaseGold(amount);
-                //village.lord.EmperorAsking(resource, amount, nbTour, true);
-                return;
-            case Ressource_Type.food:
-                DecreaseFood(amount);
-                //village.lord.EmperorAsking(resource, amount, nbTour, true);
-                return;
-            case Ressource_Type.army:
-                DecreaseArmy(amount);
-                //village.lord.EmperorAsking(resource, amount, nbTour, true);
-                return;
-            default:
-                return;
-        }
+         CarriageManager.SendCarriage(new Carriage(nbTour, destination,resource,amount));
     }
 }
