@@ -46,6 +46,19 @@ public class Request {
 
     public void DoRequest()
     {
-        Dialog.DisplayText(message, choix,RequestManager.DoNextRequest);
+        CharacterEnter.Enter(OnCharacterEnter);
+    }
+
+    void OnCharacterEnter()
+    {
+        Dialog.DisplayText(message, choix, OnTextComplete);
+    }
+    void OnTextComplete()
+    {
+        CharacterEnter.Exit(OnCharacterExit);
+    }
+    void OnCharacterExit()
+    {
+        RequestManager.DoNextRequest();
     }
 }
