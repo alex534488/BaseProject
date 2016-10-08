@@ -101,5 +101,5 @@ public class Village : IUpdate {
         if (nourrirPopulation > 0) DecreaseFood(nourrirArmy * random + nourrirPopulation * random);
     }
 
-    void OnBecomesFrontier() { isFrontier = true; }
+    public void OnBecomesFrontier() { isFrontier = true; }
 }
