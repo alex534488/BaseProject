@@ -250,20 +250,23 @@ public class Village : IUpdate {
         {
             case Ressource_Type.gold:
                 {
-                    taxeOr = taxeOr + amount;
+                    // if (taxeOr > 0)
+                        taxeOr = taxeOr + amount;
                     return taxeOr;
                 }
 
             case Ressource_Type.food:
                 {
-                    taxeNourriture= taxeNourriture + amount;
+                    // if (taxeNourriture > 0)
+                        taxeNourriture = taxeNourriture + amount;
                     return taxeNourriture;
                 }
 
             default:
             case Ressource_Type.army:
                 {
-                    taxeArmy= taxeArmy + amount;
+                    // if (taxeArmy > 0)
+                        taxeArmy= taxeArmy + amount;
                     return taxeArmy;
                 }
         }
