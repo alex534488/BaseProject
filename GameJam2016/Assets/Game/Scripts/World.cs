@@ -11,29 +11,33 @@ public class World : MonoBehaviour {
     {
         Transform transformVillage = this.transform.Find("Villages");
 
-        for (int i =0; i< transformVillage.childCount;i++)
+        for (int i =0; i < transformVillage.childCount;i++)
         {
             listeVillage.Add(transformVillage.GetChild(i).GetComponent<Village>());
         }
     }
-	
-	// Update is called once per frame
-	void Update ()
-    {
-	
-	}
+
+    // Update is called once per frame
+    void Update() {}
 
     public Village GiveTarget() // Verifie la liste des villages et retourne le village frontiere le plus faible de la liste
     {
-        int minimalArmy = 0;
+        float minimalArmy = Mathf.Infinity;
+        Village bestTarget = null;
 
-        foreach (Village unVillage in listeVillage)
+        foreach (Village leVillage in listeVillage)
         {
-
-
+            if (leVillage.army <= minimalArmy) // && Village est une frontiere
+            {
+                bestTarget = leVillage;
+                minimalArmy = leVillage.army;
+            }
         }
 
-        Village unVillage = null;
-        return unVillage;
+        return bestTarget;
     }
+
+    
+
+
 }
