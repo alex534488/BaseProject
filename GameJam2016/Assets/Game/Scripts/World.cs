@@ -5,7 +5,6 @@ using System.Collections.Generic;
 public class World : MonoBehaviour {
 
     public static World main;
-
     public Empire empire;
 
     void Awake()
