@@ -84,7 +84,7 @@ public class RequestManager : MonoBehaviour
         listMessage = new List<string>();
         listMessage.Add("Faustus : '' Seigneur, un énorme incendie est en train de ravager la cité !");
         listMessage.Add("Tous les citoyens sont au pied d’œuvre pour contenir l'incendie.");
-        listMessage.Add("Nous demandons exceptionnellement l'intervention de l'armée pour nous aider.");
+        listMessage.Add("Je sais que les soldats, par tradition, n'ont pas le droit de franchir le Rubicon, mais nous demandons exceptionnellement l'intervention de l'armée nous aider.");
         listeChoix = new List<Dialog.Choix>();
         listeChoix.Add(new Dialog.Choix("Sauvez les femmes et les enfants en priorité, mais malheureusement, les soldats ne peuvent franchir le Rubicon.", delegate () { }));
         listeChoix.Add(new Dialog.Choix("Sauvez les réserve de nourritures en priorité, mais malheureusement, les soldats ne peuvent franchir le Rubicon.", delegate () { }));
@@ -96,6 +96,7 @@ public class RequestManager : MonoBehaviour
         ///////////////////////////////////////////////////////////////////
         listMessage = new List<string>();
         listMessage.Add("Proculus : ''Ave ! Je viens d'apercevoir douze vautours dans le ciel ! Les augures sont avec nous !");
+        listMessage.Add("Tous comme Romulus à la fondation de Rome!");
         listMessage.Add("D'après vous, quelles bonnes nouvelles nous annonce ces augures ?");
         listeChoix = new List<Dialog.Choix>();
         listeChoix.Add(new Dialog.Choix("D'excellente récolte évidement !", delegate () { }));
@@ -136,7 +137,7 @@ public class RequestManager : MonoBehaviour
         listeChoix = new List<Dialog.Choix>();
         listeChoix.Add(new Dialog.Choix("Sacrifiez du bétails !", delegate () { }));
         listeChoix.Add(new Dialog.Choix("Organisez une fête populaire où le bétail sera sacrifié et la population rassasié.", delegate () { }));
-        listeChoix.Add(new Dialog.Choix("Jupiter n'est qu'une représentation de Dieu ! Que la population se repentisse et le ciel se calmera !", delegate () { }));
+        listeChoix.Add(new Dialog.Choix("Jupiter n'est qu'une représentation du seul et unique Dieu ! Je ne craint pas ses foudres!", delegate () { }));
         request = new Request(listMessage, listeChoix);
         listRandomRequest.Add(request);
 
@@ -168,6 +169,90 @@ public class RequestManager : MonoBehaviour
 
         ///////////////////////////////////////////////////////////////////
 
+<<<<<<< HEAD
         listRandomRequest.Sort((a, b) => 1 - 2 * Random.Range(0, 1)); // Shuffle
+=======
+        listMessage = new List<string>();
+        listMessage.Add("Amenophis : Empereur, je suis marchand en quête de financement pour ma prochaine expéditions.");
+        listMessage.Add("J'aurai besoin de vivre ou de marins pour pouvoir lancer un expédition commerciale.");
+        listMessage.Add("Bien sûr, à mon retour, je partagerai avec vous les revenus de cette expédition.");
+        listeChoix = new List<Dialog.Choix>();
+        listeChoix.Add(new Dialog.Choix("Je vous offre le ravitaillement nécessaire à votre expédition !", delegate () { }));
+        listeChoix.Add(new Dialog.Choix("Je vous offre les marins nécessaires à votre expédition !", delegate () { }));
+        listeChoix.Add(new Dialog.Choix("Malheureusement je ne peux fiancer votre expédition pour le moment.", delegate () { }));
+        request = new Request(listMessage, listeChoix);
+        listRequest.Add(request);
+
+
+
+        ///////////////////////////////////////////////////////////////////
+
+        listMessage = new List<string>();
+        listMessage.Add("Decima : Bien le bonjour Empereur de Rome. Mon nom est Decima, et je viens vous parler d'une opportunité exceptionnelle !");
+        listMessage.Add("e représente un groupe de barbare qui souhaite vendre leurs services aux plus offrants.");
+        listMessage.Add("Contre une belle somme d'argent, ils accepteraient de rejoindre les rangs des soldats romains.");
+        listeChoix = new List<Dialog.Choix>();
+        listeChoix.Add(new Dialog.Choix("Intéressante proposition. Prévenez vos ''amis'', j'accepte leur offre.", delegate () { }));
+        listeChoix.Add(new Dialog.Choix("Jamais l'armée romaine n'acceptera des mercenaires sans loyauté en son sein. ", delegate () { }));
+        request = new Request(listMessage, listeChoix);
+        listRequest.Add(request);
+
+
+        ///////////////////////////////////////////////////////////////////
+
+        listMessage = new List<string>();
+        listMessage.Add("Lagarefix : Ave Empereur. J'ai eu vent d'une potion magique qui donnerai des pouvoirs surhumains à celui qui la boit.");
+        listMessage.Add("Une tel potion nous permettrait d'assurer la sécurité de l'empire romain !");
+        listMessage.Add("Malheureusement, j'ai besoins d'investissement pour poursuive mes recherches.");
+        listeChoix = new List<Dialog.Choix>();
+        listeChoix.Add(new Dialog.Choix("Bien sur, voici des financements qui devrait vous aider dans cette quête.", delegate () { }));
+        listeChoix.Add(new Dialog.Choix("Cette potion magique ne peut être ! Abandonnez vos recherches !", delegate () { }));
+        request = new Request(listMessage, listeChoix);
+        listRequest.Add(request);
+
+
+        ///////////////////////////////////////////////////////////////////
+
+        listMessage = new List<string>();
+        listMessage.Add("Consilius : Empereur, un navire commercial vient d’accoster à Ostie avec des propositions intéressantes.");
+        listMessage.Add("Il nous propose de lui acheter de la nourriture à des prix très intéressants !");
+        listeChoix = new List<Dialog.Choix>();
+        listeChoix.Add(new Dialog.Choix("Achetez-lui de la nourriture.", delegate () { }));
+        listeChoix.Add(new Dialog.Choix("Achetez-lui des mets exotiques pour la population.", delegate () { }));
+        listeChoix.Add(new Dialog.Choix("Nous n'avons rien à lui acheter.", delegate () { }));
+        request = new Request(listMessage, listeChoix);
+        listRequest.Add(request);
+
+
+        ///////////////////////////////////////////////////////////////////
+
+        listMessage = new List<string>();
+        listMessage.Add("Consilius : Empereur, un navire commercial vient d’accoster à Ostie avec des propositions intéressantes.");
+        listMessage.Add(" Il souhaite acheter une partie de notre nourriture à des prix très intéressants !");
+        listeChoix = new List<Dialog.Choix>();
+        listeChoix.Add(new Dialog.Choix("Vendez-lui un quart de nos resserve !", delegate () { }));
+        listeChoix.Add(new Dialog.Choix("Vendez-lui la moitié de nos resserve !", delegate () { }));
+        listeChoix.Add(new Dialog.Choix("Dite lui que Rome à besoins de cette nourriture.", delegate () { }));
+        request = new Request(listMessage, listeChoix);
+        listRequest.Add(request);
+
+
+        ///////////////////////////////////////////////////////////////////
+
+        listMessage = new List<string>();
+        listMessage.Add("Minorinus : Empereur, je viens de trouver un filon d'or exceptionnel sous la ville de Rome.");
+        listMessage.Add("Cela nécessiterait de l'investissement colossal pour l’exploiter, mais le jeu en vaut la bougie !");
+        listeChoix = new List<Dialog.Choix>();
+        listeChoix.Add(new Dialog.Choix("Bien, voici de l'or pour commencer l’exploitation.", delegate () { }));
+        listeChoix.Add(new Dialog.Choix("Je suis certain que la population sera ravie de participer à des travaux forcés dans une nouvelle mine !", delegate () { }));
+        listeChoix.Add(new Dialog.Choix("Les barbares sont aux portes de l'empire et vous vous voulez creuser des trous ? Non !", delegate () { }));
+        request = new Request(listMessage, listeChoix);
+        listRequest.Add(request);
+
+
+        ///////////////////////////////////////////////////////////////////
+
+
+>>>>>>> f7e1c92acf44e081fd8353e0cf3b328040227dfe
     }
 }

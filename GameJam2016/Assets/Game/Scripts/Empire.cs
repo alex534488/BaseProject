@@ -15,6 +15,10 @@ public class Empire : IUpdate {
     public Capitale capitale;
     public VillageMap map;
 
+    public int valeurNouriture = 1;
+    public int valeurOr = 4;
+    public int valeurSoldat = 8;
+
 	public void Start ()
     {
         for (int i = 0; i < nbVillage; i++)
