@@ -11,15 +11,12 @@ public class DayManager : MonoBehaviour{
         requestManager.Awake();
 	}
 	
-	public void Update ()
+
+    public void NextDay()
     {
         requestManager.onWaitingForRequest.Invoke();
         
         // Display Bouton Next Day
-	}
-
-    public void NextDay()
-    {
         theWorld.Update();
     }
 
