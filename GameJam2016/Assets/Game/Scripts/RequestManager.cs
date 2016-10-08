@@ -93,7 +93,7 @@ public class RequestManager : MonoBehaviour
         listMessage = new List<string>();
         listMessage.Add("Faustus : '' Seigneur, un énorme incendie est en train de ravager la cité !");
         listMessage.Add("Tous les citoyens sont au pied d’œuvre pour contenir l'incendie.");
-        listMessage.Add("Nous demandons exceptionnellement l'intervention de l'armée pour nous aider.");
+        listMessage.Add("Je sais que les soldats, par tradition, n'ont pas le droit de franchir le Rubicon, mais nous demandons exceptionnellement l'intervention de l'armée nous aider.");
         listeChoix = new List<Dialog.Choix>();
         listeChoix.Add(new Dialog.Choix("Sauvez les femmes et les enfants en priorité, mais malheureusement, les soldats ne peuvent franchir le Rubicon.", delegate () { }));
         listeChoix.Add(new Dialog.Choix("Sauvez les réserve de nourritures en priorité, mais malheureusement, les soldats ne peuvent franchir le Rubicon.", delegate () { }));
@@ -105,6 +105,7 @@ public class RequestManager : MonoBehaviour
         ///////////////////////////////////////////////////////////////////
         listMessage = new List<string>();
         listMessage.Add("Proculus : ''Ave ! Je viens d'apercevoir douze vautours dans le ciel ! Les augures sont avec nous !");
+        listMessage.Add("Tous comme Romulus à la fondation de Rome!");
         listMessage.Add("D'après vous, quelles bonnes nouvelles nous annonce ces augures ?");
         listeChoix = new List<Dialog.Choix>();
         listeChoix.Add(new Dialog.Choix("D'excellente récolte évidement !", delegate () { }));
@@ -145,7 +146,7 @@ public class RequestManager : MonoBehaviour
         listeChoix = new List<Dialog.Choix>();
         listeChoix.Add(new Dialog.Choix("Sacrifiez du bétails !", delegate () { }));
         listeChoix.Add(new Dialog.Choix("Organisez une fête populaire où le bétail sera sacrifié et la population rassasié.", delegate () { }));
-        listeChoix.Add(new Dialog.Choix("Jupiter n'est qu'une représentation de Dieu ! Que la population se repentisse et le ciel se calmera !", delegate () { }));
+        listeChoix.Add(new Dialog.Choix("Jupiter n'est qu'une représentation du seul et unique Dieu ! Je ne craint pas ses foudres!", delegate () { }));
         request = new Request(listMessage, listeChoix);
         listRequest.Add(request);
 
