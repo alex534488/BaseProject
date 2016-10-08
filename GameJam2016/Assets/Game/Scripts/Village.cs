@@ -3,27 +3,47 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.Events;
 
+public enum Ressource_Type
+{
+    gold, food, army, happiness
+}
+
+public struct Ligne
+{
+    public int total;
+    public int production;
+    public int taxe;
+}
+
 public class Village : IUpdate {
-    // Identifiant du village
+
+    #region Identifiant
     public int id = 0;
     public string nom;
+    #endregion
 
-    // Valeur initiale des attributs
+    #region Valeurs Initiales
     public int or = 50;
     public int nourriture = 50;
     public int army = 10;
+    #endregion
 
-    // Cout des ressources en or
+    // Modifier le cout de la nourriture et des armees
+    #region Cout Des Ressources En Or 
     public int coutNourriture = 25; // pour 15 (peut varier) - correspond au montant exact pour nourrir la population
     public int costArmy = 15; // pour 1 (peut varier)
+    #endregion
 
-    // Cout en nourriture
+    #region Depense de Nourriture
     public int nourrirArmy = 0;
     public int nourrirPopulation = 15;
+    #endregion
 
-    // Par tour
+    #region Production 
     public int productionOr = 2;
     public int productionNourriture = 1;
+    public int productionArmy = 0;
+    #endregion
 
     public int random = 0;
 
@@ -99,17 +119,144 @@ public class Village : IUpdate {
 
         if (productionNourriture > 0) AddFood(productionNourriture * random);
         if (productionNourriture < 0) DecreaseFood(productionNourriture * random);
-    }
+    } // To do : Change or remove random
 
     void UpdateCost()
     {
-        empire.capitale.or -= taxeOr;
-        empire.capitale.nourriture -= taxeNourriture;
-        empire.capitale.army -= taxeArmy;
+        Transfer(this, empire.capitale, Ressource_Type.gold, taxeOr);
+        Transfer(this, empire.capitale, Ressource_Type.food, taxeNourriture);
+        Transfer(this, empire.capitale, Ressource_Type.army, taxeArmy);
 
         if (nourrirPopulation < 0) AddFood(nourrirPopulation * random);
         if (nourrirPopulation > 0) DecreaseFood(nourrirArmy * random + nourrirPopulation * random);
     }
 
     public void OnBecomesFrontier() { isFrontier = true; }
+
+    #region Interaction avec UI
+    public static void Transfer(Village source, Village destinataire, Ressource_Type ressource, int amount)
+    {
+        switch (ressource)
+        {
+            case Ressource_Type.gold:
+                {
+                    if (source.or >= amount)
+                    {
+                        source.DecreaseGold(amount);
+                        destinataire.AddGold(amount);
+                    }
+
+                    else
+                    {
+                        // Le village source ne possede pas assez de ressources pour effectuer la transaction
+                    }
+                        break;
+                }
+
+            case Ressource_Type.food:
+                {
+                    if (source.nourriture >= amount)
+                    {
+                        source.DecreaseFood(amount);
+                        destinataire.AddFood(amount);
+                    }
+
+                    else
+                    {
+                        // Le village source ne possede pas assez de ressources pour effectuer la transaction
+                    }
+                    break;
+                }
+
+            case Ressource_Type.army:
+                {
+                    if (source.army >= amount)
+                    {
+                        source.DecreaseArmy(amount);
+                        destinataire.AddArmy(amount);
+                    }
+
+                    else
+                    {
+                        // Le village source ne possede pas assez de ressources pour effectuer la transaction
+                    }
+                    break;
+                }
+
+            case Ressource_Type.happiness:
+                {
+                    break;
+                }
+        }
+    }
+
+    public Ligne GetInfos(Ressource_Type ressource)
+    {
+        switch (ressource)
+        {
+            case Ressource_Type.gold:
+                {
+                    Ligne uneLigne = new Ligne();
+
+                    uneLigne.total = or;
+                    uneLigne.production = productionOr;
+                    uneLigne.taxe = taxeOr;
+
+                    return uneLigne;
+                }
+
+            case Ressource_Type.food:
+                {
+                    Ligne uneLigne = new Ligne();
+
+                    uneLigne.total = nourriture;
+                    uneLigne.production = productionNourriture;
+                    uneLigne.taxe = taxeNourriture;
+
+                    return uneLigne;
+                }
+
+            default:
+            case Ressource_Type.army:
+                {
+                    Ligne uneLigne = new Ligne();
+
+                    uneLigne.total = army;
+                    uneLigne.production = productionArmy;
+                    uneLigne.taxe = taxeArmy;
+
+                    return uneLigne;
+                }  
+        }   
+
+    }
+
+    public int ModifyTaxe(Ressource_Type ressource, int amount)
+    {
+        switch(ressource)
+        {
+            case Ressource_Type.gold:
+                {
+                    taxeOr = taxeOr + amount;
+                    return taxeOr;
+                }
+
+            case Ressource_Type.food:
+                {
+                    taxeNourriture= taxeNourriture + amount;
+                    return taxeNourriture;
+                }
+
+            default:
+            case Ressource_Type.army:
+                {
+                    taxeArmy= taxeArmy + amount;
+                    return taxeArmy;
+                }
+        }
+           
+    }
+
+    #endregion
+
 }
