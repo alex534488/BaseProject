@@ -30,7 +30,7 @@ public class DayManager : MonoBehaviour{
         requestManager.OnCompletionOfRequests.AddListener(OnAllRequestComplete);
         nextDayButton.onClick.AddListener(LaunchedDay);
         if(scoutButton != null) scoutButton.onClick.AddListener(ButtonScout);
-        if (scoutButton != null) sendcarriage.onClick.AddListener(Test);
+        if (sendcarriage != null) sendcarriage.onClick.AddListener(Test);
     }
 
     public void LaunchedDay()
@@ -43,8 +43,8 @@ public class DayManager : MonoBehaviour{
         
         // Desactive les boutons temporairement
         nextDayButton.GetComponent<Button>().interactable = false;
-        scoutButton.GetComponent<Button>().interactable = false;
-        sendcarriage.GetComponent<Button>().interactable = false;
+        if (scoutButton != null) scoutButton.GetComponent<Button>().interactable = false;
+        if (sendcarriage != null) sendcarriage.GetComponent<Button>().interactable = false;
 
         // Debute la phase des requetes
         PhaseRequete(); 
