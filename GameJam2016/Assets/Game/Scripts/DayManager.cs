@@ -8,7 +8,7 @@ public class DayManager : MonoBehaviour{
 
 	void Start ()
     {
-        requestManager.Start();
+        requestManager.Awake();
 	}
 	
 	public void Update ()
