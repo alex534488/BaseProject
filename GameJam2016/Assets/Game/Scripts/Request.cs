@@ -11,8 +11,9 @@ public class Request {
     List<Dialog.Choix> choix = new List<Dialog.Choix>();
     public bool choosen = false;
 
-    public Request(Seigneur messager,Ressource_Type resource, int amount)
+    public Request(Seigneur messager,Ressource_Type resource, int amount, bool asking = false, bool give = false)
     {
+
         switch (resource)
         {
             case Ressource_Type.gold:

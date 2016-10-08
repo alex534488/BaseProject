@@ -27,7 +27,7 @@ public class DayManager : MonoBehaviour{
 
         requestManager.OnCompletionOfRequests.AddListener(OnAllRequestComplete);
         nextDayButton.onClick.AddListener(LaunchedDay);
-        scoutButton.onClick.AddListener(SendScout);
+        scoutButton.onClick.AddListener(ButtonScout);
     }
 
     public void LaunchedDay()
@@ -54,9 +54,8 @@ public class DayManager : MonoBehaviour{
         nextDayButton.GetComponent<Button>().interactable = true;
     }
 
-    void SendScout()
+    void ButtonScout()
     {
-        //theWorld.empire.capitale.DecreaseGold();
-        //foreach ()
+        theWorld.empire.capitale.SendScout();
     }
 }

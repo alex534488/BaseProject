@@ -17,10 +17,10 @@ public class Seigneur : IUpdate {
     // Seuil de tolerance permis par le seigneur
     private int seuilNourriture;
     private int seuilGold; // or minimale permis, correspond au coutNourriture de village
-    private int seuilArmy;
+    public int seuilArmy;
 
     // Es ce que le seigneur a deja demander a l'emperor
-    private bool alreadyAsk = false;
+    public bool alreadyAsk = false;
 
     public Seigneur(Village village)
     {
@@ -129,5 +129,10 @@ public class Seigneur : IUpdate {
             default:
                 return;
         }
+    }
+
+    public void EmperorAsking(Ressource_Type resource, int amount)
+    {
+
     }
 }
