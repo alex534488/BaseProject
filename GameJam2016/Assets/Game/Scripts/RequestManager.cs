@@ -54,7 +54,6 @@ public class RequestManager : MonoBehaviour
     {
         // LISTE DES REQUETES ALEATOIRES
 
-        // SAMPLE - CREATION D'UNE REQUETE
         List<string> listMessage = new List<string>();
         listMessage.Add("Illius : Ave ! Je viens devant votre jugement car cet homme vient de voler mon cochon ! J’exige qu'il me le rende et qu'il soit punit !");
         listMessage.Add("Maximus : Mensonge monseigneur, ce cochon est le mien depuis des lunes !");
@@ -169,15 +168,17 @@ public class RequestManager : MonoBehaviour
 
         ///////////////////////////////////////////////////////////////////
         //TODO delegate
+        Request expeEvent = null;
         listMessage = new List<string>();
         listMessage.Add("Amenophis : Empereur, je suis marchand en quête de financement pour ma prochaine expéditions.");
         listMessage.Add("J'aurai besoin de vivre ou de marins pour pouvoir lancer un expédition commerciale.");
         listMessage.Add("Bien sûr, à mon retour, je partagerai avec vous les revenus de cette expédition.");
         listeChoix = new List<Dialog.Choix>();
-        listeChoix.Add(new Dialog.Choix("Je vous offre le ravitaillement nécessaire à votre expédition !", delegate () { }));
-        listeChoix.Add(new Dialog.Choix("Je vous offre les marins nécessaires à votre expédition !", delegate () { }));
+        listeChoix.Add(new Dialog.Choix("Je vous offre le ravitaillement nécessaire à votre expédition !", delegate () { Empire.instance.capitale.DecreaseFood(8); listRandomRequest.Remove(expeEvent);listRandomRequest.Add(ExpeditionEvent2()); }));
+        listeChoix.Add(new Dialog.Choix("Je vous offre les marins nécessaires à votre expédition !", delegate () { Empire.instance.capitale.DecreaseArmy(4); listRandomRequest.Remove(expeEvent); listRandomRequest.Add(ExpeditionEvent2()); }));
         listeChoix.Add(new Dialog.Choix("Malheureusement je ne peux fiancer votre expédition pour le moment.", delegate () { }));
         request = new Request(listMessage, listeChoix);
+        expeEvent = request;
         listRandomRequest.Add(request);
 
 
@@ -196,15 +197,16 @@ public class RequestManager : MonoBehaviour
 
 
         ///////////////////////////////////////////////////////////////////
-
+        Request potionEvent1 = null;
         listMessage = new List<string>();
         listMessage.Add("Lagarefix : Ave Empereur. J'ai eu vent d'une potion magique qui donnerai des pouvoirs surhumains à celui qui la boit.");
         listMessage.Add("Une tel potion nous permettrait d'assurer la sécurité de l'empire romain !");
         listMessage.Add("Malheureusement, j'ai besoins d'investissement pour poursuive mes recherches.");
         listeChoix = new List<Dialog.Choix>();
-        listeChoix.Add(new Dialog.Choix("Bien sur, voici des financements qui devrait vous aider dans cette quête.", delegate () { }));
+        listeChoix.Add(new Dialog.Choix("Bien sur, voici des financements qui devrait vous aider dans cette quête.", delegate () { Empire.instance.capitale.DecreaseGold(20);listRandomRequest.Remove(potionEvent1); listRandomRequest.Add(PotionEvent2()); }));
         listeChoix.Add(new Dialog.Choix("Cette potion magique ne peut être ! Abandonnez vos recherches !", delegate () { }));
         request = new Request(listMessage, listeChoix);
+        potionEvent1 = request;
         listRandomRequest.Add(request);
 
 
@@ -249,5 +251,50 @@ public class RequestManager : MonoBehaviour
 
         ///////////////////////////////////////////////////////////////////
 
+    }
+
+    private Request ExpeditionEvent2()
+    {
+
+        List<string> listMessage = new List<string>();
+        listMessage.Add("Amenophis : Empereur, je viens de revenir de mon expédition et elle fut une réussite.");
+        listMessage.Add("Je vous apporte donc votre pars !");
+        List<Dialog.Choix> listeChoix = new List<Dialog.Choix>();
+        listeChoix.Add(new Dialog.Choix("Des mets exotiques venant des quatre coins du globe ?", delegate () { Empire.instance.capitale.AddFood(8); }));
+        listeChoix.Add(new Dialog.Choix("De l'or en grandes quantité ?", delegate () { Empire.instance.capitale.AddGold(16); }));
+        listeChoix.Add(new Dialog.Choix("Des vêtements de soies pour le peuple ?", delegate () { Empire.instance.capitale.bonheur += 8; }));
+        Request request = new Request(listMessage, listeChoix);
+        return request;
+    }
+
+    private Request PotionEvent2()
+    {
+        Request potionEvent2 = null;
+        List<string> listMessage = new List<string>();
+        listMessage.Add("Lagarefix : Empereur, je viens de revenir d'un petit village gaulois qui résiste encore et toujours à l'envahisseur grâce à la potion magique.");
+        listMessage.Add("ls n'ont pas voulu me partager le secret la potion, mais ils mon offert des graines de blé de qualité exceptionnel !");
+        List<Dialog.Choix> listeChoix = new List<Dialog.Choix>();
+        listeChoix.Add(new Dialog.Choix("Parfait ! Faite pousser ce blé !", delegate () { Empire.instance.capitale.capitaleNourriture += 1; }));
+        listeChoix.Add(new Dialog.Choix("C'est intolérable, préparer une armée pour détruire ce village ! Et n'oubliez pas de faire pousser ce blé !"
+            , delegate () {
+                 Empire.instance.capitale.DecreaseArmy(6); Empire.instance.capitale.capitaleNourriture += 1;
+                 listRandomRequest.Remove(potionEvent2); listRandomRequest.Add(PotionEvent3());
+            }));
+        Request request = new Request(listMessage, listeChoix);
+        potionEvent2 = request;
+        return request;
+    }
+
+    private Request PotionEvent3()
+    {
+
+        List<string> listMessage = new List<string>();
+        listMessage.Add("Leopardus : Empereur, l'armée que nous avions envoyée pour détruire ce village à été détruite par deux gaulois.");
+        listMessage.Add(" Mais bonne nouvelle ! Je suis encore entier !");
+        List<Dialog.Choix> listeChoix = new List<Dialog.Choix>();
+        listeChoix.Add(new Dialog.Choix("Retournez dans les rangs de l'armée !", delegate () { Empire.instance.capitale.AddArmy(1); }));
+        listeChoix.Add(new Dialog.Choix("Faite moi disparaitre cet incompétent !", delegate () { Empire.instance.capitale.AddGold(4); }));
+        Request request = new Request(listMessage, listeChoix);
+        return request;
     }
 }
