@@ -2,7 +2,8 @@
 using System.Collections;
 using UnityEngine.UI;
 
-public class CapitalStat : MonoBehaviour {
+public class CapitalStat : MonoBehaviour
+{
     public Ressource_Type type;
     public Text totalText;
     public Text profitText;
@@ -15,7 +16,18 @@ public class CapitalStat : MonoBehaviour {
     }
     void UpdateDisplay()
     {
-        if (profitText != null) totalText.text = "" + capital.GetTotal(type);
-        if(profitText != null) profitText.text = "" + capital.GetBilan(type);
+        if (totalText != null) totalText.text = "" + capital.GetTotal(type);
+        if (profitText != null)
+        {
+            if(type == Ressource_Type.happiness)
+            {
+
+            }
+            else
+            {
+                int bilan = capital.GetBilan(type);
+                profitText.text = "" + (bilan > 0 ? "+" : "") + bilan;
+            }
+        }
     }
 }
