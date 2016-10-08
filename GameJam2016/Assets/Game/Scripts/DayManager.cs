@@ -3,18 +3,19 @@ using System.Collections;
 
 public class DayManager : MonoBehaviour{
 
+    public static DayManager main;
+
     public World theWorld;
     public RequestManager requestManager;
 
-	void Start ()
+    void Awake()
     {
-        requestManager.Awake();
-	}
-	
+        if (main == null) main = this;
+    }
 
     public void NextDay()
     {
-        requestManager.onWaitingForRequest.Invoke();
+        requestManager.NewDay();
         
         // Display Bouton Next Day
         theWorld.Update();
