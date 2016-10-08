@@ -24,12 +24,9 @@ public class RequestManager : MonoBehaviour {
 
         GetRandomRequest(10);
 
-        foreach (Request request in listRequest)
-        {
-            request.DoRequest();
-            request.choosen = false;
-            listRequest.Remove(request);
-        }
+        request.DoRequest();
+        request.choosen = false;
+        listRequest.Remove(request);
     }
 
     public static void SendRequest(Request request)
@@ -54,6 +51,14 @@ public class RequestManager : MonoBehaviour {
             if (choosenRequest.choosen) continue;
             listRequest.Add(choosenRequest);
         }
+    }
+
+    void DoNextRequest()
+    {
+        Request current = listRequest[0];
+        current.DoRequest();
+        current.choosen = false;
+        listRequest.Remove(current);
     }
 
     void CreateRandomRequest()
