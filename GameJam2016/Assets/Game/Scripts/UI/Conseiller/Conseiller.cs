@@ -9,7 +9,7 @@ public class Conseiller : MonoBehaviour
     public Ressource_Type requestType;
     public Button button;
 
-    RessourceManager manager;
+    bool loading = false;
 
     void Awake()
     {
@@ -18,14 +18,28 @@ public class Conseiller : MonoBehaviour
 
     void OnClick()
     {
+        if (loading) return;
         //load screen
+        loading = true;
         SceneManager.LoadScene(ConseillerScreen.SCENE, LoadSceneMode.Additive);
-        SceneManager.sceneLoaded += OnSceneLoaded;
+        SceneManager.sceneLoaded += OnSceneLoading;
     }
 
-    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    IEnumerator WaitForSceneLoad(Scene scene)
     {
-        SceneManager.sceneLoaded -= OnSceneLoaded;
+        while (!scene.isLoaded) yield return null;
+        OnSceneLoaded(scene);
+    }
+    void OnSceneLoading(Scene scene, LoadSceneMode mode)
+    {
+        SceneManager.sceneLoaded -= OnSceneLoading;
+        if (scene.isLoaded) StartCoroutine(WaitForSceneLoad(scene));
+        else OnSceneLoaded(scene);
+    }
+
+    void OnSceneLoaded(Scene scene)
+    {
+        loading = false;
         ConseillerScreen screen = scene.GetRootGameObjects()[0].GetComponent<ConseillerScreen>();
         screen.Init(World.main.empire.listVillage, requestType);
     }
