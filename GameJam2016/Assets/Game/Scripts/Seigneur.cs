@@ -37,14 +37,17 @@ public class Seigneur : IUpdate {
 
         seuilNourriture = village.nourrirPopulation + village.nourrirArmy;
 
-        if (village.nourriture < seuilNourriture) NeedFood();
-        if (village.or < seuilGold) NeedGold(seuilGold);
-        if (village.army < seuilArmy) NeedArmy(seuilArmy - village.army);
+        alreadyAsk = false;
+
+        if (village.or < seuilGold) NeedGold(seuilGold); 
+        else if (village.nourriture < seuilNourriture) NeedFood();
+        else if (village.army < seuilArmy) NeedArmy(seuilArmy - village.army);
+        // else tout va bien alors proposition d'investissement possible
     }
 
     void Death()
     {
-        village.DestructionVillage();
+        //village.DestructionVillage();
         // DO: this meurt
     }
 
@@ -53,28 +56,57 @@ public class Seigneur : IUpdate {
         int foodneeded = village.nourrirPopulation + village.nourrirArmy;
         int goldneed = seuilGold*Mathf.RoundToInt(foodneeded/village.coutNourriture);
 
-        GoAskEmperor(Ressource_Type.food, foodneeded);
+        if (!alreadyAsk)
+        {
+            GoAskEmperor(Ressource_Type.food, foodneeded);
+            alreadyAsk = true;
+        }
 
-        if (village.or < goldneed) NeedGold(goldneed);
-        village.or -= goldneed;
-        village.nourriture += foodneeded;
+        if (village.nourriture < seuilNourriture)
+        {
+            if (village.or < goldneed) NeedGold(goldneed);
+            if (village.or > goldneed) {
+                village.or -= goldneed;
+                village.nourriture += foodneeded;
+            } else {
+                //famine
+                Death();
+            }
+        } else {
+            village.or -= goldneed;
+            village.nourriture += foodneeded;
+        }
     }
 
     void NeedGold(int amount)
     {
         if (!alreadyAsk)
         {
-            GoAskEmperor(Ressource_Type.gold, -1);
+            GoAskEmperor(Ressource_Type.gold, amount);
+            alreadyAsk = true;
         }
     }
 
     void NeedArmy(int amount)
     {
-        GoAskEmperor(Ressource_Type.army, amount);
+        int goldneeded = village.costArmy * amount;
 
-        if (village.or < village.costArmy) NeedGold(village.costArmy);
-        village.or -= village.costArmy * amount;
-        village.army += amount;
+        if (!alreadyAsk)
+        {
+            GoAskEmperor(Ressource_Type.army, amount);
+            alreadyAsk = true;
+        }
+
+        if (village.or < goldneeded) {
+            NeedGold(goldneeded); ;
+            if (village.or > goldneeded){
+                village.or -= goldneeded;
+                village.army += amount;
+            }
+        } else {
+            village.or -= goldneeded;
+            village.army += amount;
+        }
     }
 
     void GoAskEmperor(Ressource_Type resource, int amount)

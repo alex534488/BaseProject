@@ -39,7 +39,7 @@ public class Dialog : MonoBehaviour
             Debug.LogError("Master is null.");
             return;
         }
-        master.MasterDisplayText(messageComplet, listeChoix);
+        master.MasterDisplayText(messageComplet, listeChoix, dialogComplete);
     }
 
     public static bool IsInDialog() { return master.isInDialog; }
@@ -83,6 +83,7 @@ public class Dialog : MonoBehaviour
         if (isInDialog) return;
 
         isInDialog = true;
+        this.dialogComplete = dialogComplete;
 
         queue = new List<object>();
         currentDialogTexts = new List<DialogText>();

@@ -8,22 +8,19 @@ public class RequestManager : MonoBehaviour
 
     static RequestManager requestManager;
 
-    // public int nbRequest = 5;
     List<Request> listRequest = new List<Request>();
     List<Request> listRandomRequest = new List<Request>();
-    //public UnityEvent onWaitingForRequest = new UnityEvent();
+
+    public UnityEvent OnCompletionOfRequests = new UnityEvent();
 
     void Awake()
     {
         if (requestManager == null) requestManager = this;
         GenerateRandomRequests();
-        //onWaitingForRequest.AddListener(NewDay);
     }
 
     public void NewDay()
     {
-        //if(listRequest.Count <= nbRequest){ GetRandomRequest(nbRequest - listRequest.Count); } nombre de requete limite
-
         GetRandomRequest(1);
 
         listRequest[0].DoRequest();
@@ -32,30 +29,24 @@ public class RequestManager : MonoBehaviour
     public static void SendRequest(Request request)
     {
         requestManager.listRequest.Add(request);
-
-        /* Ancien systeme pour un nombre maximum de requetes
-        if (listRequest.Count <= nbRequest)
-        {
-            request.choosen = true;
-            listRequest.Add(request);
-        }
-        // On prend les requetes restante et on...
-        */
     }
 
     void GetRandomRequest(int amount)
     {
-        for (int i = 0; i < amount; i++)
-        {
-            Request choosenRequest = listRandomRequest[Random.Range(0, listRandomRequest.Count)];
-            if (choosenRequest.choosen) continue;
-            listRequest.Add(choosenRequest);
-        }
+        listRequest.Add(listRandomRequest[0]);
+        listRandomRequest.Remove(listRandomRequest[0]);
+        if(listRandomRequest.Count <=0) { GenerateRandomRequests(); }
     }
 
     public static void DoNextRequest()
     {
         requestManager.listRequest.Remove(requestManager.listRequest[0]);
+        if(requestManager.listRequest.Count <= 0)
+        {
+            //requestManager.listRequest.Clear();
+            requestManager.OnCompletionOfRequests.Invoke();
+            return;
+        }
         requestManager.listRequest[0].DoRequest();
     }
 
@@ -72,7 +63,7 @@ public class RequestManager : MonoBehaviour
         listeChoix.Add(new Dialog.Choix("Puisque ce cochon vous pose problème, je vais vous le retirer.", delegate () { }));
         listeChoix.Add(new Dialog.Choix("Tant de vigueur pour un cochon, vous ferez de bon soldat !", delegate () { }));
         Request request = new Request(listMessage, listeChoix);
-        listRequest.Add(request);
+        listRandomRequest.Add(request);
 
 
         ///////////////////////////////////////////////////////////////////
@@ -86,7 +77,7 @@ public class RequestManager : MonoBehaviour
         listeChoix.Add(new Dialog.Choix("Chaque soldat à un rôle crucial dans l'armée, mais j'ai espoir que cette compensation en or puisse couvrir vos besoins pendant son absence.", delegate () { }));
         listeChoix.Add(new Dialog.Choix("Malheureusement, en ces temps difficiles, chaque famille porte la même histoire, je ne peux accéder à votre requête.", delegate () { }));
         request = new Request(listMessage, listeChoix);
-        listRequest.Add(request);
+        listRandomRequest.Add(request);
 
         ///////////////////////////////////////////////////////////////////
 
@@ -99,7 +90,7 @@ public class RequestManager : MonoBehaviour
         listeChoix.Add(new Dialog.Choix("Sauvez les réserve de nourritures en priorité, mais malheureusement, les soldats ne peuvent franchir le Rubicon.", delegate () { }));
         listeChoix.Add(new Dialog.Choix("Que les armées franchisent le Rubicon et aillent aider Rome !", delegate () { }));
         request = new Request(listMessage, listeChoix);
-        listRequest.Add(request);
+        listRandomRequest.Add(request);
 
 
         ///////////////////////////////////////////////////////////////////
@@ -111,7 +102,7 @@ public class RequestManager : MonoBehaviour
         listeChoix.Add(new Dialog.Choix("Cela annonce des réussites militaires !", delegate () { }));
         listeChoix.Add(new Dialog.Choix("Cela annonce un retour prochain à la Pax Romana !", delegate () { }));
         request = new Request(listMessage, listeChoix);
-        listRequest.Add(request);
+        listRandomRequest.Add(request);
 
 
         ///////////////////////////////////////////////////////////////////
@@ -123,7 +114,7 @@ public class RequestManager : MonoBehaviour
         listeChoix.Add(new Dialog.Choix("Payer ce sage, et faite lui comprendre qu'il a tous intérêts à stopper la maladie s’il veut conserver sa tête !", delegate () { }));
         listeChoix.Add(new Dialog.Choix("Faite pendre cet escroc et réquisitionnez ses affaires personnelles !", delegate () { }));
         request = new Request(listMessage, listeChoix);
-        listRequest.Add(request);
+        listRandomRequest.Add(request);
 
 
         ///////////////////////////////////////////////////////////////////
@@ -135,7 +126,7 @@ public class RequestManager : MonoBehaviour
         listeChoix.Add(new Dialog.Choix("Organiser un banquet pour tous avec la cargaison.", delegate () { }));
         listeChoix.Add(new Dialog.Choix("Vendez la cargaison et faite moi parvenir les recettes.", delegate () { }));
         request = new Request(listMessage, listeChoix);
-        listRequest.Add(request);
+        listRandomRequest.Add(request);
 
 
         ///////////////////////////////////////////////////////////////////
@@ -147,7 +138,7 @@ public class RequestManager : MonoBehaviour
         listeChoix.Add(new Dialog.Choix("Organisez une fête populaire où le bétail sera sacrifié et la population rassasié.", delegate () { }));
         listeChoix.Add(new Dialog.Choix("Jupiter n'est qu'une représentation de Dieu ! Que la population se repentisse et le ciel se calmera !", delegate () { }));
         request = new Request(listMessage, listeChoix);
-        listRequest.Add(request);
+        listRandomRequest.Add(request);
 
 
         ///////////////////////////////////////////////////////////////////
@@ -158,7 +149,7 @@ public class RequestManager : MonoBehaviour
         listeChoix.Add(new Dialog.Choix("Dites-leur que l'armée et la sécurité de toutes les villes romaines sont ma principale préoccupation.", delegate () { }));
         listeChoix.Add(new Dialog.Choix("Dites-leur que le bonheur de chaque citoyen de capital est la priorité de l’Empereur.", delegate () { }));
         request = new Request(listMessage, listeChoix);
-        listRequest.Add(request);
+        listRandomRequest.Add(request);
 
 
         ///////////////////////////////////////////////////////////////////
@@ -172,11 +163,11 @@ public class RequestManager : MonoBehaviour
         listeChoix.Add(new Dialog.Choix("Créez de faux mauvais augures pour apeurer les Païens.", delegate () { }));
         listeChoix.Add(new Dialog.Choix("Créez l'étincelle qui enflammera le débat, et envoyez l'armée pour nettoyer les rue de ces croyants imbéciles !", delegate () { }));
         request = new Request(listMessage, listeChoix);
-        listRequest.Add(request);
+        listRandomRequest.Add(request);
 
 
         ///////////////////////////////////////////////////////////////////
 
-
+        listRandomRequest.Sort((a, b) => 1 - 2 * Random.Range(0, 1)); // Shuffle
     }
 }

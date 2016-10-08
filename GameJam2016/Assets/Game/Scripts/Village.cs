@@ -26,6 +26,7 @@ public class Village : IUpdate {
     public int or = 50;
     public int nourriture = 50;
     public int army = 10;
+    public int reputation = 10;
     #endregion
 
     // Modifier le cout de la nourriture et des armees
@@ -75,6 +76,7 @@ public class Village : IUpdate {
         AddGold((int)(Random.value * 100));
         AddFood((int)(Random.value * 100));
         AddArmy((int)(Random.value * 10));
+        AddReputation((int)(Random.value * 10));
 
         // Nouveau random constant pour l'update des ressources
         random = (int)(Random.value * 100);
@@ -118,6 +120,10 @@ public class Village : IUpdate {
     void DecreaseArmy(int amount){ army -= amount; }
 
     void AddArmy(int amount){ army += amount; }
+
+    void DecreaseReputation(int amount) { army -= amount; }
+
+    void AddReputation(int amount) { army += amount; }
     #endregion
 
     // To do : Change or remove random
