@@ -8,8 +8,6 @@ public class World : IUpdate {
     public Empire empire;
     public BarbareManager barbareManager;
 
-    public List<Barbare> listBarbare = new List<Barbare>();
-
 	public void Start ()
     {
         empire = new Empire();
