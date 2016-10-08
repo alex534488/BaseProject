@@ -5,15 +5,21 @@ using UnityEngine.Events;
 
 public class Seigneur : IUpdate {
 
+    // Le village dirige par le seigneur
     public Village village;
 
+    // Nom du Seigneur
     public string nom;
+
+    // Cout pour envoyer un message a l'Empereur
+    public int coutMessager = 10;
 
     // Seuil de tolerance permis par le seigneur
     private int seuilNourriture;
     private int seuilGold; // or minimale permis, correspond au coutNourriture de village
     private int seuilArmy;
 
+    // Es ce que le seigneur a deja demander a l'emperor
     private bool alreadyAsk = false;
 
     public Seigneur(Village village)
@@ -26,7 +32,6 @@ public class Seigneur : IUpdate {
 	
 	public void Update ()
     {
-        if (village.isDestroyed) Death();
 
         if (village.isAttacked)
         {
@@ -47,7 +52,6 @@ public class Seigneur : IUpdate {
 
     void Death()
     {
-        //village.DestructionVillage();
         // DO: this meurt
     }
 
@@ -68,10 +72,7 @@ public class Seigneur : IUpdate {
             if (village.or > goldneed) {
                 village.or -= goldneed;
                 village.nourriture += foodneeded;
-            } else {
-                //famine
-                Death();
-            }
+            } 
         } else {
             village.or -= goldneed;
             village.nourriture += foodneeded;
@@ -111,16 +112,19 @@ public class Seigneur : IUpdate {
 
     void GoAskEmperor(Ressource_Type resource, int amount)
     {
+        if (village.or < coutMessager) return;
+        village.DecreaseGold(coutMessager);
+
         switch (resource)
         {
             case Ressource_Type.gold:
-                RequestManager.SendRequest(new Request(resource,amount));
+                RequestManager.SendRequest(new Request(this,resource,amount));
                 return;
             case Ressource_Type.food:
-                RequestManager.SendRequest(new Request(resource, amount));
+                RequestManager.SendRequest(new Request(this,resource, amount));
                 return;
             case Ressource_Type.army:
-                RequestManager.SendRequest(new Request(resource, amount));
+                RequestManager.SendRequest(new Request(this,resource, amount));
                 return;
             default:
                 return;
