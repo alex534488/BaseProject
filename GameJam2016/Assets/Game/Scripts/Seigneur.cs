@@ -7,6 +7,8 @@ public class Seigneur : IUpdate {
 
     public Village village;
 
+    public string nom;
+
     // Seuil de tolerance permis par le seigneur
     private int seuilNourriture;
     private int seuilGold; // or minimale permis, correspond au coutNourriture de village
@@ -32,9 +34,11 @@ public class Seigneur : IUpdate {
             int incertitude = Mathf.RoundToInt((seuilArmy/100)*20);
             seuilArmy += Random.Range(-incertitude, incertitude+1);
         }
-        
+
+        seuilNourriture = village.nourrirPopulation + village.nourrirArmy;
+
         if (village.nourriture < seuilNourriture) NeedFood();
-        if (village.or < seuilGold) NeedGold();
+        if (village.or < seuilGold) NeedGold(seuilGold);
         if (village.army < seuilArmy) NeedArmy(seuilArmy - village.army);
     }
 
@@ -46,14 +50,17 @@ public class Seigneur : IUpdate {
 
     void NeedFood()
     {
-        GoAskEmperor("Nourriture", village.nourrirPopulation);
+        int foodneeded = village.nourrirPopulation + village.nourrirArmy;
+        int goldneed = seuilGold*Mathf.RoundToInt(foodneeded/village.coutNourriture);
 
-        if (village.or < seuilGold) NeedGold();
-        village.or -= village.coutNourriture;
-        village.nourriture += village.nourrirPopulation;
+        GoAskEmperor("Nourriture", foodneeded);
+
+        if (village.or < goldneed) NeedGold(goldneed);
+        village.or -= goldneed;
+        village.nourriture += foodneeded;
     }
 
-    void NeedGold()
+    void NeedGold(int amount)
     {
         if (!alreadyAsk)
         {
@@ -65,7 +72,7 @@ public class Seigneur : IUpdate {
     {
         GoAskEmperor("Army", amount);
 
-        if (village.or < village.costArmy) NeedGold();
+        if (village.or < village.costArmy) NeedGold(village.costArmy);
         village.or -= village.costArmy * amount;
         village.army += amount;
     }
