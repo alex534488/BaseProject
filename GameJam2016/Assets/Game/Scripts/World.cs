@@ -10,10 +10,6 @@ public class World : IUpdate {
 
     public List<Barbare> listBarbare = new List<Barbare>();
 
-    void Awake()
-    {
-        if (main == null) main = this;
-
 	void Start ()
     {
         empire = new Empire();
