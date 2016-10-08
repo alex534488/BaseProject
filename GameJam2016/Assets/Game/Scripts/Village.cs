@@ -6,6 +6,7 @@ using UnityEngine.Events;
 public class Village : IUpdate {
     // Identifiant du village
     public int id = 0;
+    public string nom;
 
     // Valeur initiale des attributs
     public int or = 50;
@@ -16,10 +17,13 @@ public class Village : IUpdate {
     public int coutNourriture = 25; // pour 15 (peut varier) - correspond au montant exact pour nourrir la population
     public int costArmy = 15; // pour 1 (peut varier)
 
+    // Cout en nourriture
+    public int nourrirArmy = 0;
+    public int nourrirPopulation = 15;
+
     // Par tour
     public int productionOr = 2;
     public int productionNourriture = 1;
-    public int nourrirPopulation = 15; 
 
     public int random = 0;
 
@@ -28,14 +32,22 @@ public class Village : IUpdate {
     public bool isDestroyed = false;
     public bool isFrontier = false;
 
+    // Taxes
+    public int taxeOr = 20;
+    public int taxeNourriture = 10;
+    public int taxeArmy = 0;
+
+    // Classes
     public Empire empire;
     public Seigneur lord;
     public Barbare barbares;
 
-    public Village(Empire empire, int id)
+    public Village(Empire empire, int id, string nomvillage, string nomseigneur)
     {
         this.empire = empire;
         this.id = id;
+        this.nom = nomvillage;
+        this.lord.nom = nomseigneur;
 
         // Ressource de depart aleatoire
         AddGold((int)(Random.value * 100));
@@ -51,6 +63,8 @@ public class Village : IUpdate {
 	public virtual void Update ()
     {
         random = (int)(Random.value * 100);
+
+        nourrirArmy = 2 * army;
 
         UpdateResources();
 
@@ -89,9 +103,13 @@ public class Village : IUpdate {
 
     void UpdateCost()
     {
+        empire.capitale.or -= taxeOr;
+        empire.capitale.nourriture -= taxeNourriture;
+        empire.capitale.army -= taxeArmy;
+
         if (nourrirPopulation < 0) AddFood(nourrirPopulation * random);
-        if (nourrirPopulation > 0) DecreaseFood(nourrirPopulation * random);
+        if (nourrirPopulation > 0) DecreaseFood(nourrirArmy * random + nourrirPopulation * random);
     }
 
-    void OnBecomesFrontier() { isFrontier = true; }
+    public void OnBecomesFrontier() { isFrontier = true; }
 }
