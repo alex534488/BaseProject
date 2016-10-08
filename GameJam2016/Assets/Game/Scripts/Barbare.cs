@@ -8,7 +8,7 @@ public class Barbare : IUpdate
     private Village actualTarget;
     private bool batailleEnCours = false;
 
-    private int nbBarbares;
+    public int nbBarbares;
     private int nbSoldats;
     private int nbUnites;
 
