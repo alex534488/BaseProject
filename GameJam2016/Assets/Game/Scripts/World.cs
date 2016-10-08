@@ -5,7 +5,6 @@ using System.Collections.Generic;
 public class World : MonoBehaviour {
 
     public static World main;
-
     public Empire empire;
 
     void Awake()
@@ -21,7 +20,10 @@ public class World : MonoBehaviour {
     }
 
     // Update is called once per frame
-    void Update() {}
+    public void Update()
+    {
+        empire.Update();
+    }
 
     public Village GiveTarget() // Verifie la liste des villages et retourne le village frontiere le plus faible de la liste
     {

@@ -27,7 +27,7 @@ public class Dialog : MonoBehaviour
     /// <summary>
     /// Spawn la boite de text. Affiche le message puis propose les choix s'il n'en a
     /// </summary>
-    public static void DisplayText(List<string> messageComplet, List<Choix> listeChoix = null)
+    public static void DisplayText(List<string> messageComplet, List<Choix> listeChoix = null, UnityAction dialogComplete = null)
     {
         if (IsInDialog())
         {
@@ -56,6 +56,8 @@ public class Dialog : MonoBehaviour
     private List<object> queue = new List<object>();
     private bool isInDialog = false;
 
+    private UnityAction dialogComplete;
+
     public void Test()
     {
         List<string> message = new List<string>();
@@ -76,11 +78,15 @@ public class Dialog : MonoBehaviour
         if (master == null) master = this;
     }
 
-    public void MasterDisplayText(List<string> messageComplet, List<Choix> listeChoix = null)
+    public void MasterDisplayText(List<string> messageComplet, List<Choix> listeChoix = null, UnityAction dialogComplete = null)
     {
         if (isInDialog) return;
 
         isInDialog = true;
+
+        queue = new List<object>();
+        currentDialogTexts = new List<DialogText>();
+
         currentDialogBox = Instantiate(dialogBoxPrefab.gameObject).GetComponent<DialogBox>();
         currentDialogBox.transform.SetParent(transform, false);
         currentDialogBox.button.onClick.AddListener(OnBoxClick);
@@ -158,6 +164,7 @@ public class Dialog : MonoBehaviour
         currentDialogBox = null;
 
         isInDialog = false;
+        if (dialogComplete != null) dialogComplete.Invoke();
     }
 
 }
