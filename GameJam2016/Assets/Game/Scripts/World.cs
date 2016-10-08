@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class World : MonoBehaviour {
+public class World : IUpdate {
 
     public static World main;
     public Empire empire;
@@ -13,7 +13,6 @@ public class World : MonoBehaviour {
     void Awake()
     {
         if (main == null) main = this;
-    }
 
 	void Start ()
     {
@@ -42,8 +41,4 @@ public class World : MonoBehaviour {
 
         return bestTarget;
     }
-
-    
-
-
 }

@@ -5,11 +5,13 @@ using UnityEngine.Events;
 
 public class Request {
 
+    public Seigneur messager;
+
     List<string> message = new List<string>();
     List<Dialog.Choix> choix = new List<Dialog.Choix>();
     public bool choosen = false;
 
-    public Request(Ressource_Type resource, int amount)
+    public Request(Seigneur messager,Ressource_Type resource, int amount)
     {
         switch (resource)
         {
@@ -44,6 +46,19 @@ public class Request {
 
     public void DoRequest()
     {
-        Dialog.DisplayText(message, choix,RequestManager.DoNextRequest);
+        CharacterEnter.Enter(OnCharacterEnter);
+    }
+
+    void OnCharacterEnter()
+    {
+        Dialog.DisplayText(message, choix, OnTextComplete);
+    }
+    void OnTextComplete()
+    {
+        CharacterEnter.Exit(OnCharacterExit);
+    }
+    void OnCharacterExit()
+    {
+        RequestManager.DoNextRequest();
     }
 }
