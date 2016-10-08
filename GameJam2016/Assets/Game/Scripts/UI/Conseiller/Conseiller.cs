@@ -19,6 +19,12 @@ public class Conseiller : MonoBehaviour
     void OnClick()
     {
         if (loading) return;
+
+        for (int i = 0; i < SceneManager.sceneCount; i++)
+        {
+            if (SceneManager.GetSceneAt(i).name == ConseillerScreen.SCENE) return;
+        }
+
         //load screen
         loading = true;
         SceneManager.LoadScene(ConseillerScreen.SCENE, LoadSceneMode.Additive);
@@ -33,7 +39,7 @@ public class Conseiller : MonoBehaviour
     void OnSceneLoading(Scene scene, LoadSceneMode mode)
     {
         SceneManager.sceneLoaded -= OnSceneLoading;
-        if (scene.isLoaded) StartCoroutine(WaitForSceneLoad(scene));
+        if (!scene.isLoaded) StartCoroutine(WaitForSceneLoad(scene));
         else OnSceneLoaded(scene);
     }
 
