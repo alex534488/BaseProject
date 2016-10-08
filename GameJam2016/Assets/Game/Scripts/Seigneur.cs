@@ -12,12 +12,14 @@ public class Seigneur : IUpdate {
     private int seuilGold; // or minimale permis, correspond au coutNourriture de village
     private int seuilArmy;
 
+    private bool alreadyAsk = false;
+
     public Seigneur(Village village)
     {
         this.village = village;
         seuilNourriture = village.nourrirPopulation;
         seuilGold = village.coutNourriture;
-        seuilArmy = 10; 
+        seuilArmy = 0; 
     }
 	
 	public void Update ()
@@ -26,7 +28,9 @@ public class Seigneur : IUpdate {
 
         if (village.isAttacked)
         {
-
+            seuilArmy = village.barbares.nbBarbares;
+            int incertitude = Mathf.RoundToInt((seuilArmy/100)*20);
+            seuilArmy += Random.Range(-incertitude, incertitude+1);
         }
         
         if (village.nourriture < seuilNourriture) NeedFood();
@@ -42,6 +46,8 @@ public class Seigneur : IUpdate {
 
     void NeedFood()
     {
+        GoAskEmperor("Nourriture", village.nourrirPopulation);
+
         if (village.or < seuilGold) NeedGold();
         village.or -= village.coutNourriture;
         village.nourriture += village.nourrirPopulation;
@@ -49,13 +55,33 @@ public class Seigneur : IUpdate {
 
     void NeedGold()
     {
-        // va voir la capitale pour de l'or
+        if (!alreadyAsk)
+        {
+            GoAskEmperor("Or", -1);
+        }
     }
 
     void NeedArmy(int amount)
     {
-        if (village.or < village.coutArmy) NeedGold();
-        village.or -= village.coutArmy * amount;
+        GoAskEmperor("Army", amount);
+
+        if (village.or < village.costArmy) NeedGold();
+        village.or -= village.costArmy * amount;
         village.army += amount;
+    }
+
+    void GoAskEmperor(string resource, int amount)
+    {
+        switch (resource)
+        {
+            case "Nourriture":
+                // envoie un messager a l'emperor pour lui signaler qu'il a besoin de bouffes
+            case "Or":
+                // envoie un messager a l'emperor pour lui signaler qu'il a besoin d'or
+            case "Army":
+                // envoie un messager a l'emperor pour lui signaler qu'il a besoin d'argent
+            default:
+                return;
+        }
     }
 }

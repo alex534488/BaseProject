@@ -14,7 +14,7 @@ public class Village : IUpdate {
 
     // Cout des ressources en or
     public int coutNourriture = 25; // pour 15 (peut varier) - correspond au montant exact pour nourrir la population
-    public int coutArmy = 15; // pour 1 (peut varier)
+    public int costArmy = 15; // pour 1 (peut varier)
 
     // Par tour
     public int productionOr = 2;
@@ -22,8 +22,11 @@ public class Village : IUpdate {
     public int nourrirPopulation = 15; 
 
     public int random = 0;
+
+    // Conditions
     public bool isAttacked = false;
     public bool isDestroyed = false;
+    public bool isFrontier = false;
 
     public Empire empire;
     public Seigneur lord;
@@ -89,4 +92,6 @@ public class Village : IUpdate {
         if (nourrirPopulation < 0) AddFood(nourrirPopulation * random);
         if (nourrirPopulation > 0) DecreaseFood(nourrirPopulation * random);
     }
+
+    void OnBecomesFrontier() { isFrontier = true; }
 }
