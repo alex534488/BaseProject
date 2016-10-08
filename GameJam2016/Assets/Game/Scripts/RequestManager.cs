@@ -168,10 +168,6 @@ public class RequestManager : MonoBehaviour
 
 
         ///////////////////////////////////////////////////////////////////
-
-<<<<<<< HEAD
-        listRandomRequest.Sort((a, b) => 1 - 2 * Random.Range(0, 1)); // Shuffle
-=======
         listMessage = new List<string>();
         listMessage.Add("Amenophis : Empereur, je suis marchand en quête de financement pour ma prochaine expéditions.");
         listMessage.Add("J'aurai besoin de vivre ou de marins pour pouvoir lancer un expédition commerciale.");
@@ -189,7 +185,7 @@ public class RequestManager : MonoBehaviour
 
         listMessage = new List<string>();
         listMessage.Add("Decima : Bien le bonjour Empereur de Rome. Mon nom est Decima, et je viens vous parler d'une opportunité exceptionnelle !");
-        listMessage.Add("e représente un groupe de barbare qui souhaite vendre leurs services aux plus offrants.");
+        listMessage.Add("je représente un groupe de barbare qui souhaite vendre leurs services aux plus offrants.");
         listMessage.Add("Contre une belle somme d'argent, ils accepteraient de rejoindre les rangs des soldats romains.");
         listeChoix = new List<Dialog.Choix>();
         listeChoix.Add(new Dialog.Choix("Intéressante proposition. Prévenez vos ''amis'', j'accepte leur offre.", delegate () { }));
@@ -253,6 +249,6 @@ public class RequestManager : MonoBehaviour
         ///////////////////////////////////////////////////////////////////
 
 
->>>>>>> f7e1c92acf44e081fd8353e0cf3b328040227dfe
+
     }
 }
