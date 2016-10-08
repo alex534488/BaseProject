@@ -3,18 +3,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.Events;
 
-public class RequestManager : MonoBehaviour {
+public class RequestManager : MonoBehaviour
+{
 
-    static RequestManager requestManager; 
+    static RequestManager requestManager;
 
     // public int nbRequest = 5;
     List<Request> listRequest = new List<Request>();
     List<Request> listRandomRequest = new List<Request>();
     public UnityEvent onWaitingForRequest = new UnityEvent();
 
-    public void Awake()
+    void Start()
     {
-        if (requestManager == null) requestManager = this;
         CreateRandomRequest();
         onWaitingForRequest.AddListener(GetRequests);
     }
@@ -25,12 +25,7 @@ public class RequestManager : MonoBehaviour {
 
         GetRandomRequest(10);
 
-        foreach (Request request in listRequest)
-        {
-            request.DoRequest();
-            request.choosen = false;
-            listRequest.Remove(request);
-        }
+        listRequest[0].DoRequest();
     }
 
     public static void SendRequest(Request request)
@@ -55,6 +50,12 @@ public class RequestManager : MonoBehaviour {
             if (choosenRequest.choosen) continue;
             listRequest.Add(choosenRequest);
         }
+    }
+
+    public static void DoNextRequest()
+    {
+        requestManager.listRequest.Remove(requestManager.listRequest[0]);
+        requestManager.listRequest[0].DoRequest();
     }
 
     void CreateRandomRequest()
