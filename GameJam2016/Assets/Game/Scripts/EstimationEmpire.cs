@@ -2,23 +2,15 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class EstimationEmpire : IUpdate {
+public class EstimationEmpire {
 
-    public World unWorld;
-    public Empire unEmpire;
+    static World unWorld;
+    static Empire unEmpire;
 
-    public void Initalize()
+    static public float Estimation()
     {
-        
-    }
-
-    public void Update ()
-    {
-        Estimation();
-	}
-
-    public float Estimation()
-    {
+        unEmpire = Empire.instance;
+        unWorld = World.main;
         Village capitale = unEmpire.capitale;
 
         int estimation = 150;
@@ -37,7 +29,7 @@ public class EstimationEmpire : IUpdate {
         return ((float)estimation/150);
     }
 
-    private void EstimationVillage (Village leVillage, int estimation, int nbSoldats)
+    private static void EstimationVillage (Village leVillage, int estimation, int nbSoldats)
     {
         if (leVillage.isDestroyed == true)
         {
@@ -87,7 +79,7 @@ public class EstimationEmpire : IUpdate {
         }
     }
 
-    private void EstimationCapitale(Village laCapitale, int estimation, int nbSoldats, int nbBarbares)
+    private static void EstimationCapitale(Village laCapitale, int estimation, int nbSoldats, int nbBarbares)
     {
         int bilanFood = laCapitale.productionNourriture - laCapitale.coutNourriture;
 

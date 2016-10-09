@@ -6,7 +6,6 @@ using CCC.Utility;
 
 public class TestScript : MonoBehaviour
 {
-    public RequestManager manager;
     
 
     public void TestDialogue()

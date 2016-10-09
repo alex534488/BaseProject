@@ -147,7 +147,11 @@ public class Village : IUpdate {
 
     public void DecreaseReputation(int amount) { reputation -= amount; onReputationChange.Invoke(-amount); }
 
-    public void AddReputation(int amount) { reputation += amount; onReputationChange.Invoke(amount); }
+    public void AddReputation(int amount)
+    {
+        amount = Mathf.Min(100 - reputation, amount);
+        reputation += amount; onReputationChange.Invoke(amount);
+    }
 
     public void ModifyFoodProd(int amount) { productionNourriture += amount; onFoodProdChange.Invoke(amount); }
 

@@ -28,24 +28,33 @@ public class World : IUpdate {
 
     public void Update()
     {
-        empire.Update();
         barbareManager.Uptade();
+        empire.Update();
     }
 
-    public Village GiveTarget() // Verifie la liste des villages et retourne le village frontiere le plus faible de la liste
+    public List<Village> GiveTarget() // Verifie la liste des villages et retourne le village frontiere le plus faible de la liste
     {
-        float minimalArmy = Mathf.Infinity;
-        Village bestTarget = null;
+        List<Village> ret = new List<Village>();
+        List<Village> clone = new List<Village>(empire.listVillage);
 
-        foreach (Village leVillage in empire.listVillage)
+        for(int i=0;i<empire.listVillage.Count;i++)
         {
-            if (leVillage.army <= minimalArmy && leVillage.isFrontier)
-            {
-                bestTarget = leVillage;
-                minimalArmy = leVillage.army;
-            }
-        }
+            float minimalArmy = Mathf.Infinity;
+            Village bestTarget = clone[0];
 
-        return bestTarget;
+            foreach (Village leVillage in clone)
+            {
+                if (leVillage.army <= minimalArmy && leVillage.isFrontier && leVillage.isAttacked==false)
+                {
+                    bestTarget = leVillage;
+                    minimalArmy = leVillage.army;
+                }
+            }
+            ret.Add(bestTarget);
+            clone.Remove(bestTarget);
+        }
+        
+
+        return ret;
     }
 }
