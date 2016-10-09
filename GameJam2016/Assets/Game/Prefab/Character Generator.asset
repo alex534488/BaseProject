@@ -1,0 +1,52 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 89e29f04ecfc6f7409a26912b4153db2, type: 3}
+  m_Name: Character Generator
+  m_EditorClassIdentifier: 
+  cheveux:
+  - {fileID: 21300000, guid: 87053452aea3ce14898e0fa388f99cca, type: 3}
+  - {fileID: 21300000, guid: e0df9de486604d641a289c9b9c882821, type: 3}
+  - {fileID: 21300000, guid: 357b02ec62626614ba2b26c63ae378a7, type: 3}
+  - {fileID: 21300000, guid: 825be19e8a1fee94795506508d9d243d, type: 3}
+  - {fileID: 21300000, guid: a667deff2950a0a41b1808f85ce5c4ac, type: 3}
+  tetes:
+  - {fileID: 21300000, guid: 2541c13366a3bf54aa4c6520a8df9de1, type: 3}
+  - {fileID: 21300000, guid: 9b100305891d65c49a63c50b6232f21e, type: 3}
+  - {fileID: 21300000, guid: 13d6fd6a7048524458b1cd7b2a78cb7b, type: 3}
+  - {fileID: 21300000, guid: b295bcadfc8e70c4e80d6336f6b12ddb, type: 3}
+  corps:
+  - sprite: {fileID: 21300000, guid: f7170db5e4837054ba084c795edfe997, type: 3}
+    range:
+      from: {r: 0.67010653, g: 0.5900736, b: 0.78676474, a: 1}
+      to: {r: 0.739172, g: 0.77205884, b: 0.5336289, a: 1}
+  - sprite: {fileID: 21300000, guid: 9eb2602b87408754fb99232af7d13998, type: 3}
+    range:
+      from: {r: 0.43382353, g: 0.41235235, b: 0.23924091, a: 1}
+      to: {r: 0.42647058, g: 0.4253417, b: 0.41706315, a: 1}
+  - sprite: {fileID: 21300000, guid: dfc58b64cba366b40b0634c104e329ad, type: 3}
+    range:
+      from: {r: 0.6838235, g: 0.6838235, b: 0.6838235, a: 1}
+      to: {r: 0.3897059, g: 0.3897059, b: 0.3897059, a: 1}
+  - sprite: {fileID: 21300000, guid: e55a130cebf9e7f44b44807559b1f98a, type: 3}
+    range:
+      from: {r: 0.4988839, g: 0.33639705, b: 0.75, a: 1}
+      to: {r: 0.68067193, g: 0.75, b: 0.26470587, a: 1}
+  bras:
+  - {fileID: 21300000, guid: bfb2af1dfb206b84880b4f7f319cfd22, type: 3}
+  - {fileID: 21300000, guid: 6f0a81da172202b4684ef57dba83a1ed, type: 3}
+  - {fileID: 21300000, guid: 849c8d2f43f9fe54b8a926ebf91960f5, type: 3}
+  - {fileID: 21300000, guid: 4d1f5d33e08f4ee4eb90f0265196b5ad, type: 3}
+  skinRange:
+    from: {r: 1, g: 0.95989305, b: 0.8897059, a: 1}
+    to: {r: 0.35294116, g: 0.26266554, b: 0.101211056, a: 1}
+  cheveuxRange:
+    from: {r: 1, g: 0.98478705, b: 0.7794118, a: 1}
+    to: {r: 0.32352942, g: 0.26632676, b: 0.076124564, a: 1}
