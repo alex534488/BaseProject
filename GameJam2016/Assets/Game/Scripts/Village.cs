@@ -204,6 +204,16 @@ public class Village : IUpdate {
         }
         return null;
     }
+
+    public bool BuyArmy(int amount)
+    {
+        int coupTotal = costArmy * amount;
+        if (coupTotal > or) return false;
+
+        AddArmy(amount);
+        DecreaseGold(coupTotal);
+        return true;
+    }
     #endregion
 
     // To do : Change or remove random
