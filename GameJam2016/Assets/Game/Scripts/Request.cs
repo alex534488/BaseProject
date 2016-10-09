@@ -6,6 +6,7 @@ using UnityEngine.Events;
 public class Request {
 
     public Seigneur messager;
+    public Carriage carriage;
 
     List<string> message = new List<string>();
     List<Dialog.Choix> choix = new List<Dialog.Choix>();
@@ -66,7 +67,6 @@ public class Request {
                     case 1:
                         message.Add("Je représente le village "+ messager.village.nom + "\n\nNotre récolte a été incroyablement abondante cette saison." + "\n\n" +
                                     "Nous voudrions éventuellement semer d'avantage de graines pour continuer d'avoir autant de réserves de nourritures. \n\nPar contre, cela necessiterait de nouveaux investissements majeurs.");
-                        choix = new List<Dialog.Choix>();
                         choix.Add(new Dialog.Choix("Payez entièrement les frais des nouvelles semances \n(-40 Or, +2 Production Nourriture, + Réputation)", delegate () { Empire.instance.capitale.DecreaseGold(40); messager.village.AddReputation(20); messager.village.ModifyFoodProd(2); }));
                         choix.Add(new Dialog.Choix("Aidez les villagois à construire la mine \n(-20 Or Capitale, -20 Or Village, +2 Production Nourriture)", delegate () { Empire.instance.capitale.DecreaseGold(20); messager.village.DecreaseGold(20); messager.village.ModifyFoodProd(2); }));
                         choix.Add(new Dialog.Choix("Refusez la demande du villageois (- Réputation)", delegate () { messager.village.DecreaseReputation(20); }));
@@ -76,7 +76,6 @@ public class Request {
                                     "En effet, bien que nous ne manquons de rien, nos infrastructures commencent à veillir. \n\nCertains batiments risquent de s'éffondrer ou ne sont carrément plus utilisables");
                         message.Add("Nous aimerions reconstruire quelques batiments de votre choix afin de pour pouvoir poursuivre nos activités" + "\n\n" +
                                      "Êtes-vous en mesure de nous apporter votre aide mon seigneur?");
-                        choix = new List<Dialog.Choix>();
                         choix.Add(new Dialog.Choix("Réparez toutes les fermes de votre village \n(-40 Or Capitale, -20 Or Village, +4 Production Or, + Réputation)", delegate () { Empire.instance.capitale.DecreaseGold(40); messager.village.DecreaseGold(20); messager.village.AddReputation(20); messager.village.ModifyGoldProd(4); }));
                         choix.Add(new Dialog.Choix("Réparez les exploitations minières de votre village \n(-40 Or Capitale, -20 Or Village, +2 Production Nourriture, + Réputation)", delegate () { Empire.instance.capitale.DecreaseGold(40); messager.village.DecreaseGold(20); messager.village.ModifyFoodProd(2); messager.village.AddReputation(20); }));
                         choix.Add(new Dialog.Choix("Refusez la demande de l'architecte (- Réputation)", delegate () { messager.village.DecreaseReputation(20); }));
@@ -104,6 +103,14 @@ public class Request {
             default:
                 return;
         }
+    }
+
+    // REQUETE CHARIOT
+    public Request(Carriage carriage, int amount)
+    {
+        this.carriage = carriage;
+        message.Add(" Notre empereur, nous sommes de retour de " + carriage.destination.nom + " et nous avons pris les ressources demandées au village soit " + amount + " de " + carriage.resource);
+        choix.Add(new Dialog.Choix("Parfait! Merci beaucoup.", delegate () {  }));
     }
 
     // REQUETE CLASSIQUE

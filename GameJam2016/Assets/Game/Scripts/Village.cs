@@ -105,8 +105,6 @@ public class Village : IUpdate {
     {
         random = (int)(Random.value * 100);
 
-        armyFoodCost = army;
-
         if (isDestroyed)
         {
             DestructionVillage();
