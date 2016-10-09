@@ -72,12 +72,16 @@ public class DayManager : MonoBehaviour {
 
     private void OnAllRequestComplete()
     {
+        if (nextDayButton != null) nextDayButton.GetComponent<Button>().interactable = true;
         if (scoutButton != null) scoutButton.GetComponent<Button>().interactable = true;
+        if (nextDayButton != null) nextDayButton.GetComponent<Button>().interactable = true;
     }
 
     void ButtonScout()
     {
+        scoutButton.GetComponent<Button>().interactable = false;
         scoutButton.GetComponent<AudioSource>().Play();
         theWorld.empire.capitale.SendScout(theWorld);
+        
     }
 }
