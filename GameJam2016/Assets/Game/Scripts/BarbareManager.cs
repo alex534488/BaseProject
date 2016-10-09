@@ -6,14 +6,13 @@ public class BarbareManager : MonoBehaviour {
 
     public List<Barbare> listeBarbare = new List<Barbare>();
 
+    public int nbClanBarbare = 1;
+
     public void Initialize()
     {
-        int child = this.transform.childCount;
-
-        for (int i=0;i<child;i++)
+        for(int i = 0; i < nbClanBarbare; i++)
         {
-            Barbare unBarbare = this.transform.GetChild(i).GetComponent<Barbare>();
-            listeBarbare.Add(unBarbare);
+            AddClanBarbare();
         }
 	}
 

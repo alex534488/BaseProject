@@ -17,7 +17,10 @@ public class Seigneur : IUpdate {
     // Seuil de tolerance permis par le seigneur
     private int seuilNourriture;
     private int seuilGold; // or minimale permis, correspond au coutNourriture de village
-    public int seuilArmy;
+    private int seuilMinimalArmy = 3;
+
+
+    public int seuilArmy = 0;
 
     // Es ce que le seigneur a deja demander a l'emperor
     public bool alreadyAsk = false;
@@ -72,8 +75,7 @@ public class Seigneur : IUpdate {
                 village.DecreaseGold(goldneed);
                 village.AddFood(amount);
             } 
-        }
-        else
+        } else
         {
             village.DecreaseGold(goldneed);
             village.AddFood(amount);
@@ -105,7 +107,8 @@ public class Seigneur : IUpdate {
                 village.DecreaseGold(goldneeded);
                 village.AddArmy(amount);
             }
-        } else {
+        } else
+        {
             village.DecreaseGold(goldneeded);
             village.AddArmy(amount);
         }
@@ -132,23 +135,41 @@ public class Seigneur : IUpdate {
         }
     }
 
-    public int CanYouGive(Ressource_Type resource, int amount)
+    public int CanYouGive(Ressource_Type resource)
     {
-        return 0; // vv Calcul qui détermine combien de resource que le village est près a donner à la capital vv
+        switch (resource)
+        {
+            default:
+            case Ressource_Type.gold:
+                {
+                    int value = InfluenceReputation(seuilGold * (Carriage.stdDelay + 1));
+                    return value;
+                }
+             
+                
+            case Ressource_Type.food:
+                {
+                    int value = InfluenceReputation(seuilNourriture * (Carriage.stdDelay + 1));
+                    return value;
+                    
+                }
+                
+            case Ressource_Type.army:
+                {
+                    int seuilMinimal = 0;
 
-        //switch (resource)
-        //{
-        //    case Ressource_Type.gold:
-        //        if (village.or < amount) return false;
-        //        else return true;
-        //    case Ressource_Type.food:
-        //        if (village.nourriture < amount) return false;
-        //        else return true;
-        //    case Ressource_Type.army:
-        //        if (village.army < amount) return false;
-        //        else return true;
-        //    default:
-        //        return false;
-        //}
+                    if (village.isAttacked == true) seuilMinimal = seuilArmy;
+                    else seuilMinimal = seuilMinimalArmy;
+
+                    int value = InfluenceReputation(seuilMinimal * (Carriage.stdDelay + 1));
+                    return value;
+                }      
+        }
+    }
+
+    public int InfluenceReputation(int amount)
+    {
+       int influenceReputation = (amount * village.reputation) / 100;
+       return village.or - influenceReputation;
     }
 }

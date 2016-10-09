@@ -6,12 +6,13 @@ public class World : IUpdate {
 
     public static World main;
     public Empire empire;
-    public BarbareManager barbareManager;
-    public CarriageManager carriageManager;
 
-	public void Start ()
+    public BarbareManager barbareManager;
+
+    public void Start (BarbareManager barbareManager)
     {
         main = this;
+        this.barbareManager = barbareManager;
         empire = new Empire();
         empire.Start();
     }

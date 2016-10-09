@@ -8,13 +8,14 @@ public class DayManager : MonoBehaviour{
 
     // Boutton du UI
     public Button nextDayButton;
-    public Button currentday;
+    public GameObject currentday;
     public Button scoutButton;
     public Button sendcarriage;
 
     public World theWorld;
     public RequestManager requestManager;
     public CarriageManager carriageManager;
+    public BarbareManager barbareManager;
 
     public int nbJour = 0;
 
@@ -23,12 +24,12 @@ public class DayManager : MonoBehaviour{
         if (main == null) main = this;
 
         theWorld = new World();
-        theWorld.Start();
+        theWorld.Start(barbareManager);
 
         // INTRODUCTION
 
         requestManager.OnCompletionOfRequests.AddListener(OnAllRequestComplete);
-        nextDayButton.onClick.AddListener(LaunchedDay);
+        if (scoutButton != null) nextDayButton.onClick.AddListener(LaunchedDay);
         if(scoutButton != null) scoutButton.onClick.AddListener(ButtonScout);
         if (sendcarriage != null) sendcarriage.onClick.AddListener(Test);
     }
@@ -36,13 +37,13 @@ public class DayManager : MonoBehaviour{
     public void LaunchedDay()
     {
         nbJour++;
-        if(currentday != null)currentday.GetComponentInChildren<Text>().text = "Jour " + nbJour;
+        if(currentday != null) currentday.GetComponentInChildren<Text>().text = "Jour " + nbJour;
 
         theWorld.Update(); // Update le monde
         carriageManager.NewDay();
-        
+
         // Desactive les boutons temporairement
-        nextDayButton.GetComponent<Button>().interactable = false;
+        if (scoutButton != null) nextDayButton.GetComponent<Button>().interactable = false;
         if (scoutButton != null) scoutButton.GetComponent<Button>().interactable = false;
         if (sendcarriage != null) sendcarriage.GetComponent<Button>().interactable = false;
 
@@ -57,7 +58,9 @@ public class DayManager : MonoBehaviour{
 
     private void OnAllRequestComplete()
     {
-        nextDayButton.GetComponent<Button>().interactable = true;
+        if (sendcarriage != null) nextDayButton.GetComponent<Button>().interactable = true;
+        if (scoutButton != null) scoutButton.GetComponent<Button>().interactable = true;
+        if (sendcarriage != null) sendcarriage.GetComponent<Button>().interactable = true;
     }
 
     void ButtonScout()
