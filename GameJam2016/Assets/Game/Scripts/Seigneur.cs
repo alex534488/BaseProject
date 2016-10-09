@@ -44,7 +44,7 @@ public class Seigneur : IUpdate {
             seuilArmy += Random.Range(-incertitude, incertitude+1);
         }
 
-        seuilNourriture = village.armyFoodCost;
+        seuilNourriture = village.armyFoodCost * village.army;
         seuilGold = village.coutNourriture * seuilNourriture;
 
         alreadyAsk = false;
