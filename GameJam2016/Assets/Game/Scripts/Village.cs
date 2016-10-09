@@ -105,7 +105,17 @@ public class Village : IUpdate {
     {
         random = (int)(Random.value * 100);
 
-        //armyFoodCost = army;
+        armyFoodCost = army;
+
+        if (isDestroyed)
+        {
+            DestructionVillage();
+        }
+        else if (nourriture < 0)
+        {
+            lord.Death();
+            DestructionVillage();
+        }
 
         UpdateResources();
 
@@ -113,13 +123,7 @@ public class Village : IUpdate {
 
         lord.Update();
 
-        if(isDestroyed)
-        {
-            DestructionVillage();
-        } else if(nourriture < 0) {
-                lord.Death();
-                DestructionVillage();
-        }
+
     }
 
     #region Attack
