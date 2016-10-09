@@ -9,14 +9,8 @@ public class Music : MonoBehaviour {
     static Music musicmanager;
 
     // Sounds
-    List<AudioClip> listMusicVictoire = new List<AudioClip>();
-    List<AudioClip> listMusicDefaite = new List<AudioClip>();
-    public AudioClip music1;
-    public AudioClip music2;
-    public AudioClip music3;
-    public AudioClip music4;
-    public AudioClip music5;
-    public AudioClip music6;
+    public List<AudioClip> listMusicVictoire = new List<AudioClip>();
+    public List<AudioClip> listMusicDefaite = new List<AudioClip>();
     private AudioClip nextsong;
     // rajouter des musiques ICI
 
@@ -29,14 +23,6 @@ public class Music : MonoBehaviour {
 
     void Start()
     {
-        listMusicVictoire.Add(music1);
-        listMusicVictoire.Add(music2);
-        listMusicVictoire.Add(music3);
-
-        listMusicDefaite.Add(music4);
-        listMusicDefaite.Add(music5);
-        listMusicDefaite.Add(music6);
-
         nextsong = listMusicVictoire[(int)Random.Range(0, listMusicVictoire.Count)];
         this.GetComponent<AudioSource>().clip = nextsong;
         this.GetComponent<AudioSource>().Play();
