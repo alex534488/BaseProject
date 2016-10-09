@@ -137,7 +137,7 @@ public class Capitale : Village
         }
         else if (amount == -1)
         {
-            CarriageManager.SendCarriage(new Carriage(nbTour,this , destination, resource, amount));
+            CarriageManager.SendCarriage(new Carriage(nbTour, destination, this, resource, amount));
         }
 
         DecreaseChariot(1);
