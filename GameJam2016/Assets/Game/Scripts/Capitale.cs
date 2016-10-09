@@ -227,7 +227,7 @@ public class Capitale : Village
         List<string> listMessage = new List<string>();
         listMessage.Add("Conseiller Brutus : Empereur, le peuple s'est mit d'accord sur votre destitution.\n\nJ'ai peur que votre règne touche à sa fin. ");
         List<Dialog.Choix> listeChoix = new List<Dialog.Choix>();
-        listeChoix.Add(new Dialog.Choix("Qu'il soit maudit, je resterai leur Empereur jusqu'a ma mort!", delegate () { Defaite() })); // AJOUTER CONDITION FIN
+        listeChoix.Add(new Dialog.Choix("Qu'il soit maudit, je resterai leur Empereur jusqu'a ma mort!", delegate () { /*Defaite();*/ })); // AJOUTER CONDITION FIN
         Request request = new Request(listMessage, listeChoix);
         return request;
     }
