@@ -5,7 +5,7 @@ using DG.Tweening;
 
 public class CapitalStat : MonoBehaviour
 {
-    public Ressource_Type type;
+    public Ressource_Type type ;
     public Text totalText;
     public Text profitText;
     Capitale capital;
