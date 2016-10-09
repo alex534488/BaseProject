@@ -2,12 +2,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 public class Capitale : Village
 {
-    int[] seuilBonheur = { 40, 30, 20, 10, 0 };
-    int[] tabBonheurMax = { 50, 40, 30, 20, 10 };
-    Request[] eventBonheur = { EventBonheur1(), EventBonheur2(), EventBonheur3(), EventBonheur4(), EventBonheur5() };
+    int[] seuilBonheur = { 40, 30, 20, 10, 0 , 0 };
+    int[] tabBonheurMax = { 50, 40, 30, 20, 10 ,0};
+    Request[] eventBonheur = { EventBonheur1(), EventBonheur2(), EventBonheur3(), EventBonheur4(), EventBonheur5(), EventBonheur1() };
     int seuilActuel = 0;
 
     // Attribut de la Capitale
@@ -65,18 +66,26 @@ public class Capitale : Village
 
     void Defaite()
     {
-        // FIN DU JEU
+        SceneManager.LoadScene("GameOver", LoadSceneMode.Single);
     }
 
     public void DecreaseBonheur(int amount)
     {
         bonheur -= amount;
-        if (bonheur < seuilBonheur[seuilActuel])
+        bool seuilFranchi = false;
+        do
         {
-            RequestManager.SendRequest(eventBonheur[seuilActuel]);
-            seuilActuel++;
-            SetBonheurMax(tabBonheurMax[seuilActuel]);
+            seuilFranchi = false;
+            if (bonheur <= seuilBonheur[seuilActuel])
+            {
+                Debug.Log("1");
+                RequestManager.SendRequest(eventBonheur[seuilActuel]);
+                seuilActuel++;
+                SetBonheurMax(tabBonheurMax[seuilActuel]);
+                seuilFranchi = true;
+            }
         }
+        while (seuilFranchi == true);
         onBonheurChange.Invoke(-amount);
     }
 
