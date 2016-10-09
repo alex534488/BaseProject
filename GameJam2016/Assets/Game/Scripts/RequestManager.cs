@@ -33,7 +33,7 @@ public class RequestManager : MonoBehaviour
 
     void GetRandomRequest(int amount)
     {
-        listRequest.Add(listRandomRequest[0]); // A REMETTRE A 0
+        listRequest.Add(listRandomRequest[0]);
         listRandomRequest.Remove(listRandomRequest[0]);
         if(listRandomRequest.Count <=0) { GenerateRandomRequests(); }
     }

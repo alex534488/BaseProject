@@ -21,6 +21,7 @@ public class Music : MonoBehaviour {
         listMusicVictoire.Add(music1);
         listMusicVictoire.Add(music2);
         listMusicVictoire.Add(music3);
+
         this.GetComponent<AudioSource>().Play();
         nextsong = this.GetComponent<AudioSource>().clip;
     }
