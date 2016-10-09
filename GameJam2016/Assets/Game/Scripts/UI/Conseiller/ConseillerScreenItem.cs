@@ -53,8 +53,7 @@ public class ConseillerScreenItem : MonoBehaviour
     void OnSendClick()
     {
         int sendAmount = System.Convert.ToInt32(sendField.text);
-        Carriage carriage = new Carriage(Carriage.stdDelay, village, Empire.instance.capitale, type, sendAmount);
-        CarriageManager.SendCarriage(carriage);
+        Empire.instance.capitale.SendCartToVillage(village, type, sendAmount);
         //SendCarriage
         UpdateDisplay();
         sendPanel.ToggleActive();
@@ -62,9 +61,8 @@ public class ConseillerScreenItem : MonoBehaviour
 
     void OnRequestClick()
     {
-        int sendAmount = System.Convert.ToInt32(sendField.text);
-        Carriage carriage = new Carriage(Carriage.stdDelay, village, Empire.instance.capitale, type, sendAmount);
-        CarriageManager.SendCarriage(carriage);
+
+        Empire.instance.capitale.SendCartToVillage(village, type, -1);
         //SendCarriage
         UpdateDisplay();
     }
