@@ -47,6 +47,7 @@ namespace CCC.Manager
         /// </summary>
         public void Play(AudioClip clip, float delay = 0, float volume = 1, AudioSource source = null)
         {
+            if (clip == null) return;
             if (delay > 0)
             {
                 StartCoroutine(PlayIn(clip, delay, volume, source));
