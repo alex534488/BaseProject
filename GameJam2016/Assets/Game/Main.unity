@@ -1998,7 +1998,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: /20
+  m_Text: 
 --- !u!222 &885410221
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2927,7 +2927,6 @@ MonoBehaviour:
   requestManager: {fileID: 568479099}
   carriageManager: {fileID: 2127779788}
   barbareManager: {fileID: 1101056532}
-  nbJour: 0
 --- !u!4 &1418466803
 Transform:
   m_ObjectHideFlags: 0
@@ -4297,7 +4296,6 @@ GameObject:
   - 114: {fileID: 1928507076}
   - 114: {fileID: 1928507075}
   - 114: {fileID: 1928507078}
-  - 82: {fileID: 1928507079}
   m_Layer: 5
   m_Name: Conseiller Gold
   m_TagString: Untagged

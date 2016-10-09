@@ -71,7 +71,7 @@ public class Capitale : Village
             seuilActuel++;
             SetBonheurMax(tabBonheurMax[seuilActuel]);
         }
-        onBonheurChange.Invoke(bonheur);
+        onBonheurChange.Invoke(-amount);
     }
 
     public void AddBonheur(int amount) { bonheur += amount; onBonheurChange.Invoke(amount); }
