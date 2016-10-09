@@ -51,16 +51,21 @@ public class Capitale : Village
     {
         seuilNourritureCapitale = army;
 
-        if (nourriture < 0 || bonheur < 0 || isDestroyed)
-        {
-            DestructionVillage();
-        }
-
         UpdateResources();
 
         UpdateCost();
 
         CheckResources();
+
+        if (isDestroyed)
+        {
+            Defaite();
+        }
+    }
+
+    void Defaite()
+    {
+        // FIN DU JEU
     }
 
     public void DecreaseBonheur(int amount)
@@ -156,7 +161,6 @@ public class Capitale : Village
     void CheckResources()
     {
         if (nourriture < seuilNourritureCapitale) BesoinNourriture(seuilNourritureCapitale - nourriture);
-        if (bonheur <= 0) Defaite("Trahison");
 
         int perteBonheur = 0;
         if (or < 0) perteBonheur += (Mathf.CeilToInt((-1 * or) / 5));
@@ -164,8 +168,6 @@ public class Capitale : Village
 
         if (perteBonheur > 0)
             DecreaseBonheur(perteBonheur);
-
-
     }
 
     void BesoinNourriture(int amount)
@@ -176,21 +178,6 @@ public class Capitale : Village
 
         ModifyResource(Ressource_Type.gold, amount);
         ModifyResource(Ressource_Type.food, amount);
-    }
-
-    void Defaite(string type)
-    {
-        // Fin de la partie
-        switch (type)
-        {
-            case "Trahison":
-                break;
-            case "Famine":
-                break;
-            case "Militaire":
-            default:
-                break;
-        }
     }
 
     static private Request EventBonheur1()
@@ -237,7 +224,7 @@ public class Capitale : Village
         List<string> listMessage = new List<string>();
         listMessage.Add("Conseiller Brutus : Empereur, le peuple s'est mit d'accord sur votre destitution.\n\nJ'ai peur que votre règne touche à sa fin. ");
         List<Dialog.Choix> listeChoix = new List<Dialog.Choix>();
-        listeChoix.Add(new Dialog.Choix("Qu'il soit maudit, je resterai leur Empereur jusqu'a ma mort!", delegate () { })); // AJOUTER CONDITION FIN
+        listeChoix.Add(new Dialog.Choix("Qu'il soit maudit, je resterai leur Empereur jusqu'a ma mort!", delegate () { Empire.instance.capitale.Defaite(); })); // AJOUTER CONDITION FIN
         Request request = new Request(listMessage, listeChoix);
         return request;
     }
