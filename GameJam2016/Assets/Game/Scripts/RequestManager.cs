@@ -57,7 +57,7 @@ public class RequestManager : MonoBehaviour
         listMessage.Add("Illius : Ave ! Je viens devant votre jugement car cet homme vient de voler mon cochon ! J’exige qu'il me le rende et qu'il soit punit !");
         listMessage.Add("Maximus : Mensonge monseigneur, ce cochon est le mien depuis des lunes !");
         List<Dialog.Choix> listeChoix = new List<Dialog.Choix>();
-        listeChoix.Add(new Dialog.Choix("Coupez-moi ce cochon en deux et partagez les morceaux avec la communauté. ( -4 Nourriure)", delegate () { Empire.instance.capitale.AddFood(4); }));
+        listeChoix.Add(new Dialog.Choix("Coupez-moi ce cochon en deux et partagez les morceaux avec la communauté. ( +4 Nourriure)", delegate () { Empire.instance.capitale.AddFood(4); }));
         listeChoix.Add(new Dialog.Choix("Puisque ce cochon vous pose problème, je vais vous le retirer. ( +8 Or)", delegate () { Empire.instance.capitale.AddGold(8); }));
         listeChoix.Add(new Dialog.Choix("Tant de vigueur pour un cochon, vous ferez de bon soldat ! ( +2 Soldat)", delegate () { Empire.instance.capitale.AddArmy(2); }));
         Request request = new Request(listMessage, listeChoix);
@@ -244,6 +244,70 @@ public class RequestManager : MonoBehaviour
         listeChoix.Add(new Dialog.Choix("Bien, voici de l'or pour commencer l’exploitation. (+4 production Or, -40 Or)", delegate () { Empire.instance.capitale.DecreaseGold(40); Empire.instance.capitale.productionOr += 4; }));
         listeChoix.Add(new Dialog.Choix("Je suis certain que la population sera ravie de participer à des travaux forcés dans une nouvelle mine ! (+4 production Or, -5 Bonheur)", delegate () { Empire.instance.capitale.DecreaseBonheur(5); }));
         listeChoix.Add(new Dialog.Choix("Les barbares sont aux portes de l'empire et vous vous voulez creuser des trous ? Non !", delegate () { }));
+        request = new Request(listMessage, listeChoix);
+        listRandomRequest.Add(request);
+
+
+        ///////////////////////////////////////////////////////////////////
+
+        listMessage = new List<string>();
+        listMessage.Add("Maxima : Mon empereur, j’implore votre soutien en ce jour malheureux. Je viens de recevoir un papyrus annonçant le décès de mon mari, tombé au combat. ");
+        listMessage.Add("Afin d’honorer son service, êtes-vous en mesure de sauver ma famille en ces temps difficiles?");
+        listeChoix = new List<Dialog.Choix>();
+        listeChoix.Add(new Dialog.Choix("L’état des récoltes ne me permet pas de vous offrir de la nourriture, mais voici une compensation financière qui vous permettra de subvenir à vous besoins", delegate () { Empire.instance.capitale.AddFood(2); Empire.instance.capitale.DecreaseGold(2); }));
+        listeChoix.Add(new Dialog.Choix("J’entends votre requête et vous offre de la nourriture en échange des loyaux services de votre mari tombé au combat.", delegate () { Empire.instance.capitale.AddBonheur(1); }));
+        listeChoix.Add(new Dialog.Choix("Sa mémoire sera honorée mais aucune compensation ne vous sera accordée.", delegate () { }));
+        request = new Request(listMessage, listeChoix);
+        listRandomRequest.Add(request);
+
+
+        ///////////////////////////////////////////////////////////////////
+
+        listMessage = new List<string>();
+        listMessage.Add("Mamerca : Seigneur, mes fils sont tombés gravement malade et je n’ai personne pour amasser mes récoltes.");
+        listMessage.Add("Je possède de bonnes réserves, suffisante à ma consommation personnelle, mais il serait dommage de perdre les récoltes.");
+        listeChoix = new List<Dialog.Choix>();
+        listeChoix.Add(new Dialog.Choix("Mes Citoyens  vont les récolter , vous serez compensé financièrement.", delegate () { }));
+        listeChoix.Add(new Dialog.Choix("Mes Citoyens  iront collecter vos récoltes et elles seront ajoutées à vos réserves.", delegate () { }));
+        listeChoix.Add(new Dialog.Choix("Mes Citoyens  vont les récolter pour l'empire.", delegate () { }));
+        request = new Request(listMessage, listeChoix);
+        listRandomRequest.Add(request);
+
+
+        ///////////////////////////////////////////////////////////////////
+
+        listMessage = new List<string>();
+        listMessage.Add("Procula : Mon empereur, le climat familial dans notre résidence n’est plus ce qu’il était.");
+        listMessage.Add("Depuis que mon mari est revenu de la guerre, il est violent avec les enfants.");
+        listMessage.Add("Pouvez-vous m’autoriser à quitter le domicile familial pour notre protection?");
+        listeChoix = new List<Dialog.Choix>();
+        listeChoix.Add(new Dialog.Choix("Votre mari cherche à préparer vos enfants à la dure réalité de la guerre.", delegate () { }));
+        listeChoix.Add(new Dialog.Choix("L’Empire hébergera vos enfants pour leur sécurité, mais votre place est aux cotés de votre mari.", delegate () { }));
+        listeChoix.Add(new Dialog.Choix("L’Empire hébergera votre famille pendant 1 semaine, le temps que votre mari reprenne ses esprits", delegate () { }));
+        request = new Request(listMessage, listeChoix);
+        listRandomRequest.Add(request);
+
+        ///////////////////////////////////////////////////////////////////
+
+        listMessage = new List<string>();
+        listMessage.Add("Numeria : Seigneur, mon garçon s’est fait jeter dans le Fleuve, hier au soir, par des jeunes voyous.");
+        listMessage.Add("Pouvez-vous m’aider à trouver les malfaiteurs?");
+        listeChoix = new List<Dialog.Choix>();
+        listeChoix.Add(new Dialog.Choix("Mes soldats partiront à la recherche de ses voyous et ils paieront pour leurs crimes.", delegate () { }));
+        listeChoix.Add(new Dialog.Choix("Votre fils devrait apprendre à se défendre. À partir d’aujourd’hui, il commencera sa formation militaire.", delegate () { }));
+        request = new Request(listMessage, listeChoix);
+        listRandomRequest.Add(request);
+
+
+        ///////////////////////////////////////////////////////////////////
+
+        listMessage = new List<string>();
+        listMessage.Add("Quinta : Mon seigneur, j’implore votre générosité suite à un grave incendie qui a ravagé ma résidence.");
+        listMessage.Add("Mon mari, mes 4 enfants et moi-même ne sommes plus en mesure de subvenir à nos besoins en ces temps difficile.");
+        listeChoix = new List<Dialog.Choix>();
+        listeChoix.Add(new Dialog.Choix("Je suis en mesure de vous verser quelques pièces d’or à vous et votre famille.", delegate () { }));
+        listeChoix.Add(new Dialog.Choix("Je vous offre une partie des réserves alimentaires de l’Empire ma chère dame.", delegate () { }));
+        listeChoix.Add(new Dialog.Choix("Les dieux nous soumettent parfois à des tests difficiles, mais votre famille doit surmonter cette épreuve seul ma chère dame.", delegate () { }));
         request = new Request(listMessage, listeChoix);
         listRandomRequest.Add(request);
 
