@@ -27,16 +27,21 @@ public class CarriageManager : MonoBehaviour
                 {
                     if(carriage.amount > 0) { // Give resource to village
                         GiveResources(carriage, carriage.resource, carriage.amount);
-                        carriage.destination.AddReputation(carriage.amount/carriage.provenance.AmountOfResources(carriage.resource) * 100);
-                    } else { //Take resource FROM village to capital (instant)
+
+                          (carriage.provenance as Capitale).nbCharriot++;
+                    } 
+                        else { //Take resource FROM village to capital (instant)
                         int realAmount = carriage.destination.lord.CanYouGive(carriage.resource);
-                        if (realAmount > 0) {
-                            TakeResources(carriage, carriage.resource, realAmount);
-                            carriage.destination.DecreaseReputation(10);
-                        }
+                        if (realAmount > 0)
+                            {
+                                 TakeResources(carriage, carriage.resource, realAmount);
+                                 carriage.destination.DecreaseReputation(10);
+                                (carriage.destination as Capitale).nbCharriot++;
+
+                            }
                     }
                 }
-                (carriage.provenance as Capitale).nbCharriot++;
+                
                 listCarriage.Remove(carriage);
                 return;
             }

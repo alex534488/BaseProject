@@ -43,7 +43,7 @@ public class ConseillerScreenItem : MonoBehaviour
     void UpdateDisplay()
     {
         totalText.text = "" + village.GetTotal(type);
-        slider.UpdateSlider(village.reputation / 100);
+        slider.UpdateSlider((float)(village.reputation / 100.0));
         int bilan = village.GetBilan(type);
         bilanText.text = "" + bilan;
         bg.color = (bilan >= 0) ? positiveColor : negativeColor;
@@ -53,8 +53,7 @@ public class ConseillerScreenItem : MonoBehaviour
     void OnSendClick()
     {
         int sendAmount = System.Convert.ToInt32(sendField.text);
-        Carriage carriage = new Carriage(Carriage.stdDelay, village, Empire.instance.capitale, type, sendAmount);
-        CarriageManager.SendCarriage(carriage);
+        Empire.instance.capitale.SendCartToVillage(village, type, sendAmount);
         //SendCarriage
         UpdateDisplay();
         sendPanel.ToggleActive();
@@ -62,9 +61,8 @@ public class ConseillerScreenItem : MonoBehaviour
 
     void OnRequestClick()
     {
-        int sendAmount = System.Convert.ToInt32(sendField.text);
-        Carriage carriage = new Carriage(Carriage.stdDelay, village, Empire.instance.capitale, type, sendAmount);
-        CarriageManager.SendCarriage(carriage);
+
+        Empire.instance.capitale.SendCartToVillage(village, type, -1);
         //SendCarriage
         UpdateDisplay();
     }
