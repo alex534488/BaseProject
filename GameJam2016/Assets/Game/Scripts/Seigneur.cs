@@ -21,7 +21,7 @@ public class Seigneur : IUpdate {
     public int seuilArmy = 0;
 
     // Requete investissement
-    List<Request> listInvestRequest = new List<Request>();
+    //List<Request> listInvestRequest = new List<Request>();
 
     // Es ce que le seigneur a deja demander a l'emperor
     public bool alreadyAsk = false;
@@ -32,8 +32,6 @@ public class Seigneur : IUpdate {
         seuilNourriture = village.armyFoodCost;
         seuilGold = village.coutNourriture * village.armyFoodCost;
         seuilArmy = 0;
-
-        GenerateRandomInvestment();
     }
 	
 	public void Update ()
@@ -59,10 +57,11 @@ public class Seigneur : IUpdate {
             {
                 if (!alreadyAsk)
                 {
-                    RequestManager.SendRequest(listInvestRequest[0]);
-                    listInvestRequest.Remove(listInvestRequest[0]);
-                    if(listInvestRequest.Count <= 0) GenerateRandomInvestment();
-                    alreadyAsk = true;
+                    if(Empire.instance.capitale.or > (Empire.instance.capitale.coutNourriture * Empire.instance.capitale.army) * 3)
+                    {
+                        RequestManager.SendRequest(new Request(this, Ressource_Type.gold));
+                        alreadyAsk = true;
+                    }
                 }
             }
         }
@@ -188,7 +187,7 @@ public class Seigneur : IUpdate {
        return village.or - influenceReputation;
     }
 
-
+    /*
     void GenerateRandomInvestment()
     {
         List<string> listMessage = new List<string>();
@@ -220,4 +219,5 @@ public class Seigneur : IUpdate {
         request = new Request(listMessage, listeChoix);
         listInvestRequest.Add(request);
     }
+    */
 }
