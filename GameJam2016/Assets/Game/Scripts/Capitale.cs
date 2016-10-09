@@ -26,13 +26,14 @@ public class Capitale : Village {
 
     //Events
     public StatEvent onBonheurChange = new StatEvent();
+    public StatEvent onBonheurMaxChange = new StatEvent();
 
     public Capitale(Empire empire, int id) : base(empire,id, "ROME", null)
     {
         this.empire = empire;
         this.id = id;
 
-        bonheurMax = tabBonheurMax[seuilActuel];
+        SetBonheurMax(tabBonheurMax[seuilActuel]);
 
         AddGold(capitaleOr);
         AddFood(capitaleNourriture);
@@ -61,12 +62,14 @@ public class Capitale : Village {
         {
             RequestManager.SendRequest(eventBonheur[seuilActuel]);
             seuilActuel++;
-            bonheurMax = tabBonheurMax[seuilActuel];
+            SetBonheurMax(tabBonheurMax[seuilActuel]);
         }
         onBonheurChange.Invoke(bonheur);
     }
 
     public void AddBonheur(int amount) { bonheur += amount; onBonheurChange.Invoke(bonheur); }
+
+    public void SetBonheurMax (int amount) { bonheurMax = amount; onBonheurMaxChange.Invoke(bonheurMax); }
 
     public void DecreaseChariot(int amount) { nbCharriot -= amount; }
 
@@ -100,15 +103,15 @@ public class Capitale : Village {
         CarriageManager.SendCarriage(new Carriage(nbTour, destination, this,resource,amount));
     }
 
-    public override StatEvent GetStatEvent(Ressource_Type type)
+    public override StatEvent GetStatEvent(Ressource_Type type, bool isAlternative = false)
     {
-        StatEvent ev =  base.GetStatEvent(type);
+        StatEvent ev =  base.GetStatEvent(type, isAlternative);
         if(ev == null)
         {
             switch (type)
             {
                 case Ressource_Type.happiness:
-                    ev = onBonheurChange;
+                    ev = isAlternative? onBonheurMaxChange : onBonheurChange;
                     break;
             }
         }

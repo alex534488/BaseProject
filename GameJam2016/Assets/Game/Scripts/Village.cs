@@ -171,16 +171,16 @@ public class Village : IUpdate {
         }
     }
 
-    public virtual StatEvent GetStatEvent(Ressource_Type type)
+    public virtual StatEvent GetStatEvent(Ressource_Type type, bool isAlternative = false)
     {
         switch (type)
         {
             case Ressource_Type.army:
                 return onArmyChange;
             case Ressource_Type.food:
-                return onFoodChange;
+                return isAlternative? onFoodProdChange: onFoodChange;
             case Ressource_Type.gold:
-                return onGoldChange;
+                return isAlternative? onGoldProdChange: onGoldChange;
             case Ressource_Type.reputation:
                 return onReputationChange;
         }

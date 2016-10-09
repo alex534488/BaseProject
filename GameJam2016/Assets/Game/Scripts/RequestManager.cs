@@ -216,7 +216,7 @@ public class RequestManager : MonoBehaviour
         listMessage.Add("Il nous propose de lui acheter de la nourriture à des prix très intéressants !");
         listeChoix = new List<Dialog.Choix>();
         listeChoix.Add(new Dialog.Choix("Achetez-lui de la nourriture. (+5 nourriture, -5 Or)", delegate () { Empire.instance.capitale.AddFood(5); Empire.instance.capitale.DecreaseGold(5); }));
-        listeChoix.Add(new Dialog.Choix("Achetez-lui des mets exotiques pour la population.(+5 Bonheur -5 Or)", delegate () { Empire.instance.capitale.bonheur += 5; Empire.instance.capitale.DecreaseGold(5); }));
+        listeChoix.Add(new Dialog.Choix("Achetez-lui des mets exotiques pour la population.(+5 Bonheur -5 Or)", delegate () { Empire.instance.capitale.AddBonheur(5); Empire.instance.capitale.DecreaseGold(5); }));
         listeChoix.Add(new Dialog.Choix("Nous n'avons rien à lui acheter.", delegate () { }));
         request = new Request(listMessage, listeChoix);
         listRandomRequest.Add(request);
