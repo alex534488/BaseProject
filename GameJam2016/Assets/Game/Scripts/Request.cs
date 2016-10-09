@@ -13,8 +13,15 @@ public class Request {
     public bool choosen = false;
     public int delay;
 
-    // REQUETE D'AIDE
 
+    // REQUETE MORT
+    public Request(Seigneur messager)
+    {
+        message.Add("Bonjour Empereur. J'ai de mauvaises nouvelles. Le village " + messager.village.nom + " a malheureusement été détruit par une invasion barbare.");
+        choix.Add(new Dialog.Choix("C'est malheureux en effet, mais l'Empire survivra!", delegate () { }));
+    }
+
+    // REQUETE D'AIDE
     public Request(Seigneur messager,Ressource_Type resource, int amount)
     {
         this.messager = messager;
@@ -100,7 +107,6 @@ public class Request {
     }
 
     // REQUETE CLASSIQUE
-
     public Request (List < string> message, List<Dialog.Choix> choix)
     {
         this.message = message;
