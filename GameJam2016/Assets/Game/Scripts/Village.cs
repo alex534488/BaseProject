@@ -32,8 +32,8 @@ public class Village : IUpdate {
     #endregion
 
     #region Production 
-    public int productionOr = 2;
-    public int productionNourriture = 5;
+    public int productionOr = 0;
+    public int productionNourriture = 3;
     public int productionArmy = 0;
     #endregion
 
@@ -96,9 +96,6 @@ public class Village : IUpdate {
             
         }
 
-        AddGold(productionOr*4);
-        AddFood(productionNourriture*4);
-        AddArmy(productionArmy*4);
 
         lord = new Seigneur(this);
         this.lord.nom = nomseigneur;

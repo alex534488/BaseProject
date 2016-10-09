@@ -43,7 +43,7 @@ public class ConseillerScreenItem : MonoBehaviour
     void UpdateDisplay()
     {
         totalText.text = "" + village.GetTotal(type);
-        slider.UpdateSlider(village.reputation / 100);
+        slider.UpdateSlider((float)(village.reputation / 100.0));
         int bilan = village.GetBilan(type);
         bilanText.text = "" + bilan;
         bg.color = (bilan >= 0) ? positiveColor : negativeColor;
