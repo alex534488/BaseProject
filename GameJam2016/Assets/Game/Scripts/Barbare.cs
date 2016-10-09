@@ -25,7 +25,7 @@ public class Barbare : IUpdate
     private int barbareRestant = 0;
     private int soldatRestant = 0;
 
-    public int spawnRate = 1;
+    public int spawnRate = 2;
     #endregion
 
     #region Probabilites
@@ -47,9 +47,9 @@ public class Barbare : IUpdate
     {
 
 
-
         if (actualTarget != null)
         {
+           
             waitForAttack = waitForAttack - 1;
 
             if (waitForAttack <= 0)
@@ -58,13 +58,23 @@ public class Barbare : IUpdate
 
         else
         {
+
             if (nextTarget == null)
             {
                 AskTarget();
             }
             SpawnEnnemy(spawnRate);
             AmIStrongEnough();
+           
         }
+
+        if (nextTarget != null && nextTarget.isAttacked && World.main.GiveTarget()[0].isAttacked == false)
+        {
+            nextTarget = null;
+        }
+
+
+
 
     }
 
@@ -72,8 +82,8 @@ public class Barbare : IUpdate
 
     void AskTarget() // Retourne le village frontiere avec le moins de soldats disponibles
     {
-        nextTarget = World.main.GiveTarget();
-
+        List<Village> listNextTarget = World.main.GiveTarget();
+        nextTarget = listNextTarget[0];
         AmIStrongEnough();
     }
 
