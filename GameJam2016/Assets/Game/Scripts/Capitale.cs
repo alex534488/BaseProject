@@ -163,9 +163,13 @@ public class Capitale : Village
         if (nourriture < 0) perteBonheur += (Mathf.CeilToInt((-3 * nourriture) / 5));
 
         if (perteBonheur > 0)
-            DecreaseBonheur(perteBonheur);
+        {
+            if (perteBonheur >= bonheur)
+                DecreaseBonheur(bonheur);
 
-
+            else
+                DecreaseBonheur(perteBonheur);
+        }
     }
 
     void BesoinNourriture(int amount)
