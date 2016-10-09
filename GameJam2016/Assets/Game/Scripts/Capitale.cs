@@ -71,6 +71,7 @@ public class Capitale : Village
 
     public void DecreaseBonheur(int amount)
     {
+        // Revoir cette fonction entièrement car eventBonheur[4] n'est jamais fait
         bonheur -= amount;
         bool seuilFranchi = false;
         do
