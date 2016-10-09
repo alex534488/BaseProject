@@ -21,7 +21,7 @@ public class Seigneur : IUpdate {
     public int seuilArmy = 0;
 
     // Investissement
-    private int cooldown = 3;
+    private int cooldown = 0;
 
 
     // Es ce que le seigneur a deja demander a l'emperor
@@ -33,6 +33,7 @@ public class Seigneur : IUpdate {
         seuilNourriture = village.armyFoodCost;
         seuilGold = village.coutNourriture * village.armyFoodCost;
         seuilArmy = 0;
+        cooldown += village.id * 2;
     }
 	
 	public void Update ()
@@ -52,9 +53,9 @@ public class Seigneur : IUpdate {
         if (village.or < seuilGold) NeedGold(seuilGold); 
         else if (village.nourriture < seuilNourriture) NeedFood(seuilNourriture);
         else if (village.army < seuilArmy) NeedArmy(seuilArmy - village.army);
-        if (village.or > seuilGold * 5 && village.or > 20)
+        if (village.or > seuilGold * 2 && village.or > 10)
         {
-            if (Random.Range(0, 101) < village.reputation/4)
+            if (Random.Range(0, 101) < village.reputation)
             {
                 if (!alreadyAsk)
                 {
@@ -67,7 +68,10 @@ public class Seigneur : IUpdate {
                 }
             }
         }
-        cooldown--;
+        if (cooldown == 0)
+        {
+            cooldown = 3; 
+        } else cooldown--;
     }
 
     public void Death()

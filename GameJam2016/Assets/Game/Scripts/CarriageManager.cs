@@ -35,14 +35,12 @@ public class CarriageManager : MonoBehaviour
                         if (realAmount > 0) {
                             TakeResources(carriage, carriage.resource, realAmount);
                             carriage.destination.DecreaseReputation(10);
-                            (carriage.destination as Capitale).AddChariot(1);
+                            Empire.instance.capitale.AddChariot(1);
                             RequestManager.SendRequest(new Request(carriage,realAmount));
                         }
                     }
                 }
-                
                 listCarriage.Remove(carriage);
-                return;
             }
             carriage.delay--;
         }
