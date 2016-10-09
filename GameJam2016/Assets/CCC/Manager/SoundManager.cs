@@ -55,7 +55,7 @@ namespace CCC.Manager
             AudioSource theSource = source;
             if (theSource == null) theSource = stdSource;
             
-            theSource.PlayOneShot(clip, delay); //avant stdSource.PlayOneShot(clip, delay); 
+            theSource.PlayOneShot(clip, volume); //avant stdSource.PlayOneShot(clip, delay); 
         }
 
         public void PlayMusic(AudioClip clip, bool looping = true, float volume = 1, bool faded = false)
