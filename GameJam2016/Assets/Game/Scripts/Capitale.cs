@@ -6,8 +6,8 @@ using UnityEngine.SceneManagement;
 
 public class Capitale : Village
 {
-    int[] seuilBonheur = { 40, 30, 20, 10, 0 , 0 };
-    int[] tabBonheurMax = { 50, 40, 30, 20, 10 ,0};
+    int[] seuilBonheur = { 40, 30, 20, 10, 0 , -10 };
+    int[] tabBonheurMax = { 50, 40, 30, 20, 10 ,-10};
     Request[] eventBonheur = { EventBonheur1(), EventBonheur2(), EventBonheur3(), EventBonheur4(), EventBonheur5(), EventBonheur1() };
     int seuilActuel = 0;
 
