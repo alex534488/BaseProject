@@ -57,7 +57,7 @@ public class Character : MonoBehaviour {
     {
         float duration = (dest[0].position - transform.position).magnitude / moveSpeed;
         float scaleDelta = Mathf.Abs((transform.localScale - dest[0].localScale).magnitude);
-        duration += (scaleDelta*5);
+        duration += (scaleDelta*5*1.5f/moveSpeed);
 
         transform.DOScale(dest[0].localScale, duration).SetEase(dest[0].localScale.magnitude > transform.localScale.magnitude? Ease.InSine: Ease.OutSine);
         transform.DOMove(dest[0].position, duration).SetEase(Ease.Linear).OnComplete(EndItem);

@@ -285,7 +285,7 @@ MonoBehaviour:
   coup: {fileID: 212000012085429890}
   generator: {fileID: 11400000, guid: 4af0aaba27a240a40b751b9fa7a6e4bd, type: 2}
   anim: {fileID: 95000012244706280}
-  moveSpeed: 1.5
+  moveSpeed: 2.5
 --- !u!212 &212000012085429890
 SpriteRenderer:
   m_ObjectHideFlags: 1
