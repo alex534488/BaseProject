@@ -28,7 +28,7 @@ public class CarriageManager : MonoBehaviour
                     if(carriage.amount > 0) { // Give resource to village
                         GiveResources(carriage, carriage.resource, carriage.amount);
                     } else { //Take resource FROM village to capital (instant)
-                        int realAmount = carriage.destination.lord.CanYouGive(carriage.resource, carriage.amount);
+                        int realAmount = carriage.destination.lord.CanYouGive(carriage.resource);
                         if (realAmount > 0) {
                             TakeResources(carriage, carriage.resource, carriage.amount);
                         }
