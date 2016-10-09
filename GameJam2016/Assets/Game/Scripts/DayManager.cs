@@ -32,6 +32,8 @@ public class DayManager : MonoBehaviour {
 
         // INTRODUCTION
 
+        if (currentday != null) currentday.GetComponentInChildren<Text>().text = "Jour " + nbJour;
+
         requestManager.OnCompletionOfRequests.AddListener(OnAllRequestComplete);
         if (scoutButton != null) nextDayButton.onClick.AddListener(LaunchedDay);
         if(scoutButton != null) scoutButton.onClick.AddListener(ButtonScout);

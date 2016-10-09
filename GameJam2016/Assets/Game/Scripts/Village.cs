@@ -171,6 +171,23 @@ public class Village : IUpdate {
         }
     }
 
+    public int AmountOfResources(Ressource_Type type)
+    {
+        switch (type)
+        {
+            case Ressource_Type.army:
+                return army;
+            case Ressource_Type.food:
+                return nourriture;
+            case Ressource_Type.gold:
+                return or;
+            case Ressource_Type.reputation:
+                return reputation;
+            default:
+                return 0;
+        }
+    }
+
     public virtual StatEvent GetStatEvent(Ressource_Type type, bool isAlternative = false)
     {
         switch (type)
