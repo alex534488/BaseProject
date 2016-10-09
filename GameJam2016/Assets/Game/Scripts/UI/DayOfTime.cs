@@ -49,7 +49,7 @@ public class DayOfTime : MonoBehaviour
         tweens.Add(DOTween.To(() => main.redFilter.intensity, x => main.redFilter.intensity = x, 0, duration));
         tweens.Add(main.skybox.DOFade(0, duration));
 
-        if (main.nightClip != null) main.audioSource.PlayOneShot(main.nightClip);
+        if (main.nightClip != null) main.audioSource.PlayOneShot(main.nightClip, 0.5f);
     }
 
     static public void Day(float intensity)
