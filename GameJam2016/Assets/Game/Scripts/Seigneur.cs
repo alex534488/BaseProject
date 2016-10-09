@@ -53,7 +53,7 @@ public class Seigneur : IUpdate {
         else if (village.army < seuilArmy) NeedArmy(seuilArmy - village.army);
         if (village.or > seuilGold * 5 && village.or > 20)
         {
-            if (Random.Range(0, 101) < village.reputation/2)
+            if (Random.Range(0, 101) < village.reputation/4)
             {
                 if (!alreadyAsk)
                 {
@@ -85,7 +85,11 @@ public class Seigneur : IUpdate {
             if (village.or > goldneed) {
                 village.DecreaseGold(goldneed);
                 village.AddFood(amount);
-            } 
+            } else
+            {
+                village.DecreaseGold(goldneed - village.or);
+                village.AddArmy(Mathf.RoundToInt((goldneed - village.or) / village.coutNourriture));
+            }
         } else
         {
             village.DecreaseGold(goldneed);
@@ -117,6 +121,10 @@ public class Seigneur : IUpdate {
             if (village.or > goldneeded){
                 village.DecreaseGold(goldneeded);
                 village.AddArmy(amount);
+            } else
+            {
+                village.DecreaseGold(goldneeded - village.or);
+                village.AddArmy(Mathf.RoundToInt((goldneeded - village.or)/village.costArmy));
             }
         } else
         {

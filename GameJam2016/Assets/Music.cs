@@ -10,15 +10,16 @@ public class Music : MonoBehaviour {
     List<AudioClip> listMusic = new List<AudioClip>();
     public AudioClip music1;
     public AudioClip music2;
+    public AudioClip music3;
     private AudioClip nextsong;
     // rajouter des musiques ICI
-    public SoundManager soundmanager;
 
     // Use this for initialization
     void Start()
     {
         listMusic.Add(music1);
         listMusic.Add(music2);
+        listMusic.Add(music3);
         this.GetComponent<AudioSource>().Play();
         nextsong = this.GetComponent<AudioSource>().clip;
     }
@@ -31,7 +32,6 @@ public class Music : MonoBehaviour {
         {
             nextsong = listMusic[(int)Random.Range(0, listMusic.Count)];
         }
-
         this.GetComponent<AudioSource>().clip = nextsong;
         this.GetComponent<AudioSource>().Play();
     }

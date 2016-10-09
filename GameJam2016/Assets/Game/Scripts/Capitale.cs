@@ -89,6 +89,8 @@ public class Capitale : Village
 
     public void SendScout(World theWorld)
     {
+        int count = 0;
+
         DecreaseGold(empire.capitale.coutScout);
 
         foreach (Village village in empire.listVillage)
@@ -100,10 +102,22 @@ public class Capitale : Village
                     if (!village.lord.alreadyAsk)
                     {
                         RequestManager.SendRequest(new Request(village.lord, Ressource_Type.army, village.barbares.nbBarbares - village.army));
+                        count++;
                     }
                 }
             }
         }
+
+        // Aucun village n'est attaqué, l'écraireur le signale à la capitale
+        List<string >listMessage = new List<string>();
+        listMessage.Add(" Salutation, je suis votre humble éclaireur qui est de retour de voyage." + "\n \n" + " L'état de la situation actuelle n'est vraiment pas allarmante. Les barbares semblent être tranquille et n'attaque pas les villages.");
+        listMessage.Add(" Chacun d'entre eux se porte bien et votre assistance n'est pas necessaire pour le moment" + "\n \n" + " Nous sommes dans une période de paix. N'hésitez à me renvoyer faire le tour des villages pour que je vous signale la situation des villages");
+        List<Dialog.Choix> listeChoix = new List<Dialog.Choix>();
+        listeChoix.Add(new Dialog.Choix(" Merci éclaireur! Bonne journée à toi mon ami.", delegate () { }));
+        Request request = new Request(listMessage, listeChoix);
+
+        if (count <= 0) RequestManager.SendRequest(request);
+        count = 0;
     }
 
     public void SendCartToVillage(Village destination, Ressource_Type resource, int amount)
