@@ -45,8 +45,6 @@ public class Barbare : IUpdate
 
     public void Update() 
     {
-
-
         if (actualTarget != null)
         {
            
@@ -138,6 +136,12 @@ public class Barbare : IUpdate
 
         totalBarbare = nbBarbares;
         totalSoldats = soldatRestant;
+
+        if (actualTarget.isDestroyed == true)
+        {
+            ResetValues();
+            return;
+        }
 
         if (barbareRestant / nbUnites >= 1 / 3)
         {

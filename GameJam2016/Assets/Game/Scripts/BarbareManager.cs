@@ -10,8 +10,6 @@ public class BarbareManager : IUpdate {
    
     public int nbClanBarbare = 1;
 
-    
-
     public void Initialize()
     {
         for(int i = 0; i < nbClanBarbare; i++)

@@ -125,7 +125,7 @@ public class RequestManager : MonoBehaviour
         listMessage.Add("Octavius : Jupiter est en colère monseigneur ! "+ "\n \n" + "Ses foudres déchirent le ciel en ce moment même !" + "\n \n" + "Que devons nous faire pour apaiser le dieu des dieux ?");
         listeChoix = new List<Dialog.Choix>();
         listeChoix.Add(new Dialog.Choix("Sacrifiez du bétails ! (-8 Nourriture)", delegate () { Empire.instance.capitale.DecreaseFood(8); }));
-        listeChoix.Add(new Dialog.Choix("Organisez une fête populaire où le bétail sera sacrifié et la population rassasiée (-16 Nourriture, +2 Bonheur)", delegate () { Empire.instance.capitale.DecreaseFood(16); Empire.instance.capitale.AddBonheur(2); }));
+        listeChoix.Add(new Dialog.Choix("Organisez une fête populaire où le bétail sera sacrifié et la population rassasiée (-16 Nourriture, +4 Bonheur)", delegate () { Empire.instance.capitale.DecreaseFood(16); Empire.instance.capitale.AddBonheur(2); }));
         listeChoix.Add(new Dialog.Choix("Jupiter n'est qu'une représentation du seul et unique Dieu ! Je ne crains pas ses foudres! (-3 Bonheur)", delegate () { Empire.instance.capitale.DecreaseBonheur(3); }));
         request = new Request(listMessage, listeChoix);
         listRandomRequest.Add(request);
@@ -387,7 +387,7 @@ public class RequestManager : MonoBehaviour
         listMessage = new List<string>();
         listMessage.Add("Abdul (Voyageur étranger) : Nou bezwen manje. Noue vou ede pli tor.");
         listeChoix = new List<Dialog.Choix>();
-        listeChoix.Add(new Dialog.Choix("Mon cher voyageur, je ne suis pas en mesure de comprendre votre dialecte.\nRetournez dans votre contrée et apprenez notre langue avant de venir nous importuner encore.", delegate () { }));
+        listeChoix.Add(new Dialog.Choix("Retournez dans votre contrée et apprenez notre langue avant de venir nous importuner encore.", delegate () { }));
         request = new Request(listMessage, listeChoix);
         AbdulN = request;
         listRandomRequest.Add(request);

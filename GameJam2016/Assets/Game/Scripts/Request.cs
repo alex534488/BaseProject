@@ -65,7 +65,7 @@ public class Request {
                 {
                     case 1:
                         message.Add("Je représente le village "+ messager.village.nom + "\n\nNotre récolte a été incroyablement abondante cette saison." + "\n\n" +
-                                    "Nous voudrions éventuellement semer d'avantage de graines pour continuer d'avoir autant de réserves de nourritures. \n\nPar contre, cela necessiterait de nouveaux investissements majeurs.");
+                                    "Nous voudrions semer davantage pour améliorer nos réserves de nourritures. \n\nPar contre, cela necessiterait de nouveaux investissements majeurs.");
                         choix = new List<Dialog.Choix>();
                         choix.Add(new Dialog.Choix("Payez entièrement les frais des nouvelles semances \n(-40 Or, +2 Production Nourriture, + Réputation)", delegate () { Empire.instance.capitale.DecreaseGold(40); messager.village.AddReputation(20); messager.village.ModifyFoodProd(2); }));
                         choix.Add(new Dialog.Choix("Aidez les villagois à construire la mine \n(-20 Or Capitale, -20 Or Village, +2 Production Nourriture)", delegate () { Empire.instance.capitale.DecreaseGold(20); messager.village.DecreaseGold(20); messager.village.ModifyFoodProd(2); }));

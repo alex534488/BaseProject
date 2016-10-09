@@ -160,7 +160,7 @@ public class Capitale : Village
 
     void CheckResources()
     {
-        if (nourriture < seuilNourritureCapitale) BesoinNourriture(seuilNourritureCapitale - nourriture);
+        // if (nourriture < seuilNourritureCapitale) BesoinNourriture(seuilNourritureCapitale - nourriture);
 
         int perteBonheur = 0;
         if (or < 0) perteBonheur += (Mathf.CeilToInt((-1 * or) / 5));
@@ -173,15 +173,15 @@ public class Capitale : Village
         }
     }
 
-    void BesoinNourriture(int amount)
-    {
-        int goldNeeded = coutNourriture * amount;
+    //void BesoinNourriture(int amount)
+    //{
+    //    int goldNeeded = coutNourriture * amount;
 
-        if (or < goldNeeded) return;
+    //    if (or < goldNeeded) return;
 
-        ModifyResource(Ressource_Type.gold, amount);
-        ModifyResource(Ressource_Type.food, amount);
-    }
+    //    ModifyResource(Ressource_Type.gold, amount);
+    //    ModifyResource(Ressource_Type.food, amount);
+    //}
 
     static private Request EventBonheur1()
     {
@@ -195,7 +195,7 @@ public class Capitale : Village
     static private Request EventBonheur2()
     {
         List<string> listMessage = new List<string>();
-        listMessage.Add("Conseiller Brutus : Empereur, l'agitation grandit au sein de Rome.\n\n Cette nuit, elle ont conduit à des affrontements entre vos partisans et d'autres groupes d'individus. (-8 Or, -2 Soldat)");
+        listMessage.Add("Conseiller Brutus : Empereur, l'agitation grandit au sein de Rome.\n\nCette nuit, elle ont conduit à des affrontements entre vos partisans et d'autres groupes d'individus. \n(-8 Or, -2 Soldat)");
         List<Dialog.Choix> listeChoix = new List<Dialog.Choix>();
         listeChoix.Add(new Dialog.Choix("Sacrebleu!", delegate () { Empire.instance.capitale.DecreaseGold(8); Empire.instance.capitale.DecreaseArmy(2); }));
         Request request = new Request(listMessage, listeChoix);

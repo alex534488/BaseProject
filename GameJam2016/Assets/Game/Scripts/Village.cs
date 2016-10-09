@@ -127,7 +127,14 @@ public class Village : IUpdate {
     }
 
     #region Attack
-    public virtual void DestructionVillage(){ empire.DeleteVillage(this); }
+    public virtual void DestructionVillage()
+    {
+        this.isDestroyed = true;
+        this.army = 0;
+        this.nourriture = 0;
+        this.or = 0;
+        empire.DeleteVillage(this);
+    }
 
     public void BeingAttack(Barbare attaquant) { isAttacked = true; barbares = attaquant; }
 

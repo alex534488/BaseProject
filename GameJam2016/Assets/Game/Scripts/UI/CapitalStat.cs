@@ -35,6 +35,7 @@ public class CapitalStat : MonoBehaviour
             {
                 int bilan = capital.GetBilan(type);
                 profitText.text = "" + (bilan >= 0 ? "+" : "") + bilan;
+                print("Test - " + type);
             }
         }
     }
