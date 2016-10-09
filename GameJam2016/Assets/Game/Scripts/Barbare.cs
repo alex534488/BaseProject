@@ -6,7 +6,7 @@ public class Barbare : IUpdate
 {
 
     public float facteur = 1.2f;
-    public int delay = 1;
+    public int delay = 5;
 
     private Village nextTarget = null;
     public Village actualTarget = null;
@@ -260,7 +260,6 @@ public class Barbare : IUpdate
             return;
         }
         batailleEnCours = true;
-        Debug.Log("Combat!");
         AttaqueBarbare();
 
         if (soldatRestant <= 0)
