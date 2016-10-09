@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class Barbare : IUpdate
 {
-    public World theWorld;
+
     public float facteur = 1.2f;
     public int delay = 5;
 
@@ -33,10 +33,21 @@ public class Barbare : IUpdate
     private int probabiliteBarbare = 50;
     #endregion
 
-    void Start(){}
+    public Barbare()
+    {
+
+    }
+
+    void Start()
+    {
+        
+    }
 
     public void Update() 
     {
+
+
+
         if (actualTarget != null)
         {
             waitForAttack = waitForAttack - 1;
@@ -47,6 +58,10 @@ public class Barbare : IUpdate
 
         else
         {
+            if (nextTarget == null)
+            {
+                AskTarget();
+            }
             SpawnEnnemy(spawnRate);
             AmIStrongEnough();
         }
@@ -57,7 +72,7 @@ public class Barbare : IUpdate
 
     void AskTarget() // Retourne le village frontiere avec le moins de soldats disponibles
     {
-        nextTarget = theWorld.GiveTarget();
+        nextTarget = World.main.GiveTarget();
 
         AmIStrongEnough();
     }
@@ -152,6 +167,7 @@ public class Barbare : IUpdate
     void Retraite()
     {
         // Definit un nouveau village cible. Il peut s'agir du même village sans aucun problème.
+        actualTarget=null;
         AskTarget();
     } // Lorsque les barbares decident de ne pas attaquer le village en question
 
@@ -212,6 +228,7 @@ public class Barbare : IUpdate
 
         Request rapportCombat= new Request(listeLigne, listeChoix);
 
+       
         RequestManager.SendRequest(rapportCombat);
     }
 
@@ -237,15 +254,29 @@ public class Barbare : IUpdate
 
     void Bataille()
     {
+        if(actualTarget.isDestroyed)
+        {
+            ResetValues();
+            return;
+        }
+        batailleEnCours = true;
         AttaqueBarbare();
 
         if (soldatRestant <= 0)
+        {
             VictoireBarbare();
+            return;
+        }
+            
 
         AttaqueSoldat();
 
         if (barbareRestant <= 0)
+        {
             VictoireSoldat();
+            return;
+        }
+           
 
         if (batailleEnCours == true)
             Bataille();

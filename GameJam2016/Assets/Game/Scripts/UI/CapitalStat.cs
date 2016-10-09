@@ -29,7 +29,7 @@ public class CapitalStat : MonoBehaviour
         {
             if(type == Ressource_Type.happiness)
             {
-
+                totalText.text = ""+capital.bonheur + "/" + capital.bonheurMax;
             }
             else
             {

@@ -1,8 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System;
 
-public class BarbareManager : MonoBehaviour {
+public class BarbareManager : IUpdate {
 
     public List<Barbare> listeBarbare = new List<Barbare>();
 
@@ -15,6 +16,14 @@ public class BarbareManager : MonoBehaviour {
             AddClanBarbare();
         }
 	}
+
+    public void Uptade()
+    {
+        foreach(Barbare bar in listeBarbare)
+        {
+            bar.Update();
+        }
+    }
 
     public void AddClanBarbare()
     {
@@ -33,5 +42,9 @@ public class BarbareManager : MonoBehaviour {
 
         return barbareTotal;
     }
-	
+
+    public void Update()
+    {
+        throw new NotImplementedException();
+    }
 }

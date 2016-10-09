@@ -25,7 +25,7 @@ public class DayManager : MonoBehaviour{
         if (main == null) main = this;
 
         theWorld = new World();
-        theWorld.Start(barbareManager);
+        theWorld.Start();
 
         // INTRODUCTION
 
