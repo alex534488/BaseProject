@@ -18,9 +18,10 @@ public class Seigneur : IUpdate {
     private int seuilNourriture;
     private int seuilGold; // or minimale permis, correspond au coutNourriture de village
     private int seuilMinimalArmy = 3;
-
-
     public int seuilArmy = 0;
+
+    // Requete investissement
+    List<Request> listInvestRequest = new List<Request>();
 
     // Es ce que le seigneur a deja demander a l'emperor
     public bool alreadyAsk = false;
@@ -30,7 +31,9 @@ public class Seigneur : IUpdate {
         this.village = village;
         seuilNourriture = village.armyFoodCost;
         seuilGold = village.coutNourriture * village.armyFoodCost;
-        seuilArmy = 0; 
+        seuilArmy = 0;
+
+        GenerateRandomInvestment();
     }
 	
 	public void Update ()
@@ -50,7 +53,19 @@ public class Seigneur : IUpdate {
         if (village.or < seuilGold) NeedGold(seuilGold); 
         else if (village.nourriture < seuilNourriture) NeedFood(seuilNourriture);
         else if (village.army < seuilArmy) NeedArmy(seuilArmy - village.army);
-        // else tout va bien alors proposition d'investissement possible
+        if (village.or > seuilGold * 5)
+        {
+            if (Random.Range(0, 101) < village.reputation/2)
+            {
+                if (!alreadyAsk)
+                {
+                    RequestManager.SendRequest(listInvestRequest[0]);
+                    listInvestRequest.Remove(listInvestRequest[0]);
+                    if(listInvestRequest.Count <= 0) GenerateRandomInvestment();
+                    alreadyAsk = true;
+                }
+            }
+        }
     }
 
     void Death()
@@ -171,5 +186,38 @@ public class Seigneur : IUpdate {
     {
        int influenceReputation = (amount * village.reputation) / 100;
        return village.or - influenceReputation;
+    }
+
+
+    void GenerateRandomInvestment()
+    {
+        List<string> listMessage = new List<string>();
+        listMessage.Add("Bonjour notre digne empereur! Je suis du village " + village + " et vous serez heureux d'apprendre que notre économie se porte à merveille!" + "\n\n" + 
+                        "Je viens en tant que messager pour vous informer que nous voudrions une aide financière pour investir dans une nouvelle mine d'or.");
+        List<Dialog.Choix> listeChoix = new List<Dialog.Choix>();
+        listeChoix.Add(new Dialog.Choix(" Payez entièrement les frais de constructions de la mine (-40 Or , +3 Production D'Or)", delegate () { village.DecreaseGold(40); village.AddReputation(20); village.ModifyGoldProd(3); }));
+        listeChoix.Add(new Dialog.Choix(" Aidez les villagois à construire la mine (-20 Or, +3 Production D'Or)", delegate () { village.DecreaseGold(20); village.ModifyGoldProd(3); }));
+        listeChoix.Add(new Dialog.Choix(" Refusez la demande du villagois", delegate () { village.DecreaseReputation(20); }));
+        Request request = new Request(listMessage, listeChoix);
+        listInvestRequest.Add(request);
+
+        listMessage = new List<string>();
+        listMessage.Add("Bien le bonjour votre excellence! Avez-vous vu le beau temps qu'il y a eu dernierement? Notre recolte a été incroyablement abondante cette saison." + "\n\n" +
+                        "Nous voudrions éventuellement semer d'avantages de graines pour continuer d'avoir autant de réserves de nourritures. Par contre, cela necessiterait de nouveaux investissements majeurs.");
+        listeChoix = new List<Dialog.Choix>();
+        listeChoix.Add(new Dialog.Choix(" Payez entièrement les frais des nouvelles semances (-40 Or , +3 Production D'Or) ()", delegate () { village.DecreaseGold(40); village.AddReputation(20); village.ModifyGoldProd(3); }));
+        listeChoix.Add(new Dialog.Choix(" Aidez les villagois à construire la mine (-20 Or, +3 Production D'Or)", delegate () { village.DecreaseGold(20); village.ModifyGoldProd(3); }));
+        listeChoix.Add(new Dialog.Choix("Refusez la demande du villagois", delegate () { village.DecreaseReputation(20); }));
+        request = new Request(listMessage, listeChoix);
+        listInvestRequest.Add(request);
+
+        listMessage = new List<string>();
+        listMessage.Add("");
+        listeChoix = new List<Dialog.Choix>();
+        listeChoix.Add(new Dialog.Choix(" ()", delegate () { }));
+        listeChoix.Add(new Dialog.Choix(" ()", delegate () { }));
+        listeChoix.Add(new Dialog.Choix("()", delegate () { }));
+        request = new Request(listMessage, listeChoix);
+        listInvestRequest.Add(request);
     }
 }

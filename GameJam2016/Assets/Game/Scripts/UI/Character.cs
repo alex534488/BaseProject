@@ -6,6 +6,14 @@ using UnityEngine.Events;
 
 public class Character : MonoBehaviour {
 
+    [Header("Display")]
+    public SpriteRenderer cheveux;
+    public SpriteRenderer tete;
+    public SpriteRenderer bras;
+    public SpriteRenderer corps;
+    public SpriteRenderer coup;
+    [Header("Stuff")]
+    public CharacterGenerator generator;
     public Animator anim;
     public float moveSpeed = 1;
 
@@ -16,8 +24,26 @@ public class Character : MonoBehaviour {
 
     public void Init(Transform spawnPoint)
     {
+        if (generator != null) ApplyKit(generator.Generate());
         transform.position = spawnPoint.position;
         transform.localScale = spawnPoint.localScale;
+    }
+
+    void ApplyKit(CharacterGenerator.Kit kit)
+    {
+        tete.sprite = kit.tete;
+        tete.color = kit.skinColor;
+
+        cheveux.sprite = kit.cheveux;
+        cheveux.color = kit.cheveuxColor;
+
+        coup.color = kit.skinColor;
+
+        corps.sprite = kit.corps;
+        corps.color = kit.corpsColor;
+
+        bras.sprite = kit.bras;
+        bras.color = kit.skinColor;
     }
 
     public void QueueMoveTo(Transform destination, UnityAction onComplete = null)
