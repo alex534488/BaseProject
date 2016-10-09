@@ -30,8 +30,6 @@ public class DayManager : MonoBehaviour {
         theWorld = new World();
         theWorld.Start();
 
-        // INTRODUCTION
-
         if (currentday != null) currentday.GetComponentInChildren<Text>().text = "Jour " + nbJour;
 
         requestManager.OnCompletionOfRequests.AddListener(OnAllRequestComplete);
@@ -42,6 +40,7 @@ public class DayManager : MonoBehaviour {
 
     void Start()
     {
+        RequestManager.SendRequest(new Request());
         LaunchDay();
     }
 

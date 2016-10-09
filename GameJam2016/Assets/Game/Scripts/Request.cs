@@ -121,6 +121,21 @@ public class Request {
         this.choix = choix;
     }
 
+    public Request()
+    {
+        message.Add(" Bonjour Empereur, votre récente nomination inquiète beaucoup de citoyens au sein de la capitale. En tant que conseiller laissez moi vous donnez quelques indications quant a la facon de gouverner un Empire.");
+        message.Add(" Chaque jour, des personnes provenant de tout votre empire vont venir vous voir pour faire des requêtes à l'État, libre à vous de les accepter ou non. Dépendemment de vos choix vous allez pouvoir constater les impacts.");
+        message.Add(" En effet, à votre gauche vous avez un indication de resources de votre Capitale. La quantité de soldat, le bonheur de la cité, la quantité de nourriture et d'or sont représenté. À chaque tour vous avez une production de " + "\n" +
+            " nourriture et d'or, mais les autres attributs peuvent diminuer aussi en fonction de votre gouvernance.");
+        message.Add(" Afin de bien gérer vos décissions et leur potentiel impacte sur l'Empire, vous avez a votre droite, vos trois conseillers. Ils servent tous à avoir de l'information sur les villages compris au sein de votre empire et leur situation " + "\n\n" +
+            " Il vous est possible de demander ou de fournir des ressources à ces villages à l'aide de vos caravanes. À noter que les villes vont vous faire des demandes à l'occasion dépendemment de leur besoin.");
+        message.Add(" Également, il ne faut pas oublier les barbares peuvent attaquer à tout moment votre empire. Des villages pourraient se faire détruire s'il n'y a pas une armé assez suffisante. Pour avoir une idée globale des chose vous pouvez envoyer un " + "\n\n" +
+            " éclaireur qui récoltera de l'information sur les déplacements des barbares ce qui permettera au Ville de vous avertir s'ils sont en difficulté");
+        message.Add(" Finalement, il ne faut pas oublier que lorsque vous avez terminer de gérer votre empire pour la journée en cours, il faut appuyer sur le bouton Prochain Jour afin de passer à la prochaine journée." + "\n\n" + 
+                    "Un icone en haut au centre permet de signaler votre gouvernance a débuter depuis combien de temps");
+        choix.Add(new Dialog.Choix("Je crois que j'ai bien compris, je suis prêt à Gouverner!", delegate () { }));
+    }
+
     public void DoRequest()
     {
         CharacterEnter.Enter(OnCharacterEnter);
