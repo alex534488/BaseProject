@@ -82,6 +82,12 @@ public class EstimationEmpire {
     private static void EstimationCapitale(Village laCapitale, int estimation, int nbSoldats, int nbBarbares)
     {
         int bilanFood = laCapitale.productionNourriture - laCapitale.coutNourriture;
+        int bilanGold = laCapitale.or;
+
+        if (bilanGold < 0)
+        {
+            estimation = estimation - 15;
+        }
 
         if (bilanFood < 0)
         {
