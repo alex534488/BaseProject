@@ -116,11 +116,12 @@ public class Village : IUpdate {
         if(nourriture<0 || isDestroyed)
         {
             DestructionVillage();
+            lord.Death();
         }    
 	}
 
     #region Attack
-    public void DestructionVillage(){ empire.DeleteVillage(this); }
+    public virtual void DestructionVillage(){ empire.DeleteVillage(this); }
 
     public void BeingAttack(Barbare attaquant) { isAttacked = true; barbares = attaquant; }
 

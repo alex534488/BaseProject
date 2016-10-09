@@ -64,7 +64,7 @@ public class Seigneur : IUpdate {
         }
     }
 
-    void Death()
+    public void Death()
     {
         // DO: this meurt
     }

@@ -287,7 +287,6 @@ public class Barbare : IUpdate
             return;
         }
            
-
         if (batailleEnCours == true)
             Bataille();
     } // Boucle qui se termine lorsque un des deux clans ne possedent plus de unites
