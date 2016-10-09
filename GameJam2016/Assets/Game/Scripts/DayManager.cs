@@ -81,6 +81,5 @@ public class DayManager : MonoBehaviour {
         scoutButton.GetComponent<Button>().interactable = false;
         scoutButton.GetComponent<AudioSource>().Play();
         theWorld.empire.capitale.SendScout(theWorld);
-        
     }
 }

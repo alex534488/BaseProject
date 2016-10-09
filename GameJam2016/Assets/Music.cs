@@ -7,7 +7,8 @@ using CCC.Manager;
 public class Music : MonoBehaviour {
 
     // Sounds
-    List<AudioClip> listMusic = new List<AudioClip>();
+    List<AudioClip> listMusicVictoire = new List<AudioClip>();
+    List<AudioClip> listMusicDefaite = new List<AudioClip>();
     public AudioClip music1;
     public AudioClip music2;
     public AudioClip music3;
@@ -17,9 +18,9 @@ public class Music : MonoBehaviour {
     // Use this for initialization
     void Start()
     {
-        listMusic.Add(music1);
-        listMusic.Add(music2);
-        listMusic.Add(music3);
+        listMusicVictoire.Add(music1);
+        listMusicVictoire.Add(music2);
+        listMusicVictoire.Add(music3);
         this.GetComponent<AudioSource>().Play();
         nextsong = this.GetComponent<AudioSource>().clip;
     }

@@ -33,6 +33,12 @@ public class Capitale : Village
     public StatEvent onBonheurChange = new StatEvent();
     public StatEvent onBonheurMaxChange = new StatEvent();
 
+    // Type de Défaites
+    public enum Defeat_Type
+    {
+        famine,trahison
+    }
+
     public Capitale(Empire empire, int id) : base(empire, id, "ROME", null)
     {
         this.empire = empire;
@@ -51,16 +57,20 @@ public class Capitale : Village
     {
         seuilNourritureCapitale = army;
 
-        if (nourriture < 0 || bonheur < 0 || isDestroyed)
-        {
-            DestructionVillage();
-        }
-
         UpdateResources();
 
         UpdateCost();
 
         CheckResources();
+
+        if (isDestroyed)
+        {
+            
+        }
+    }
+
+    public override void DestructionVillage() {
+        empire.capitale = null;
     }
 
     public void DecreaseBonheur(int amount)
@@ -110,7 +120,7 @@ public class Capitale : Village
 
         // Aucun village n'est attaqué, l'écraireur le signale à la capitale
         List<string >listMessage = new List<string>();
-        listMessage.Add(" Salutation, je suis votre humble éclaireur qui est de retour de voyage." + "\n \n" + " L'état de la situation actuelle n'est vraiment pas allarmante. Les barbares semblent être tranquille et n'attaque pas les villages.");
+        listMessage.Add(" Salutation, je suis votre humble éclaireur qui est de retour de voyage." + "\n \n" + " L'état de la situation actuelle n'est vraiment pas alarmante. Les barbares semblent être tranquille et n'attaque pas les villages.");
         listMessage.Add(" Chacun d'entre eux se porte bien et votre assistance n'est pas necessaire pour le moment" + "\n \n" + " Nous sommes dans une période de paix. N'hésitez à me renvoyer faire le tour des villages pour que je vous signale la situation des villages");
         List<Dialog.Choix> listeChoix = new List<Dialog.Choix>();
         listeChoix.Add(new Dialog.Choix(" Merci éclaireur! Bonne journée à toi mon ami.", delegate () { }));
@@ -156,7 +166,6 @@ public class Capitale : Village
     void CheckResources()
     {
         if (nourriture < seuilNourritureCapitale) BesoinNourriture(seuilNourritureCapitale - nourriture);
-        if (bonheur <= 0) Defaite("Trahison");
         if (or < 0) DecreaseBonheur(Mathf.CeilToInt((-1 * or) / 10));
     }
 
@@ -164,24 +173,8 @@ public class Capitale : Village
     {
         int goldNeeded = coutNourriture * amount;
 
-        if (or < goldNeeded) return;
-
         ModifyResource(Ressource_Type.gold, amount);
         ModifyResource(Ressource_Type.food, amount);
-    }
-
-    void Defaite(string type)
-    {
-        // Fin de la partie
-        switch (type)
-        {
-            case "Trahison":
-                break;
-            case "Famine":
-                break;
-            default:
-                break;
-        }
     }
 
     static private Request EventBonheur1()
