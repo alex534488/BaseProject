@@ -14,12 +14,11 @@ public class DayManager : MonoBehaviour {
     public Button scoutButton;
     public Button sendcarriage;
 
+    // Manager et World
     public World theWorld;
     public RequestManager requestManager;
     public CarriageManager carriageManager;
     public BarbareManager barbareManager;
-
-
 
     // Nombre de jours (Points de la partie)
     private int nbJour = 0;
@@ -27,8 +26,6 @@ public class DayManager : MonoBehaviour {
     void Awake()
     {
         if (main == null) main = this;
-        
-        // rajouter des musiques ICI
 
         theWorld = new World();
         theWorld.Start();
@@ -81,6 +78,5 @@ public class DayManager : MonoBehaviour {
     {
         sendcarriage.GetComponent<AudioSource>().Play();
         theWorld.empire.capitale.SendCartToVillage(theWorld.empire.listVillage[0], Ressource_Type.gold, 10); // Test, va chercher 10 d'or dans le village numero 0
-        print("Gold Village 1:" + World.main.empire.listVillage[0].or);
     }
 }

@@ -23,7 +23,6 @@ public class Capitale : Village
 
     // Seuil de tolerance permis pour les resources de la capitale
     private int seuilNourritureCapitale;
-    private int seulOrCapitale = -50;
 
     // Trade
     public int nbCharriot = 3;
@@ -134,15 +133,7 @@ public class Capitale : Village
     {
         if (nourriture < seuilNourritureCapitale) BesoinNourriture(seuilNourritureCapitale - nourriture);
         if (bonheur <= 0) Defaite("Trahison");
-        if (or < 0)
-        {
-            DecreaseBonheur(1);
-            if (or < -25)
-            {
-                DecreaseBonheur(2);
-                if (or < seulOrCapitale) Defaite("Faillite");
-            }
-        }
+        if (or < 0) DecreaseBonheur(Mathf.CeilToInt((-1 * or) / 10));
     }
 
     void BesoinNourriture(int amount)
@@ -158,6 +149,15 @@ public class Capitale : Village
     void Defaite(string type)
     {
         // Fin de la partie
+        switch (type)
+        {
+            case "Trahison":
+                break;
+            case "Famine":
+                break;
+            default:
+                break;
+        }
     }
 
     static private Request EventBonheur1()
