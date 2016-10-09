@@ -50,6 +50,8 @@ public class Capitale : Village
 
     public override void Update()
     {
+        seuilNourritureCapitale = army;
+
         if (nourriture < 0 || bonheur < 0 || isDestroyed)
         {
             DestructionVillage();
@@ -98,14 +100,12 @@ public class Capitale : Village
                     }
                 }
             }
-
         }
-
-        // Le scout revient dans X tours?
     }
 
     public void SendCartToVillage(Village destination, Ressource_Type resource, int amount)
     {
+        if (nbCharriot <= 0) return;
         if (amount > 0) ModifyResource(resource, amount);
         CarriageManager.SendCarriage(new Carriage(nbTour, destination, this, resource, amount));
     }

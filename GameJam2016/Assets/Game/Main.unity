@@ -866,7 +866,8 @@ MonoBehaviour:
   type: 3
   totalText: {fileID: 1088013567}
   profitText: {fileID: 885410220}
-  statTextPrefab: {fileID: 0}
+  statTextPrefab: {fileID: 114000013230344322, guid: 09c9e5e0020184f4e8334293c4ed8286,
+    type: 2}
   offset: {x: 0, y: 0}
 --- !u!1 &332565450
 GameObject:
@@ -2098,7 +2099,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: SEND
+  m_Text: SEND CART
 --- !u!222 &1030317309
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2636,7 +2637,8 @@ MonoBehaviour:
   type: 0
   totalText: {fileID: 2104029078}
   profitText: {fileID: 1387318107}
-  statTextPrefab: {fileID: 0}
+  statTextPrefab: {fileID: 114000013230344322, guid: 09c9e5e0020184f4e8334293c4ed8286,
+    type: 2}
   offset: {x: 0, y: 0}
 --- !u!1 &1387318104
 GameObject:
@@ -2849,7 +2851,6 @@ MonoBehaviour:
   requestManager: {fileID: 568479099}
   carriageManager: {fileID: 2127779788}
   barbareManager: {fileID: 1101056532}
-  nbJour: 0
 --- !u!4 &1418466803
 Transform:
   m_ObjectHideFlags: 0
@@ -3061,7 +3062,8 @@ MonoBehaviour:
   type: 2
   totalText: {fileID: 966660508}
   profitText: {fileID: 1983886728}
-  statTextPrefab: {fileID: 0}
+  statTextPrefab: {fileID: 114000013230344322, guid: 09c9e5e0020184f4e8334293c4ed8286,
+    type: 2}
   offset: {x: 0, y: 0}
 --- !u!1 &1523543082
 GameObject:
@@ -3675,7 +3677,7 @@ AudioSource:
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   Priority: 128
@@ -3873,7 +3875,8 @@ MonoBehaviour:
   type: 1
   totalText: {fileID: 516564114}
   profitText: {fileID: 489745000}
-  statTextPrefab: {fileID: 0}
+  statTextPrefab: {fileID: 114000013230344322, guid: 09c9e5e0020184f4e8334293c4ed8286,
+    type: 2}
   offset: {x: 0, y: 0}
 --- !u!1 &1847773196
 GameObject:

@@ -32,7 +32,7 @@ public class DayManager : MonoBehaviour{
         requestManager.OnCompletionOfRequests.AddListener(OnAllRequestComplete);
         if (scoutButton != null) nextDayButton.onClick.AddListener(LaunchedDay);
         if(scoutButton != null) scoutButton.onClick.AddListener(ButtonScout);
-        if (sendcarriage != null) sendcarriage.onClick.AddListener(Test);
+        if (sendcarriage != null) sendcarriage.onClick.AddListener(SendCarriageTest);
     }
 
     public void LaunchedDay()
@@ -71,7 +71,7 @@ public class DayManager : MonoBehaviour{
         theWorld.empire.capitale.SendScout(theWorld);
     }
 
-    void Test()
+    void SendCarriageTest()
     {
         sendcarriage.GetComponent<AudioSource>().Play();
         theWorld.empire.capitale.SendCartToVillage(theWorld.empire.listVillage[0], Ressource_Type.gold, 10);
