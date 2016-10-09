@@ -73,6 +73,7 @@ public class DayManager : MonoBehaviour {
     private void OnAllRequestComplete()
     {
         if (scoutButton != null) scoutButton.GetComponent<Button>().interactable = true;
+        if (nextDayButton != null) nextDayButton.GetComponent<Button>().interactable = true;
     }
 
     void ButtonScout()
