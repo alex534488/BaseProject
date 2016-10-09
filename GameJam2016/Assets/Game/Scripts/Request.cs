@@ -49,7 +49,7 @@ public class Request {
     public Request(Seigneur messager, Ressource_Type resource)
     {
         this.messager = messager;
-        int random = Mathf.CeilToInt(Random.Range(0,10));
+        int random = Mathf.CeilToInt(Random.Range(0,3));
 
         switch (resource)
         {
@@ -63,6 +63,16 @@ public class Request {
                         choix.Add(new Dialog.Choix(" Payez entièrement les frais des nouvelles semances (-40 Or , +3 Production D'Or) ()", delegate () { Empire.instance.capitale.DecreaseGold(40); messager.village.AddReputation(20); messager.village.ModifyGoldProd(3); }));
                         choix.Add(new Dialog.Choix(" Aidez les villagois à construire la mine (-20 Or, +3 Production D'Or)", delegate () { Empire.instance.capitale.DecreaseGold(20); messager.village.DecreaseGold(20); messager.village.ModifyGoldProd(3); }));
                         choix.Add(new Dialog.Choix("Refusez la demande du villagois", delegate () { messager.village.DecreaseReputation(20); }));
+                        return;
+                    case 2:
+                        message.Add("Salutation votre majesté. Je viens du village lointin " + messager.village.nom + " qui aurait grandement besoin de votre support." + "\n\n" +
+                                    "En effet, bien que nous ne manquons de rien, nos infrastructures commence à veillir. Certains batiments risque de s'effondrer ou ne sont carément plus déja utilisable");
+                        message.Add("Ce que nous aimerions ce serait de pouvoir reconstruire plusieurs batiments pour pouvoir pooursuivre nos activité et ne pas nous ralentir dans notre si bonne lancé" + "\n\n" +
+                                     "Êtes-vous en mesure de nous apporter votre aide mon seigneur?");
+                        choix = new List<Dialog.Choix>();
+                        choix.Add(new Dialog.Choix(" Payez entièrement les frais des nouvelles infrastructures (-40 Or , +3 Production D'Or) ()", delegate () { Empire.instance.capitale.DecreaseGold(40); messager.village.AddReputation(20); messager.village.ModifyGoldProd(3); }));
+                        choix.Add(new Dialog.Choix(" Aidez les villagois à construire les infrastructures (-20 Or, +3 Production D'Or)", delegate () { Empire.instance.capitale.DecreaseGold(20); messager.village.DecreaseGold(20); messager.village.ModifyGoldProd(3); }));
+                        choix.Add(new Dialog.Choix("Refusez la demande de l'architecte", delegate () { messager.village.DecreaseReputation(20); }));
                         return;
                     default:
                         message.Add("Bonjour notre digne empereur! Je suis du village " + messager.village.nom + " et vous serez heureux d'apprendre que notre économie se porte à merveille!" + "\n\n" +

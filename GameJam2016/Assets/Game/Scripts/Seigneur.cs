@@ -51,17 +51,14 @@ public class Seigneur : IUpdate {
         if (village.or < seuilGold) NeedGold(seuilGold); 
         else if (village.nourriture < seuilNourriture) NeedFood(seuilNourriture);
         else if (village.army < seuilArmy) NeedArmy(seuilArmy - village.army);
-        if (village.or > seuilGold * 5)
+        if (village.or > seuilGold * 5 && village.or > 20)
         {
             if (Random.Range(0, 101) < village.reputation/2)
             {
                 if (!alreadyAsk)
                 {
-                    if(Empire.instance.capitale.or > (Empire.instance.capitale.coutNourriture * Empire.instance.capitale.army) * 3)
-                    {
-                        RequestManager.SendRequest(new Request(this, Ressource_Type.gold));
-                        alreadyAsk = true;
-                    }
+                    RequestManager.SendRequest(new Request(this, Ressource_Type.gold));
+                    alreadyAsk = true;
                 }
             }
         }
