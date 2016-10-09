@@ -113,12 +113,14 @@ public class Village : IUpdate {
 
         lord.Update();
 
-        if(nourriture < 0 || isDestroyed)
+        if(isDestroyed)
         {
             DestructionVillage();
-            lord.Death();
-        }    
-	}
+        } else if(nourriture < 0) {
+                lord.Death();
+                DestructionVillage();
+        }
+    }
 
     #region Attack
     public virtual void DestructionVillage(){ empire.DeleteVillage(this); }
