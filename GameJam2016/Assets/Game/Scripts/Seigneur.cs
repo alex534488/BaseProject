@@ -72,7 +72,7 @@ public class Seigneur : IUpdate {
 
     public void Death()
     {
-        // DO: this meurt
+        RequestManager.SendRequest(new Request(this));
     }
 
     void NeedFood(int amount)
