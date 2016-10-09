@@ -57,8 +57,5 @@ public class CapitalStat : MonoBehaviour
         text.color = new Color(text.color.r, text.color.g, text.color.b, 0);
         text.DOFade(1, 0.1f);
         text.DOFade(0, 0.4f).SetDelay(1.75f - 0.4f).OnComplete(delegate () { Destroy(text.gameObject); });
-
-
-
     }
 }

@@ -3,11 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.Events;
 
-public class Capitale : Village {
+public class Capitale : Village
+{
 
-    int[] seuilBonheur = {40,30,20,10,0};
+    int[] seuilBonheur = { 40, 30, 20, 10, 0 };
     int[] tabBonheurMax = { 50, 40, 30, 20, 10 };
-    Request[] eventBonheur = { EventBonheur1(), EventBonheur2(),EventBonheur3(),EventBonheur4(),EventBonheur5() };
+    Request[] eventBonheur = { EventBonheur1(), EventBonheur2(), EventBonheur3(), EventBonheur4(), EventBonheur5() };
     int seuilActuel = 0;
 
     // Attribut de la Capitale
@@ -16,8 +17,13 @@ public class Capitale : Village {
     public int capitaleArmy = 5;
     public int bonheur = 50;
     public int bonheurMax;
+
     // Scout
     public int coutScout = 10;
+
+    // Seuil de tolerance permis pour les resources de la capitale
+    private int seuilNourritureCapitale;
+    private int seulOrCapitale = -50;
 
     // Trade
     public int nbCharriot = 3;
@@ -28,7 +34,7 @@ public class Capitale : Village {
     public StatEvent onBonheurChange = new StatEvent();
     public StatEvent onBonheurMaxChange = new StatEvent();
 
-    public Capitale(Empire empire, int id) : base(empire,id, "ROME", null)
+    public Capitale(Empire empire, int id) : base(empire, id, "ROME", null)
     {
         this.empire = empire;
         this.id = id;
@@ -41,8 +47,8 @@ public class Capitale : Village {
 
         lord = new Seigneur(this);
     }
-	
-	public override void Update ()
+
+    public override void Update()
     {
         if (nourriture < 0 || bonheur < 0 || isDestroyed)
         {
@@ -53,12 +59,13 @@ public class Capitale : Village {
 
         UpdateCost();
 
+        CheckResources();
     }
 
     public void DecreaseBonheur(int amount)
     {
         bonheur -= amount;
-        if(bonheur< seuilBonheur[seuilActuel])
+        if (bonheur < seuilBonheur[seuilActuel])
         {
             RequestManager.SendRequest(eventBonheur[seuilActuel]);
             seuilActuel++;
@@ -69,7 +76,7 @@ public class Capitale : Village {
 
     public void AddBonheur(int amount) { bonheur += amount; onBonheurChange.Invoke(amount); }
 
-    public void SetBonheurMax (int amount) { bonheurMax = amount; onBonheurMaxChange.Invoke(amount); }
+    public void SetBonheurMax(int amount) { bonheurMax = amount; onBonheurMaxChange.Invoke(amount); }
 
     public void DecreaseChariot(int amount) { nbCharriot -= amount; }
 
@@ -81,7 +88,7 @@ public class Capitale : Village {
 
         foreach (Village village in empire.listVillage)
         {
-            foreach(Barbare barbare in theWorld.barbareManager.listeBarbare)
+            foreach (Barbare barbare in theWorld.barbareManager.listeBarbare)
             {
                 if ((barbare.actualTarget == village) && village.barbares.nbBarbares > village.army)
                 {
@@ -91,7 +98,7 @@ public class Capitale : Village {
                     }
                 }
             }
-           
+
         }
 
         // Le scout revient dans X tours?
@@ -100,22 +107,52 @@ public class Capitale : Village {
     public void SendCartToVillage(Village destination, Ressource_Type resource, int amount)
     {
         if (amount > 0) ModifyResource(resource, amount);
-        CarriageManager.SendCarriage(new Carriage(nbTour, destination, this,resource,amount));
+        CarriageManager.SendCarriage(new Carriage(nbTour, destination, this, resource, amount));
     }
 
     public override StatEvent GetStatEvent(Ressource_Type type, bool isAlternative = false)
     {
-        StatEvent ev =  base.GetStatEvent(type, isAlternative);
-        if(ev == null)
+        StatEvent ev = base.GetStatEvent(type, isAlternative);
+        if (ev == null)
         {
             switch (type)
             {
                 case Ressource_Type.happiness:
-                    ev = isAlternative? onBonheurMaxChange : onBonheurChange;
+                    ev = isAlternative ? onBonheurMaxChange : onBonheurChange;
                     break;
             }
         }
         return ev;
+    }
+
+    void CheckResources()
+    {
+        if (nourriture < seuilNourritureCapitale) BesoinNourriture(seuilNourritureCapitale - nourriture);
+        if (bonheur <= 0) Defaite("Trahison");
+        if (or < 0)
+        {
+            DecreaseBonheur(1);
+            if (or < -25)
+            {
+                DecreaseBonheur(2);
+                if (or < seulOrCapitale) Defaite("Faillite");
+            }
+        }
+    }
+
+    void BesoinNourriture(int amount)
+    {
+        int goldNeeded = coutNourriture * amount;
+
+        if (or < goldNeeded) return;
+
+        ModifyResource(Ressource_Type.gold, amount);
+        ModifyResource(Ressource_Type.food, amount);
+    }
+
+    void Defaite(string type)
+    {
+        // Fin de la partie
     }
 
     static private Request EventBonheur1()

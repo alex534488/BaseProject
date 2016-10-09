@@ -17,7 +17,8 @@ public class DayManager : MonoBehaviour{
     public CarriageManager carriageManager;
     public BarbareManager barbareManager;
 
-    public int nbJour = 0;
+    // Nombre de jours (Points de la partie)
+    private int nbJour = 0;
 
     void Awake()
     {
@@ -36,6 +37,7 @@ public class DayManager : MonoBehaviour{
 
     public void LaunchedDay()
     {
+        nextDayButton.GetComponent<AudioSource>().Play();
         nbJour++;
         if(currentday != null) currentday.GetComponentInChildren<Text>().text = "Jour " + nbJour;
 
@@ -65,11 +67,13 @@ public class DayManager : MonoBehaviour{
 
     void ButtonScout()
     {
+        scoutButton.GetComponent<AudioSource>().Play();
         theWorld.empire.capitale.SendScout(theWorld);
     }
 
     void Test()
     {
+        sendcarriage.GetComponent<AudioSource>().Play();
         theWorld.empire.capitale.SendCartToVillage(theWorld.empire.listVillage[0], Ressource_Type.gold, 10);
     }
 }

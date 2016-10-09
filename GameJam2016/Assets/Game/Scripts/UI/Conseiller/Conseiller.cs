@@ -18,6 +18,8 @@ public class Conseiller : MonoBehaviour
 
     void OnClick()
     {
+        button.GetComponent<AudioSource>().Play();
+
         if (loading) return;
 
         for (int i = 0; i < SceneManager.sceneCount; i++)
