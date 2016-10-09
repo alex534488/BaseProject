@@ -32,6 +32,7 @@ public class Capitale : Village
     //Events
     public StatEvent onBonheurChange = new StatEvent();
     public StatEvent onBonheurMaxChange = new StatEvent();
+    public StatEvent onCharriotChange = new StatEvent();
 
     public Capitale(Empire empire, int id) : base(empire, id, "ROME", null)
     {
@@ -88,9 +89,9 @@ public class Capitale : Village
 
     public void SetBonheurMax(int amount) { bonheurMax = amount; onBonheurMaxChange.Invoke(amount); }
 
-    public void DecreaseChariot(int amount) { nbCharriot -= amount; }
+    public void DecreaseChariot(int amount) { nbCharriot -= amount; onCharriotChange.Invoke(amount); }
 
-    public void AddChariot(int amount) { nbCharriot += amount; }
+    public void AddChariot(int amount) { nbCharriot += amount; onCharriotChange.Invoke(amount); }
 
     public void SendScout(World theWorld)
     {
@@ -139,8 +140,8 @@ public class Capitale : Village
         {
             CarriageManager.SendCarriage(new Carriage(nbTour,this , destination, resource, amount));
         }
-        
-        nbCharriot --;
+
+        DecreaseChariot(1);
     }
 
     public override StatEvent GetStatEvent(Ressource_Type type, bool isAlternative = false)
@@ -227,7 +228,7 @@ public class Capitale : Village
         List<string> listMessage = new List<string>();
         listMessage.Add("Conseiller Brutus : Empereur, le peuple s'est mit d'accord sur votre destitution.\n\nJ'ai peur que votre règne touche à sa fin. ");
         List<Dialog.Choix> listeChoix = new List<Dialog.Choix>();
-        listeChoix.Add(new Dialog.Choix("Qu'il soit maudit, je resterai leur Empereur jusqu'a ma mort!", delegate () { Defaite() })); // AJOUTER CONDITION FIN
+        listeChoix.Add(new Dialog.Choix("Qu'il soit maudit, je resterai leur Empereur jusqu'a ma mort!", delegate () { Empire.instance.capitale.Defaite(); })); // AJOUTER CONDITION FIN
         Request request = new Request(listMessage, listeChoix);
         return request;
     }
