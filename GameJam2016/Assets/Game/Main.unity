@@ -2212,8 +2212,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: baa242903398d764ea9d35bc13984704, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  text: "Envoyer un \xE9claireur. Il reviendra dans quelques jours pour vous informer
-    d'une attaque barbare."
+  text: "Envoyer un \xE9claireur. Il reviendra demain pour vous informer d'une attaque
+    barbare."
   prefab: {fileID: 1000013068124236, guid: 219ff08cfb777d24facaeaf625192d44, type: 2}
   offset: {x: 165, y: 20, z: 0}
   container: {fileID: 620568655}
@@ -4021,7 +4021,7 @@ GameObject:
   m_PrefabInternal: {fileID: 0}
   serializedVersion: 4
   m_Component:
-  - 4: {fileID: 1713880457}
+  - 224: {fileID: 1713880457}
   - 82: {fileID: 1713880456}
   - 114: {fileID: 1713880458}
   m_Layer: 0
@@ -4042,7 +4042,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 48b17ad794b8c8e488b27c48abc46701, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.35
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -4105,8 +4105,8 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
---- !u!4 &1713880457
-Transform:
+--- !u!224 &1713880457
+RectTransform:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
@@ -4118,6 +4118,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 5
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1713880458
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4129,9 +4134,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 179953bd9ce594c40b0789151c73b90d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  music1: {fileID: 8300000, guid: 5cfddb1e46ac1334595f415ae535a267, type: 3}
-  music2: {fileID: 8300000, guid: 48b17ad794b8c8e488b27c48abc46701, type: 3}
-  music3: {fileID: 8300000, guid: 0f553f052fa449f498f71df08e250562, type: 3}
+  listMusicVictoire:
+  - {fileID: 8300000, guid: 5cfddb1e46ac1334595f415ae535a267, type: 3}
+  - {fileID: 8300000, guid: 48b17ad794b8c8e488b27c48abc46701, type: 3}
+  - {fileID: 8300000, guid: 0f553f052fa449f498f71df08e250562, type: 3}
+  - {fileID: 8300000, guid: 59243bc1227b8c44a818788851c34972, type: 3}
+  - {fileID: 8300000, guid: af79811d5f656e145a8023ed3c794e24, type: 3}
+  - {fileID: 8300000, guid: a3ee015d6d00fda4594d97bc222a6115, type: 3}
+  listMusicDefaite:
+  - {fileID: 8300000, guid: 7250dd9b49d1f864c9d88f5583bc92e7, type: 3}
+  - {fileID: 8300000, guid: 3dedc93c15464ae4b9a0fa5024898869, type: 3}
+  - {fileID: 8300000, guid: 9bde525231d5cfc4fadbfae992878f08, type: 3}
+  - {fileID: 8300000, guid: 2cf5b7bc34d031c4aa963c275980708d, type: 3}
+  - {fileID: 8300000, guid: ce77e175f026ad840aab2a5545f71567, type: 3}
 --- !u!1 &1824336609
 GameObject:
   m_ObjectHideFlags: 0

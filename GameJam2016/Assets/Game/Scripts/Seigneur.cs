@@ -20,8 +20,9 @@ public class Seigneur : IUpdate {
     private int seuilMinimalArmy = 3;
     public int seuilArmy = 0;
 
-    // Requete investissement
-    //List<Request> listInvestRequest = new List<Request>();
+    // Investissement
+    private int cooldown = 3;
+
 
     // Es ce que le seigneur a deja demander a l'emperor
     public bool alreadyAsk = false;
@@ -57,16 +58,21 @@ public class Seigneur : IUpdate {
             {
                 if (!alreadyAsk)
                 {
-                    RequestManager.SendRequest(new Request(this, Ressource_Type.gold));
-                    alreadyAsk = true;
+                    if(cooldown == 0)
+                    {
+                        RequestManager.SendRequest(new Request(this, Ressource_Type.gold));
+                        alreadyAsk = true;
+                        cooldown = 3;
+                    }    
                 }
             }
         }
+        cooldown--;
     }
 
     public void Death()
     {
-        // DO: this meurt
+        RequestManager.SendRequest(new Request(this));
     }
 
     void NeedFood(int amount)
