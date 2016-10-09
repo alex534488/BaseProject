@@ -32,6 +32,7 @@ public class Capitale : Village
     //Events
     public StatEvent onBonheurChange = new StatEvent();
     public StatEvent onBonheurMaxChange = new StatEvent();
+    public StatEvent onCharriotChange = new StatEvent();
 
     public Capitale(Empire empire, int id) : base(empire, id, "ROME", null)
     {
@@ -83,9 +84,9 @@ public class Capitale : Village
 
     public void SetBonheurMax(int amount) { bonheurMax = amount; onBonheurMaxChange.Invoke(amount); }
 
-    public void DecreaseChariot(int amount) { nbCharriot -= amount; }
+    public void DecreaseChariot(int amount) { nbCharriot -= amount; onCharriotChange.Invoke(-amount); }
 
-    public void AddChariot(int amount) { nbCharriot += amount; }
+    public void AddChariot(int amount) { nbCharriot += amount; onCharriotChange.Invoke(amount); }
 
     public void SendScout(World theWorld)
     {
@@ -135,7 +136,7 @@ public class Capitale : Village
             CarriageManager.SendCarriage(new Carriage(nbTour,this , destination, resource, amount));
         }
         
-        nbCharriot --;
+        DecreaseChariot(1);
     }
 
     public override StatEvent GetStatEvent(Ressource_Type type, bool isAlternative = false)
