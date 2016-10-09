@@ -37,8 +37,9 @@ public class Music : MonoBehaviour {
         listMusicDefaite.Add(music5);
         listMusicDefaite.Add(music6);
 
+        nextsong = listMusicVictoire[(int)Random.Range(0, listMusicVictoire.Count)];
+        this.GetComponent<AudioSource>().clip = nextsong;
         this.GetComponent<AudioSource>().Play();
-        nextsong = this.GetComponent<AudioSource>().clip;
     }
 
     void Update()
