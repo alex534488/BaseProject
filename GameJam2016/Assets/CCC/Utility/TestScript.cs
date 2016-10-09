@@ -6,22 +6,11 @@ using CCC.Utility;
 
 public class TestScript : MonoBehaviour
 {
+    public RequestManager manager;
     
-    public void testVillageMap()
+
+    public void TestDialogue()
     {
-        Empire emp = new Empire();
-        Capitale cap = new Capitale(emp,12);
-        Village[] tab = new Village[12];
-        for(int i=0;i<12;i++)
-        {
-            tab[i] = new Village(emp,i,"Hey","hey");
-        }
-
-        VillageMap temp  =new VillageMap(cap, tab);
-        temp.testPrint();
-        temp.removeVillage(tab[3]);
-        temp.testPrint();
-
     }
     
 }

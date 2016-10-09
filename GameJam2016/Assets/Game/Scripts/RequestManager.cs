@@ -33,7 +33,7 @@ public class RequestManager : MonoBehaviour
 
     void GetRandomRequest(int amount)
     {
-        listRequest.Add(listRandomRequest[0]);
+        listRequest.Add(listRandomRequest[3]); // A REMETTRE A 0
         listRandomRequest.Remove(listRandomRequest[0]);
         if(listRandomRequest.Count <=0) { GenerateRandomRequests(); }
     }
@@ -54,63 +54,56 @@ public class RequestManager : MonoBehaviour
         // LISTE DES REQUETES ALEATOIRES
 
         List<string> listMessage = new List<string>();
-        listMessage.Add("Illius : Ave ! Je viens devant votre jugement car cet homme vient de voler mon cochon ! J’exige qu'il me le rende et qu'il soit punit !");
-        listMessage.Add("Maximus : Mensonge monseigneur, ce cochon est le mien depuis des lunes !");
+        listMessage.Add("Illius : Ave ! Je viens vous avertir que deux hommes se disputent concernant le titre de propriété d'un cochon." + "\n" + "Le premier exige que le cochon lui soit rendu et que le voleur soit punit. " + "\n" + "Le second soutient que le cochon lui appartient depuis des lunes. " + "\n" + "Que devrions-nous faire?");
         List<Dialog.Choix> listeChoix = new List<Dialog.Choix>();
-        listeChoix.Add(new Dialog.Choix("Coupez-moi ce cochon en deux et partagez les morceaux avec la communauté. ( +4 Nourriure)", delegate () { Empire.instance.capitale.AddFood(4); }));
-        listeChoix.Add(new Dialog.Choix("Puisque ce cochon vous pose problème, je vais vous le retirer. ( +8 Or)", delegate () { Empire.instance.capitale.AddGold(8); }));
-        listeChoix.Add(new Dialog.Choix("Tant de vigueur pour un cochon, vous ferez de bon soldat ! ( +2 Soldat)", delegate () { Empire.instance.capitale.AddArmy(2); }));
+        listeChoix.Add(new Dialog.Choix("Coupez-moi ce cochon en deux et partagez les morceaux avec la communauté. (+4 Nourriture)", delegate () { Empire.instance.capitale.AddFood(4); }));
+        listeChoix.Add(new Dialog.Choix("Puisque ce cochon vous pose problème, je vais vous le retirer. (+8 Or)", delegate () { Empire.instance.capitale.AddGold(8); }));
+        listeChoix.Add(new Dialog.Choix("Tant de vigueur pour un cochon, vous ferez de bon soldat ! (+2 Soldat)", delegate () { Empire.instance.capitale.AddArmy(2); }));
         Request request = new Request(listMessage, listeChoix);
         listRandomRequest.Add(request);
         
 
-        ///////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////// 1
 
         listMessage = new List<string>();
-        listMessage.Add("Maxima : Bien le bonjour mon seigneur. Je viens humblement devant vous pour obtenir vos faveurs.");
-        listMessage.Add("Mon mari vient d'être enrôlé dans l’armée, malheureusement, il était essentiel à la survit de notre pauvre famille.");
-        listMessage.Add("Si vous pouvez simplement lui permettre de revenir auprès des siens, je vous en serai éternellement reconnaissante.");
+        listMessage.Add("Maxima : Bien le bonjour mon seigneur. Je viens humblement devant vous pour obtenir vos faveurs." + "\n \n" + "Mon mari vient d'être enrôlé dans l’armée, malheureusement, il était essentiel à la survie de notre pauvre famille." + "\n \n" + "Si vous pouviez simplement lui permettre de revenir auprès des siens, je vous en serais éternellement reconnaissante.");
+
         listeChoix = new List<Dialog.Choix>();
         listeChoix.Add(new Dialog.Choix("J’entends votre requête et je vais faire le nécessaire pour qu'il retourne auprès de sa famille. (-1 Soldat +1 Bonheur)", delegate () { Empire.instance.capitale.DecreaseArmy(1); Empire.instance.capitale.AddBonheur(1); }));
-        listeChoix.Add(new Dialog.Choix("Chaque soldat à un rôle crucial dans l'armée, mais j'ai espoir que cette compensation en or puisse couvrir vos besoins pendant son absence. ( -4 Or)", delegate () { Empire.instance.capitale.DecreaseGold(4); }));
-        listeChoix.Add(new Dialog.Choix("Malheureusement, en ces temps difficiles, chaque famille porte la même histoire, je ne peux accéder à votre requête. ( -2 Bonheur)", delegate () { Empire.instance.capitale.DecreaseBonheur(2); }));
+        listeChoix.Add(new Dialog.Choix("Chaque soldat à un rôle crucial dans l'armée, mais j'ai espoir que cette compensation en or puisse couvrir vos besoins pendant son absence. (-8 Or)", delegate () { Empire.instance.capitale.DecreaseGold(4); }));
+        listeChoix.Add(new Dialog.Choix("Malheureusement, en ces temps difficiles, chaque famille porte la même histoire, je ne peux accéder à votre requête. (-2 Bonheur)", delegate () { Empire.instance.capitale.DecreaseBonheur(2); }));
         request = new Request(listMessage, listeChoix);
         listRandomRequest.Add(request);
 
-        ///////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////// 2
 
         listMessage = new List<string>();
-        listMessage.Add("Faustus : '' Seigneur, un énorme incendie est en train de ravager la cité !");
-        listMessage.Add("Tous les citoyens sont au pied d’œuvre pour contenir l'incendie.");
-        listMessage.Add("Je sais que les soldats, par tradition, n'ont pas le droit de franchir le Rubicon, mais nous demandons exceptionnellement l'intervention de l'armée nous aider.");
+        listMessage.Add("Faustus : Seigneur, un énorme incendie est en train de ravager la cité !" + "\n \n" + "Tous les citoyens sont au pied d’œuvre pour contenir l'incendie." + "\n \n" + "Je sais que les soldats, par tradition, n'ont pas le droit de franchir le Rubicon, mais nous demandons exceptionnellement l'intervention de l'armée afin de nous aider.");
         listeChoix = new List<Dialog.Choix>();
-        listeChoix.Add(new Dialog.Choix("Sauvez les femmes et les enfants en priorité, mais malheureusement, les soldats ne peuvent franchir le Rubicon. (-8 Nourriture)", delegate () { Empire.instance.capitale.DecreaseFood(8); }));
+        listeChoix.Add(new Dialog.Choix("Sauvez les femmes et les enfants en priorité, mais malheureusement, les soldats ne peuvent franchir le Rubicon. (-16 Nourriture)", delegate () { Empire.instance.capitale.DecreaseFood(8); }));
         listeChoix.Add(new Dialog.Choix("Sauvez les réserve de nourritures en priorité, mais malheureusement, les soldats ne peuvent franchir le Rubicon. (-8 Bonheur)", delegate () { Empire.instance.capitale.DecreaseBonheur(8); }));
-        listeChoix.Add(new Dialog.Choix("Que les armées franchisent le Rubicon et aillent aider Rome !(4 soldats meurt lors des secoures)", delegate () { Empire.instance.capitale.DecreaseArmy(4); }));
+        listeChoix.Add(new Dialog.Choix("Que les armées franchisent le Rubicon et aillent aider Rome ! (-8 soldats)", delegate () { Empire.instance.capitale.DecreaseArmy(4); }));
         request = new Request(listMessage, listeChoix);
         listRandomRequest.Add(request);
 
 
-        ///////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////// 3
         listMessage = new List<string>();
-        listMessage.Add("Proculus : ''Ave ! Je viens d'apercevoir douze vautours dans le ciel ! Les augures sont avec nous !");
-        listMessage.Add("Tous comme Romulus à la fondation de Rome!");
-        listMessage.Add("D'après vous, quelles bonnes nouvelles nous annonce ces augures ?");
+        listMessage.Add("Proculus : Ave ! Je viens d'apercevoir douze vautours dans le ciel, j'en déduis que les augures sont de notre coté !" + "\n \n" + "Cela me rappelle Romulus à la fondation de Rome!" + "\n \n" + "D'après vous, quelle bonne nouvelle nous annonce ces augures ?");
         listeChoix = new List<Dialog.Choix>();
-        listeChoix.Add(new Dialog.Choix("D'excellente récolte évidement ! (production nourriture +1)", delegate () { Empire.instance.capitale.ModifyFoodProd(1); }));
+        listeChoix.Add(new Dialog.Choix("D'excellentes récoltes évidemment ! (Production Nourriture +1)", delegate () { Empire.instance.capitale.ModifyFoodProd(1); }));
         listeChoix.Add(new Dialog.Choix("Cela annonce des réussites militaires ! (Soldat +5)", delegate () { Empire.instance.capitale.AddArmy(5); }));
         listeChoix.Add(new Dialog.Choix("Cela annonce un retour prochain à la Pax Romana ! (Bonheur +5)", delegate () { Empire.instance.capitale.AddBonheur(5); }));
         request = new Request(listMessage, listeChoix);
         listRandomRequest.Add(request);
 
 
-        ///////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////// 4
         listMessage = new List<string>();
-        listMessage.Add("Secundus : Seigneur, une maladie étrange décimes nos troupeaux !");
-        listMessage.Add(" Nous avons trouvé un sage qui prétend pouvoir stopper la maladie, mais il demande une compensation financière !");
+        listMessage.Add("Secundus : Seigneur, une maladie étrange décime nos troupeaux !" + "\n \n" + "Nous avons trouvé un sage qui prétend pouvoir arrêter la propagation de la maladie, mais ce dernier demande une compensation financière !");
         listeChoix = new List<Dialog.Choix>();
         listeChoix.Add(new Dialog.Choix("Abattez les troupeaux pour contenir la maladie ! (-6 Nourriture)", delegate () { Empire.instance.capitale.DecreaseFood(6); }));
-        listeChoix.Add(new Dialog.Choix("Payer ce sage, et faite lui comprendre qu'il a tous intérêts à stopper la maladie s’il veut conserver sa tête ! (-12 Or)", delegate () { Empire.instance.capitale.DecreaseGold(12); }));
+        listeChoix.Add(new Dialog.Choix("Payer ce sage, et faites lui comprendre qu'il est dans son intérêt de réussir la maladie s’il veut conserver sa tête ! (-12 Or)", delegate () { Empire.instance.capitale.DecreaseGold(12); }));
         listeChoix.Add(new Dialog.Choix("Faite pendre cet escroc et réquisitionnez ses affaires personnelles !(-4 Bonheur -4 Nourriture + 4 Or)", delegate () { Empire.instance.capitale.DecreaseBonheur(4); Empire.instance.capitale.DecreaseFood(4); Empire.instance.capitale.AddGold(4); }));
         request = new Request(listMessage, listeChoix);
         listRandomRequest.Add(request);
