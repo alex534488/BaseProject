@@ -38,9 +38,15 @@ public class Empire : IUpdate {
 	
 	public void Update ()
     {
-        foreach (Village village in listVillage)
+        for(int i = 0; i < listVillage.Count; i++)
         {
-            village.Update();
+            Village ancienVillage = listVillage[i];
+            listVillage[i].Update();
+            if (ancienVillage.isDestroyed)
+            {
+                i = i - 2;
+                Debug.Log("test");
+            }
         }
         capitale.Update();
     }
