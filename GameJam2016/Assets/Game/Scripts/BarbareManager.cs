@@ -8,7 +8,7 @@ public class BarbareManager : IUpdate {
     public List<Barbare> listeBarbare = new List<Barbare>();
 
    
-    public int nbClanBarbare = 1;
+    public int nbClanBarbare = 2;
 
     public void Initialize()
     {

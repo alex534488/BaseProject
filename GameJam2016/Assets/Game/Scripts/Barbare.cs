@@ -4,9 +4,8 @@ using System.Collections.Generic;
 
 public class Barbare : IUpdate
 {
-
     public float facteur = 1.2f;
-    public int delay = 5;
+    public int delay = 3;
 
     private Village nextTarget = null;
     public Village actualTarget = null;

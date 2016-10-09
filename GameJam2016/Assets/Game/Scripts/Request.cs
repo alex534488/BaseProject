@@ -43,8 +43,8 @@ public class Request {
                 return;
             case Ressource_Type.army:
                 message.Add("Le village " + messager.village.nom + " a besoin de " + amount + " Soldats pour se défendre contre une invasion imminente de barbares.");
-                choix.Add(new Dialog.Choix("Chaque village de l'empire compte! ("+ amount + " Soldats)", delegate () { if (Empire.instance.capitale.army >= amount) { messager.village.AddArmy(amount); Empire.instance.capitale.DecreaseArmy(amount); messager.village.AddReputation(20); } }));
-                choix.Add(new Dialog.Choix("Je peux vous fournir quelques soldats mon cher. \n("+ (amount + 1 )/ 2 + " Soldats)", delegate () { if (Empire.instance.capitale.army >= (amount + 1 )/ 2) { messager.village.AddArmy((amount + 1 )/ 2); Empire.instance.capitale.DecreaseArmy((amount + 1) / 2); } }));
+                choix.Add(new Dialog.Choix("Voici davantage de soldats que nécessaire ! \n("+ Mathf.CeilToInt((amount) * 1.5f)+ " Soldats)", delegate () { messager.village.AddArmy(Mathf.CeilToInt((amount) * 1.5f)); Empire.instance.capitale.DecreaseArmy(Mathf.CeilToInt((amount) * 1.5f)); messager.village.AddReputation(20); }));
+                choix.Add(new Dialog.Choix("Voici le nombre minimum de soldats nécessaire! (" + amount + " Soldats)", delegate () { if (Empire.instance.capitale.army >= amount) { messager.village.AddArmy(amount); Empire.instance.capitale.DecreaseArmy(amount); } }));
                 choix.Add(new Dialog.Choix("Les barbares sont à nos portes également.", delegate () { messager.village.DecreaseReputation(20); }));
                 return;
             default:

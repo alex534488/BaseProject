@@ -148,7 +148,25 @@ public class Village : IUpdate {
 
     public void AddFood(int amount){ nourriture += amount; onFoodChange.Invoke(amount); }
 
-    public void DecreaseArmy(int amount){ army -= amount; onArmyChange.Invoke(-amount); }
+    public void DecreaseArmy(int amount)
+    {
+        army -= amount; onArmyChange.Invoke(-amount);
+
+        if (army < 0)
+        {
+            int coutTotal = 0;
+            int nbTotal = 0;
+
+            while (army < 0)
+            {
+                coutTotal = coutTotal + empire.valeurSoldat;
+                nbTotal = nbTotal + 1;
+                
+            }
+            AddArmy(nbTotal);
+            DecreaseGold(coutTotal);
+        }
+    }
 
     public void SetArmy(int amount) { army = amount; onArmyChange.Invoke(amount); }
 
