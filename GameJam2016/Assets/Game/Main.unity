@@ -732,7 +732,7 @@ MonoBehaviour:
   profitText: {fileID: 885410220}
   statTextPrefab: {fileID: 114000013230344322, guid: 09c9e5e0020184f4e8334293c4ed8286,
     type: 2}
-  offset: {x: 300, y: 0}
+  offset: {x: 200, y: 0}
 --- !u!1 &332565450
 GameObject:
   m_ObjectHideFlags: 0
@@ -2354,7 +2354,7 @@ MonoBehaviour:
   profitText: {fileID: 1387318107}
   statTextPrefab: {fileID: 114000013230344322, guid: 09c9e5e0020184f4e8334293c4ed8286,
     type: 2}
-  offset: {x: 300, y: 0}
+  offset: {x: 200, y: 0}
 --- !u!1 &1387318104
 GameObject:
   m_ObjectHideFlags: 0
@@ -3004,7 +3004,7 @@ MonoBehaviour:
   profitText: {fileID: 0}
   statTextPrefab: {fileID: 114000013230344322, guid: 09c9e5e0020184f4e8334293c4ed8286,
     type: 2}
-  offset: {x: 300, y: 0}
+  offset: {x: 200, y: 0}
 --- !u!1 &1539875816
 GameObject:
   m_ObjectHideFlags: 0
@@ -3951,7 +3951,7 @@ MonoBehaviour:
   profitText: {fileID: 489745000}
   statTextPrefab: {fileID: 114000013230344322, guid: 09c9e5e0020184f4e8334293c4ed8286,
     type: 2}
-  offset: {x: 300, y: 0}
+  offset: {x: 200, y: 0}
 --- !u!1 &1847773196
 GameObject:
   m_ObjectHideFlags: 0
