@@ -131,27 +131,27 @@ public class Village : IUpdate {
     #endregion
 
     #region Fonctions modifiant les attributs
-    public void DecreaseGold(int amount){ or -= amount; onGoldChange.Invoke(or); }
+    public void DecreaseGold(int amount){ or -= amount; onGoldChange.Invoke(-amount); }
 
-    public void AddGold(int amount){ or += amount; onGoldChange.Invoke(or); }
+    public void AddGold(int amount){ or += amount; onGoldChange.Invoke(amount); }
 
-    public void DecreaseFood(int amount){ nourriture -= amount; onFoodChange.Invoke(nourriture); }
+    public void DecreaseFood(int amount){ nourriture -= amount; onFoodChange.Invoke(-amount); }
 
-    public void AddFood(int amount){ nourriture += amount; onFoodChange.Invoke(nourriture); }
+    public void AddFood(int amount){ nourriture += amount; onFoodChange.Invoke(amount); }
 
-    public void DecreaseArmy(int amount){ army -= amount; onArmyChange.Invoke(army); }
+    public void DecreaseArmy(int amount){ army -= amount; onArmyChange.Invoke(-amount); }
 
-    public void SetArmy(int amount) { army = amount; onArmyChange.Invoke(army); }
+    public void SetArmy(int amount) { army = amount; onArmyChange.Invoke(amount); }
 
-    public void AddArmy(int amount){ army += amount; onArmyChange.Invoke(army); }
+    public void AddArmy(int amount){ army += amount; onArmyChange.Invoke(amount); }
 
-    public void DecreaseReputation(int amount) { reputation -= amount; onReputationChange.Invoke(reputation); }
+    public void DecreaseReputation(int amount) { reputation -= amount; onReputationChange.Invoke(-amount); }
 
-    public void AddReputation(int amount) { reputation += amount; onReputationChange.Invoke(reputation); }
+    public void AddReputation(int amount) { reputation += amount; onReputationChange.Invoke(amount); }
 
-    public void ModifyFoodProd(int amount) { productionNourriture += amount; onFoodProdChange.Invoke(productionNourriture); }
+    public void ModifyFoodProd(int amount) { productionNourriture += amount; onFoodProdChange.Invoke(amount); }
 
-    public void ModifyGoldProd(int amount) { productionOr += amount; onGoldProdChange.Invoke(productionOr); }
+    public void ModifyGoldProd(int amount) { productionOr += amount; onGoldProdChange.Invoke(amount); }
 
     public void ModifyResource(Ressource_Type type, int amount)
     {
@@ -193,14 +193,14 @@ public class Village : IUpdate {
     protected void UpdateResources()
     {
         AddGold(productionOr);
-        AddFood(productionNourriture);
-        AddArmy(productionArmy);
+        AddFood(productionNourriture - (army * armyFoodCost));
+        // AddArmy(productionArmy);
        
     } // To do : Change or remove random
 
     protected void UpdateCost() // To do : Change or remove random
     {
-        DecreaseFood(army * armyFoodCost);
+        // Remove
     }
     
     #endregion 

@@ -67,9 +67,9 @@ public class Capitale : Village {
         onBonheurChange.Invoke(bonheur);
     }
 
-    public void AddBonheur(int amount) { bonheur += amount; onBonheurChange.Invoke(bonheur); }
+    public void AddBonheur(int amount) { bonheur += amount; onBonheurChange.Invoke(amount); }
 
-    public void SetBonheurMax (int amount) { bonheurMax = amount; onBonheurMaxChange.Invoke(bonheurMax); }
+    public void SetBonheurMax (int amount) { bonheurMax = amount; onBonheurMaxChange.Invoke(amount); }
 
     public void DecreaseChariot(int amount) { nbCharriot -= amount; }
 
