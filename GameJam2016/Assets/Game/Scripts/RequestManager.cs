@@ -462,7 +462,6 @@ public class RequestManager : MonoBehaviour
         listeChoix.Add(new Dialog.Choix("Malheuresement, je ne peux point vous aider actuellement.", delegate () { }));
         request = new Request(listMessage, listeChoix);
         Aakif = request;
-        listRandomRequest.Add(request);
 
         ///////////////////////////////////////////////////////////////////
 
@@ -483,7 +482,6 @@ public class RequestManager : MonoBehaviour
         listeChoix.Add(new Dialog.Choix("Malheuresement, je ne peux point vous aider actuellement.", delegate () { }));
         request = new Request(listMessage, listeChoix);
         Abdul = request;
-        listRandomRequest.Add(request);
 
                 ///////////////////////////////////////////////////////////////////
 
@@ -504,9 +502,8 @@ public class RequestManager : MonoBehaviour
         listeChoix.Add(new Dialog.Choix("Malheuresement, je ne peux point vous aider actuellement.", delegate () { }));
         request = new Request(listMessage, listeChoix);
         Chaka = request;
-        listRandomRequest.Add(request);
 
-
+        shuffleList<Request>(listRandomRequest);
 
     }
 
@@ -554,4 +551,26 @@ public class RequestManager : MonoBehaviour
         Request request = new Request(listMessage, listeChoix);
         return request;
     }
+
+    private void shuffleList<T>(List<T> list)
+    {
+        int nbTri = list.Count * list.Count;
+        int y;
+        int x;
+        T temp;
+        for(int i=0;i<nbTri;i++)
+        {
+            x = Random.Range(0, list.Count);
+            y = Random.Range(0, list.Count);
+
+            temp = list[x];
+            list[x] = list[y];
+            list[y] = temp;
+
+        }
+    }
+
+
+
 }
+
