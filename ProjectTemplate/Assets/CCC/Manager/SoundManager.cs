@@ -40,6 +40,7 @@ namespace CCC.Manager
         /// </summary>
         public void Play(AudioClip clip, float delay = 0, float volume = 1, AudioSource source = null)
         {
+            if (clip == null) return;
             if (delay > 0)
             {
                 StartCoroutine(PlayIn(clip, delay, volume, source));
@@ -48,7 +49,7 @@ namespace CCC.Manager
             AudioSource theSource = source;
             if (theSource == null) theSource = stdSource;
 
-            stdSource.PlayOneShot(clip, delay);
+            stdSource.PlayOneShot(clip, volume);
         }
 
         public void PlayMusic(AudioClip clip, bool looping = true, float volume = 1, bool faded = false)
