@@ -25,7 +25,7 @@ public class Barbare : IUpdate
     private int barbareRestant = 0;
     private int soldatRestant = 0;
 
-    public int spawnRate = 4;
+    public int spawnRate = 2;
     #endregion
 
     #region Probabilites
