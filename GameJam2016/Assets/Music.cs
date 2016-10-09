@@ -6,21 +6,36 @@ using CCC.Manager;
 
 public class Music : MonoBehaviour {
 
+    static Music musicmanager;
+
     // Sounds
     List<AudioClip> listMusicVictoire = new List<AudioClip>();
     List<AudioClip> listMusicDefaite = new List<AudioClip>();
     public AudioClip music1;
     public AudioClip music2;
     public AudioClip music3;
+    public AudioClip music4;
+    public AudioClip music5;
+    public AudioClip music6;
     private AudioClip nextsong;
     // rajouter des musiques ICI
 
-    // Use this for initialization
+    private double etat = 1;
+    
+    void Awake()
+    {
+        if (musicmanager == null) musicmanager = this;
+    }
+
     void Start()
     {
         listMusicVictoire.Add(music1);
         listMusicVictoire.Add(music2);
         listMusicVictoire.Add(music3);
+
+        listMusicDefaite.Add(music4);
+        listMusicDefaite.Add(music5);
+        listMusicDefaite.Add(music6);
 
         this.GetComponent<AudioSource>().Play();
         nextsong = this.GetComponent<AudioSource>().clip;
@@ -30,11 +45,22 @@ public class Music : MonoBehaviour {
     {
         if (this.GetComponent<AudioSource>().isPlaying) return;
 
-        while (this.GetComponent<AudioSource>().clip == nextsong)
+        if (EstimationEmpire.Estimation() > 0.60f)
         {
-            nextsong = listMusic[(int)Random.Range(0, listMusic.Count)];
+            while (this.GetComponent<AudioSource>().clip == nextsong)
+            {
+                nextsong = listMusicVictoire[(int)Random.Range(0, listMusicVictoire.Count)];
+            }
+        } else
+        {
+            while (this.GetComponent<AudioSource>().clip == nextsong)
+            {
+                nextsong = listMusicDefaite[(int)Random.Range(0, listMusicDefaite.Count)];
+            }
         }
+
         this.GetComponent<AudioSource>().clip = nextsong;
         this.GetComponent<AudioSource>().Play();
     }
+
 }

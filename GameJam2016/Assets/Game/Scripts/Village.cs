@@ -113,7 +113,7 @@ public class Village : IUpdate {
 
         lord.Update();
 
-        if(nourriture<0 || isDestroyed)
+        if(nourriture < 0 || isDestroyed)
         {
             DestructionVillage();
             lord.Death();
