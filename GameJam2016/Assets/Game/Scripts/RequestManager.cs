@@ -54,7 +54,7 @@ public class RequestManager : MonoBehaviour
         // LISTE DES REQUETES ALEATOIRES
 
         List<string> listMessage = new List<string>();
-        listMessage.Add("Illius : Ave ! Je viens vous avertir que deux hommes se disputent concernant le titre de propriété d'un cochon." + "\n" + "Le premier exige que le cochon lui soit rendu et que le voleur soit punit. " + "\n" + "Le second soutient que le cochon lui appartient depuis des lunes. " + "\n" + "Que devrions-nous faire?");
+        listMessage.Add("Illius : Ave ! Je viens vous avertir que deux hommes se disputent concernant le titre de propriété d'un cochon." + "\n\n" + "Le premier exige que le cochon lui soit rendu et que le voleur soit punit. Le second soutient que le cochon lui appartient depuis des lunes. " + "\n\n" + "Que devrions-nous faire?");
         List<Dialog.Choix> listeChoix = new List<Dialog.Choix>();
         listeChoix.Add(new Dialog.Choix("Coupez-moi ce cochon en deux et partagez les morceaux avec la communauté. (+4 Nourriture)", delegate () { Empire.instance.capitale.AddFood(4); }));
         listeChoix.Add(new Dialog.Choix("Puisque ce cochon vous pose problème, je vais vous le retirer. (+8 Or)", delegate () { Empire.instance.capitale.AddGold(8); }));
@@ -174,7 +174,7 @@ public class RequestManager : MonoBehaviour
         listMessage = new List<string>();
         listMessage.Add("Decima : Bien le bonjour Empereur de Rome. \n\nJe viens vous parler d'une opportunité exceptionnelle ! \n\nJe représente un groupe de barbares qui souhaite vendre leurs services aux plus offrants. \n\nContre une belle somme d'argent, ils accepteraient de rejoindre les rangs des soldats romains.");
         listeChoix = new List<Dialog.Choix>();
-        listeChoix.Add(new Dialog.Choix("Intéressante proposition. Prévenez vos ''amis'', j'accepte leur offre. (-20 Or +7 Soldats)", delegate () { Empire.instance.capitale.DecreaseGold(20); Empire.instance.capitale.AddArmy(7); }));
+        listeChoix.Add(new Dialog.Choix("Intéressante proposition. Prévenez vos amis, j'accepte leur offre. (-20 Or +7 Soldats)", delegate () { Empire.instance.capitale.DecreaseGold(20); Empire.instance.capitale.AddArmy(7); }));
         listeChoix.Add(new Dialog.Choix("Jamais l'armée romaine n'acceptera des mercenaires sans loyauté dans ses rangs. ", delegate () { }));
         request = new Request(listMessage, listeChoix);
         listRandomRequest.Add(request);
@@ -198,7 +198,7 @@ public class RequestManager : MonoBehaviour
         listMessage.Add("Consilius : Empereur, un navire commercial vient d’accoster à Ostie avec des propositions intéressantes.\n\nIl nous propose de lui acheter de la nourriture à des prix très intéressants !");
         listeChoix = new List<Dialog.Choix>();
         listeChoix.Add(new Dialog.Choix("Achetez-lui de la nourriture. (+5 Nourriture, -5 Or)", delegate () { Empire.instance.capitale.AddFood(5); Empire.instance.capitale.DecreaseGold(5); }));
-        listeChoix.Add(new Dialog.Choix("Achetez-lui des mets exotiques pour la population.(+5 Bonheur, -25 Or)", delegate () { Empire.instance.capitale.AddBonheur(5); Empire.instance.capitale.DecreaseGold(25); }));
+        listeChoix.Add(new Dialog.Choix("Achetez-lui des mets exotiques pour la population.\n(+5 Bonheur, -25 Or)", delegate () { Empire.instance.capitale.AddBonheur(5); Empire.instance.capitale.DecreaseGold(25); }));
         listeChoix.Add(new Dialog.Choix("Nous n'avons rien à lui acheter.", delegate () { }));
         request = new Request(listMessage, listeChoix);
         listRandomRequest.Add(request);
