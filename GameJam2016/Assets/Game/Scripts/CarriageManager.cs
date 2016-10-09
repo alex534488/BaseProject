@@ -19,30 +19,30 @@ public class CarriageManager : MonoBehaviour
 
     public void NewDay()
     {
-        foreach (Carriage carriage in listCarriage)
+        for(int i = 0; i < listCarriage.Count; i++)
         {
-            if(carriage.delay <= 0)
+            if(listCarriage[i].delay <= 0)
             {
-                if (!carriage.destination.isDestroyed)
+                if (!listCarriage[i].destination.isDestroyed)
                 {
-                    if(carriage.amount > 0) { // Give resource to village
-                        GiveResources(carriage, carriage.resource, carriage.amount);
-                        carriage.destination.AddReputation(10);
-                        (carriage.provenance as Capitale).AddChariot(1);
+                    if(listCarriage[i].amount > 0) { // Give resource to village
+                        GiveResources(listCarriage[i], listCarriage[i].resource, listCarriage[i].amount);
+                        listCarriage[i].destination.AddReputation(10);
+                        (listCarriage[i].provenance as Capitale).AddChariot(1);
                     } 
                         else { //Take resource FROM village to capital (instant)
-                        int realAmount = carriage.destination.lord.CanYouGive(carriage.resource);
+                        int realAmount = listCarriage[i].destination.lord.CanYouGive(listCarriage[i].resource);
                         if (realAmount > 0) {
-                            TakeResources(carriage, carriage.resource, realAmount);
-                            carriage.destination.DecreaseReputation(10);
+                            TakeResources(listCarriage[i], listCarriage[i].resource, realAmount);
+                            listCarriage[i].destination.DecreaseReputation(10);
                             Empire.instance.capitale.AddChariot(1);
-                            RequestManager.SendRequest(new Request(carriage,realAmount));
+                            RequestManager.SendRequest(new Request(listCarriage[i], realAmount));
                         }
                     }
                 }
-                listCarriage.Remove(carriage);
+                this.listCarriage.Remove(listCarriage[i]);
             }
-            carriage.delay--;
+            listCarriage[i].delay--;
         }
     }
 
