@@ -473,7 +473,7 @@ public class RequestManager : MonoBehaviour
         request = new Request(listMessage, listeChoix);
         Chaka = request;
 
-        shuffleList<Request>(listRandomRequest);
+        // shuffleList<Request>(listRandomRequest);
 
     }
 
