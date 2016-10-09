@@ -97,7 +97,7 @@ public class RequestManager : MonoBehaviour
         listMessage.Add("Tous comme Romulus à la fondation de Rome!");
         listMessage.Add("D'après vous, quelles bonnes nouvelles nous annonce ces augures ?");
         listeChoix = new List<Dialog.Choix>();
-        listeChoix.Add(new Dialog.Choix("D'excellente récolte évidement ! (production nourriture +1)", delegate () { Empire.instance.capitale.productionNourriture += 1; }));
+        listeChoix.Add(new Dialog.Choix("D'excellente récolte évidement ! (production nourriture +1)", delegate () { Empire.instance.capitale.ModifyFoodProd(1); }));
         listeChoix.Add(new Dialog.Choix("Cela annonce des réussites militaires ! (Soldat +5)", delegate () { Empire.instance.capitale.AddArmy(5); }));
         listeChoix.Add(new Dialog.Choix("Cela annonce un retour prochain à la Pax Romana ! (Bonheur +5)", delegate () { Empire.instance.capitale.AddBonheur(5); }));
         request = new Request(listMessage, listeChoix);
@@ -241,7 +241,7 @@ public class RequestManager : MonoBehaviour
         listMessage.Add("Minorinus : Empereur, je viens de trouver un filon d'or exceptionnel sous la ville de Rome.");
         listMessage.Add("Cela nécessiterait de l'investissement colossal pour l’exploiter, mais le jeu en vaut la bougie !");
         listeChoix = new List<Dialog.Choix>();
-        listeChoix.Add(new Dialog.Choix("Bien, voici de l'or pour commencer l’exploitation. (+4 production Or, -40 Or)", delegate () { Empire.instance.capitale.DecreaseGold(40); Empire.instance.capitale.productionOr += 4; }));
+        listeChoix.Add(new Dialog.Choix("Bien, voici de l'or pour commencer l’exploitation. (+4 production Or, -40 Or)", delegate () { Empire.instance.capitale.DecreaseGold(40); Empire.instance.capitale.ModifyGoldProd(4); }));
         listeChoix.Add(new Dialog.Choix("Je suis certain que la population sera ravie de participer à des travaux forcés dans une nouvelle mine ! (+4 production Or, -5 Bonheur)", delegate () { Empire.instance.capitale.DecreaseBonheur(5); }));
         listeChoix.Add(new Dialog.Choix("Les barbares sont aux portes de l'empire et vous vous voulez creuser des trous ? Non !", delegate () { }));
         request = new Request(listMessage, listeChoix);

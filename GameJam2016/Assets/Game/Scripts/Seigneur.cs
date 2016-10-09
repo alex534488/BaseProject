@@ -69,12 +69,14 @@ public class Seigneur : IUpdate {
         {
             if (village.or < goldneed) NeedGold(goldneed);
             if (village.or > goldneed) {
-                village.or -= goldneed;
-                village.nourriture += amount;
+                village.DecreaseGold(goldneed);
+                village.AddFood(amount);
             } 
-        } else {
-            village.or -= goldneed;
-            village.nourriture += amount;
+        }
+        else
+        {
+            village.DecreaseGold(goldneed);
+            village.AddFood(amount);
         }
     }
 
@@ -100,12 +102,12 @@ public class Seigneur : IUpdate {
         if (village.or < goldneeded) {
             NeedGold(goldneeded); ;
             if (village.or > goldneeded){
-                village.or -= goldneeded;
-                village.army += amount;
+                village.DecreaseGold(goldneeded);
+                village.AddArmy(amount);
             }
         } else {
-            village.or -= goldneeded;
-            village.army += amount;
+            village.DecreaseGold(goldneeded);
+            village.AddArmy(amount);
         }
     }
 

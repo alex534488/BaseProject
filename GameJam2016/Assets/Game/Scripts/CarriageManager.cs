@@ -86,10 +86,10 @@ public class CarriageManager : MonoBehaviour
         }
     }
 
-    public int GetCarriageCountAt(Village village)
+    public static int GetCarriageCountAt(Village village)
     {
         int amount = 0;
-        foreach(Carriage carriage in listCarriage)
+        foreach(Carriage carriage in carriageManager.listCarriage)
         {
             if (carriage.provenance == village || carriage.destination == village) amount++;
         }

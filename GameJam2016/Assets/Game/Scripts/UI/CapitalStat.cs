@@ -12,9 +12,10 @@ public class CapitalStat : MonoBehaviour
     void Start()
     {
         capital = World.main.empire.capitale;
-        UpdateDisplay();
+        capital.GetStatEvent(type).AddListener(UpdateDisplay);
+        UpdateDisplay(0);
     }
-    void UpdateDisplay()
+    void UpdateDisplay(int dummy)
     {
         if (totalText != null) totalText.text = "" + capital.GetTotal(type);
         if (profitText != null)

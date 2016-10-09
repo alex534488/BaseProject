@@ -23,7 +23,6 @@ public class SliderColor : MonoBehaviour {
     {
         slider.value = amount;
         int i = Mathf.RoundToInt((amount - min) / (max - min) * (separations.Length-1));
-        print("i: " + i);
         fill.color = separations[i];
     }
 }

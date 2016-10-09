@@ -24,6 +24,9 @@ public class Capitale : Village {
     public int nbTour = 2;
     List<Carriage> listCarriage = new List<Carriage>();
 
+    //Events
+    public StatEvent onBonheurChange = new StatEvent();
+
     public Capitale(Empire empire, int id) : base(empire,id, "ROME", null)
     {
         this.empire = empire;
@@ -31,9 +34,9 @@ public class Capitale : Village {
 
         bonheurMax = tabBonheurMax[seuilActuel];
 
-        or += capitaleOr;
-        nourriture += capitaleNourriture;
-        army += capitaleArmy;
+        AddGold(capitaleOr);
+        AddFood(capitaleNourriture);
+        AddArmy(capitaleArmy);
 
         lord = new Seigneur(this);
     }
@@ -60,9 +63,10 @@ public class Capitale : Village {
             seuilActuel++;
             bonheurMax = tabBonheurMax[seuilActuel];
         }
+        onBonheurChange.Invoke(bonheur);
     }
 
-    public void AddBonheur(int amount) { bonheur += amount; }
+    public void AddBonheur(int amount) { bonheur += amount; onBonheurChange.Invoke(bonheur); }
 
     public void DecreaseChariot(int amount) { nbCharriot -= amount; }
 
@@ -96,6 +100,21 @@ public class Capitale : Village {
         CarriageManager.SendCarriage(new Carriage(nbTour, destination, this,resource,amount));
     }
 
+    public override StatEvent GetStatEvent(Ressource_Type type)
+    {
+        StatEvent ev =  base.GetStatEvent(type);
+        if(ev == null)
+        {
+            switch (type)
+            {
+                case Ressource_Type.happiness:
+                    ev = onBonheurChange;
+                    break;
+            }
+        }
+        return ev;
+    }
+
     static private Request EventBonheur1()
     {
         List<string> listMessage = new List<string>();
@@ -123,7 +142,7 @@ public class Capitale : Village {
         listMessage.Add("Conseiller Brutus : Empereur, un groupe contestant votre gouvernance de Rome vient de détruire le Forum.");
         listMessage.Add("Cela va avoir de sérieuse répercutions sur l'économie de la capitale. (-2 production or");
         List<Dialog.Choix> listeChoix = new List<Dialog.Choix>();
-        listeChoix.Add(new Dialog.Choix("Diantre!", delegate () { Empire.instance.capitale.productionOr -= 2; }));
+        listeChoix.Add(new Dialog.Choix("Diantre!", delegate () { Empire.instance.capitale.ModifyGoldProd(-2); }));
         Request request = new Request(listMessage, listeChoix);
         return request;
     }
@@ -134,7 +153,7 @@ public class Capitale : Village {
         listMessage.Add("Conseiller Brutus : Empereur, de violente émeute éclate en ce moment même dans Rome.");
         listMessage.Add("Les répercussions économiques vont être dramatiques. Les resserve de nourritures sont en flammes.");
         List<Dialog.Choix> listeChoix = new List<Dialog.Choix>();
-        listeChoix.Add(new Dialog.Choix("Malédictition! (-2 production nourriture, -6 nourriture)", delegate () { Empire.instance.capitale.DecreaseFood(6);Empire.instance.capitale.productionNourriture -= 2; }));
+        listeChoix.Add(new Dialog.Choix("Malédictition! (-2 production nourriture, -6 nourriture)", delegate () { Empire.instance.capitale.DecreaseFood(6);Empire.instance.capitale.ModifyFoodProd(-2); }));
         Request request = new Request(listMessage, listeChoix);
         return request;
     }

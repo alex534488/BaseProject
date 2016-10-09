@@ -5,7 +5,7 @@ using UnityEngine.Events;
 
 public enum Ressource_Type
 {
-    gold, food, army, happiness
+    gold, food, army, happiness, reputation
 }
 
 public struct Ligne
@@ -16,6 +16,8 @@ public struct Ligne
 }
 
 public class Village : IUpdate {
+
+    public class StatEvent : UnityEvent<int> { }
 
     #region Identifiant
     public int id = 0;
@@ -53,6 +55,14 @@ public class Village : IUpdate {
     public int costArmy;
     public int armyFoodCost = 1;
 
+    //Events
+    public StatEvent onGoldChange = new StatEvent();
+    public StatEvent onGoldProdChange = new StatEvent();
+    public StatEvent onArmyChange = new StatEvent();
+    public StatEvent onFoodChange = new StatEvent();
+    public StatEvent onFoodProdChange = new StatEvent();
+    public StatEvent onReputationChange = new StatEvent();
+
 
     public Village(Empire empire, int id, string nomvillage, string nomseigneur)
     {
@@ -75,12 +85,12 @@ public class Village : IUpdate {
 
             if (nbPointProduction >= valN && choixRng < 0.3)
             {
-                productionNourriture += 1;
+                ModifyFoodProd(1);
                 nbPointProduction -= valN;
             }
             else if (nbPointProduction >= valO)
             {
-                productionOr += 1;
+                ModifyGoldProd(1);
                 nbPointProduction -= valO;
             }
             
@@ -121,22 +131,28 @@ public class Village : IUpdate {
     #endregion
 
     #region Fonctions modifiant les attributs
-    public void DecreaseGold(int amount){ or -= amount; }
+    public void DecreaseGold(int amount){ or -= amount; onGoldChange.Invoke(or); }
 
-    public void AddGold(int amount){ or += amount; }
+    public void AddGold(int amount){ or += amount; onGoldChange.Invoke(or); }
 
-    public void DecreaseFood(int amount){ nourriture -= amount; }
+    public void DecreaseFood(int amount){ nourriture -= amount; onFoodChange.Invoke(nourriture); }
 
-    public void AddFood(int amount){ nourriture += amount; }
+    public void AddFood(int amount){ nourriture += amount; onFoodChange.Invoke(nourriture); }
 
-    public void DecreaseArmy(int amount){ army -= amount; }
+    public void DecreaseArmy(int amount){ army -= amount; onArmyChange.Invoke(army); }
 
-    public void AddArmy(int amount){ army += amount; }
+    public void SetArmy(int amount) { army = amount; onArmyChange.Invoke(army); }
 
-    public void DecreaseReputation(int amount) { army -= amount; }
+    public void AddArmy(int amount){ army += amount; onArmyChange.Invoke(army); }
 
-    public void AddReputation(int amount) { army += amount; }
-    
+    public void DecreaseReputation(int amount) { reputation -= amount; onReputationChange.Invoke(reputation); }
+
+    public void AddReputation(int amount) { reputation += amount; onReputationChange.Invoke(reputation); }
+
+    public void ModifyFoodProd(int amount) { productionNourriture += amount; onFoodProdChange.Invoke(productionNourriture); }
+
+    public void ModifyGoldProd(int amount) { productionOr += amount; onGoldProdChange.Invoke(productionOr); }
+
     public void ModifyResource(Ressource_Type type, int amount)
     {
         switch (type)
@@ -154,21 +170,37 @@ public class Village : IUpdate {
                 break;
         }
     }
+
+    public virtual StatEvent GetStatEvent(Ressource_Type type)
+    {
+        switch (type)
+        {
+            case Ressource_Type.army:
+                return onArmyChange;
+            case Ressource_Type.food:
+                return onFoodChange;
+            case Ressource_Type.gold:
+                return onGoldChange;
+            case Ressource_Type.reputation:
+                return onReputationChange;
+        }
+        return null;
+    }
     #endregion
 
     // To do : Change or remove random
     #region Updates 
     protected void UpdateResources()
     {
-        or += productionOr;
-        nourriture += productionNourriture;
-        army += productionArmy;
+        AddGold(productionOr);
+        AddFood(productionNourriture);
+        AddArmy(productionArmy);
        
     } // To do : Change or remove random
 
     protected void UpdateCost() // To do : Change or remove random
     {
-        nourriture -= army * armyFoodCost;
+        DecreaseFood(army * armyFoodCost);
     }
     
     #endregion 

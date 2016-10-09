@@ -85,7 +85,7 @@ public class Barbare : IUpdate
     void ResetValues()
     {
         nbBarbares = barbareRestant;       // Met a jour le nombre de barbares restant dans le clan
-        actualTarget.army = soldatRestant; // Met a jour la valeur de soldats dans Village
+        actualTarget.SetArmy(soldatRestant); // Met a jour la valeur de soldats dans Village
 
         totalBarbare = 0;
         totalSoldats = 0;

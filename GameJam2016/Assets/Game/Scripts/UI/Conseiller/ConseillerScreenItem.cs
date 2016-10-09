@@ -18,6 +18,7 @@ public class ConseillerScreenItem : MonoBehaviour
     [Header("Texts")]
     public Text totalText;
     public Text bilanText;
+    public Text carriageText;
 
 
     Village village;
@@ -46,6 +47,7 @@ public class ConseillerScreenItem : MonoBehaviour
         int bilan = village.GetBilan(type);
         bilanText.text = "" + bilan;
         bg.color = (bilan >= 0) ? positiveColor : negativeColor;
+        carriageText.text = "" + CarriageManager.GetCarriageCountAt(village);
     }
 
     void OnSendClick()
