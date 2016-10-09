@@ -351,13 +351,157 @@ public class RequestManager : MonoBehaviour
         listMessage.Add("Faustus : Mon empereur, les récoltes ne vont pas aussi bien qu’à l’habitude.");
         listMessage.Add("Plusieurs animaux ont été victime de la maladie, il faudrait en acheter de nouveaux afin d’optimiser la récolte.");
         listeChoix = new List<Dialog.Choix>();
-        listeChoix.Add(new Dialog.Choix("Je vais immédiatement corriger ce problème en ordonnant l’achat  de nouveaux bœufs .( -20 Or)", delegate () { Empire.instance.capitale.DecreaseGold(20); }));
-        listeChoix.Add(new Dialog.Choix("Nous allons investir massivement dans l'agriculture pour corriger le problème et optimiser les récoltes. (- 40 Or)", delegate () { Empire.instance.capitale.DecreaseGold(40); }));
-        listeChoix.Add(new Dialog.Choix("Les coffres de l’Empire ne me permettent pas une telle dépense en ce moment.", delegate () { }));
+        listeChoix.Add(new Dialog.Choix("Je vais immédiatement corriger ce problème en ordonnant l’achat  de nouveaux bœufs .( -20 Or)", delegate () { Empire.instance.capitale.DecreaseGold(20);  }));
+        listeChoix.Add(new Dialog.Choix("Nous allons investir massivement dans l'agriculture pour corriger le problème et optimiser les récoltes. (- 40 Or +1 production nourriture)", delegate () { Empire.instance.capitale.DecreaseGold(40); Empire.instance.capitale.ModifyFoodProd(1); }));
+        listeChoix.Add(new Dialog.Choix("Les coffres de l’Empire ne me permettent pas une telle dépense en ce moment. (-1 production nourriture)", delegate () { Empire.instance.capitale.ModifyFoodProd(-1); }));
         request = new Request(listMessage, listeChoix);
         listRandomRequest.Add(request);
 
         ///////////////////////////////////////////////////////////////////
+
+        listMessage = new List<string>();
+        listMessage.Add("Valentinus : Mon seigneur, j’aimerais vous demander la permission de construire une banque qui permettrait d’augmenter la prospérité économique de la cité.");
+        listMessage.Add("J’aurais besoin de 20 pièces d’or.");
+        listeChoix = new List<Dialog.Choix>();
+        listeChoix.Add(new Dialog.Choix("Toutes les idées qui permettront d’augmenter la richesse de notre Empire seront les bienvenues.(-20 OR +2 production Or)", delegate () { Empire.instance.capitale.DecreaseGold(20); Empire.instance.capitale.ModifyGoldProd(2);  }));
+        listeChoix.Add(new Dialog.Choix("Malgré votre bonne initiative, il m’est impossible d’accepter la présente demande.", delegate () { }));
+        request = new Request(listMessage, listeChoix);
+        listRandomRequest.Add(request);
+
+        ///////////////////////////////////////////////////////////////////
+
+
+        listMessage = new List<string>();
+        listMessage.Add(" Vibius : Empereur, compte-tenu de la situation économique actuelle, devrions-nous encourager les gens à se convertir en fermiers ou en marchands?");
+        listeChoix = new List<Dialog.Choix>();
+        listeChoix.Add(new Dialog.Choix("Incitons les fermiers à devenir marchands. (+2production OR,-1 production nourriture)", delegate () { Empire.instance.capitale.ModifyGoldProd(2); Empire.instance.capitale.ModifyFoodProd(-1); }));
+        listeChoix.Add(new Dialog.Choix("Incitons les marchands à devenir fermiers. (+1 proudction nourriture -2 production Or)", delegate () { Empire.instance.capitale.ModifyGoldProd(-2); Empire.instance.capitale.ModifyFoodProd(1); }));
+        request = new Request(listMessage, listeChoix);
+        listRandomRequest.Add(request);
+
+        ///////////////////////////////////////////////////////////////////
+
+        Request AakifN = null;
+        Request AbdulN = null;
+        Request ChakaN = null;
+
+        Request Aakif = null;
+        Request Abdul = null;
+        Request Chaka = null;
+
+        Request trad = null;
+
+        listMessage = new List<string>();
+        listMessage.Add("Vopiscus : Bien le bonjour, je suis un grand voyageur");
+        listMessage.Add("J’ai parcouru une grande partie de notre monde et je suis prêt à vous offrir mes services de traduction au coût raisonnable de 1 pièce par jour.");
+        listeChoix = new List<Dialog.Choix>();
+        listeChoix.Add(new Dialog.Choix("Un service de traduction? Êtes-vous tombé sur la tête mon jeune ami, tout le monde parle la même langue ici, dans l’Empire.", delegate () { }));
+        listeChoix.Add(new Dialog.Choix("Vos services seront de grande utilité au sein de l’Empire, ainsi j’accepte votre requête. (- production Or)"
+            , delegate () {
+                Empire.instance.capitale.ModifyGoldProd(-2);
+                listRandomRequest.Remove(AakifN);
+                listRandomRequest.Remove(AbdulN);
+                listRandomRequest.Remove(ChakaN);
+                listRandomRequest.Remove(trad);
+                listRandomRequest.Add(Aakif);
+                listRandomRequest.Add(Abdul);
+                listRandomRequest.Add(Chaka);
+            }));
+        request = new Request(listMessage, listeChoix);
+        trad = request;
+        listRandomRequest.Add(request);
+
+        ///////////////////////////////////////////////////////////////////
+
+
+        listMessage = new List<string>();
+        listMessage.Add("Abdul (Voyageur étranger) : Nou bezwen manje. Noue vou ede pli tor.");
+        listeChoix = new List<Dialog.Choix>();
+        listeChoix.Add(new Dialog.Choix("Mon cher voyageur, je ne suis pas en mesure de comprendre votre dialecte.Retournez dans votre contrée et apprenez notre langue avant de venir nous importuner encore.", delegate () { }));
+        request = new Request(listMessage, listeChoix);
+        AbdulN = request;
+        listRandomRequest.Add(request);
+
+        ///////////////////////////////////////////////////////////////////
+
+
+        listMessage = new List<string>();
+        listMessage.Add("Aakif (Voyageur étranger) : Keiser, ons, Suid-voisons is in ekonomiese probleme en vra vir jou finansiële ondersteuning.");
+        listeChoix = new List<Dialog.Choix>();
+        listeChoix.Add(new Dialog.Choix("Votre dialecte de civilisation sous-développé et inutile ne m’intéresse guère mon cher. Apprenez à communiquer dans la langue de l’Empire avant de revenir me voir.", delegate () { }));
+        request = new Request(listMessage, listeChoix);
+        ChakaN = request;
+        listRandomRequest.Add(request);
+
+        ///////////////////////////////////////////////////////////////////
+
+
+        listMessage = new List<string>();
+        listMessage.Add("Chaka(Voyageur étranger) : Singabantu Izıhlabane omuhle abazokwazi ukubungaza izakhamuzi esenana X igolide.");
+        listeChoix = new List<Dialog.Choix>();
+        listeChoix.Add(new Dialog.Choix("1)	Comment voulez-vous que je vous aide si je ne vous comprends point?", delegate () { }));
+        request = new Request(listMessage, listeChoix);
+        listRandomRequest.Add(request);
+
+        ///////////////////////////////////////////////////////////////////
+
+
+        listMessage = new List<string>();
+        listMessage.Add("Aakif (Traduit): Empereur, nous, voisons du Sud sommes en difficulté économique et demandons votre soutien financier.");
+        listeChoix = new List<Dialog.Choix>();
+        listeChoix.Add(new Dialog.Choix("Offrir 120 pièces d’or au chef de la tribu afin de développer une alliance économique. (+2 production pour tous les villages)", delegate () 
+        {
+            Empire.instance.capitale.DecreaseGold(120);
+             foreach (Village vil in Empire.instance.listVillage)
+            {
+                vil.ModifyGoldProd(2);
+            }
+            listRandomRequest.Remove(Aakif);
+        }));
+        listeChoix.Add(new Dialog.Choix("Malheuresement, je ne peux point vous aider actuellement.", delegate () { }));
+        request = new Request(listMessage, listeChoix);
+        listRandomRequest.Add(request);
+
+        ///////////////////////////////////////////////////////////////////
+
+
+        listMessage = new List<string>();
+        listMessage.Add("Nous avons besoin de manger. Nous allons vous aider plus tard");
+        listeChoix = new List<Dialog.Choix>();
+        listeChoix.Add(new Dialog.Choix("2)	Offrir 60 nourriture au chef de la tribu afin de développer une alliance alimentaire.(+1 production nourriture pour tous les village)"
+            , delegate () 
+            {
+                Empire.instance.capitale.DecreaseFood(60);
+                foreach (Village vil in Empire.instance.listVillage)
+                {
+                    vil.ModifyFoodProd(1);
+                }
+                listRandomRequest.Remove(Abdul);
+            }));
+        listeChoix.Add(new Dialog.Choix("Malheuresement, je ne peux point vous aider actuellement.", delegate () { }));
+        request = new Request(listMessage, listeChoix);
+        listRandomRequest.Add(request);
+
+                ///////////////////////////////////////////////////////////////////
+
+
+        listMessage = new List<string>();
+        listMessage.Add("Nous sommes d'excellents acteurs qui serons en mesure de divertir vos citoyens en échange de X pièces d'or.");
+        listeChoix = new List<Dialog.Choix>();
+        listeChoix.Add(new Dialog.Choix("Offrir 100 pièces d’or à la communauté et développer une alliance culturelle. (Meilleurs relations avec les villages)",
+            delegate ()
+            {
+                Empire.instance.capitale.DecreaseGold(100);
+                foreach (Village vil in Empire.instance.listVillage)
+                {
+                    vil.AddReputation(20);
+                }
+                listRandomRequest.Remove(Chaka);
+            }));
+        listeChoix.Add(new Dialog.Choix("Malheuresement, je ne peux point vous aider actuellement.", delegate () { }));
+        request = new Request(listMessage, listeChoix);
+        listRandomRequest.Add(request);
+
 
 
     }
@@ -383,10 +527,10 @@ public class RequestManager : MonoBehaviour
         listMessage.Add("Lagarefix : Empereur, je viens de revenir d'un petit village gaulois qui résiste encore et toujours à l'envahisseur grâce à la potion magique.");
         listMessage.Add("ls n'ont pas voulu me partager le secret la potion, mais ils mon offert des graines de blé de qualité exceptionnel ! (+1 production nourriture)");
         List<Dialog.Choix> listeChoix = new List<Dialog.Choix>();
-        listeChoix.Add(new Dialog.Choix("Parfait ! Faite pousser ce blé !", delegate () { Empire.instance.capitale.productionNourriture += 1; }));
+        listeChoix.Add(new Dialog.Choix("Parfait ! Faite pousser ce blé !", delegate () { Empire.instance.capitale.ModifyFoodProd(1); }));
         listeChoix.Add(new Dialog.Choix("C'est intolérable, préparer une armée pour détruire ce village ! Et n'oubliez pas de faire pousser ce blé ! (Soldat -6)"
             , delegate () {
-                 Empire.instance.capitale.DecreaseArmy(6); Empire.instance.capitale.productionNourriture += 1;
+                 Empire.instance.capitale.DecreaseArmy(6); Empire.instance.capitale.ModifyFoodProd(1);
                  listRandomRequest.Remove(potionEvent2); listRandomRequest.Add(PotionEvent3());
             }));
         Request request = new Request(listMessage, listeChoix);
