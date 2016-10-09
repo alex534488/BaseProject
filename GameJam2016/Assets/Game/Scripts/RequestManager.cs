@@ -323,8 +323,8 @@ public class RequestManager : MonoBehaviour
         listMessage = new List<string>();
         listMessage.Add("Faustus : Mon empereur, les récoltes ne vont pas aussi bien qu’à l’habitude. \n\nPlusieurs animaux ont été victime de la maladie, il faudrait en acheter de nouveaux afin d’optimiser la récolte.");
         listeChoix = new List<Dialog.Choix>();
-        listeChoix.Add(new Dialog.Choix("Je vais immédiatement corriger ce problème en ordonnant l’achat  de nouveaux bœufs. (-10 Or)", delegate () { Empire.instance.capitale.DecreaseGold(10);  }));
         listeChoix.Add(new Dialog.Choix("Nous allons investir massivement dans l'agriculture pour corriger le problème et optimiser les récoltes. \n(-40 Or, +4 Production Nourriture)", delegate () { Empire.instance.capitale.DecreaseGold(40); Empire.instance.capitale.ModifyFoodProd(4); }));
+        listeChoix.Add(new Dialog.Choix("Je vais immédiatement corriger ce problème en ordonnant l’achat  de nouveaux bœufs. (-10 Or)", delegate () { Empire.instance.capitale.DecreaseGold(10);  }));
         listeChoix.Add(new Dialog.Choix("Les coffres de l’Empire ne me permettent pas une telle dépense en ce moment. (-2 Production Nourriture)", delegate () { Empire.instance.capitale.ModifyFoodProd(-1); }));
         request = new Request(listMessage, listeChoix);
         listRandomRequest.Add(request);
