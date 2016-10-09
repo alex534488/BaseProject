@@ -278,6 +278,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6991b53d11e98894395bb41c06df971f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cheveux: {fileID: 212000013773215566}
+  tete: {fileID: 212000014162801988}
+  bras: {fileID: 212000013670439358}
+  corps: {fileID: 212000014018610514}
+  coup: {fileID: 212000012085429890}
+  generator: {fileID: 11400000, guid: 4af0aaba27a240a40b751b9fa7a6e4bd, type: 2}
   anim: {fileID: 95000012244706280}
   moveSpeed: 1.5
 --- !u!212 &212000012085429890
