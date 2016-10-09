@@ -41,8 +41,10 @@ public class CarriageManager : MonoBehaviour
                     }
                 }
                 this.listCarriage.Remove(listCarriage[i]);
+            } else
+            {
+                listCarriage[i].delay--;
             }
-            listCarriage[i].delay--;
         }
     }
 

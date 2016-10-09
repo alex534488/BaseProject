@@ -152,18 +152,15 @@ public class Village : IUpdate {
     {
         army -= amount; onArmyChange.Invoke(-amount);
 
-        // Pourquoi? Ceci est un bug, le ville ne devrait pas prendre de decision pour rééquilibrer l'armé si elle est négative
-
         if (army < 0)
         {
             int coutTotal = 0;
             int nbTotal = 0;
 
-            while (army < 0)
+            while (nbTotal <= (0 - army))
             {
-                coutTotal = coutTotal + empire.valeurSoldat;
-                nbTotal = nbTotal + 1;
-                
+                coutTotal += empire.valeurSoldat;
+                nbTotal++;
             }
             AddArmy(nbTotal);
             DecreaseGold(coutTotal);
