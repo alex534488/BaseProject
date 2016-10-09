@@ -62,7 +62,7 @@ public class RequestManager : MonoBehaviour
         listeChoix.Add(new Dialog.Choix("Tant de vigueur pour un cochon, vous ferez de bon soldat ! ( +2 Soldat)", delegate () { Empire.instance.capitale.AddArmy(2); }));
         Request request = new Request(listMessage, listeChoix);
         listRandomRequest.Add(request);
-
+        
 
         ///////////////////////////////////////////////////////////////////
 
@@ -378,7 +378,7 @@ public class RequestManager : MonoBehaviour
         listeChoix.Add(new Dialog.Choix("Incitons les marchands à devenir fermiers. (+1 proudction nourriture -2 production Or)", delegate () { Empire.instance.capitale.ModifyGoldProd(-2); Empire.instance.capitale.ModifyFoodProd(1); }));
         request = new Request(listMessage, listeChoix);
         listRandomRequest.Add(request);
-
+        
         ///////////////////////////////////////////////////////////////////
 
         Request AakifN = null;
@@ -396,7 +396,7 @@ public class RequestManager : MonoBehaviour
         listMessage.Add("J’ai parcouru une grande partie de notre monde et je suis prêt à vous offrir mes services de traduction au coût raisonnable de 1 pièce par jour.");
         listeChoix = new List<Dialog.Choix>();
         listeChoix.Add(new Dialog.Choix("Un service de traduction? Êtes-vous tombé sur la tête mon jeune ami, tout le monde parle la même langue ici, dans l’Empire.", delegate () { }));
-        listeChoix.Add(new Dialog.Choix("Vos services seront de grande utilité au sein de l’Empire, ainsi j’accepte votre requête. (- production Or)"
+        listeChoix.Add(new Dialog.Choix("Vos services seront de grande utilité au sein de l’Empire, ainsi j’accepte votre requête. (- 2production Or)"
             , delegate () {
                 Empire.instance.capitale.ModifyGoldProd(-2);
                 listRandomRequest.Remove(AakifN);
@@ -430,7 +430,7 @@ public class RequestManager : MonoBehaviour
         listeChoix = new List<Dialog.Choix>();
         listeChoix.Add(new Dialog.Choix("Votre dialecte de civilisation sous-développé et inutile ne m’intéresse guère mon cher. Apprenez à communiquer dans la langue de l’Empire avant de revenir me voir.", delegate () { }));
         request = new Request(listMessage, listeChoix);
-        ChakaN = request;
+        AakifN = request;
         listRandomRequest.Add(request);
 
         ///////////////////////////////////////////////////////////////////
@@ -441,6 +441,7 @@ public class RequestManager : MonoBehaviour
         listeChoix = new List<Dialog.Choix>();
         listeChoix.Add(new Dialog.Choix("1)	Comment voulez-vous que je vous aide si je ne vous comprends point?", delegate () { }));
         request = new Request(listMessage, listeChoix);
+        ChakaN = request;
         listRandomRequest.Add(request);
 
         ///////////////////////////////////////////////////////////////////
@@ -460,6 +461,7 @@ public class RequestManager : MonoBehaviour
         }));
         listeChoix.Add(new Dialog.Choix("Malheuresement, je ne peux point vous aider actuellement.", delegate () { }));
         request = new Request(listMessage, listeChoix);
+        Aakif = request;
         listRandomRequest.Add(request);
 
         ///////////////////////////////////////////////////////////////////
@@ -468,7 +470,7 @@ public class RequestManager : MonoBehaviour
         listMessage = new List<string>();
         listMessage.Add("Nous avons besoin de manger. Nous allons vous aider plus tard");
         listeChoix = new List<Dialog.Choix>();
-        listeChoix.Add(new Dialog.Choix("2)	Offrir 60 nourriture au chef de la tribu afin de développer une alliance alimentaire.(+1 production nourriture pour tous les village)"
+        listeChoix.Add(new Dialog.Choix("Offrir 60 nourriture au chef de la tribu afin de développer une alliance alimentaire.(+1 production nourriture pour tous les village)"
             , delegate () 
             {
                 Empire.instance.capitale.DecreaseFood(60);
@@ -480,6 +482,7 @@ public class RequestManager : MonoBehaviour
             }));
         listeChoix.Add(new Dialog.Choix("Malheuresement, je ne peux point vous aider actuellement.", delegate () { }));
         request = new Request(listMessage, listeChoix);
+        Abdul = request;
         listRandomRequest.Add(request);
 
                 ///////////////////////////////////////////////////////////////////
@@ -500,6 +503,7 @@ public class RequestManager : MonoBehaviour
             }));
         listeChoix.Add(new Dialog.Choix("Malheuresement, je ne peux point vous aider actuellement.", delegate () { }));
         request = new Request(listMessage, listeChoix);
+        Chaka = request;
         listRandomRequest.Add(request);
 
 
