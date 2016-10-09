@@ -136,6 +136,24 @@ public class Village : IUpdate {
     public void DecreaseReputation(int amount) { army -= amount; }
 
     public void AddReputation(int amount) { army += amount; }
+    
+    public void ModifyResource(Ressource_Type type, int amount)
+    {
+        switch (type)
+        {
+            default:
+                return;
+            case Ressource_Type.army:
+                AddArmy(amount);
+                break;
+            case Ressource_Type.food:
+                AddFood(amount);
+                break;
+            case Ressource_Type.gold:
+                AddGold(amount);
+                break;
+        }
+    }
     #endregion
 
     // To do : Change or remove random

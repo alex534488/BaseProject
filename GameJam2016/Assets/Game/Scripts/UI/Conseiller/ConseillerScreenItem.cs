@@ -42,8 +42,7 @@ public class ConseillerScreenItem : MonoBehaviour
     void UpdateDisplay()
     {
         totalText.text = "" + village.GetTotal(type);
-        print("change prod amount ! + slider color");
-        //slider.UpdateSlider(reputation);
+        slider.UpdateSlider(village.reputation / 100);
         int bilan = village.GetBilan(type);
         bilanText.text = "" + bilan;
         bg.color = (bilan >= 0) ? positiveColor : negativeColor;
@@ -51,16 +50,19 @@ public class ConseillerScreenItem : MonoBehaviour
 
     void OnSendClick()
     {
-        print("send cariage");
-        //SendCarriage
         int sendAmount = System.Convert.ToInt32(sendField.text);
+        Carriage carriage = new Carriage(Carriage.stdDelay, village, Empire.instance.capitale, type, sendAmount);
+        CarriageManager.SendCarriage(carriage);
+        //SendCarriage
         UpdateDisplay();
         sendPanel.ToggleActive();
     }
 
     void OnRequestClick()
     {
-        print("request cariage");
+        int sendAmount = System.Convert.ToInt32(sendField.text);
+        Carriage carriage = new Carriage(Carriage.stdDelay, village, Empire.instance.capitale, type, sendAmount);
+        CarriageManager.SendCarriage(carriage);
         //SendCarriage
         UpdateDisplay();
     }

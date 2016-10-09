@@ -25,13 +25,12 @@ public class CarriageManager : MonoBehaviour
             {
                 if (!carriage.destination.isDestroyed)
                 {
-                    if(carriage.amount < 0) {
+                    if(carriage.amount > 0) { // Give resource to village
                         GiveResources(carriage, carriage.resource, carriage.amount);
-                        listCarriage.Remove(carriage);
-                    } else {
-                        if (carriage.destination.lord.CanYouGive(carriage.resource, carriage.amount)) {
+                    } else { //Take resource FROM village to capital (instant)
+                        int realAmount = carriage.destination.lord.CanYouGive(carriage.resource, carriage.amount);
+                        if (realAmount > 0) {
                             TakeResources(carriage, carriage.resource, carriage.amount);
-                            listCarriage.Remove(carriage);
                         }
                     }
                 }
@@ -50,21 +49,19 @@ public class CarriageManager : MonoBehaviour
 
     public void TakeResources(Carriage carriage, Ressource_Type resource, int amount)
     {
-        int newamount = (-1 * amount) / carriage.destination.reputation;
-
         switch (resource)
         {
             case Ressource_Type.gold:
-                carriage.destination.DecreaseGold(newamount);
-                carriage.provenance.AddGold(newamount);
+                carriage.destination.DecreaseGold(amount);
+                carriage.provenance.AddGold(amount);
                 return;
             case Ressource_Type.food:
-                carriage.destination.DecreaseFood(newamount);
-                carriage.provenance.AddFood(newamount);
+                carriage.destination.DecreaseFood(amount);
+                carriage.provenance.AddFood(amount);
                 return;
             case Ressource_Type.army:
-                carriage.destination.DecreaseArmy(newamount);
-                carriage.provenance.AddArmy(newamount);
+                carriage.destination.DecreaseArmy(amount);
+                carriage.provenance.AddArmy(amount);
                 return;
             default:
                 return;
@@ -87,5 +84,15 @@ public class CarriageManager : MonoBehaviour
             default:
                 return;
         }
+    }
+
+    public int GetCarriageCountAt(Village village)
+    {
+        int amount = 0;
+        foreach(Carriage carriage in listCarriage)
+        {
+            if (carriage.provenance == village || carriage.destination == village) amount++;
+        }
+        return amount;
     }
 }

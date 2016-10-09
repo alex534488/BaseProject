@@ -92,7 +92,8 @@ public class Capitale : Village {
 
     public void SendCartToVillage(Village destination, Ressource_Type resource, int amount)
     {
-         CarriageManager.SendCarriage(new Carriage(nbTour, destination,resource,amount));
+        if (amount > 0) ModifyResource(resource, amount);
+        CarriageManager.SendCarriage(new Carriage(nbTour, destination, this,resource,amount));
     }
 
     static private Request EventBonheur1()
