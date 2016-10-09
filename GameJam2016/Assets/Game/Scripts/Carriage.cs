@@ -5,14 +5,16 @@ using UnityEngine.Events;
 
 public class Carriage {
 
+    public static int stdDelay = 2;
     public int delay;
     public Village provenance;
     public Village destination;
     public Ressource_Type resource;
     public int amount;
 
-	public Carriage(int delay, Village destination, Ressource_Type resource, int amount)
+	public Carriage(int delay, Village destination, Village provenance, Ressource_Type resource, int amount)
     {
+        this.provenance = provenance;
         this.delay = delay;
         this.destination = destination;
         this.resource = resource;

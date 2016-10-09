@@ -6,7 +6,7 @@ using UnityEngine.Events;
 public class Capitale : Village {
 
     int[] seuilBonheur = {40,30,20,10,0};
-    int[] tabBbonheurMax = { 50, 40, 30, 20, 10 };
+    int[] tabBonheurMax = { 50, 40, 30, 20, 10 };
     Request[] eventBonheur = { EventBonheur1(), EventBonheur2(),EventBonheur3(),EventBonheur4(),EventBonheur5() };
     int seuilActuel = 0;
 
@@ -29,7 +29,7 @@ public class Capitale : Village {
         this.empire = empire;
         this.id = id;
 
-        bonheurMax = tabBbonheurMax[seuilActuel];
+        bonheurMax = tabBonheurMax[seuilActuel];
 
         or += capitaleOr;
         nourriture += capitaleNourriture;
@@ -40,13 +40,10 @@ public class Capitale : Village {
 	
 	public override void Update ()
     {
-
-
         if (nourriture < 0 || bonheur < 0 || isDestroyed)
         {
             DestructionVillage();
         }
-        nourrirArmy = army;
 
         UpdateResources();
 
@@ -61,7 +58,7 @@ public class Capitale : Village {
         {
             RequestManager.SendRequest(eventBonheur[seuilActuel]);
             seuilActuel++;
-            bonheurMax = tabBbonheurMax[seuilActuel];
+            bonheurMax = tabBonheurMax[seuilActuel];
         }
     }
 
@@ -77,7 +74,7 @@ public class Capitale : Village {
 
         foreach (Village village in empire.listVillage)
         {
-            foreach(Barbare barbare in theWorld.listBarbare)
+            foreach(Barbare barbare in theWorld.barbareManager.listeBarbare)
             {
                 if ((barbare.actualTarget == village) && village.barbares.nbBarbares > village.army)
                 {
@@ -95,7 +92,8 @@ public class Capitale : Village {
 
     public void SendCartToVillage(Village destination, Ressource_Type resource, int amount)
     {
-         CarriageManager.SendCarriage(new Carriage(nbTour, destination,resource,amount));
+        if (amount > 0) ModifyResource(resource, amount);
+        CarriageManager.SendCarriage(new Carriage(nbTour, destination, this,resource,amount));
     }
 
     static private Request EventBonheur1()
@@ -123,7 +121,7 @@ public class Capitale : Village {
     {
         List<string> listMessage = new List<string>();
         listMessage.Add("Conseiller Brutus : Empereur, un groupe contestant votre gouvernance de Rome vient de détruire le Forum.");
-        listMessage.Add("Cela va avoir de sérieuse répercutions sur l'économie de la capitale.(-2 production or");
+        listMessage.Add("Cela va avoir de sérieuse répercutions sur l'économie de la capitale. (-2 production or");
         List<Dialog.Choix> listeChoix = new List<Dialog.Choix>();
         listeChoix.Add(new Dialog.Choix("Diantre!", delegate () { Empire.instance.capitale.productionOr -= 2; }));
         Request request = new Request(listMessage, listeChoix);
