@@ -32,12 +32,11 @@ public class CarriageManager : MonoBehaviour
                     } 
                         else { //Take resource FROM village to capital (instant)
                         int realAmount = carriage.destination.lord.CanYouGive(carriage.resource);
-                        if (realAmount > 0)
-                            {
-                                 TakeResources(carriage, carriage.resource, realAmount);
-                                 carriage.destination.DecreaseReputation(10);
-                                (carriage.destination as Capitale).AddChariot(1);
-
+                        if (realAmount > 0) {
+                            TakeResources(carriage, carriage.resource, realAmount);
+                            carriage.destination.DecreaseReputation(10);
+                            (carriage.destination as Capitale).AddChariot(1);
+                            RequestManager.SendRequest(new Request(carriage,realAmount));
                         }
                     }
                 }
