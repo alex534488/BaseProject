@@ -14,6 +14,7 @@ namespace CCC.Manager
 {
     public class SoundManager : BaseManager
     {
+        public static SoundManager main;
         [System.Serializable]
         public class VolumeSave
         {
@@ -27,6 +28,12 @@ namespace CCC.Manager
         public AudioSource musicSource;
         public AudioMixer mixer;
         public VolumeSave save;
+
+        protected override void Awake()
+        {
+            base.Awake();
+            main = this;
+        }
 
         public override void Init()
         {
@@ -47,8 +54,8 @@ namespace CCC.Manager
             }
             AudioSource theSource = source;
             if (theSource == null) theSource = stdSource;
-
-            stdSource.PlayOneShot(clip, delay);
+            
+            theSource.PlayOneShot(clip, delay); //avant stdSource.PlayOneShot(clip, delay); 
         }
 
         public void PlayMusic(AudioClip clip, bool looping = true, float volume = 1, bool faded = false)

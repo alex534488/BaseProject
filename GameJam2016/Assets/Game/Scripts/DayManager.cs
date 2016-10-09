@@ -1,8 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
-public class DayManager : MonoBehaviour{
+public class DayManager : MonoBehaviour {
 
     public static DayManager main;
 
@@ -17,12 +19,16 @@ public class DayManager : MonoBehaviour{
     public CarriageManager carriageManager;
     public BarbareManager barbareManager;
 
+
+
     // Nombre de jours (Points de la partie)
     private int nbJour = 0;
 
     void Awake()
     {
         if (main == null) main = this;
+        
+        // rajouter des musiques ICI
 
         theWorld = new World();
         theWorld.Start(barbareManager);
@@ -74,6 +80,7 @@ public class DayManager : MonoBehaviour{
     void SendCarriageTest()
     {
         sendcarriage.GetComponent<AudioSource>().Play();
-        theWorld.empire.capitale.SendCartToVillage(theWorld.empire.listVillage[0], Ressource_Type.gold, 10);
+        theWorld.empire.capitale.SendCartToVillage(theWorld.empire.listVillage[0], Ressource_Type.gold, 10); // Test, va chercher 10 d'or dans le village numero 0
+        print("Gold Village 1:" + World.main.empire.listVillage[0].or);
     }
 }

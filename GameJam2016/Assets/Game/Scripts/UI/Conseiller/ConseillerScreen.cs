@@ -3,11 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using CCC.Manager;
 
 public class ConseillerScreen : MonoBehaviour {
 
     public ConseillerScreenItem itemPrefab;
     public Text titre;
+    public AudioClip clip;
     public RectTransform container;
     public static string SCENE = "ConseillerPanel";
     List<Village> villages;
@@ -68,6 +70,7 @@ public class ConseillerScreen : MonoBehaviour {
 
     public void Exit()
     {
+        SoundManager.main.Play(clip);
         SceneManager.UnloadScene(SCENE);
     }
 }

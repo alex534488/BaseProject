@@ -106,8 +106,9 @@ public class Capitale : Village
     public void SendCartToVillage(Village destination, Ressource_Type resource, int amount)
     {
         if (nbCharriot <= 0) return;
-        if (amount > 0) ModifyResource(resource, amount);
+        //if (amount > 0) ModifyResource(resource, amount);
         CarriageManager.SendCarriage(new Carriage(nbTour, destination, this, resource, amount));
+        nbCharriot --;
     }
 
     public override StatEvent GetStatEvent(Ressource_Type type, bool isAlternative = false)

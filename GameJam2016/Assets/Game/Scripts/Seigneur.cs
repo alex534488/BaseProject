@@ -122,10 +122,10 @@ public class Seigneur : IUpdate {
         switch (resource)
         {
             case Ressource_Type.gold:
-                
+                RequestManager.SendRequest(new Request(this, resource, amount));
                 return;
             case Ressource_Type.food:
-                
+                RequestManager.SendRequest(new Request(this, resource, amount));
                 return;
             case Ressource_Type.army:
                 RequestManager.SendRequest(new Request(this,resource, amount));
