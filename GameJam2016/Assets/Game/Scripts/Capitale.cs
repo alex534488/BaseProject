@@ -23,7 +23,6 @@ public class Capitale : Village
 
     // Seuil de tolerance permis pour les resources de la capitale
     private int seuilNourritureCapitale;
-    private int seulOrCapitale = -50;
 
     // Trade
     public int nbCharriot = 3;
@@ -50,6 +49,8 @@ public class Capitale : Village
 
     public override void Update()
     {
+        seuilNourritureCapitale = army;
+
         if (nourriture < 0 || bonheur < 0 || isDestroyed)
         {
             DestructionVillage();
@@ -102,16 +103,15 @@ public class Capitale : Village
                     }
                 }
             }
-
         }
-
-        // Le scout revient dans X tours?
     }
 
     public void SendCartToVillage(Village destination, Ressource_Type resource, int amount)
     {
-        if (amount > 0) ModifyResource(resource, amount);
+        if (nbCharriot <= 0) return;
+        //if (amount > 0) ModifyResource(resource, amount);
         CarriageManager.SendCarriage(new Carriage(nbTour, destination, this, resource, amount));
+        nbCharriot --;
     }
 
     public override StatEvent GetStatEvent(Ressource_Type type, bool isAlternative = false)
@@ -133,15 +133,7 @@ public class Capitale : Village
     {
         if (nourriture < seuilNourritureCapitale) BesoinNourriture(seuilNourritureCapitale - nourriture);
         if (bonheur <= 0) Defaite("Trahison");
-        if (or < 0)
-        {
-            DecreaseBonheur(1);
-            if (or < -25)
-            {
-                DecreaseBonheur(2);
-                if (or < seulOrCapitale) Defaite("Faillite");
-            }
-        }
+        if (or < 0) DecreaseBonheur(Mathf.CeilToInt((-1 * or) / 10));
     }
 
     void BesoinNourriture(int amount)
@@ -157,6 +149,15 @@ public class Capitale : Village
     void Defaite(string type)
     {
         // Fin de la partie
+        switch (type)
+        {
+            case "Trahison":
+                break;
+            case "Famine":
+                break;
+            default:
+                break;
+        }
     }
 
     static private Request EventBonheur1()

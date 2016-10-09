@@ -1,9 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
+using UnityEngine.Events;
 using UnityEngine.UI;
 using CCC.Manager;
 
-public class DayManager : MonoBehaviour{
+public class DayManager : MonoBehaviour {
 
     public static DayManager main;
 
@@ -13,6 +15,7 @@ public class DayManager : MonoBehaviour{
     public Button scoutButton;
     public Button sendcarriage;
 
+    // Manager et World
     public World theWorld;
     public RequestManager requestManager;
     public CarriageManager carriageManager;
@@ -33,7 +36,7 @@ public class DayManager : MonoBehaviour{
         requestManager.OnCompletionOfRequests.AddListener(OnAllRequestComplete);
         if (scoutButton != null) nextDayButton.onClick.AddListener(OnNextDayClick);
         if(scoutButton != null) scoutButton.onClick.AddListener(ButtonScout);
-        if (sendcarriage != null) sendcarriage.onClick.AddListener(Test);
+        if (sendcarriage != null) sendcarriage.onClick.AddListener(SendCarriageTest);
     }
 
     void OnNextDayClick()
@@ -81,9 +84,9 @@ public class DayManager : MonoBehaviour{
         theWorld.empire.capitale.SendScout(theWorld);
     }
 
-    void Test()
+    void SendCarriageTest()
     {
         sendcarriage.GetComponent<AudioSource>().Play();
-        theWorld.empire.capitale.SendCartToVillage(theWorld.empire.listVillage[0], Ressource_Type.gold, 10);
+        theWorld.empire.capitale.SendCartToVillage(theWorld.empire.listVillage[0], Ressource_Type.gold, 10); // Test, va chercher 10 d'or dans le village numero 0
     }
 }

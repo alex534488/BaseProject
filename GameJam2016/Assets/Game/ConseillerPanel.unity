@@ -1080,6 +1080,7 @@ MonoBehaviour:
   itemPrefab: {fileID: 114000010992472156, guid: 305a8060c29bda24e9a90796dfe0fa5d,
     type: 2}
   titre: {fileID: 1684006685}
+  clip: {fileID: 8300000, guid: d1d50eeedb9590a47ad56248d3d808ab, type: 3}
   container: {fileID: 243550583}
 --- !u!1 &1911360941
 GameObject:
