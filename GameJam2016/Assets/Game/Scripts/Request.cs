@@ -60,9 +60,9 @@ public class Request {
                         message.Add("Bien le bonjour votre excellence! Avez-vous vu le beau temps qu'il y a eu dernierement? Notre recolte a été incroyablement abondante cette saison." + "\n\n" +
                                     "Nous voudrions éventuellement semer d'avantages de graines pour continuer d'avoir autant de réserves de nourritures. Par contre, cela necessiterait de nouveaux investissements majeurs.");
                         choix = new List<Dialog.Choix>();
-                        choix.Add(new Dialog.Choix(" Payez entièrement les frais des nouvelles semances (-40 Or , +3 Production D'Or) ()", delegate () { Empire.instance.capitale.DecreaseGold(40); messager.village.AddReputation(20); messager.village.ModifyGoldProd(3); }));
+                        choix.Add(new Dialog.Choix(" Payez entièrement les frais des nouvelles semances (-40 Or , +20 Reputation, +3 Production D'Or) ()", delegate () { Empire.instance.capitale.DecreaseGold(40); messager.village.AddReputation(20); messager.village.ModifyGoldProd(3); }));
                         choix.Add(new Dialog.Choix(" Aidez les villagois à construire la mine (-20 Or, +3 Production D'Or)", delegate () { Empire.instance.capitale.DecreaseGold(20); messager.village.DecreaseGold(20); messager.village.ModifyGoldProd(3); }));
-                        choix.Add(new Dialog.Choix("Refusez la demande du villagois", delegate () { messager.village.DecreaseReputation(20); }));
+                        choix.Add(new Dialog.Choix("Refusez la demande du villagois (-20 Reputation)", delegate () { messager.village.DecreaseReputation(20); }));
                         return;
                     case 2:
                         message.Add("Salutation votre majesté. Je viens du village lointin " + messager.village.nom + " qui aurait grandement besoin de votre support." + "\n\n" +
@@ -70,16 +70,16 @@ public class Request {
                         message.Add("Ce que nous aimerions ce serait de pouvoir reconstruire plusieurs batiments pour pouvoir pooursuivre nos activité et ne pas nous ralentir dans notre si bonne lancé" + "\n\n" +
                                      "Êtes-vous en mesure de nous apporter votre aide mon seigneur?");
                         choix = new List<Dialog.Choix>();
-                        choix.Add(new Dialog.Choix(" Payez entièrement les frais des nouvelles infrastructures (-40 Or , +3 Production D'Or) ()", delegate () { Empire.instance.capitale.DecreaseGold(40); messager.village.AddReputation(20); messager.village.ModifyGoldProd(3); }));
+                        choix.Add(new Dialog.Choix(" Payez entièrement les frais des nouvelles infrastructures (-40 Or , +20 Reputation, +3 Production D'Or) ()", delegate () { Empire.instance.capitale.DecreaseGold(40); messager.village.AddReputation(20); messager.village.ModifyGoldProd(3); }));
                         choix.Add(new Dialog.Choix(" Aidez les villagois à construire les infrastructures (-20 Or, +3 Production D'Or)", delegate () { Empire.instance.capitale.DecreaseGold(20); messager.village.DecreaseGold(20); messager.village.ModifyGoldProd(3); }));
-                        choix.Add(new Dialog.Choix("Refusez la demande de l'architecte", delegate () { messager.village.DecreaseReputation(20); }));
+                        choix.Add(new Dialog.Choix("Refusez la demande de l'architecte (-20 Reputation)", delegate () { messager.village.DecreaseReputation(20); }));
                         return;
                     default:
                         message.Add("Bonjour notre digne empereur! Je suis du village " + messager.village.nom + " et vous serez heureux d'apprendre que notre économie se porte à merveille!" + "\n\n" +
                                     "Je viens en tant que messager pour vous informer que nous voudrions une aide financière pour investir dans une nouvelle mine d'or.");
-                        choix.Add(new Dialog.Choix(" Payez entièrement les frais de constructions de la mine (-40 Or , +3 Production D'Or)", delegate () { messager.village.DecreaseGold(40); messager.village.AddReputation(20); messager.village.ModifyGoldProd(3); }));
-                        choix.Add(new Dialog.Choix(" Aidez les villagois à construire la mine (-20 Or, +3 Production D'Or)", delegate () { messager.village.DecreaseGold(20); messager.village.ModifyGoldProd(3); }));
-                        choix.Add(new Dialog.Choix(" Refusez la demande du villagois", delegate () { messager.village.DecreaseReputation(20); }));
+                        choix.Add(new Dialog.Choix(" Payez entièrement les frais de constructions de la mine (-40 Or , +20 Reputation, +3 Production D'Or)", delegate () { messager.village.DecreaseGold(40); messager.village.AddReputation(20); messager.village.ModifyGoldProd(3); }));
+                        choix.Add(new Dialog.Choix(" Aidez les villagois à construire la mine (-20 Or, +3 Production D'Or)", delegate () { Empire.instance.capitale.DecreaseGold(20); messager.village.DecreaseGold(20); messager.village.ModifyGoldProd(3); }));
+                        choix.Add(new Dialog.Choix(" Refusez la demande du villagois (-20 Reputation)", delegate () { messager.village.DecreaseReputation(20); }));
                         return;
                 }
             case Ressource_Type.food:
