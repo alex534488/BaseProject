@@ -22,6 +22,7 @@ public class BarbareManager : IUpdate {
 
     public void Uptade()
     {
+        spawn();
         foreach(Barbare bar in listeBarbare)
         {
             bar.Update();
@@ -30,7 +31,11 @@ public class BarbareManager : IUpdate {
 
     public void spawn()
     {
-        
+        if(DayManager.main.nbJour > 0 &&  DayManager.main.nbJour%5 == 0)
+        {
+            nbClanBarbare++;
+            AddClanBarbare();
+        }
     }
 
     public void AddClanBarbare()
