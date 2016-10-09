@@ -4024,7 +4024,6 @@ GameObject:
   - 224: {fileID: 1713880457}
   - 82: {fileID: 1713880456}
   - 114: {fileID: 1713880458}
-  - 114: {fileID: 1713880459}
   m_Layer: 0
   m_Name: BackgroundMusic
   m_TagString: Untagged
@@ -4141,17 +4140,6 @@ MonoBehaviour:
   music4: {fileID: 0}
   music5: {fileID: 0}
   music6: {fileID: 0}
---- !u!114 &1713880459
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1713880455}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ce29cb859d78b634c9d7b447327d88d7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1824336609
 GameObject:
   m_ObjectHideFlags: 0
