@@ -9,17 +9,27 @@ public class World : IUpdate {
 
     public BarbareManager barbareManager;
 
-    public void Start (BarbareManager barbareManager)
+    public World()
     {
-        main = this;
-        this.barbareManager = barbareManager;
+        barbareManager = new BarbareManager();
+        barbareManager.Initialize();
         empire = new Empire();
+        main = this;
         empire.Start();
+    }
+
+    public void Start ()
+    {
+
+
+       
+       
     }
 
     public void Update()
     {
         empire.Update();
+        barbareManager.Uptade();
     }
 
     public Village GiveTarget() // Verifie la liste des villages et retourne le village frontiere le plus faible de la liste

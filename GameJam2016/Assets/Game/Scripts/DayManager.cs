@@ -31,7 +31,7 @@ public class DayManager : MonoBehaviour {
         // rajouter des musiques ICI
 
         theWorld = new World();
-        theWorld.Start(barbareManager);
+        theWorld.Start();
 
         // INTRODUCTION
 
