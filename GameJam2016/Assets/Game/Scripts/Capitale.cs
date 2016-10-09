@@ -74,7 +74,11 @@ public class Capitale : Village
         onBonheurChange.Invoke(-amount);
     }
 
-    public void AddBonheur(int amount) { bonheur += amount; onBonheurChange.Invoke(amount); }
+    public void AddBonheur(int amount)
+    {
+        amount = Mathf.Min(bonheurMax - bonheur, amount);
+        bonheur += amount; onBonheurChange.Invoke(amount);
+    }
 
     public void SetBonheurMax(int amount) { bonheurMax = amount; onBonheurMaxChange.Invoke(amount); }
 
