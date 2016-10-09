@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using CCC.Manager;
 
 public class DayManager : MonoBehaviour{
 
@@ -18,7 +19,7 @@ public class DayManager : MonoBehaviour{
     public BarbareManager barbareManager;
 
     // Nombre de jours (Points de la partie)
-    private int nbJour = 0;
+    public int nbJour = 0;
 
     void Awake()
     {
@@ -30,24 +31,33 @@ public class DayManager : MonoBehaviour{
         // INTRODUCTION
 
         requestManager.OnCompletionOfRequests.AddListener(OnAllRequestComplete);
-        if (scoutButton != null) nextDayButton.onClick.AddListener(LaunchedDay);
+        if (scoutButton != null) nextDayButton.onClick.AddListener(OnNextDayClick);
         if(scoutButton != null) scoutButton.onClick.AddListener(ButtonScout);
         if (sendcarriage != null) sendcarriage.onClick.AddListener(Test);
     }
 
-    public void LaunchedDay()
+    void OnNextDayClick()
     {
-        nextDayButton.GetComponent<AudioSource>().Play();
+        // Desactive les boutons temporairement
+        if (scoutButton != null) nextDayButton.GetComponent<Button>().interactable = false;
+        if (scoutButton != null) scoutButton.GetComponent<Button>().interactable = false;
+        if (sendcarriage != null) sendcarriage.GetComponent<Button>().interactable = false;
+
+        DayOfTime.Night();
+        DelayManager.CallTo(delegate ()
+        {
+            DayOfTime.Day(1-EstimationEmpire.Estimation());
+            LaunchDay();
+        }, 1);
+    }
+
+    public void LaunchDay()
+    {
         nbJour++;
         if(currentday != null) currentday.GetComponentInChildren<Text>().text = "Jour " + nbJour;
 
         theWorld.Update(); // Update le monde
         carriageManager.NewDay();
-
-        // Desactive les boutons temporairement
-        if (scoutButton != null) nextDayButton.GetComponent<Button>().interactable = false;
-        if (scoutButton != null) scoutButton.GetComponent<Button>().interactable = false;
-        if (sendcarriage != null) sendcarriage.GetComponent<Button>().interactable = false;
 
         // Debute la phase des requetes
         PhaseRequete(); 
