@@ -173,8 +173,8 @@ public class Capitale : Village
     static private Request EventBonheur1()
     {
         List<string> listMessage = new List<string>();
-        listMessage.Add("Conseiller Brutus : Empereur, une certaine agitation commence à parcourir les rue de Rome.");
-        listMessage.Add("Les gens parlent de vos choix inhumains, et ont peur de l'avancé des barbares.");
+        listMessage.Add("Conseiller Brutus : Empereur, une certaine agitation commence à parcourir les rue de Rome.\n\nLes gens parlent de vos choix inhumains, et craignent les invasions de barbares.");
+        listMessage.Add("");
         List<Dialog.Choix> listeChoix = new List<Dialog.Choix>();
         Request request = new Request(listMessage, listeChoix);
         return request;
