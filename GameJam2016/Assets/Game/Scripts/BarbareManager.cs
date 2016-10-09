@@ -7,7 +7,10 @@ public class BarbareManager : IUpdate {
 
     public List<Barbare> listeBarbare = new List<Barbare>();
 
+   
     public int nbClanBarbare = 1;
+
+    
 
     public void Initialize()
     {
@@ -23,6 +26,11 @@ public class BarbareManager : IUpdate {
         {
             bar.Update();
         }
+    }
+
+    public void spawn()
+    {
+        
     }
 
     public void AddClanBarbare()
@@ -42,6 +50,8 @@ public class BarbareManager : IUpdate {
 
         return barbareTotal;
     }
+
+   
 
     public void Update()
     {
