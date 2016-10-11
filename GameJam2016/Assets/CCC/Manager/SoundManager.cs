@@ -14,7 +14,7 @@ namespace CCC.Manager
 {
     public class SoundManager : BaseManager
     {
-        public static SoundManager main;
+        static SoundManager instance;
         [System.Serializable]
         public class VolumeSave
         {
@@ -32,7 +32,7 @@ namespace CCC.Manager
         protected override void Awake()
         {
             base.Awake();
-            main = this;
+            instance = this;
         }
 
         public override void Init()
@@ -45,22 +45,26 @@ namespace CCC.Manager
         /// <summary>
         /// Plays the audioclip. Leave source to 'null' to play on the standard 2D SFX audiosource.
         /// </summary>
-        public void Play(AudioClip clip, float delay = 0, float volume = 1, AudioSource source = null)
+        public static void Play(AudioClip clip, float delay = 0, float volume = 1, AudioSource source = null)
         {
+            if (instance == null) { Debug.LogError("SoundManager instance is null"); return; }
+
             if (clip == null) return;
             if (delay > 0)
             {
-                StartCoroutine(PlayIn(clip, delay, volume, source));
+                instance.StartCoroutine(instance.PlayIn(clip, delay, volume, source));
                 return;
             }
             AudioSource theSource = source;
-            if (theSource == null) theSource = stdSource;
+            if (theSource == null) theSource = instance.stdSource;
             
             theSource.PlayOneShot(clip, volume); //avant stdSource.PlayOneShot(clip, delay); 
         }
 
-        public void PlayMusic(AudioClip clip, bool looping = true, float volume = 1, bool faded = false)
+        public static void PlayMusic(AudioClip clip, bool looping = true, float volume = 1, bool faded = false)
         {
+            if (instance == null) { Debug.LogError("SoundManager instance is null"); return; }
+
             if (faded)
             {
                 StopMusic(true, delegate ()
@@ -70,26 +74,28 @@ namespace CCC.Manager
             }
             else
             {
-                musicSource.volume = volume;
+                instance.musicSource.volume = volume;
                 StopMusic();
-                musicSource.clip = clip;
-                musicSource.loop = looping;
-                musicSource.Play();
+                instance.musicSource.clip = clip;
+                instance.musicSource.loop = looping;
+                instance.musicSource.Play();
             }
         }
 
-        public void StopMusic(bool faded = false, TweenCallback onComplete = null)
+        public static void StopMusic(bool faded = false, TweenCallback onComplete = null)
         {
+            if (instance == null) { Debug.LogError("SoundManager instance is null"); return; }
+
             if (faded)
             {
-                Tweener tween = DOTween.To(() => musicSource.volume, x => musicSource.volume = x, 0, 0.5f).OnComplete(delegate ()
+                Tweener tween = DOTween.To(() => instance.musicSource.volume, x => instance.musicSource.volume = x, 0, 0.5f).OnComplete(delegate ()
                 {
                     StopMusic(false, onComplete);
                 });
             }
             else
             {
-                musicSource.Stop();
+                instance.musicSource.Stop();
                 if (onComplete != null) onComplete.Invoke();
             }
         }
@@ -102,25 +108,33 @@ namespace CCC.Manager
 
         #region Volume Set
 
-        public void SetMaster(float value)
+        public static void SetMaster(float value)
         {
-            save.master = value;
-            mixer.SetFloat("master", value);
+            if (instance == null) { Debug.LogError("SoundManager instance is null"); return; }
+
+            instance.save.master = value;
+            instance.mixer.SetFloat("master", value);
         }
-        public void SetVoice(float value)
+        public static void SetVoice(float value)
         {
-            save.voice = value;
-            mixer.SetFloat("voice", value);
+            if (instance == null) { Debug.LogError("SoundManager instance is null"); return; }
+
+            instance.save.voice = value;
+            instance.mixer.SetFloat("voice", value);
         }
-        public void SetMusic(float value)
+        public static void SetMusic(float value)
         {
-            save.music = value;
-            mixer.SetFloat("music", value);
+            if (instance == null) { Debug.LogError("SoundManager instance is null"); return; }
+
+            instance.save.music = value;
+            instance.mixer.SetFloat("music", value);
         }
-        public void SetSfx(float value)
+        public static void SetSfx(float value)
         {
-            save.sfx = value;
-            mixer.SetFloat("sfx", value);
+            if (instance == null) { Debug.LogError("SoundManager instance is null"); return; }
+
+            instance.save.sfx = value;
+            instance.mixer.SetFloat("sfx", value);
         }
 
         private void ApplyAll()
@@ -135,41 +149,47 @@ namespace CCC.Manager
 
         #region Load/Save
 
-        public void Load()
+        public static void Load()
         {
+            if (instance == null) { Debug.LogError("SoundManager instance is null"); return; }
+
             string savePath = Application.persistentDataPath + "/Sound.dat";
             if (File.Exists(savePath))
             {
                 BinaryFormatter bf = new BinaryFormatter();
                 FileStream file = File.Open(savePath, FileMode.Open);
                 VolumeSave saveCopy = (VolumeSave)bf.Deserialize(file);
-                save.master = saveCopy.master;
-                save.voice = saveCopy.voice;
-                save.sfx = saveCopy.sfx;
-                save.music = saveCopy.music;
+                instance.save.master = saveCopy.master;
+                instance.save.voice = saveCopy.voice;
+                instance.save.sfx = saveCopy.sfx;
+                instance.save.music = saveCopy.music;
                 file.Close();
             }
             else
             {
-                save = new VolumeSave();
+                instance.save = new VolumeSave();
                 Save();
             }
 
-            ApplyAll();
+            instance.ApplyAll();
         }
 
-        public void Save()
+        public static void Save()
         {
+            if (instance == null) { Debug.LogError("SoundManager instance is null"); return; }
+
             string savePath = Application.persistentDataPath + "/Sound.dat";
             BinaryFormatter bf = new BinaryFormatter();
             FileStream file = File.Open(savePath, FileMode.OpenOrCreate);
-            bf.Serialize(file, save);
+            bf.Serialize(file, instance.save);
             file.Close();
         }
 
-        public void Clear()
+        public static void Clear()
         {
-            save = new VolumeSave();
+            if (instance == null) { Debug.LogError("SoundManager instance is null"); return; }
+
+            instance.save = new VolumeSave();
             Save();
         }
 
@@ -186,17 +206,20 @@ namespace CCC.Manager
 
                 SoundManager manager = target as SoundManager;
 
-                if (GUILayout.Button("Clear"))
+                if (Application.isPlaying)
                 {
-                    manager.Clear();
-                }
-                if (GUILayout.Button("Save"))
-                {
-                    manager.Save();
-                }
-                if (GUILayout.Button("Load"))
-                {
-                    manager.Load();
+                    if (GUILayout.Button("Clear"))
+                    {
+                        SoundManager.Clear();
+                    }
+                    if (GUILayout.Button("Save"))
+                    {
+                        SoundManager.Save();
+                    }
+                    if (GUILayout.Button("Load"))
+                    {
+                        SoundManager.Load();
+                    }
                 }
             }
         }

@@ -70,7 +70,7 @@ public class ConseillerScreen : MonoBehaviour {
 
     public void Exit()
     {
-        SoundManager.main.Play(clip);
+        SoundManager.Play(clip);
         SceneManager.UnloadScene(SCENE);
     }
 }
