@@ -31,20 +31,20 @@ public class Request {
         {
             case Ressource_Type.gold:
                 message.Add("Le village "+messager.village.nom+" a besoin de "+amount+ " pièces d'or pour combler ses manquements économiques");
-                choix.Add(new Dialog.Choix("Chaque village de l'Empire compte! ("+amount+ " Or, + Réputation)", delegate () { if (Empire.instance.capitale.or >= amount) { messager.village.AddGold(amount); Empire.instance.capitale.DecreaseGold(amount); messager.village.AddReputation(20); } }));
-                choix.Add(new Dialog.Choix("L'or est précieux, faites bon usage de ces quelques pièces \n("+ (amount+1)/2 + " Or)", delegate () { if (Empire.instance.capitale.or >= (amount+1)/2) { messager.village.AddGold((amount+1)/2); Empire.instance.capitale.DecreaseGold((amount+1)/2); } } ));
+                choix.Add(new Dialog.Choix("Chaque village de l'Empire compte! ("+amount+ " Or, + Réputation)", delegate () { messager.village.AddGold(amount); Empire.instance.capitale.DecreaseGold(amount); messager.village.AddReputation(20); }));
+                choix.Add(new Dialog.Choix("L'or est précieux, faites bon usage de ces quelques pièces \n("+ (amount+1)/2 + " Or)", delegate () { messager.village.AddGold((amount+1)/2); Empire.instance.capitale.DecreaseGold((amount+1)/2); } ));
                 choix.Add(new Dialog.Choix("Les caisses sont vides pour vous! (- Réputation)", delegate () { messager.village.DecreaseReputation(20); }));
                 return;
             case Ressource_Type.food:
                 message.Add("Le village " + messager.village.nom + " a besoin de " + amount + " Nourritures pour nourrir les soldats stationnés dans notre village.");
-                choix.Add(new Dialog.Choix("Chaque village de l'empire compte! ("+ amount + " Nourritures, + Réputation)", delegate () { if (Empire.instance.capitale.nourriture >= amount) { messager.village.AddFood(amount); Empire.instance.capitale.DecreaseFood(amount); messager.village.AddReputation(20); } }));
-                choix.Add(new Dialog.Choix("Je peux vous fournir quelques rations de Nourritures mon cher. \n("+ (amount + 1) / 2 + " Nourriture)", delegate () { if (Empire.instance.capitale.nourriture >= (amount + 1) / 2) { messager.village.AddFood((amount + 1 )/ 2); Empire.instance.capitale.DecreaseFood((amount + 1) / 2); } }));
+                choix.Add(new Dialog.Choix("Chaque village de l'empire compte! ("+ amount + " Nourritures, + Réputation)", delegate () {messager.village.AddFood(amount); Empire.instance.capitale.DecreaseFood(amount); messager.village.AddReputation(20); }));
+                choix.Add(new Dialog.Choix("Je peux vous fournir quelques rations de Nourritures mon cher. \n("+ (amount + 1) / 2 + " Nourriture)", delegate () { messager.village.AddFood((amount + 1 )/ 2); Empire.instance.capitale.DecreaseFood((amount + 1) / 2); }));
                 choix.Add(new Dialog.Choix("Rome est au bord de la famine également. (- Réputation)", delegate () { messager.village.DecreaseReputation(20); }));
                 return;
             case Ressource_Type.army:
                 message.Add("Le village " + messager.village.nom + " a besoin de " + amount + " Soldats pour se défendre contre une invasion imminente de barbares.");
                 choix.Add(new Dialog.Choix("Voici davantage de soldats que nécessaire ! \n("+ Mathf.CeilToInt((amount) * 1.5f)+ " Soldats)", delegate () { messager.village.AddArmy(Mathf.CeilToInt((amount) * 1.5f)); Empire.instance.capitale.DecreaseArmy(Mathf.CeilToInt((amount) * 1.5f)); messager.village.AddReputation(20); }));
-                choix.Add(new Dialog.Choix("Voici le nombre minimum de soldats nécessaire! (" + amount + " Soldats)", delegate () { if (Empire.instance.capitale.army >= amount) { messager.village.AddArmy(amount); Empire.instance.capitale.DecreaseArmy(amount); } }));
+                choix.Add(new Dialog.Choix("Voici le nombre minimum de soldats nécessaire! (" + amount + " Soldats)", delegate () { messager.village.AddArmy(amount); Empire.instance.capitale.DecreaseArmy(amount); }));
                 choix.Add(new Dialog.Choix("Les barbares sont à nos portes également.", delegate () { messager.village.DecreaseReputation(20); }));
                 return;
             default:

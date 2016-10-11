@@ -156,11 +156,10 @@ public class Village : IUpdate {
         {
             int nbTotal = -1 * army;
             int coutTotal = empire.valeurSoldat * nbTotal;
-            // La ville doit enroller des hommes pour les forcer a etre des soldats esclaves
-            Empire.instance.capitale.DecreaseBonheur(1);
+            // Dans les trois lignes suivantes quelques chose marche pas (le gold s'enleve pas tjrs au complet
             DecreaseGold(coutTotal);
             army = 0;
-            onArmyChange.Invoke(0);
+            onArmyChange.Invoke(-amount);
         } else
         {
             onArmyChange.Invoke(-amount);
