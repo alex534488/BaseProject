@@ -150,20 +150,20 @@ public class Village : IUpdate {
 
     public void DecreaseArmy(int amount)
     {
-        army -= amount; onArmyChange.Invoke(-amount);
+        army -= amount; 
 
         if (army < 0)
         {
-            int coutTotal = 0;
-            int nbTotal = 0;
-
-            while (nbTotal <= (0 - army))
-            {
-                coutTotal += empire.valeurSoldat;
-                nbTotal++;
-            }
-            AddArmy(nbTotal);
+            int nbTotal = -1 * army;
+            int coutTotal = empire.valeurSoldat * nbTotal;
+            // La ville doit enroller des hommes pour les forcer a etre des soldats esclaves
+            Empire.instance.capitale.DecreaseBonheur(1);
             DecreaseGold(coutTotal);
+            army = 0;
+            onArmyChange.Invoke(0);
+        } else
+        {
+            onArmyChange.Invoke(-amount);
         }
     }
 

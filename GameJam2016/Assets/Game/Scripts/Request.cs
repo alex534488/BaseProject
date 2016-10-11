@@ -110,8 +110,16 @@ public class Request {
     public Request(Carriage carriage, int amount)
     {
         this.carriage = carriage;
-        message.Add(" Notre empereur, nous sommes de retour de " + carriage.destination.nom + " et nous avons pris les ressources demandées au village soit " + amount + " de " + carriage.resource);
-        choix.Add(new Dialog.Choix("Parfait! Merci beaucoup.", delegate () {  }));
+
+        if (amount == -1)
+        {
+            message.Add(" Notre empereur, la carravan qui était parti pour " + carriage.destination.nom + " est revenu vide puisque lors de leur arrivé le village avait été détruit.");
+            choix.Add(new Dialog.Choix("C'est vraiment dommage, l'Empire avait besoin de ces resources.", delegate () { }));
+        } else
+        {
+            message.Add(" Notre empereur, nous sommes de retour de " + carriage.destination.nom + " et nous avons pris les ressources demandées au village soit " + amount + " de " + carriage.resource);
+            choix.Add(new Dialog.Choix("Parfait! Merci beaucoup.", delegate () { }));
+        }
     }
 
     // REQUETE CLASSIQUE

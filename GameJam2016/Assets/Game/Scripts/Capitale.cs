@@ -170,8 +170,6 @@ public class Capitale : Village
 
     void CheckResources()
     {
-        // if (nourriture < seuilNourritureCapitale) BesoinNourriture(seuilNourritureCapitale - nourriture);
-
         int perteBonheur = 0;
         if (or < 0) perteBonheur += (Mathf.CeilToInt((-1 * or) / 5));
         if (nourriture < 0) perteBonheur += (Mathf.CeilToInt((-3 * nourriture) / 5));
@@ -182,16 +180,6 @@ public class Capitale : Village
             else DecreaseBonheur(perteBonheur);
         }
     }
-
-    //void BesoinNourriture(int amount)
-    //{
-    //    int goldNeeded = coutNourriture * amount;
-
-    //    if (or < goldNeeded) return;
-
-    //    ModifyResource(Ressource_Type.gold, amount);
-    //    ModifyResource(Ressource_Type.food, amount);
-    //}
 
     static private Request EventBonheur1()
     {

@@ -28,7 +28,7 @@ public class CarriageManager : MonoBehaviour
                     if(listCarriage[i].amount > 0) { // Give resource to village
                         GiveResources(listCarriage[i], listCarriage[i].resource, listCarriage[i].amount);
                         listCarriage[i].destination.AddReputation(10);
-                        (listCarriage[i].provenance as Capitale).AddChariot(1);
+                        Empire.instance.capitale.AddChariot(1);
                     } 
                         else { //Take resource FROM village to capital (instant)
                         int realAmount = listCarriage[i].destination.lord.CanYouGive(listCarriage[i].resource);
@@ -39,6 +39,9 @@ public class CarriageManager : MonoBehaviour
                             RequestManager.SendRequest(new Request(listCarriage[i], realAmount));
                         }
                     }
+                } else
+                {
+                    RequestManager.SendRequest(new Request(listCarriage[i], -1));
                 }
                 this.listCarriage.Remove(listCarriage[i]);
             } else

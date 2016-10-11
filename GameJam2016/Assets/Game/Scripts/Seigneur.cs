@@ -164,75 +164,52 @@ public class Seigneur : IUpdate {
         }
     }
 
-    public int CanYouGive(Ressource_Type resource)
+    public int CanYouGive(Ressource_Type resource) // Modifie
     {
         switch (resource)
         {
             default:
             case Ressource_Type.gold:
                 {
-                    int value = InfluenceReputation(seuilGold * (Carriage.stdDelay + 1));
+                    int value;
+                    if ((village.or - seuilGold) < 0)
+                    {
+                        value = 0;
+                    } else
+                    {
+                        value = (village.or - seuilGold) * (village.reputation / 100);
+                    }
                     return value;
                 }
              
                 
             case Ressource_Type.food:
                 {
-                    int value = InfluenceReputation(seuilNourriture * (Carriage.stdDelay + 1));
+                    int value;
+                    if ((village.nourriture - seuilNourriture) < 0)
+                    {
+                        value = 0;
+                    }
+                    else
+                    {
+                        value = (village.nourriture - seuilNourriture) * (village.reputation / 100);
+                    }
                     return value;
-                    
                 }
                 
             case Ressource_Type.army:
                 {
-                    int seuilMinimal = 0;
-
-                    if (village.isAttacked == true) seuilMinimal = seuilArmy;
-                    else seuilMinimal = seuilMinimalArmy;
-
-                    int value = InfluenceReputation(seuilMinimal * (Carriage.stdDelay + 1));
+                    int value;
+                    if ((village.army - seuilArmy) < 0)
+                    {
+                        value = 0;
+                    }
+                    else
+                    {
+                        value = (village.army - seuilArmy) * (village.reputation / 100);
+                    }
                     return value;
                 }      
         }
     }
-
-    public int InfluenceReputation(int amount)
-    {
-       int influenceReputation = (amount * village.reputation) / 100;
-       return village.or - influenceReputation;
-    }
-
-    /*
-    void GenerateRandomInvestment()
-    {
-        List<string> listMessage = new List<string>();
-        listMessage.Add("Bonjour notre digne empereur! Je suis du village " + village + " et vous serez heureux d'apprendre que notre économie se porte à merveille!" + "\n\n" + 
-                        "Je viens en tant que messager pour vous informer que nous voudrions une aide financière pour investir dans une nouvelle mine d'or.");
-        List<Dialog.Choix> listeChoix = new List<Dialog.Choix>();
-        listeChoix.Add(new Dialog.Choix(" Payez entièrement les frais de constructions de la mine (-40 Or , +3 Production D'Or)", delegate () { village.DecreaseGold(40); village.AddReputation(20); village.ModifyGoldProd(3); }));
-        listeChoix.Add(new Dialog.Choix(" Aidez les villagois à construire la mine (-20 Or, +3 Production D'Or)", delegate () { village.DecreaseGold(20); village.ModifyGoldProd(3); }));
-        listeChoix.Add(new Dialog.Choix(" Refusez la demande du villagois", delegate () { village.DecreaseReputation(20); }));
-        Request request = new Request(listMessage, listeChoix);
-        listInvestRequest.Add(request);
-
-        listMessage = new List<string>();
-        listMessage.Add("Bien le bonjour votre excellence! Avez-vous vu le beau temps qu'il y a eu dernierement? Notre recolte a été incroyablement abondante cette saison." + "\n\n" +
-                        "Nous voudrions éventuellement semer d'avantages de graines pour continuer d'avoir autant de réserves de nourritures. Par contre, cela necessiterait de nouveaux investissements majeurs.");
-        listeChoix = new List<Dialog.Choix>();
-        listeChoix.Add(new Dialog.Choix(" Payez entièrement les frais des nouvelles semances (-40 Or , +3 Production D'Or) ()", delegate () { village.DecreaseGold(40); village.AddReputation(20); village.ModifyGoldProd(3); }));
-        listeChoix.Add(new Dialog.Choix(" Aidez les villagois à construire la mine (-20 Or, +3 Production D'Or)", delegate () { village.DecreaseGold(20); village.ModifyGoldProd(3); }));
-        listeChoix.Add(new Dialog.Choix("Refusez la demande du villagois", delegate () { village.DecreaseReputation(20); }));
-        request = new Request(listMessage, listeChoix);
-        listInvestRequest.Add(request);
-
-        listMessage = new List<string>();
-        listMessage.Add("");
-        listeChoix = new List<Dialog.Choix>();
-        listeChoix.Add(new Dialog.Choix(" ()", delegate () { }));
-        listeChoix.Add(new Dialog.Choix(" ()", delegate () { }));
-        listeChoix.Add(new Dialog.Choix("()", delegate () { }));
-        request = new Request(listMessage, listeChoix);
-        listInvestRequest.Add(request);
-    }
-    */
 }
