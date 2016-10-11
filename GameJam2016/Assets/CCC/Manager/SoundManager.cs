@@ -106,11 +106,17 @@ namespace CCC.Manager
             Play(clip, 0, volume, source);
         }
 
+        static public bool IsPlayingMusic()
+        {
+            return instance.musicSource.isPlaying;
+        }
+
         #region Volume Set
 
         public static void SetMaster(float value)
         {
             if (instance == null) { Debug.LogError("SoundManager instance is null"); return; }
+            if (instance.mixer == null) return;
 
             instance.save.master = value;
             instance.mixer.SetFloat("master", value);
@@ -118,6 +124,7 @@ namespace CCC.Manager
         public static void SetVoice(float value)
         {
             if (instance == null) { Debug.LogError("SoundManager instance is null"); return; }
+            if (instance.mixer == null) return;
 
             instance.save.voice = value;
             instance.mixer.SetFloat("voice", value);
@@ -125,6 +132,7 @@ namespace CCC.Manager
         public static void SetMusic(float value)
         {
             if (instance == null) { Debug.LogError("SoundManager instance is null"); return; }
+            if (instance.mixer == null) return;
 
             instance.save.music = value;
             instance.mixer.SetFloat("music", value);
@@ -132,6 +140,7 @@ namespace CCC.Manager
         public static void SetSfx(float value)
         {
             if (instance == null) { Debug.LogError("SoundManager instance is null"); return; }
+            if (instance.mixer == null) return;
 
             instance.save.sfx = value;
             instance.mixer.SetFloat("sfx", value);
@@ -139,6 +148,8 @@ namespace CCC.Manager
 
         private void ApplyAll()
         {
+            if (instance.mixer == null) return;
+
             mixer.SetFloat("master", save.master);
             mixer.SetFloat("sfx", save.sfx);
             mixer.SetFloat("voice", save.voice);
