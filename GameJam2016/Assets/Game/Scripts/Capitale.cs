@@ -79,7 +79,7 @@ public class Capitale : Village
             seuilFranchi = false;
             if (bonheur <= seuilBonheur[seuilActuel])
             {
-                Debug.Log("1");
+                Debug.Log(seuilActuel);
                 RequestManager.SendRequest(eventBonheur[seuilActuel]);
                 seuilActuel++;
                 SetBonheurMax(tabBonheurMax[seuilActuel]);

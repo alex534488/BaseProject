@@ -157,6 +157,7 @@ public class Village : IUpdate {
             int nbTotal = -1 * army;
             int coutTotal = empire.valeurSoldat * nbTotal;
             // Dans les trois lignes suivantes quelques chose marche pas (le gold s'enleve pas tjrs au complet
+            if (Empire.instance.capitale == this) Empire.instance.capitale.DecreaseBonheur(nbTotal);
             DecreaseGold(coutTotal);
             army = 0;
             onArmyChange.Invoke(-amount);
