@@ -6,10 +6,11 @@ using UnityEngine.SceneManagement;
 
 public class Capitale : Village
 {
-    int[] seuilBonheur = { 40, 30, 20, 10, 0, -10 };
-    int[] tabBonheurMax = { 50, 40, 30, 20, 10, -10 };
-    Request[] eventBonheur = { EventBonheur1(), EventBonheur2(), EventBonheur3(), EventBonheur4(), EventBonheur5(), EventBonheur1() };
+    int[] seuilBonheur = { 40, 30, 20, 10, 0 };
+    int[] tabBonheurMax = { 50, 40, 30, 20, 10 };
+    Request[] eventBonheur = { EventBonheur1(), EventBonheur2(), EventBonheur3(), EventBonheur4(), EventBonheur5() };
     int seuilActuel = 0;
+    bool bonheurEventTriggered = false;
 
     // Attribut de la Capitale
     public int capitaleOr = 10;
@@ -51,6 +52,7 @@ public class Capitale : Village
     public override void Update()
     {
         seuilNourritureCapitale = army;
+        bonheurEventTriggered = false;
 
         UpdateResources();
 
@@ -66,13 +68,40 @@ public class Capitale : Village
 
     void Defaite()
     {
-        SceneManager.LoadScene("GameOver", LoadSceneMode.Single);
+        if (isDestroyed)
+        {
+            DayManager.main.Lose("Les barbares ont envahis votre Empire et détruit votre capitale pour finalement vous découpez en petit morceau afin de faire une délicieuse raclette canibale");
+        } else
+        {
+            DayManager.main.Lose("Votre peuple insatisfait vous a trahis en vous poignardant dans le dos");
+        }
     }
 
     public void DecreaseBonheur(int amount)
     {
-        // Revoir cette fonction entièrement car eventBonheur[4] n'est jamais fait
         bonheur -= amount;
+
+        if (bonheur <= seuilBonheur[seuilActuel])
+        {
+            if (bonheurEventTriggered)
+            {
+                RequestManager.DeleteRequest(eventBonheur[seuilActuel - 1]);
+                bonheurEventTriggered = false;
+            }
+            RequestManager.SendRequest(eventBonheur[seuilActuel]);
+            bonheurEventTriggered = true;
+            if (seuilBonheur[seuilActuel] == 0)
+            {
+                bonheur = 0;
+                onBonheurChange.Invoke(-amount);
+                return;
+            }
+            seuilActuel++;
+            SetBonheurMax(tabBonheurMax[seuilActuel]);
+        }
+        onBonheurChange.Invoke(-amount);
+
+        /* Ancienne fonction
         bool seuilFranchi = false;
         do
         {
@@ -81,13 +110,14 @@ public class Capitale : Village
             {
                 Debug.Log(seuilActuel);
                 RequestManager.SendRequest(eventBonheur[seuilActuel]);
-                seuilActuel++;
+                seuilActuel++;        
                 SetBonheurMax(tabBonheurMax[seuilActuel]);
                 seuilFranchi = true;
             }
         }
         while (seuilFranchi == true);
         onBonheurChange.Invoke(-amount);
+        */
     }
 
     public void AddBonheur(int amount)
