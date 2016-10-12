@@ -54,7 +54,7 @@ public class ConseillerScreenItem : MonoBehaviour
     {
         int sendAmount = System.Convert.ToInt32(sendField.text);
         Empire.instance.capitale.SendCartToVillage(village, type, sendAmount);
-        //SendCarriage
+        
         UpdateDisplay();
         sendPanel.ToggleActive();
     }
@@ -63,7 +63,6 @@ public class ConseillerScreenItem : MonoBehaviour
     {
 
         Empire.instance.capitale.SendCartToVillage(village, type, -1);
-        //SendCarriage
         UpdateDisplay();
     }
 }

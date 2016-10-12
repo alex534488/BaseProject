@@ -261,8 +261,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   title: {fileID: 38157972}
-  clip: {fileID: 8300000, guid: 25f9ce4083fb5844da2c720715588510, type: 3}
+  clip: {fileID: 8300000, guid: af79811d5f656e145a8023ed3c794e24, type: 3}
   endScale: 1.2
+  musicPersistent: 1
   fadeInDelay: 0
   fadeIn: 4
   pause: 1
@@ -410,7 +411,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.17647058, g: 0.13012478, b: 0, a: 0}
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0

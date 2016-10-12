@@ -9,7 +9,6 @@ public class ConseillerScreen : MonoBehaviour {
 
     public ConseillerScreenItem itemPrefab;
     public Text titre;
-    public AudioClip clip;
     public RectTransform container;
     public static string SCENE = "ConseillerPanel";
     List<Village> villages;
@@ -70,7 +69,6 @@ public class ConseillerScreen : MonoBehaviour {
 
     public void Exit()
     {
-        SoundManager.Play(clip);
         SceneManager.UnloadScene(SCENE);
     }
 }

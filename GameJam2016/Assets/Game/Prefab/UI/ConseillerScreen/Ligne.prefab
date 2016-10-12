@@ -224,6 +224,7 @@ GameObject:
   - 222: {fileID: 222000014285284850}
   - 114: {fileID: 114000013115822540}
   - 114: {fileID: 114000012270068104}
+  - 114: {fileID: 114000013234662340}
   m_Layer: 5
   m_Name: SendPanelButton
   m_TagString: Untagged
@@ -309,6 +310,7 @@ GameObject:
   - 222: {fileID: 222000010561100446}
   - 114: {fileID: 114000012381529844}
   - 114: {fileID: 114000012815471562}
+  - 114: {fileID: 114000013327683282}
   m_Layer: 5
   m_Name: RequestButton
   m_TagString: Untagged
@@ -396,6 +398,7 @@ GameObject:
   - 222: {fileID: 222000013951855628}
   - 114: {fileID: 114000012157387942}
   - 114: {fileID: 114000010279457136}
+  - 114: {fileID: 114000013497934412}
   m_Layer: 5
   m_Name: SendButton (1)
   m_TagString: Untagged
@@ -1076,6 +1079,18 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114000013234662340
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000011887588302}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 298432c73e6c1d14fb83ec3c23ea3460, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clip: {fileID: 8300000, guid: d1d50eeedb9590a47ad56248d3d808ab, type: 3}
 --- !u!114 &114000013235845944
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1103,6 +1118,18 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114000013327683282
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000012297814630}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 298432c73e6c1d14fb83ec3c23ea3460, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clip: {fileID: 8300000, guid: d1d50eeedb9590a47ad56248d3d808ab, type: 3}
 --- !u!114 &114000013363681556
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1136,6 +1163,18 @@ MonoBehaviour:
     m_VerticalOverflow: 1
     m_LineSpacing: 1
   m_Text: 10
+--- !u!114 &114000013497934412
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000013634729936}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 298432c73e6c1d14fb83ec3c23ea3460, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clip: {fileID: 8300000, guid: d1d50eeedb9590a47ad56248d3d808ab, type: 3}
 --- !u!114 &114000013888253278
 MonoBehaviour:
   m_ObjectHideFlags: 1

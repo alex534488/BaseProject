@@ -663,6 +663,7 @@ GameObject:
   - 222: {fileID: 1322768696}
   - 114: {fileID: 1322768695}
   - 114: {fileID: 1322768694}
+  - 114: {fileID: 1322768697}
   m_Layer: 5
   m_Name: Exit
   m_TagString: Untagged
@@ -774,6 +775,18 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1322768692}
+--- !u!114 &1322768697
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1322768692}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 298432c73e6c1d14fb83ec3c23ea3460, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clip: {fileID: 8300000, guid: d1d50eeedb9590a47ad56248d3d808ab, type: 3}
 --- !u!1 &1404992287
 GameObject:
   m_ObjectHideFlags: 0
@@ -1465,7 +1478,6 @@ MonoBehaviour:
   itemPrefab: {fileID: 114000010992472156, guid: 305a8060c29bda24e9a90796dfe0fa5d,
     type: 2}
   titre: {fileID: 1684006685}
-  clip: {fileID: 8300000, guid: d1d50eeedb9590a47ad56248d3d808ab, type: 3}
   container: {fileID: 243550583}
 --- !u!1 &1911360941
 GameObject:
