@@ -21,12 +21,15 @@ namespace CCC.Manager
 
         int inLoadingManagers = 0;
 
-        static public void Sync(System.Action initCallback)
+        static public void Sync(System.Action initCallback = null)
         {
             CheckInstance();
 
-            if (initComplete) initCallback();
-            else onAllInitComplete.Add(initCallback);
+            if(initCallback != null)
+            {
+                if (initComplete) initCallback();
+                else onAllInitComplete.Add(initCallback);
+            }
         }
 
         void Awake()

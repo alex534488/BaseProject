@@ -7,6 +7,7 @@ namespace CCC.Manager
 {
     public class BaseManager : MonoBehaviour
     {
+        static public BaseManager instance;
         public class BaseManagerEvent: UnityEvent<BaseManager> { }
         [HideInInspector]
         public BaseManagerEvent onCompleteInit = new BaseManagerEvent();
@@ -15,6 +16,7 @@ namespace CCC.Manager
 
         protected virtual void Awake()
         {
+            instance = this;
             DontDestroyOnLoad(gameObject);
         }
 
