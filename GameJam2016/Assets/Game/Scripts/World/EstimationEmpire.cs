@@ -21,20 +21,21 @@ public class EstimationEmpire {
        
         for (int i=0; i< nbVillages;i++)
         {
-            EstimationVillage(unEmpire.listVillage[i], estimation, nbSoldats);
+            estimation += EstimationVillage(unEmpire.listVillage[i], nbSoldats);
         }
 
-        EstimationCapitale(capitale, estimation, nbSoldats, nbBarbares);
+        estimation += EstimationCapitale(capitale, nbSoldats, nbBarbares);
 
-        return ((float)estimation/150);
+        return ((float)estimation)/150;
     }
 
-    private static void EstimationVillage (Village leVillage, int estimation, int nbSoldats)
+    private static int EstimationVillage (Village leVillage, int nbSoldats)
     {
+        int estimation = 0;
         if (leVillage.isDestroyed == true)
         {
-            estimation = estimation - 10;
-            return;
+            estimation -= 10;
+            return estimation;
         }
 
         int bilanFood = leVillage.coutNourriture - leVillage.nourriture;
@@ -44,7 +45,7 @@ public class EstimationEmpire {
 
         if (bilanFood < 0)
         {
-            estimation = estimation - 3;
+            estimation -= 3;
         }
 
         int bilanGold = leVillage.or;
@@ -56,14 +57,14 @@ public class EstimationEmpire {
             if (reputation <= 50)
             {
                 if (reputation <= 25)
-                    estimation = estimation - 5;
+                    estimation -= 5;
 
                 else
-                    estimation = estimation - 3;
+                    estimation -= 3;
             }
 
             else
-                estimation = estimation - 1;
+                estimation -= 1;
         }
 
         if (leVillage.isAttacked == true)
@@ -74,31 +75,34 @@ public class EstimationEmpire {
 
             if (differenceForce < 0)
             {
-                estimation = estimation - 2;
+                estimation -= 2;
             }
         }
+        return estimation;
     }
 
-    private static void EstimationCapitale(Village laCapitale, int estimation, int nbSoldats, int nbBarbares)
+    private static int EstimationCapitale(Village laCapitale, int nbSoldats, int nbBarbares)
     {
+        int estimation = 0;
         int bilanFood = laCapitale.productionNourriture - laCapitale.coutNourriture;
         int bilanGold = laCapitale.or;
 
         if (bilanGold < 0)
         {
-            estimation = estimation - 15;
+            estimation -= 15;
         }
 
         if (bilanFood < 0)
         {
-            estimation = estimation - 15;
+            estimation -= 15;
         }
 
         int bilanForce = nbSoldats - nbBarbares;
 
         if (bilanForce < 0)
         {
-            estimation = estimation - 15;
+            estimation -= 15;
         }
+        return estimation;
     }
 }

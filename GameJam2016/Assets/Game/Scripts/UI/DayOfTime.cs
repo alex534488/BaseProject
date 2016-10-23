@@ -54,6 +54,8 @@ public class DayOfTime : MonoBehaviour
 
     static public void Day(float intensity)
     {
+        print("Ambiant intensity: " + intensity + "%        (0% -> fine     100% ->  deep shit)");
+
         ClearTweens();
         tweens.Add(DOTween.To(() => main.blueFilter.intensity, x => main.blueFilter.intensity = x, 0, duration));
         tweens.Add(DOTween.To(() => main.darkFilter.intensity, x => main.darkFilter.intensity = x, 0, duration));
