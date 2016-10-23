@@ -23,10 +23,7 @@ public class Empire : IUpdate {
 
 	public void Start ()
     {
-        if (instance == null)
-        {
-            instance = this;
-        }
+        instance = this;
         for (int i = 0; i < nbVillage; i++)
         {
             listVillage.Add(new Village(this,i, nomvillage[i], nomseigneur[i])); // le village numero 0 correspond a listVillage[0]

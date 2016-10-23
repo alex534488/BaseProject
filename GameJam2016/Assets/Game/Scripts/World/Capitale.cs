@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class Capitale : Village
 {
-    int[] seuilBonheur = { 40, 30, 20, 10, 0 };
+    int[] seuilBonheur = { 40, 30, 20, 10, -1 };
     int[] tabBonheurMax = { 50, 40, 30, 20, 10 };
     Request[] eventBonheur = { EventBonheur1(), EventBonheur2(), EventBonheur3(), EventBonheur4(), EventBonheur5() };
     int seuilActuel = 0;
@@ -80,44 +80,31 @@ public class Capitale : Village
     public void DecreaseBonheur(int amount)
     {
         bonheur -= amount;
+        if (bonheur < 0) bonheur = 0;
 
         if (bonheur <= seuilBonheur[seuilActuel])
         {
+            //Modifie le seuil
+            while (seuilBonheur[seuilActuel] > bonheur)
+            {
+                seuilActuel++;
+                if(seuilActuel > seuilBonheur.Length - 1) break;
+            }
+            SetBonheurMax(tabBonheurMax[seuilActuel]);
+
+            //Event
             if (bonheurEventTriggered)
             {
                 RequestManager.DeleteRequest(eventBonheur[seuilActuel - 1]);
                 bonheurEventTriggered = false;
             }
-            RequestManager.SendRequest(eventBonheur[seuilActuel]);
-            bonheurEventTriggered = true;
-            if (seuilBonheur[seuilActuel] == 0)
-            {
-                bonheur = 0;
-                onBonheurChange.Invoke(-amount);
-                return;
-            }
-            seuilActuel++;
-            SetBonheurMax(tabBonheurMax[seuilActuel]);
-        }
-        onBonheurChange.Invoke(-amount);
 
-        /* Ancienne fonction
-        bool seuilFranchi = false;
-        do
-        {
-            seuilFranchi = false;
-            if (bonheur <= seuilBonheur[seuilActuel])
-            {
-                Debug.Log(seuilActuel);
-                RequestManager.SendRequest(eventBonheur[seuilActuel]);
-                seuilActuel++;        
-                SetBonheurMax(tabBonheurMax[seuilActuel]);
-                seuilFranchi = true;
-            }
+            if (seuilActuel == eventBonheur.Length - 1) RequestManager.DeleteAllRequests(); // This means the player lost
+            RequestManager.SendRequest(eventBonheur[seuilActuel]);
+
+            bonheurEventTriggered = true;
         }
-        while (seuilFranchi == true);
         onBonheurChange.Invoke(-amount);
-        */
     }
 
     public void AddBonheur(int amount)

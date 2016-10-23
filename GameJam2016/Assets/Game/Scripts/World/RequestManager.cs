@@ -54,6 +54,11 @@ public class RequestManager : MonoBehaviour
         requestManager.listRequest.Remove(request);
     }
 
+    public static void DeleteAllRequests()
+    {
+        requestManager.listRequest.Clear();
+    }
+
     void GenerateRandomRequests()
     {
         // LISTE DES REQUETES ALEATOIRES
