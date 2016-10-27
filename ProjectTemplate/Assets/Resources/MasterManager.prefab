@@ -8,6 +8,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 408406}
+  - 114: {fileID: 114000012890733266}
   m_Layer: 0
   m_Name: MasterManager
   m_TagString: Untagged
@@ -24,9 +25,10 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 0
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
@@ -50,7 +52,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   managersPrefab:
-  - {fileID: 1176530273, guid: 527ea6377c522924b99d7b47e967edd0, type: 2}
-  - {fileID: 1176530273, guid: 29aa0b3d609906944b6610765cc0ab89, type: 2}
-  - {fileID: 1176530273, guid: db9f7109b6145274db92b091807919fa, type: 2}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  managers: []
+--- !u!114 &114000012890733266
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: -1029485100}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 515cb9c8aca8b844ab9f01cfb5d961f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  managersPrefab: []
   managers: []

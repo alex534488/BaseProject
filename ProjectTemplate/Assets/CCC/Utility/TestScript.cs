@@ -12,4 +12,9 @@ public class TestScript : SlowBehaviour
         base.SlowUpdate();
         print("hello");
     }
+
+    void Start()
+    {
+        MasterManager.Sync(null);
+    }
 }
