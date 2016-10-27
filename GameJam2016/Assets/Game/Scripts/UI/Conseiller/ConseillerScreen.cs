@@ -46,16 +46,16 @@ public class ConseillerScreen : MonoBehaviour {
         switch (type)
         {
             default:
-            case Ressource_Type.food:
+            case Ressource_Type.nourriture:
                 titre.text = "Nourriture de l'empire";
                 break;
-            case Ressource_Type.gold:
+            case Ressource_Type.or:
                 titre.text = "Or de l'empire";
                 break;
-            case Ressource_Type.army:
+            case Ressource_Type.armé:
                 titre.text = "Armé de l'empire";
                 break;
-            case Ressource_Type.happiness:
+            case Ressource_Type.bonheur:
                 titre.text = "Bonheur de l'empire";
                 break;
         }

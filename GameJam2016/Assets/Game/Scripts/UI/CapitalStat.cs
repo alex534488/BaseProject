@@ -27,7 +27,7 @@ public class CapitalStat : MonoBehaviour
         if (totalText != null) totalText.text = "" + capital.GetTotal(type);
         if (profitText != null)
         {
-            if(type == Ressource_Type.happiness)
+            if(type == Ressource_Type.bonheur)
             {
                 totalText.text = ""+capital.bonheur + "/" + capital.bonheurMax;
             }

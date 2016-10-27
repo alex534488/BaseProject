@@ -60,15 +60,15 @@ public class CarriageManager : MonoBehaviour
     {
         switch (resource)
         {
-            case Ressource_Type.gold:
+            case Ressource_Type.or:
                 carriage.destination.DecreaseGold(amount);
                 carriage.provenance.AddGold(amount);
                 return;
-            case Ressource_Type.food:
+            case Ressource_Type.nourriture:
                 carriage.destination.DecreaseFood(amount);
                 carriage.provenance.AddFood(amount);
                 return;
-            case Ressource_Type.army:
+            case Ressource_Type.armé:
                 carriage.destination.DecreaseArmy(amount);
                 carriage.provenance.AddArmy(amount);
                 return;
@@ -81,13 +81,13 @@ public class CarriageManager : MonoBehaviour
     {
         switch (resource)
         {
-            case Ressource_Type.gold:
+            case Ressource_Type.or:
                 carriage.destination.AddGold(amount);
                 return;
-            case Ressource_Type.food:
+            case Ressource_Type.nourriture:
                 carriage.destination.AddFood(amount);
                 return;
-            case Ressource_Type.army:
+            case Ressource_Type.armé:
                 carriage.destination.AddArmy(amount);
                 return;
             default:

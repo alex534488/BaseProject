@@ -133,7 +133,7 @@ public class Capitale : Village
                 {
                     if (!village.lord.alreadyAsk)
                     {
-                        RequestManager.SendRequest(new Request(village.lord, Ressource_Type.army, village.barbares.nbBarbares - village.army));
+                        RequestManager.SendRequest(new Request(village.lord, Ressource_Type.armé, village.barbares.nbBarbares - village.army));
                         count++;
                     }
                 }
@@ -178,7 +178,7 @@ public class Capitale : Village
         {
             switch (type)
             {
-                case Ressource_Type.happiness:
+                case Ressource_Type.bonheur:
                     ev = isAlternative ? onBonheurMaxChange : onBonheurChange;
                     break;
             }

@@ -5,7 +5,7 @@ using UnityEngine.Events;
 
 public enum Ressource_Type
 {
-    gold, food, army, happiness, reputation
+    or, nourriture, armé, bonheur, réputation
 }
 
 public struct Ligne
@@ -189,13 +189,13 @@ public class Village : IUpdate {
         {
             default:
                 return;
-            case Ressource_Type.army:
+            case Ressource_Type.armé:
                 AddArmy(amount);
                 break;
-            case Ressource_Type.food:
+            case Ressource_Type.nourriture:
                 AddFood(amount);
                 break;
-            case Ressource_Type.gold:
+            case Ressource_Type.or:
                 AddGold(amount);
                 break;
         }
@@ -205,13 +205,13 @@ public class Village : IUpdate {
     {
         switch (type)
         {
-            case Ressource_Type.army:
+            case Ressource_Type.armé:
                 return army;
-            case Ressource_Type.food:
+            case Ressource_Type.nourriture:
                 return nourriture;
-            case Ressource_Type.gold:
+            case Ressource_Type.or:
                 return or;
-            case Ressource_Type.reputation:
+            case Ressource_Type.réputation:
                 return reputation;
             default:
                 return 0;
@@ -222,13 +222,13 @@ public class Village : IUpdate {
     {
         switch (type)
         {
-            case Ressource_Type.army:
+            case Ressource_Type.armé:
                 return onArmyChange;
-            case Ressource_Type.food:
+            case Ressource_Type.nourriture:
                 return isAlternative? onFoodProdChange: onFoodChange;
-            case Ressource_Type.gold:
+            case Ressource_Type.or:
                 return isAlternative? onGoldProdChange: onGoldChange;
-            case Ressource_Type.reputation:
+            case Ressource_Type.réputation:
                 return onReputationChange;
         }
         return null;
@@ -267,7 +267,7 @@ public class Village : IUpdate {
     {
         switch (ressource)
         {
-            case Ressource_Type.gold:
+            case Ressource_Type.or:
                 {
                     if (source.or >= amount)
                     {
@@ -282,7 +282,7 @@ public class Village : IUpdate {
                         break;
                 }
 
-            case Ressource_Type.food:
+            case Ressource_Type.nourriture:
                 {
                     if (source.nourriture >= amount)
                     {
@@ -297,7 +297,7 @@ public class Village : IUpdate {
                     break;
                 }
 
-            case Ressource_Type.army:
+            case Ressource_Type.armé:
                 {
                     if (source.army >= amount)
                     {
@@ -312,7 +312,7 @@ public class Village : IUpdate {
                     break;
                 }
 
-            case Ressource_Type.happiness:
+            case Ressource_Type.bonheur:
                 {
                     break;
                 }
@@ -325,11 +325,11 @@ public class Village : IUpdate {
         {
             default:
                 return 0;
-            case Ressource_Type.army:
+            case Ressource_Type.armé:
                 return productionArmy;
-            case Ressource_Type.food:
+            case Ressource_Type.nourriture:
                 return productionNourriture - (army * armyFoodCost);
-            case Ressource_Type.gold:
+            case Ressource_Type.or:
                 return productionOr;
         }
     }
@@ -339,11 +339,11 @@ public class Village : IUpdate {
         {
             default:
                 return 0;
-            case Ressource_Type.army:
+            case Ressource_Type.armé:
                 return army;
-            case Ressource_Type.food:
+            case Ressource_Type.nourriture:
                 return nourriture;
-            case Ressource_Type.gold:
+            case Ressource_Type.or:
                 return or;
         }
     }
