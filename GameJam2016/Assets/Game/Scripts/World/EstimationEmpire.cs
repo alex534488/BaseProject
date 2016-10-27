@@ -2,12 +2,48 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class EstimationEmpire {
+public class EstimationEmpire
+{
+
+    static float bonheurDepart = 0;
 
     static World unWorld;
     static Empire unEmpire;
 
     static public float Estimation()
+    {
+        unEmpire = Empire.instance;
+        unWorld = World.main;
+
+        if (bonheurDepart == 0)
+            bonheurDepart = unEmpire.capitale.bonheur;
+
+        float a = EstimationVillage();
+        float b = EstimationBonheur();
+
+        if (a <= b)
+            return a;
+
+        else
+            return b;
+
+    }
+
+    private static float EstimationVillage()
+    {
+        float nbVillageRestant = unEmpire.listVillage.Count;
+        return (nbVillageRestant / unEmpire.nbVillage);
+
+    }
+
+    private static float EstimationBonheur()
+    {
+        float nbBonheurRestant = unEmpire.capitale.bonheur;
+        return (nbBonheurRestant / bonheurDepart);
+    }
+
+    #region Anciennes Fonctions
+    static public float OldEstimation()
     {
         unEmpire = Empire.instance;
         unWorld = World.main;
@@ -18,18 +54,18 @@ public class EstimationEmpire {
         int nbVillages = unEmpire.listVillage.Count;
         int nbSoldats = 0;
         int nbBarbares = unWorld.barbareManager.NombreTotalBarbare();
-       
-        for (int i=0; i< nbVillages;i++)
+
+        for (int i = 0; i < nbVillages; i++)
         {
-            estimation += EstimationVillage(unEmpire.listVillage[i], nbSoldats);
+            estimation += OldEstimationVillage(unEmpire.listVillage[i], nbSoldats);
         }
 
-        estimation += EstimationCapitale(capitale, nbSoldats, nbBarbares);
+        estimation += OldEstimationCapitale(capitale, nbSoldats, nbBarbares);
 
-        return ((float)estimation)/150;
-    }
+        return ((float)estimation) / 150;
+    } // Ne pas utiliser 
 
-    private static int EstimationVillage (Village leVillage, int nbSoldats)
+    private static int OldEstimationVillage(Village leVillage, int nbSoldats)
     {
         int estimation = 0;
         if (leVillage.isDestroyed == true)
@@ -79,9 +115,9 @@ public class EstimationEmpire {
             }
         }
         return estimation;
-    }
+    } // Ne pas utiliser
 
-    private static int EstimationCapitale(Village laCapitale, int nbSoldats, int nbBarbares)
+    private static int OldEstimationCapitale(Village laCapitale, int nbSoldats, int nbBarbares)
     {
         int estimation = 0;
         int bilanFood = laCapitale.productionNourriture - laCapitale.coutNourriture;
@@ -104,5 +140,6 @@ public class EstimationEmpire {
             estimation -= 15;
         }
         return estimation;
-    }
+    } // Ne pas utiliser
+    #endregion
 }
