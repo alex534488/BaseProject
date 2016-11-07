@@ -42,9 +42,9 @@ public class ConseillerScreenItem : MonoBehaviour
 
     void UpdateDisplay()
     {
-        totalText.text = "" + village.GetTotal(type);
-        slider.UpdateSlider((float)(village.reputation / 100.0));
-        int bilan = village.GetBilan(type);
+        totalText.text = "" + village.GetResource(type);
+        slider.UpdateSlider((float)(village.GetReputation() / 100.0));
+        int bilan = village.GetResourceAlt(type);
         bilanText.text = "" + bilan;
         bg.color = (bilan >= 0) ? positiveColor : negativeColor;
         carriageText.text = "" + CarriageManager.GetCarriageCountAt(village);

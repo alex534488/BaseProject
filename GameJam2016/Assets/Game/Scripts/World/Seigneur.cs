@@ -45,17 +45,17 @@ public class Seigneur : IUpdate {
             seuilArmy += Random.Range(-incertitude, incertitude+1);
         }
 
-        seuilNourriture = village.armyFoodCost * village.army;
+        seuilNourriture = village.armyFoodCost * village.GetArmy();
         seuilGold = village.coutNourriture * seuilNourriture;
 
         alreadyAsk = false;
 
-        if (village.or < seuilGold) NeedGold(seuilGold); 
-        else if (village.nourriture < seuilNourriture) NeedFood(seuilNourriture);
-        else if (village.army < seuilArmy) NeedArmy(seuilArmy - village.army);
-        if (village.or > seuilGold * 2 && village.or > 10)
+        if (village.GetGold() < seuilGold) NeedGold(seuilGold); 
+        else if (village.GetFood() < seuilNourriture) NeedFood(seuilNourriture);
+        else if (village.GetArmy() < seuilArmy) NeedArmy(seuilArmy - village.GetArmy());
+        if (village.GetGold() > seuilGold * 2 && village.GetGold() > 10)
         {
-            if (Random.Range(0, 101) < village.reputation)
+            if (Random.Range(0, 101) < village.GetReputation())
             {
                 if (!alreadyAsk)
                 {
@@ -89,20 +89,20 @@ public class Seigneur : IUpdate {
             alreadyAsk = true;
         }
 
-        if (village.nourriture < seuilNourriture)
+        if (village.GetFood() < seuilNourriture)
         {
-            if (village.or < goldneed) NeedGold(goldneed);
-            if (village.or > goldneed) {
-                village.DecreaseGold(goldneed);
+            if (village.GetGold() < goldneed) NeedGold(goldneed);
+            if (village.GetGold() > goldneed) {
+                village.AddGold(-goldneed);
                 village.AddFood(amount);
             } else
             {
-                village.DecreaseGold(goldneed - village.or);
-                village.AddArmy(Mathf.RoundToInt((goldneed - village.or) / village.coutNourriture));
+                village.AddGold(-(goldneed - village.GetGold()));
+                village.AddArmy(Mathf.RoundToInt((goldneed - village.GetGold()) / village.coutNourriture));
             }
         } else
         {
-            village.DecreaseGold(goldneed);
+            village.AddGold(-goldneed);
             village.AddFood(amount);
         }
     }
@@ -126,27 +126,27 @@ public class Seigneur : IUpdate {
             alreadyAsk = true;
         }
 
-        if (village.or < goldneeded) {
+        if (village.GetGold() < goldneeded) {
             NeedGold(goldneeded); ;
-            if (village.or > goldneeded){
-                village.DecreaseGold(goldneeded);
+            if (village.GetGold() > goldneeded){
+                village.AddGold(-goldneeded);
                 village.AddArmy(amount);
             } else
             {
-                village.DecreaseGold(goldneeded - village.or);
-                village.AddArmy(Mathf.RoundToInt((goldneeded - village.or)/village.costArmy));
+                village.AddGold(-(goldneeded - village.GetGold()));
+                village.AddArmy(Mathf.RoundToInt((goldneeded - village.GetGold())/village.costArmy));
             }
         } else
         {
-            village.DecreaseGold(goldneeded);
+            village.AddGold(-goldneeded);
             village.AddArmy(amount);
         }
     }
 
     void GoAskEmperor(Ressource_Type resource, int amount)
     {
-        if (village.or < coutMessager) return;
-        village.DecreaseGold(coutMessager);
+        if (village.GetGold() < coutMessager) return;
+        village.AddGold(-coutMessager);
 
         switch (resource)
         {
@@ -172,12 +172,12 @@ public class Seigneur : IUpdate {
             case Ressource_Type.or:
                 {
                     int value;
-                    if ((village.or - seuilGold) < 0)
+                    if ((village.GetGold() - seuilGold) < 0)
                     {
                         value = 0;
                     } else
                     {
-                        value = (village.or - seuilGold) * (village.reputation / 100);
+                        value = (village.GetGold() - seuilGold) * (village.GetReputation() / 100);
                     }
                     return value;
                 }
@@ -186,13 +186,13 @@ public class Seigneur : IUpdate {
             case Ressource_Type.nourriture:
                 {
                     int value;
-                    if ((village.nourriture - seuilNourriture) < 0)
+                    if ((village.GetFood() - seuilNourriture) < 0)
                     {
                         value = 0;
                     }
                     else
                     {
-                        value = (village.nourriture - seuilNourriture) * (village.reputation / 100);
+                        value = (village.GetFood() - seuilNourriture) * (village.GetReputation() / 100);
                     }
                     return value;
                 }
@@ -200,13 +200,13 @@ public class Seigneur : IUpdate {
             case Ressource_Type.armé:
                 {
                     int value;
-                    if ((village.army - seuilArmy) < 0)
+                    if ((village.GetArmy() - seuilArmy) < 0)
                     {
                         value = 0;
                     }
                     else
                     {
-                        value = (village.army - seuilArmy) * (village.reputation / 100);
+                        value = (village.GetArmy() - seuilArmy) * (village.GetReputation() / 100);
                     }
                     return value;
                 }      

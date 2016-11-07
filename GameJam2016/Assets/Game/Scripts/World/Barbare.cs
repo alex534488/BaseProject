@@ -86,7 +86,7 @@ public class Barbare : IUpdate
 
     void AmIStrongEnough()
     {
-        if (nbBarbares >= nextTarget.army * facteur)
+        if (nbBarbares >= nextTarget.GetArmy() * facteur)
         {
             actualTarget = nextTarget;
             actualTarget.BeingAttack(this);
@@ -128,7 +128,7 @@ public class Barbare : IUpdate
 
     void TakeDecision()
     {
-        soldatRestant = actualTarget.army;
+        soldatRestant = actualTarget.GetArmy();
         barbareRestant = nbBarbares;
 
         nbUnites = soldatRestant + barbareRestant;

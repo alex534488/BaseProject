@@ -2,6 +2,7 @@
 using System.Collections;
 using UnityEngine.UI;
 using DG.Tweening;
+using CCC.Utility;
 
 public class CapitalStat : MonoBehaviour
 {
@@ -13,41 +14,48 @@ public class CapitalStat : MonoBehaviour
     public Text statTextPrefab;
     public Vector2 offset;
 
+    int currentValue;
+
     void Start()
     {
         capital = World.main.empire.capitale;
-        Village.StatEvent ev = capital.GetStatEvent(type, false);
+
+        Stat<int>.StatEvent ev = capital.GetStatEvent(type, false);
         ev.AddListener(OnValueChange);
-        Village.StatEvent evAlt = capital.GetStatEvent(type, true);
+
+        Stat<int>.StatEvent evAlt = capital.GetStatEvent(type, true);
         if(evAlt != ev) evAlt.AddListener(UpdateDisplay);
+
         UpdateDisplay(0);
     }
     void UpdateDisplay(int dummy)
     {
-        if (totalText != null) totalText.text = "" + capital.GetTotal(type);
+        currentValue = capital.GetResource(type);
+        int altValue = capital.GetResourceAlt(type);
+
+        if (totalText != null) totalText.text = "" + currentValue;
         if (profitText != null)
         {
             if(type == Ressource_Type.bonheur)
             {
-                totalText.text = ""+capital.bonheur + "/" + capital.bonheurMax;
+                totalText.text = ""+ currentValue + "/" + altValue;
             }
             else
             {
-                int bilan = capital.GetBilan(type);
-                profitText.text = "" + (bilan >= 0 ? "+" : "") + bilan;
+                profitText.text = "" + (altValue >= 0 ? "+" : "") + altValue;
             }
         }
     }
 
-    void OnValueChange(int amount)
+    void OnValueChange(int newValue)
     {
-        if (amount == 0)
-            return;
+        int change = newValue - currentValue;
+        if (change == 0) return;
 
-        UpdateDisplay(amount);
+        UpdateDisplay(-1);
         Text text = Instantiate(statTextPrefab.gameObject).GetComponent<Text>();
 
-        text.text = "" + (amount > 0 ? "+" : "") + amount;
+        text.text = "" + (change > 0 ? "+" : "") + change;
 
         text.rectTransform.SetParent(this.GetComponent<RectTransform>(),true);
         text.transform.localScale = Vector3.one;

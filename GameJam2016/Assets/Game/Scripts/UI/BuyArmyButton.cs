@@ -19,7 +19,7 @@ public class BuyArmyButton : MonoBehaviour {
     {
         if (sellButton)
         {
-            Empire.instance.capitale.DecreaseArmy(1);
+            Empire.instance.capitale.AddArmy(-1);
             SoundManager.Play(sellClip);
         }
         else

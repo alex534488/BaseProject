@@ -44,10 +44,10 @@ public class World : IUpdate {
 
             foreach (Village leVillage in clone)
             {
-                if (leVillage.army <= minimalArmy && leVillage.isFrontier && leVillage.isAttacked==false)
+                if (leVillage.GetArmy() <= minimalArmy && leVillage.isFrontier && leVillage.isAttacked==false)
                 {
                     bestTarget = leVillage;
-                    minimalArmy = leVillage.army;
+                    minimalArmy = leVillage.GetArmy();
                 }
             }
             ret.Add(bestTarget);

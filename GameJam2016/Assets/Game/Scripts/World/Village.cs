@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.Events;
+using CCC.Utility;
 
 public enum Ressource_Type
 {
@@ -15,7 +16,8 @@ public struct Ligne
     public int taxe;
 }
 
-public class Village : IUpdate {
+public class Village : IUpdate
+{
 
     public class StatEvent : UnityEvent<int> { }
 
@@ -25,16 +27,16 @@ public class Village : IUpdate {
     #endregion
 
     #region Valeurs Initiales
-    public int or = 5;
-    public int nourriture = 10;
-    public int army = 5;
-    public int reputation = 100;
+    protected Stat<int> gold = new Stat<int>(5);
+    protected Stat<int> food = new Stat<int>(10);
+    protected Stat<int> army = new Stat<int>(5);
+    protected Stat<int> reputation = new Stat<int>(100, 0, 100);
     #endregion
 
     #region Production 
-    public int productionOr = 0;
-    public int productionNourriture = 3;
-    public int productionArmy = 0;
+    protected Stat<int> prodGold = new Stat<int>(0);
+    protected Stat<int> prodFood = new Stat<int>(3);
+    protected Stat<int> prodArmy = new Stat<int>(0);
     #endregion
 
     #region Conditions
@@ -44,7 +46,6 @@ public class Village : IUpdate {
     #endregion
 
     #region Classes
-    public Empire empire;
     public Seigneur lord;
     public Barbare barbares;
     #endregion
@@ -55,18 +56,9 @@ public class Village : IUpdate {
     public int costArmy;
     public int armyFoodCost = 1;
 
-    //Events
-    public StatEvent onGoldChange = new StatEvent();
-    public StatEvent onGoldProdChange = new StatEvent();
-    public StatEvent onArmyChange = new StatEvent();
-    public StatEvent onFoodChange = new StatEvent();
-    public StatEvent onFoodProdChange = new StatEvent();
-    public StatEvent onReputationChange = new StatEvent();
-
 
     public Village(Empire empire, int id, string nomvillage, string nomseigneur)
     {
-        this.empire = empire;
         this.id = id;
         this.nom = nomvillage;
 
@@ -79,29 +71,29 @@ public class Village : IUpdate {
 
         int nbPointProduction = 10;
 
-        while(nbPointProduction >0)
+        while (nbPointProduction > 0)
         {
             float choixRng = Random.value;
 
             if (nbPointProduction >= valN && choixRng < 0.3)
             {
-                ModifyFoodProd(1);
+                AddFoodProd(1);
                 nbPointProduction -= valN;
             }
             else if (nbPointProduction >= valO)
             {
-                ModifyGoldProd(1);
+                AddGoldProd(1);
                 nbPointProduction -= valO;
             }
-            
+
         }
 
 
         lord = new Seigneur(this);
         this.lord.nom = nomseigneur;
     }
-	
-	public virtual void Update ()
+
+    public virtual void Update()
     {
         random = (int)(Random.value * 100);
 
@@ -109,15 +101,13 @@ public class Village : IUpdate {
         {
             DestructionVillage();
         }
-        else if (nourriture < 0)
+        else if (food < 0)
         {
             lord.Death();
             DestructionVillage();
         }
 
         UpdateResources();
-
-        UpdateCost();
 
         lord.Update();
 
@@ -127,11 +117,8 @@ public class Village : IUpdate {
     #region Attack
     public virtual void DestructionVillage()
     {
-        this.isDestroyed = true;
-        this.army = 0;
-        this.nourriture = 0;
-        this.or = 0;
-        empire.DeleteVillage(this);
+        isDestroyed = true;
+        Empire.instance.DeleteVillage(this);
     }
 
     public void BeingAttack(Barbare attaquant) { isAttacked = true; barbares = attaquant; }
@@ -140,50 +127,35 @@ public class Village : IUpdate {
     #endregion
 
     #region Fonctions modifiant les attributs
-    public void DecreaseGold(int amount){ or -= amount; onGoldChange.Invoke(-amount); }
 
-    public void AddGold(int amount){ or += amount; onGoldChange.Invoke(amount); }
+    public void AddGold(int amount) { gold.Set(gold + amount); }
+    public int GetGold() { return gold; }
 
-    public void DecreaseFood(int amount){ nourriture -= amount; onFoodChange.Invoke(-amount); }
+    public void AddFood(int amount) { food.Set(food + amount); }
+    public int GetFood() { return food; }
 
-    public void AddFood(int amount){ nourriture += amount; onFoodChange.Invoke(amount); }
-
-    public void DecreaseArmy(int amount)
+    public void SetArmy(int amount) { army.Set(army + amount); }
+    public void AddArmy(int amount)
     {
-        army -= amount; 
+        army.Set(army + amount);
 
-        if (army < 0)
+        if (amount < 0 && army < 0)     //Faut-il achter des soldat ?
         {
-            int nbTotal = -1 * army;
-            int coutTotal = empire.valeurSoldat * nbTotal;
-            // Dans les trois lignes suivantes quelques chose marche pas (le gold s'enleve pas tjrs au complet
-            if (Empire.instance.capitale == this) Empire.instance.capitale.DecreaseBonheur(nbTotal);
-            DecreaseGold(coutTotal);
-            army = 0;
-            onArmyChange.Invoke(-amount);
-        } else
-        {
-            onArmyChange.Invoke(-amount);
+            BuyArmy(-1 * army);
         }
     }
+    public int GetArmy() { return army; }
 
-    public void SetArmy(int amount) { army = amount; onArmyChange.Invoke(amount); }
+    public void AddReputation(int amount) { reputation.Set(reputation + amount); }
+    public int GetReputation() { return reputation; }
 
-    public void AddArmy(int amount){ army += amount; onArmyChange.Invoke(amount); }
+    public void AddFoodProd(int amount) { prodFood.Set(prodFood + amount); }
+    public int GetFoodProd() { return prodFood; }
 
-    public void DecreaseReputation(int amount) { reputation -= amount; onReputationChange.Invoke(-amount); }
+    public void AddGoldProd(int amount) { prodGold.Set(prodGold + amount); }
+    public int GetGoldProd() { return prodGold; }
 
-    public void AddReputation(int amount)
-    {
-        amount = Mathf.Min(100 - reputation, amount);
-        reputation += amount; onReputationChange.Invoke(amount);
-    }
-
-    public void ModifyFoodProd(int amount) { productionNourriture += amount; onFoodProdChange.Invoke(amount); }
-
-    public void ModifyGoldProd(int amount) { productionOr += amount; onGoldProdChange.Invoke(amount); }
-
-    public void ModifyResource(Ressource_Type type, int amount)
+    public virtual void AddResource(Ressource_Type type, int amount)
     {
         switch (type)
         {
@@ -208,9 +180,9 @@ public class Village : IUpdate {
             case Ressource_Type.armé:
                 return army;
             case Ressource_Type.nourriture:
-                return nourriture;
+                return food;
             case Ressource_Type.or:
-                return or;
+                return gold;
             case Ressource_Type.réputation:
                 return reputation;
             default:
@@ -218,29 +190,29 @@ public class Village : IUpdate {
         }
     }
 
-    public virtual StatEvent GetStatEvent(Ressource_Type type, bool isAlternative = false)
+    public virtual Stat<int>.StatEvent GetStatEvent(Ressource_Type type, bool isAlternative = false)
     {
         switch (type)
         {
             case Ressource_Type.armé:
-                return onArmyChange;
+                return army.onSet;
             case Ressource_Type.nourriture:
-                return isAlternative? onFoodProdChange: onFoodChange;
+                return isAlternative ? prodFood.onSet : food.onSet;
             case Ressource_Type.or:
-                return isAlternative? onGoldProdChange: onGoldChange;
+                return isAlternative ? prodGold.onSet : gold.onSet;
             case Ressource_Type.réputation:
-                return onReputationChange;
+                return reputation.onSet;
         }
         return null;
     }
 
-    public bool BuyArmy(int amount)
+    public virtual bool BuyArmy(int amount) // A modifier
     {
         int coupTotal = costArmy * amount;
-        if (coupTotal > or) return false;
+        if (coupTotal > gold) return false;
 
         AddArmy(amount);
-        DecreaseGold(coupTotal);
+        AddGold(-coupTotal);
         return true;
     }
     #endregion
@@ -249,18 +221,12 @@ public class Village : IUpdate {
     #region Updates 
     protected void UpdateResources()
     {
-        AddGold(productionOr);
-        AddFood(productionNourriture - (army * armyFoodCost));
+        AddGold(prodGold);
+        AddFood(prodFood - (army * armyFoodCost));
         // AddArmy(productionArmy);
-       
-    } // To do : Change or remove random
-
-    protected void UpdateCost() // To do : Change or remove random
-    {
-        // Remove
     }
-    
-    #endregion 
+
+    #endregion
 
     #region Interaction avec UI
     public static void Transfer(Village source, Village destinataire, Ressource_Type ressource, int amount)
@@ -268,72 +234,44 @@ public class Village : IUpdate {
         switch (ressource)
         {
             case Ressource_Type.or:
+                if (source.GetGold() >= amount)
                 {
-                    if (source.or >= amount)
-                    {
-                        source.DecreaseGold(amount);
-                        destinataire.AddGold(amount);
-                    }
-
-                    else
-                    {
-                        // Le village source ne possede pas assez de ressources pour effectuer la transaction
-                    }
-                        break;
+                    source.AddGold(-amount);
+                    destinataire.AddGold(amount);
                 }
-
+                break;
             case Ressource_Type.nourriture:
+                if (source.GetFood() >= amount)
                 {
-                    if (source.nourriture >= amount)
-                    {
-                        source.DecreaseFood(amount);
-                        destinataire.AddFood(amount);
-                    }
-
-                    else
-                    {
-                        // Le village source ne possede pas assez de ressources pour effectuer la transaction
-                    }
-                    break;
+                    source.AddFood(-amount);
+                    destinataire.AddFood(amount);
                 }
-
+                break;
             case Ressource_Type.armé:
+                if (source.GetArmy() >= amount)
                 {
-                    if (source.army >= amount)
-                    {
-                        source.DecreaseArmy(amount);
-                        destinataire.AddArmy(amount);
-                    }
-
-                    else
-                    {
-                        // Le village source ne possede pas assez de ressources pour effectuer la transaction
-                    }
-                    break;
+                    source.AddArmy(-amount);
+                    destinataire.AddArmy(amount);
                 }
-
-            case Ressource_Type.bonheur:
-                {
-                    break;
-                }
+                break;
         }
     }
 
-    public int GetBilan(Ressource_Type type)
+    public virtual int GetResourceAlt(Ressource_Type type)
     {
         switch (type)
         {
             default:
                 return 0;
-            case Ressource_Type.armé:
-                return productionArmy;
-            case Ressource_Type.nourriture:
-                return productionNourriture - (army * armyFoodCost);
-            case Ressource_Type.or:
-                return productionOr;
+            case Ressource_Type.armé:           //bilan de soldat par tour
+                return prodArmy;
+            case Ressource_Type.nourriture:     //bilan de bouffe par tour
+                return prodFood - (army * armyFoodCost);
+            case Ressource_Type.or:             //bilan d'or par tour
+                return prodGold;
         }
     }
-    public int GetTotal(Ressource_Type type)
+    public virtual int GetResource(Ressource_Type type)
     {
         switch (type)
         {
@@ -342,9 +280,9 @@ public class Village : IUpdate {
             case Ressource_Type.armé:
                 return army;
             case Ressource_Type.nourriture:
-                return nourriture;
+                return food;
             case Ressource_Type.or:
-                return or;
+                return gold;
         }
     }
 

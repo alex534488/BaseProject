@@ -19,34 +19,42 @@ public class CarriageManager : MonoBehaviour
 
     public void NewDay()
     {
-        for(int i = 0; i < listCarriage.Count; i++)
+        for (int i = 0; i < listCarriage.Count; i++)
         {
-            if(listCarriage[i].delay <= 0)
+            Carriage carriage = listCarriage[i];
+            if (carriage.delay <= 0)
             {
-                if (!listCarriage[i].destination.isDestroyed)
+                print("arrivee");
+                if (!carriage.destination.isDestroyed)
                 {
-                    if(listCarriage[i].amount > 0) { // Give resource to village
-                        GiveResources(listCarriage[i], listCarriage[i].resource, listCarriage[i].amount);
-                        listCarriage[i].destination.AddReputation(10);
-                        Empire.instance.capitale.AddChariot(1);
-                    } 
-                        else { //Take resource FROM village to capital (instant)
-                        int realAmount = listCarriage[i].destination.lord.CanYouGive(listCarriage[i].resource);
-                        if (realAmount > 0) {
-                            TakeResources(listCarriage[i], listCarriage[i].resource, realAmount);
-                            listCarriage[i].destination.DecreaseReputation(10);
-                            Empire.instance.capitale.AddChariot(1);
-                            RequestManager.SendRequest(new Request(listCarriage[i], realAmount));
-                        }
+                    if (carriage.amount > 0)                                   // Give resource to village
+                    {
+                        carriage.destination.AddResource(carriage.resource, carriage.amount);
+                        carriage.destination.AddReputation(10);
                     }
-                } else
-                {
-                    RequestManager.SendRequest(new Request(listCarriage[i], -1));
+                    else                                                       //Take resource FROM village to capital (instant)
+                    {
+                        int realAmount = carriage.destination.lord.CanYouGive(carriage.resource);
+                        if (realAmount > 0)
+                        {
+                            Village.Transfer(carriage.destination, carriage.provenance, carriage.resource, realAmount);
+                            carriage.destination.AddReputation(-10);
+                            RequestManager.SendRequest(new Request(carriage, realAmount));
+                        }
+                        else RequestManager.SendRequest(new Request(carriage, 0));
+                    }
+                    Empire.instance.capitale.charriot.Set(Empire.instance.capitale.charriot + 1);
                 }
-                this.listCarriage.Remove(listCarriage[i]);
-            } else
+                else
+                {
+                    RequestManager.SendRequest(new Request(carriage, -1));
+                }
+                this.listCarriage.RemoveAt(i);
+                i--;
+            }
+            else
             {
-                listCarriage[i].delay--;
+                carriage.delay--;
             }
         }
     }
@@ -56,49 +64,10 @@ public class CarriageManager : MonoBehaviour
         carriageManager.listCarriage.Add(carriage);
     }
 
-    public void TakeResources(Carriage carriage, Ressource_Type resource, int amount)
-    {
-        switch (resource)
-        {
-            case Ressource_Type.or:
-                carriage.destination.DecreaseGold(amount);
-                carriage.provenance.AddGold(amount);
-                return;
-            case Ressource_Type.nourriture:
-                carriage.destination.DecreaseFood(amount);
-                carriage.provenance.AddFood(amount);
-                return;
-            case Ressource_Type.armé:
-                carriage.destination.DecreaseArmy(amount);
-                carriage.provenance.AddArmy(amount);
-                return;
-            default:
-                return;
-        }
-    }
-
-    public void GiveResources(Carriage carriage, Ressource_Type resource, int amount)
-    {
-        switch (resource)
-        {
-            case Ressource_Type.or:
-                carriage.destination.AddGold(amount);
-                return;
-            case Ressource_Type.nourriture:
-                carriage.destination.AddFood(amount);
-                return;
-            case Ressource_Type.armé:
-                carriage.destination.AddArmy(amount);
-                return;
-            default:
-                return;
-        }
-    }
-
     public static int GetCarriageCountAt(Village village)
     {
         int amount = 0;
-        foreach(Carriage carriage in carriageManager.listCarriage)
+        foreach (Carriage carriage in carriageManager.listCarriage)
         {
             if (carriage.provenance == village || carriage.destination == village) amount++;
         }
