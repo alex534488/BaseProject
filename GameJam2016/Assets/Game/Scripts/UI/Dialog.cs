@@ -2,6 +2,7 @@
 using System.Collections;
 using UnityEngine.Events;
 using System.Collections.Generic;
+using CCC.Utility;
 
 public class DialogIcon
 {
@@ -13,6 +14,17 @@ public class DialogIcon
 
 public class Dialog : MonoBehaviour
 {
+    public class Message
+    {
+        public string text;
+        public char forceSeparation;
+        public Message(string text, char forceSeparation = '%')
+        {
+            this.text = text;
+            this.forceSeparation = forceSeparation;
+        }
+        public Message() { }
+    }
     public class Choix
     {
         public Choix(string text, UnityAction callback)
@@ -27,7 +39,7 @@ public class Dialog : MonoBehaviour
     /// <summary>
     /// Spawn la boite de text. Affiche le message puis propose les choix s'il n'en a
     /// </summary>
-    public static void DisplayText(List<string> messageComplet, List<Choix> listeChoix = null, UnityAction dialogComplete = null)
+    public static void DisplayText(Message message, List<Choix> listeChoix = null, UnityAction dialogComplete = null)
     {
         if (IsInDialog())
         {
@@ -39,7 +51,7 @@ public class Dialog : MonoBehaviour
             Debug.LogError("Master is null.");
             return;
         }
-        master.MasterDisplayText(messageComplet, listeChoix, dialogComplete);
+        master.MasterDisplayText(message, listeChoix, dialogComplete);
     }
 
     public static bool IsInDialog() { return master.isInDialog; }
@@ -60,10 +72,9 @@ public class Dialog : MonoBehaviour
 
     public void Test()
     {
-        List<string> message = new List<string>();
-        message.Add("Hello, je suis une délicieuse poutine !");
-        message.Add("NAK NAK");
-        message.Add("this is da end!");
+        Message message = new Message("Hello, je suis une délicieuse poutine !"
+            +"NAK NAK"
+            +"this is da end!");
 
         List<Choix> choix = new List<Choix>();
         choix.Add(new Choix("-Mourir", delegate () { print("choix 1"); }));
@@ -78,9 +89,11 @@ public class Dialog : MonoBehaviour
         if (master == null) master = this;
     }
 
-    public void MasterDisplayText(List<string> messageComplet, List<Choix> listeChoix = null, UnityAction dialogComplete = null)
+    public void MasterDisplayText(Message message, List<Choix> listeChoix = null, UnityAction dialogComplete = null)
     {
         if (isInDialog) return;
+
+        List<string> messageSplit = TextSplitter.Split(message.text, dialogTextPrefab.text, dialogBoxPrefab.GetComponent<RectTransform>().sizeDelta, message.forceSeparation);
 
         isInDialog = true;
         this.dialogComplete = dialogComplete;
@@ -93,7 +106,7 @@ public class Dialog : MonoBehaviour
         currentDialogBox.button.onClick.AddListener(OnBoxClick);
         //currentDialogBox.transform.position = new Vector3(Screen.width/2, Screen.height/2, 0) + screenBottomOffset;
 
-        if (messageComplet != null) foreach (string message in messageComplet) queue.Add(message);
+        if (messageSplit != null) foreach (string aMessage in messageSplit) queue.Add(aMessage);
         if (listeChoix != null) foreach (Choix choix in listeChoix) queue.Add(choix);
 
         NextText();

@@ -228,18 +228,16 @@ public class Barbare : IUpdate
         actualTarget.isAttacked = false;
         actualTarget.isDestroyed = true;
 
-        List<string> listeLigne = new List<string>();
+        Dialog.Message message = new Dialog.Message();
         List<Dialog.Choix> listeChoix = null;
 
-        string string1 = " Mon seigneur, je vous apporte le rapport de combat du village " + actualTarget.nom + "\n" + " * Le messager vous remet le papyrus sur lequel se lit : * ";
-        string string2 = " Barbares éliminées: " + (totalBarbare - barbareRestant) + "\n" + " Soldats éliminés: " + (totalSoldats - soldatRestant) + "\n" + " Soldat restant: " + (soldatRestant) + "\n" + " Le village " + actualTarget.nom + " a succombé à l'invasion de barbares";
+        message.text = " Mon seigneur, je vous apporte le rapport de combat du village " + actualTarget.nom + "\n" + " * Le messager vous remet le papyrus sur lequel se lit : * "
+            + "% Barbares éliminées: " + (totalBarbare - barbareRestant) + "\n" + " Soldats éliminés: " + (totalSoldats - soldatRestant) + "\n" + " Soldat restant: " + (soldatRestant) + "\n" + " Le village " + actualTarget.nom + " a succombé à l'invasion de barbares";
+        message.forceSeparation = '%';
 
         ResetValues();
 
-        listeLigne.Add(string1);
-        listeLigne.Add(string2);
-
-        Request rapportCombat= new Request(listeLigne, listeChoix);
+        Request rapportCombat= new Request(message, listeChoix);
 
        
         RequestManager.SendRequest(rapportCombat);
@@ -249,18 +247,16 @@ public class Barbare : IUpdate
     {
         actualTarget.isAttacked = false;
 
-        List<string> listeLigne = new List<string>();
+        Dialog.Message message = new Dialog.Message();
         List<Dialog.Choix> listeChoix = null;
 
-        string string1 = " Mon seigneur, je vous apporte le rapport de combat du village " + actualTarget.nom + "\n" + " * Le messager vous remet le papyrus sur lequel se lit : * ";
-        string string2 = " Barbares éliminées: " + (totalBarbare - barbareRestant) + "\n" + " Soldats éliminés: " + (totalSoldats - soldatRestant) + "\n" + " Soldat restant: " + (soldatRestant) + "\n" + " Le village " + actualTarget.nom + " a repoussé avec succès l'invasion de barbares";
+        message.text = " Mon seigneur, je vous apporte le rapport de combat du village " + actualTarget.nom + "\n" + " * Le messager vous remet le papyrus sur lequel se lit : * "
+            + "% Barbares éliminées: " + (totalBarbare - barbareRestant) + "\n" + " Soldats éliminés: " + (totalSoldats - soldatRestant) + "\n" + " Soldat restant: " + (soldatRestant) + "\n" + " Le village " + actualTarget.nom + " a repoussé avec succès l'invasion de barbares";
+        message.forceSeparation = '%';
 
         ResetValues();
 
-        listeLigne.Add(string1);
-        listeLigne.Add(string2);
-
-        Request rapportCombat = new Request(listeLigne, listeChoix);
+        Request rapportCombat = new Request(message, listeChoix);
 
         RequestManager.SendRequest(rapportCombat);
     }

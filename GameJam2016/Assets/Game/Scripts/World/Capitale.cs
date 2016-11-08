@@ -156,12 +156,11 @@ public class Capitale : Village
         }
 
         // Aucun village n'est attaqué, l'écraireur le signale à la capitale
-        List<string> listMessage = new List<string>();
-        listMessage.Add(" Salutation, je suis votre humble éclaireur qui est de retour de voyage." + "\n \n" + " L'état de la situation actuelle n'est vraiment pas allarmante. Les barbares semblent être tranquille et n'attaque pas les villages.");
-        listMessage.Add(" Chacun d'entre eux se porte bien et votre assistance n'est pas necessaire pour le moment" + "\n \n" + " Nous sommes dans une période de paix. N'hésitez à me renvoyer faire le tour des villages pour que je vous signale la situation des villages");
+        Dialog.Message message = new Dialog.Message(" Salutation, je suis votre humble éclaireur qui est de retour de voyage." + "\n \n" + " L'état de la situation actuelle n'est vraiment pas allarmante. Les barbares semblent être tranquille et n'attaque pas les villages."
+            + " Chacun d'entre eux se porte bien et votre assistance n'est pas necessaire pour le moment" + "\n \n" + " Nous sommes dans une période de paix. N'hésitez à me renvoyer faire le tour des villages pour que je vous signale la situation des villages");
         List<Dialog.Choix> listeChoix = new List<Dialog.Choix>();
         listeChoix.Add(new Dialog.Choix(" Merci éclaireur! Bonne journée à toi mon ami.", delegate () { }));
-        Request request = new Request(listMessage, listeChoix);
+        Request request = new Request(message, listeChoix);
 
         if (count <= 0) RequestManager.SendRequest(request);
         count = 0;
@@ -212,16 +211,14 @@ public class Capitale : Village
 
     static private Request EventBonheur1()
     {
-        List<string> listMessage = new List<string>();
-        listMessage.Add("Conseiller Brutus : Empereur, une certaine agitation commence à parcourir les rue de Rome.\n\nLes gens parlent de vos choix inhumains, et craignent les invasions de barbares.");
+        Dialog.Message listMessage = new Dialog.Message("Conseiller Brutus : Empereur, une certaine agitation commence à parcourir les rue de Rome.\n\nLes gens parlent de vos choix inhumains, et craignent les invasions de barbares.");
         Request request = new Request(listMessage, null);
         return request;
     }
 
     static private Request EventBonheur2()
     {
-        List<string> listMessage = new List<string>();
-        listMessage.Add("Conseiller Brutus : Empereur, l'agitation grandit au sein de Rome.\n\nCette nuit, elle ont conduit à des affrontements entre vos partisans et d'autres groupes d'individus. \n(-8 Or, -2 Soldat)");
+        Dialog.Message listMessage = new Dialog.Message("Conseiller Brutus : Empereur, l'agitation grandit au sein de Rome.\n\nCette nuit, elle ont conduit à des affrontements entre vos partisans et d'autres groupes d'individus. \n(-8 Or, -2 Soldat)");
         List<Dialog.Choix> listeChoix = new List<Dialog.Choix>();
         listeChoix.Add(new Dialog.Choix("Sacrebleu!", delegate () { Empire.instance.capitale.AddGold(-8); Empire.instance.capitale.AddArmy(-2); }));
         Request request = new Request(listMessage, listeChoix);
@@ -230,8 +227,7 @@ public class Capitale : Village
 
     static private Request EventBonheur3()
     {
-        List<string> listMessage = new List<string>();
-        listMessage.Add("Conseiller Brutus : Empereur, un groupe contestant votre gouvernance de Rome vient de détruire le Forum.\n\nCela va avoir de sérieuse répercutions sur l'économie de la capitale. (-4 Production Or) ");
+        Dialog.Message listMessage = new Dialog.Message("Conseiller Brutus : Empereur, un groupe contestant votre gouvernance de Rome vient de détruire le Forum.\n\nCela va avoir de sérieuse répercutions sur l'économie de la capitale. (-4 Production Or) ");
         List<Dialog.Choix> listeChoix = new List<Dialog.Choix>();
         listeChoix.Add(new Dialog.Choix("Diantre!", delegate () { Empire.instance.capitale.AddGoldProd(-5); }));
         Request request = new Request(listMessage, listeChoix);
@@ -240,8 +236,7 @@ public class Capitale : Village
 
     static private Request EventBonheur4()
     {
-        List<string> listMessage = new List<string>();
-        listMessage.Add("Conseiller Brutus : Empereur, de violente émeute éclate en ce moment même dans Rome.\n\nLes répercussions économiques vont être dramatiques. Les réserves de nourritures sont en flammes.");
+        Dialog.Message listMessage = new Dialog.Message("Conseiller Brutus : Empereur, de violente émeute éclate en ce moment même dans Rome.\n\nLes répercussions économiques vont être dramatiques. Les réserves de nourritures sont en flammes.");
         List<Dialog.Choix> listeChoix = new List<Dialog.Choix>();
         listeChoix.Add(new Dialog.Choix("Malédictition! (-4 Production Nourriture, -20 Nourriture)", delegate () { Empire.instance.capitale.AddFood(-20); Empire.instance.capitale.AddFoodProd(-4); }));
         Request request = new Request(listMessage, listeChoix);
@@ -250,8 +245,7 @@ public class Capitale : Village
 
     static private Request EventBonheur5()
     {
-        List<string> listMessage = new List<string>();
-        listMessage.Add("Conseiller Brutus : Empereur, le peuple s'est mit d'accord sur votre destitution.\n\nJ'ai peur que votre règne touche à sa fin. ");
+        Dialog.Message listMessage = new Dialog.Message("Conseiller Brutus : Empereur, le peuple s'est mit d'accord sur votre destitution.\n\nJ'ai peur que votre règne touche à sa fin. ");
         List<Dialog.Choix> listeChoix = new List<Dialog.Choix>();
         listeChoix.Add(new Dialog.Choix("Qu'il soit maudit, je resterai leur Empereur jusqu'a ma mort!", delegate () { Empire.instance.capitale.Defaite(); })); // AJOUTER CONDITION FIN
 

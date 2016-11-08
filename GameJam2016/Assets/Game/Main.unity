@@ -1184,7 +1184,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce29cb859d78b634c9d7b447327d88d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  clip: {fileID: 0}
+  textUI: {fileID: 0}
+  area: {x: 914, y: 400}
 --- !u!1 &394744879
 GameObject:
   m_ObjectHideFlags: 0
@@ -2069,7 +2070,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_EffectColor: {r: 1, g: 1, b: 1, a: 1}
   m_EffectDistance: {x: 1, y: -1}
-  m_UseGraphicAlpha: 1
+  m_UseGraphicAlpha: 0
 --- !u!114 &1088013567
 MonoBehaviour:
   m_ObjectHideFlags: 0
