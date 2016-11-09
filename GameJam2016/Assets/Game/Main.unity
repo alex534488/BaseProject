@@ -882,7 +882,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bacc813a0b11ab14e81bdfe5b60c9c42, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 3
+  type: 7
+  secondeType: 8
   totalText: {fileID: 1088013567}
   profitText: {fileID: 885410220}
   statTextPrefab: {fileID: 114000013230344322, guid: 09c9e5e0020184f4e8334293c4ed8286,
@@ -1184,8 +1185,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce29cb859d78b634c9d7b447327d88d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  textUI: {fileID: 0}
-  area: {x: 914, y: 400}
+  text: {fileID: 0}
+  frame: {fileID: 11400000, guid: 05a1b7e82db3fb54381cf2e132dfff5a, type: 2}
 --- !u!1 &394744879
 GameObject:
   m_ObjectHideFlags: 0
@@ -2591,6 +2592,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 0
+  secondeType: 1
   totalText: {fileID: 2104029078}
   profitText: {fileID: 1387318107}
   statTextPrefab: {fileID: 114000013230344322, guid: 09c9e5e0020184f4e8334293c4ed8286,
@@ -3258,7 +3260,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bacc813a0b11ab14e81bdfe5b60c9c42, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 2
+  type: 5
+  secondeType: 6
   totalText: {fileID: 966660508}
   profitText: {fileID: 0}
   statTextPrefab: {fileID: 114000013230344322, guid: 09c9e5e0020184f4e8334293c4ed8286,
@@ -4135,7 +4138,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bacc813a0b11ab14e81bdfe5b60c9c42, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 1
+  type: 2
+  secondeType: 4
   totalText: {fileID: 516564114}
   profitText: {fileID: 489745000}
   statTextPrefab: {fileID: 114000013230344322, guid: 09c9e5e0020184f4e8334293c4ed8286,

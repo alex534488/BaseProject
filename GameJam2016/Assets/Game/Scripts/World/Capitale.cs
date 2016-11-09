@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.Events;
@@ -26,16 +27,15 @@ public class Capitale : Village
         new BonheurEvent(0, EventBonheur5()),
     };
     List<Request> eventBonheur = new List<Request> { EventBonheur1(), EventBonheur2(), EventBonheur3(), EventBonheur4(), EventBonheur5() };
-    int seuilActuel = 0;
-    bool bonheurEventTriggered = false;
 
     // Attribut de la Capitale
-    public int startBonusleOr = 10;
-    public int startBonusNourriture = 20;
+    public int startBonusGold = 10;
+    public int startBonusFood = 20;
     public int startBonusArmy = 5;
 
-    Stat<int> bonheur;
-    int bonheurTop = 10; //Le max de bonheur descend avec le bonheur. 'bonheurTop' est la distance entre le bonheur et le max qui suit
+    Stat<int> happiness;
+    int happinessTop = 10; //Le max de bonheur descend avec le bonheur. 'bonheurTop' est la distance entre le bonheur et le max qui suit
+                                    // Ex: si   top=10    alors    42/50   ->   38/48
 
     // Scout
     public int coutScout = 10;
@@ -52,10 +52,10 @@ public class Capitale : Village
     {
         this.id = id;
 
-        bonheur = new Stat<int>(50, 0, 50); //SET LE BONHEUR
+        happiness = new Stat<int>(50, 0, 50); //SET LE BONHEUR
 
-        AddGold(startBonusleOr);
-        AddFood(startBonusNourriture);
+        AddGold(startBonusGold);
+        AddFood(startBonusFood);
         AddArmy(startBonusArmy);
 
         lord = new Seigneur(this);
@@ -64,7 +64,6 @@ public class Capitale : Village
     public override void Update()
     {
         seuilNourritureCapitale = GetArmy();
-        bonheurEventTriggered = false;
 
         UpdateResources();
 
@@ -90,18 +89,15 @@ public class Capitale : Village
 
     #region Resource
 
-    public void AddBonheur(int amount)
+    public void AddHappiness(int amount)
     {
-        bonheur.Set(bonheur + amount);
+        happiness.Set(happiness + amount);
 
         if (amount < 0)
         {
-            if ((int)bonheur.MAX > bonheur + bonheurTop)        //Si on diminue le bonheur ET que le max est trop haut
-            {
-                bonheur.MAX = bonheur + bonheurTop;
-            }
+            UpdateBonheurMax();
 
-            while (bonheurEvents.Count > 0 && bonheurEvents[0].at >= bonheur)  //Bonheur events
+            while (bonheurEvents.Count > 0 && bonheurEvents[0].at >= happiness)  //Bonheur events
             {
                 if (bonheurEvents.Count == 1) RequestManager.DeleteAllRequests(); //S'il ne reste que le dernier event -> Defaite
 
@@ -111,9 +107,30 @@ public class Capitale : Village
         }
     }
 
-    public int GetBonheur() { return bonheur; }
+    void UpdateBonheurMax()
+    {
+        if ((int)happiness.MAX > happiness + happinessTop)        //Si on diminue le bonheur ET que le max est trop haut
+        {
+            happiness.MAX = happiness + happinessTop;
+        }
+    }
+
+    public void AddHappinessCap(int amount)
+    {
+        happinessTop += amount;
+        if(amount > 0)      //Si le changement est positif, alors on augment directement le cap ex:     49/50  ->  49/51
+        {
+            happiness.MAX = (int)happiness.MAX + amount;
+        }
+        else                //Si le changement est negatif, alors on diminue PEUT-ETRE le cap ex:       49/50  ->  49/50      mais    40/50  ->  40/49
+        {
+            UpdateBonheurMax();
+        }
+    }
+
+    public int GetBonheur() { return happiness; }
     
-    public int GetBonheurMax() { return (int)bonheur.MAX; }
+    public int GetBonheurMax() { return (int)happiness.MAX; }
 
     public override bool BuyArmy(int amount) //Changement a faire ?
     {
@@ -122,14 +139,31 @@ public class Capitale : Village
 
     public override int GetResource(Ressource_Type type)
     {
-        if (type == Ressource_Type.bonheur) return GetBonheur();
-        else return base.GetResource(type);
+        switch (type)
+        {
+            default:
+                return base.GetResource(type);
+            case Ressource_Type.happiness:
+                return happiness;
+            case Ressource_Type.happinessCap:
+                return (int)happiness.MAX;
+        }
     }
 
-    public override int GetResourceAlt(Ressource_Type type)
+    protected override void LocalGive(Ressource_Type resource, int amount)
     {
-        if (type == Ressource_Type.bonheur) return GetBonheurMax();
-        else return base.GetResourceAlt(type);
+        switch (resource)
+        {
+            default:
+                base.LocalGive(resource, amount);
+                break;
+            case Ressource_Type.happiness:
+                AddHappiness(amount);
+                break;
+            case Ressource_Type.happinessCap:
+                AddHappinessCap(amount);
+                break;
+        }
     }
 
     #endregion
@@ -148,7 +182,7 @@ public class Capitale : Village
                 {
                     if (!village.lord.alreadyAsk)
                     {
-                        RequestManager.SendRequest(new Request(village.lord, Ressource_Type.armé, village.barbares.nbBarbares - village.GetArmy()));
+                        RequestManager.SendRequest(new Request(village.lord, Ressource_Type.army, village.barbares.nbBarbares - village.GetArmy()));
                         count++;
                     }
                 }
@@ -158,8 +192,8 @@ public class Capitale : Village
         // Aucun village n'est attaqué, l'écraireur le signale à la capitale
         Dialog.Message message = new Dialog.Message(" Salutation, je suis votre humble éclaireur qui est de retour de voyage." + "\n \n" + " L'état de la situation actuelle n'est vraiment pas allarmante. Les barbares semblent être tranquille et n'attaque pas les villages."
             + " Chacun d'entre eux se porte bien et votre assistance n'est pas necessaire pour le moment" + "\n \n" + " Nous sommes dans une période de paix. N'hésitez à me renvoyer faire le tour des villages pour que je vous signale la situation des villages");
-        List<Dialog.Choix> listeChoix = new List<Dialog.Choix>();
-        listeChoix.Add(new Dialog.Choix(" Merci éclaireur! Bonne journée à toi mon ami.", delegate () { }));
+        List<Choice> listeChoix = new List<Choice>();
+        listeChoix.Add(new Choice(" Merci éclaireur! Bonne journée à toi mon ami.", delegate () { }));
         Request request = new Request(message, listeChoix);
 
         if (count <= 0) RequestManager.SendRequest(request);
@@ -185,28 +219,26 @@ public class Capitale : Village
         charriot.Set(charriot - 1); //Enleve 1 charriot a la capital
     }
 
-    public override Stat<int>.StatEvent GetStatEvent(Ressource_Type type, bool isAlternative = false)
+    public override Stat<int>.StatEvent GetStatEvent(Ressource_Type type)
     {
-        Stat<int>.StatEvent ev = base.GetStatEvent(type, isAlternative);
-        if (ev == null)
+        switch (type)
         {
-            switch (type)
-            {
-                case Ressource_Type.bonheur:
-                    ev = isAlternative ? bonheur.onMaxSet : bonheur.onSet;
-                    break;
-            }
+            default:
+                return base.GetStatEvent(type);
+            case Ressource_Type.happiness:
+                return happiness.onSet;
+            case Ressource_Type.happinessCap:
+                return happiness.onMaxSet;
         }
-        return ev;
     }
 
-    void CheckResources()
+    void CheckResources() //Renommer ? ça porte un peux a confusion. On devrait p-e plus appeler ça 'ApplyHappniessPenality' ou qqlchose dans le genre
     {
         int perteBonheur = 0;
         if (gold < 0) perteBonheur += (Mathf.CeilToInt((-1 * gold) / 5));
         if (food < 0) perteBonheur += (Mathf.CeilToInt((-3 * food) / 5));
 
-        if (perteBonheur > 0) AddBonheur(-perteBonheur);
+        if (perteBonheur > 0) AddHappiness(-perteBonheur);
     }
 
     static private Request EventBonheur1()
@@ -219,8 +251,8 @@ public class Capitale : Village
     static private Request EventBonheur2()
     {
         Dialog.Message listMessage = new Dialog.Message("Conseiller Brutus : Empereur, l'agitation grandit au sein de Rome.\n\nCette nuit, elle ont conduit à des affrontements entre vos partisans et d'autres groupes d'individus. \n(-8 Or, -2 Soldat)");
-        List<Dialog.Choix> listeChoix = new List<Dialog.Choix>();
-        listeChoix.Add(new Dialog.Choix("Sacrebleu!", delegate () { Empire.instance.capitale.AddGold(-8); Empire.instance.capitale.AddArmy(-2); }));
+        List<Choice> listeChoix = new List<Choice>();
+        listeChoix.Add(new Choice("Sacrebleu!", delegate () { Empire.instance.capitale.AddGold(-8); Empire.instance.capitale.AddArmy(-2); }));
         Request request = new Request(listMessage, listeChoix);
         return request;
     }
@@ -228,8 +260,8 @@ public class Capitale : Village
     static private Request EventBonheur3()
     {
         Dialog.Message listMessage = new Dialog.Message("Conseiller Brutus : Empereur, un groupe contestant votre gouvernance de Rome vient de détruire le Forum.\n\nCela va avoir de sérieuse répercutions sur l'économie de la capitale. (-4 Production Or) ");
-        List<Dialog.Choix> listeChoix = new List<Dialog.Choix>();
-        listeChoix.Add(new Dialog.Choix("Diantre!", delegate () { Empire.instance.capitale.AddGoldProd(-5); }));
+        List<Choice> listeChoix = new List<Choice>();
+        listeChoix.Add(new Choice("Diantre!", delegate () { Empire.instance.capitale.AddGoldProd(-5); }));
         Request request = new Request(listMessage, listeChoix);
         return request;
     }
@@ -237,8 +269,8 @@ public class Capitale : Village
     static private Request EventBonheur4()
     {
         Dialog.Message listMessage = new Dialog.Message("Conseiller Brutus : Empereur, de violente émeute éclate en ce moment même dans Rome.\n\nLes répercussions économiques vont être dramatiques. Les réserves de nourritures sont en flammes.");
-        List<Dialog.Choix> listeChoix = new List<Dialog.Choix>();
-        listeChoix.Add(new Dialog.Choix("Malédictition! (-4 Production Nourriture, -20 Nourriture)", delegate () { Empire.instance.capitale.AddFood(-20); Empire.instance.capitale.AddFoodProd(-4); }));
+        List<Choice> listeChoix = new List<Choice>();
+        listeChoix.Add(new Choice("Malédictition! (-4 Production Nourriture, -20 Nourriture)", delegate () { Empire.instance.capitale.AddFood(-20); Empire.instance.capitale.AddFoodProd(-4); }));
         Request request = new Request(listMessage, listeChoix);
         return request;
     }
@@ -246,8 +278,8 @@ public class Capitale : Village
     static private Request EventBonheur5()
     {
         Dialog.Message listMessage = new Dialog.Message("Conseiller Brutus : Empereur, le peuple s'est mit d'accord sur votre destitution.\n\nJ'ai peur que votre règne touche à sa fin. ");
-        List<Dialog.Choix> listeChoix = new List<Dialog.Choix>();
-        listeChoix.Add(new Dialog.Choix("Qu'il soit maudit, je resterai leur Empereur jusqu'a ma mort!", delegate () { Empire.instance.capitale.Defaite(); })); // AJOUTER CONDITION FIN
+        List<Choice> listeChoix = new List<Choice>();
+        listeChoix.Add(new Choice("Qu'il soit maudit, je resterai leur Empereur jusqu'a ma mort!", delegate () { Empire.instance.capitale.Defaite(); })); // AJOUTER CONDITION FIN
 
         Request request = new Request(listMessage, listeChoix);
         return request;

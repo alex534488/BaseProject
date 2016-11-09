@@ -25,13 +25,13 @@ public class Carriage {
     {
         switch (resource)
         {
-            case Ressource_Type.or:
+            case Ressource_Type.gold:
                 destination.AddGold(amount);
                 return;
-            case Ressource_Type.nourriture:
+            case Ressource_Type.food:
                 destination.AddFood(amount);
                 return;
-            case Ressource_Type.armé:
+            case Ressource_Type.army:
                 destination.AddArmy(amount);
                 return;
             default:
@@ -43,13 +43,13 @@ public class Carriage {
     {
         switch (resource)
         {
-            case Ressource_Type.or:
+            case Ressource_Type.gold:
                 provenance.AddGold(amount);
                 return;
-            case Ressource_Type.nourriture:
+            case Ressource_Type.food:
                 provenance.AddFood(amount);
                 return;
-            case Ressource_Type.armé:
+            case Ressource_Type.army:
                 provenance.AddArmy(amount);
                 return;
             default:

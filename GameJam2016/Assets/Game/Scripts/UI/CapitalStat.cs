@@ -7,6 +7,7 @@ using CCC.Utility;
 public class CapitalStat : MonoBehaviour
 {
     public Ressource_Type type;
+    public Ressource_Type secondeType;
     public Text totalText;
     public Text profitText;
     Capitale capital;
@@ -20,23 +21,23 @@ public class CapitalStat : MonoBehaviour
     {
         capital = World.main.empire.capitale;
 
-        Stat<int>.StatEvent ev = capital.GetStatEvent(type, false);
-        ev.AddListener(OnValueChange);
+        Stat<int>.StatEvent ev = capital.GetStatEvent(type);
+        if(ev != null)ev.AddListener(OnValueChange);
 
-        Stat<int>.StatEvent evAlt = capital.GetStatEvent(type, true);
-        if(evAlt != ev) evAlt.AddListener(UpdateDisplay);
+        Stat<int>.StatEvent evAlt = capital.GetStatEvent(secondeType);
+        if(evAlt != ev && evAlt != null) evAlt.AddListener(UpdateDisplay);
 
         UpdateDisplay(0);
     }
     void UpdateDisplay(int dummy)
     {
         currentValue = capital.GetResource(type);
-        int altValue = capital.GetResourceAlt(type);
+        int altValue = capital.GetResource(secondeType);
 
         if (totalText != null) totalText.text = "" + currentValue;
         if (profitText != null)
         {
-            if(type == Ressource_Type.bonheur)
+            if(type == Ressource_Type.happiness)
             {
                 totalText.text = ""+ currentValue + "/" + altValue;
             }

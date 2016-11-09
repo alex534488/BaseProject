@@ -229,7 +229,7 @@ public class Barbare : IUpdate
         actualTarget.isDestroyed = true;
 
         Dialog.Message message = new Dialog.Message();
-        List<Dialog.Choix> listeChoix = null;
+        List<Choice> listeChoix = null;
 
         message.text = " Mon seigneur, je vous apporte le rapport de combat du village " + actualTarget.nom + "\n" + " * Le messager vous remet le papyrus sur lequel se lit : * "
             + "% Barbares éliminées: " + (totalBarbare - barbareRestant) + "\n" + " Soldats éliminés: " + (totalSoldats - soldatRestant) + "\n" + " Soldat restant: " + (soldatRestant) + "\n" + " Le village " + actualTarget.nom + " a succombé à l'invasion de barbares";
@@ -248,7 +248,7 @@ public class Barbare : IUpdate
         actualTarget.isAttacked = false;
 
         Dialog.Message message = new Dialog.Message();
-        List<Dialog.Choix> listeChoix = null;
+        List<Choice> listeChoix = null;
 
         message.text = " Mon seigneur, je vous apporte le rapport de combat du village " + actualTarget.nom + "\n" + " * Le messager vous remet le papyrus sur lequel se lit : * "
             + "% Barbares éliminées: " + (totalBarbare - barbareRestant) + "\n" + " Soldats éliminés: " + (totalSoldats - soldatRestant) + "\n" + " Soldat restant: " + (soldatRestant) + "\n" + " Le village " + actualTarget.nom + " a repoussé avec succès l'invasion de barbares";

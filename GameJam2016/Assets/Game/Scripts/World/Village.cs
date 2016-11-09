@@ -4,11 +4,6 @@ using System.Collections.Generic;
 using UnityEngine.Events;
 using CCC.Utility;
 
-public enum Ressource_Type
-{
-    or, nourriture, armé, bonheur, réputation
-}
-
 public struct Ligne
 {
     public int total;
@@ -34,9 +29,9 @@ public class Village : IUpdate
     #endregion
 
     #region Production 
-    protected Stat<int> prodGold = new Stat<int>(0);
-    protected Stat<int> prodFood = new Stat<int>(3);
-    protected Stat<int> prodArmy = new Stat<int>(0);
+    protected Stat<int> goldProd = new Stat<int>(0);
+    protected Stat<int> foodProd = new Stat<int>(3);
+    protected Stat<int> armyProd = new Stat<int>(0, 0, int.MaxValue);
     #endregion
 
     #region Conditions
@@ -133,27 +128,32 @@ public class Village : IUpdate
 
     public void AddFood(int amount) { food.Set(food + amount); }
     public int GetFood() { return food; }
+    public int GetFoodBilan() { return foodProd - (army * armyFoodCost); }
 
     public void SetArmy(int amount) { army.Set(army + amount); }
     public void AddArmy(int amount)
     {
         army.Set(army + amount);
 
-        if (amount < 0 && army < 0)     //Faut-il achter des soldat ?
+        //Si le changement est négatif et que les soldat sont à 0, il en acheter.
+        //Ceci assure une quantité de soldat >= 0 tout en pénalisant le village.
+        if (amount < 0 && army < 0)
         {
             BuyArmy(-1 * army);
         }
     }
+    public void AddArmyProd(int amount) { armyProd.Set(armyProd + amount); }
     public int GetArmy() { return army; }
+    public int GetArmyProd() { return armyProd; }
 
     public void AddReputation(int amount) { reputation.Set(reputation + amount); }
     public int GetReputation() { return reputation; }
 
-    public void AddFoodProd(int amount) { prodFood.Set(prodFood + amount); }
-    public int GetFoodProd() { return prodFood; }
+    public void AddFoodProd(int amount) { foodProd.Set(foodProd + amount); }
+    public int GetFoodProd() { return foodProd; }
 
-    public void AddGoldProd(int amount) { prodGold.Set(prodGold + amount); }
-    public int GetGoldProd() { return prodGold; }
+    public void AddGoldProd(int amount) { goldProd.Set(goldProd + amount); }
+    public int GetGoldProd() { return goldProd; }
 
     public virtual void AddResource(Ressource_Type type, int amount)
     {
@@ -161,13 +161,13 @@ public class Village : IUpdate
         {
             default:
                 return;
-            case Ressource_Type.armé:
+            case Ressource_Type.army:
                 AddArmy(amount);
                 break;
-            case Ressource_Type.nourriture:
+            case Ressource_Type.food:
                 AddFood(amount);
                 break;
-            case Ressource_Type.or:
+            case Ressource_Type.gold:
                 AddGold(amount);
                 break;
         }
@@ -177,33 +177,40 @@ public class Village : IUpdate
     {
         switch (type)
         {
-            case Ressource_Type.armé:
+            case Ressource_Type.army:
                 return army;
-            case Ressource_Type.nourriture:
+            case Ressource_Type.food:
                 return food;
-            case Ressource_Type.or:
+            case Ressource_Type.gold:
                 return gold;
-            case Ressource_Type.réputation:
+            case Ressource_Type.reputation:
                 return reputation;
             default:
                 return 0;
         }
     }
 
-    public virtual Stat<int>.StatEvent GetStatEvent(Ressource_Type type, bool isAlternative = false)
+    public virtual Stat<int>.StatEvent GetStatEvent(Ressource_Type type)
     {
         switch (type)
         {
-            case Ressource_Type.armé:
+            default:
+                return null;
+            case Ressource_Type.army:
                 return army.onSet;
-            case Ressource_Type.nourriture:
-                return isAlternative ? prodFood.onSet : food.onSet;
-            case Ressource_Type.or:
-                return isAlternative ? prodGold.onSet : gold.onSet;
-            case Ressource_Type.réputation:
+            case Ressource_Type.armyProd:
+                return armyProd.onSet;
+            case Ressource_Type.food:
+                return food.onSet;
+            case Ressource_Type.foodProd:
+                return foodProd.onSet;
+            case Ressource_Type.gold:
+                return gold.onSet;
+            case Ressource_Type.goldProd:
+                return goldProd.onSet;
+            case Ressource_Type.reputation:
                 return reputation.onSet;
         }
-        return null;
     }
 
     public virtual bool BuyArmy(int amount) // A modifier
@@ -221,68 +228,82 @@ public class Village : IUpdate
     #region Updates 
     protected void UpdateResources()
     {
-        AddGold(prodGold);
-        AddFood(prodFood - (army * armyFoodCost));
+        AddGold(goldProd);
+        AddFood(GetFoodBilan());
         // AddArmy(productionArmy);
     }
 
     #endregion
 
     #region Interaction avec UI
-    public static void Transfer(Village source, Village destinataire, Ressource_Type ressource, int amount)
+    public static void Transfer(Village source, Village destinataire, Ressource_Type resource, int amount)
     {
-        switch (ressource)
+        if (amount < 0) //Swap les deux village si le montant est negatif
         {
-            case Ressource_Type.or:
-                if (source.GetGold() >= amount)
-                {
-                    source.AddGold(-amount);
-                    destinataire.AddGold(amount);
-                }
+            Village temp = source;
+            source = destinataire;
+            destinataire = temp;
+        }
+
+        Give(source, resource, -amount);
+        Give(destinataire, resource, amount);
+    }
+
+    public static void Give(Village village, Ressource_Type resource, int amount)
+    {
+        if (village != null) village.LocalGive(resource, amount);
+    }
+
+    protected virtual void LocalGive(Ressource_Type resource, int amount)
+    {
+        switch (resource)
+        {
+            case Ressource_Type.gold:
+                AddGold(amount);
                 break;
-            case Ressource_Type.nourriture:
-                if (source.GetFood() >= amount)
-                {
-                    source.AddFood(-amount);
-                    destinataire.AddFood(amount);
-                }
+            case Ressource_Type.goldProd:
+                AddGoldProd(amount);
                 break;
-            case Ressource_Type.armé:
-                if (source.GetArmy() >= amount)
-                {
-                    source.AddArmy(-amount);
-                    destinataire.AddArmy(amount);
-                }
+            case Ressource_Type.food:
+                AddFood(amount);
+                break;
+            case Ressource_Type.foodProd:
+                AddFoodProd(amount);
+                break;
+            case Ressource_Type.army:
+                AddArmy(amount);
+                break;
+            case Ressource_Type.armyProd:
+                AddArmyProd(amount);
+                break;
+            case Ressource_Type.reputation:
+                AddReputation(amount);
                 break;
         }
     }
 
-    public virtual int GetResourceAlt(Ressource_Type type)
-    {
-        switch (type)
-        {
-            default:
-                return 0;
-            case Ressource_Type.armé:           //bilan de soldat par tour
-                return prodArmy;
-            case Ressource_Type.nourriture:     //bilan de bouffe par tour
-                return prodFood - (army * armyFoodCost);
-            case Ressource_Type.or:             //bilan d'or par tour
-                return prodGold;
-        }
-    }
     public virtual int GetResource(Ressource_Type type)
     {
         switch (type)
         {
             default:
                 return 0;
-            case Ressource_Type.armé:
+            case Ressource_Type.army:
                 return army;
-            case Ressource_Type.nourriture:
+            case Ressource_Type.armyProd:
+                return armyProd;
+            case Ressource_Type.food:
                 return food;
-            case Ressource_Type.or:
+            case Ressource_Type.foodProd:
+                return foodProd;
+            case Ressource_Type.foodBilan:
+                return GetFoodBilan();
+            case Ressource_Type.gold:
                 return gold;
+            case Ressource_Type.goldProd:
+                return goldProd;
+            case Ressource_Type.reputation:
+                return reputation;
         }
     }
 

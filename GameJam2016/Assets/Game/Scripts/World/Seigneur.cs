@@ -61,7 +61,7 @@ public class Seigneur : IUpdate {
                 {
                     if(cooldown == 0)
                     {
-                        RequestManager.SendRequest(new Request(this, Ressource_Type.or));
+                        RequestManager.SendRequest(new Request(this, Ressource_Type.gold));
                         alreadyAsk = true;
                         cooldown = 3;
                     }    
@@ -85,7 +85,7 @@ public class Seigneur : IUpdate {
 
         if (!alreadyAsk)
         {
-            GoAskEmperor(Ressource_Type.nourriture, amount);
+            GoAskEmperor(Ressource_Type.food, amount);
             alreadyAsk = true;
         }
 
@@ -111,7 +111,7 @@ public class Seigneur : IUpdate {
     {
         if (!alreadyAsk)
         {
-            GoAskEmperor(Ressource_Type.or, amount);
+            GoAskEmperor(Ressource_Type.gold, amount);
             alreadyAsk = true;
         }
     }
@@ -122,7 +122,7 @@ public class Seigneur : IUpdate {
 
         if (!alreadyAsk)
         {
-            GoAskEmperor(Ressource_Type.armé, amount);
+            GoAskEmperor(Ressource_Type.army, amount);
             alreadyAsk = true;
         }
 
@@ -150,13 +150,13 @@ public class Seigneur : IUpdate {
 
         switch (resource)
         {
-            case Ressource_Type.or:
+            case Ressource_Type.gold:
                 RequestManager.SendRequest(new Request(this, resource, amount));
                 return;
-            case Ressource_Type.nourriture:
+            case Ressource_Type.food:
                 RequestManager.SendRequest(new Request(this, resource, amount));
                 return;
-            case Ressource_Type.armé:
+            case Ressource_Type.army:
                 RequestManager.SendRequest(new Request(this,resource, amount));
                 return;
             default:
@@ -169,7 +169,7 @@ public class Seigneur : IUpdate {
         switch (resource)
         {
             default:
-            case Ressource_Type.or:
+            case Ressource_Type.gold:
                 {
                     int value;
                     if ((village.GetGold() - seuilGold) < 0)
@@ -183,7 +183,7 @@ public class Seigneur : IUpdate {
                 }
              
                 
-            case Ressource_Type.nourriture:
+            case Ressource_Type.food:
                 {
                     int value;
                     if ((village.GetFood() - seuilNourriture) < 0)
@@ -197,7 +197,7 @@ public class Seigneur : IUpdate {
                     return value;
                 }
                 
-            case Ressource_Type.armé:
+            case Ressource_Type.army:
                 {
                     int value;
                     if ((village.GetArmy() - seuilArmy) < 0)

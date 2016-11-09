@@ -44,7 +44,7 @@ public class ConseillerScreenItem : MonoBehaviour
     {
         totalText.text = "" + village.GetResource(type);
         slider.UpdateSlider((float)(village.GetReputation() / 100.0));
-        int bilan = village.GetResourceAlt(type);
+        int bilan = village.GetResource(GameResources.GetAlternate(type));
         bilanText.text = "" + bilan;
         bg.color = (bilan >= 0) ? positiveColor : negativeColor;
         carriageText.text = "" + CarriageManager.GetCarriageCountAt(village);

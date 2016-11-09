@@ -4,6 +4,7 @@ using UnityEngine.Events;
 
 namespace CCC.Utility
 {
+    [System.Serializable]
     public class Stat<T>
     {
         public class StatEvent : UnityEvent<T> { };
