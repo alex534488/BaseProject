@@ -3,8 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.Events;
 
+
+[System.Serializable]
 public class Transaction
 {
+    [System.Serializable]
+    public enum Id { source, destination, Null }
+    [System.Serializable]
     public enum ValueType { flat, sourcePercent, destPercent }
 
     public Village source = null;
@@ -13,14 +18,36 @@ public class Transaction
     public int value = 0;
     public ValueType valueType = ValueType.flat;
     public Condition condition = null;
-
-    bool hasExecuted = false;
+    /// <summary>
+    /// Used in the editor (request creation)
+    /// </summary>
+    public Id fromId = Id.Null;
+    /// <summary>
+    /// Used in the editor (request creation)
+    /// </summary>
+    public Id toId = Id.Null;
+    /// <summary>
+    /// Used in the editor (request creation)
+    /// </summary>
+    public string fillValue = "0";
 
     public Transaction() { }
     public Transaction(Village source, Village destination, Ressource_Type type, int value, ValueType valueType = ValueType.flat, Condition condition = null)
     {
         this.source = source;
         this.destination = destination;
+        this.type = type;
+        this.value = value;
+        this.valueType = valueType;
+        this.condition = condition;
+    }
+    /// <summary>
+    /// Used in the editor (request creation)
+    /// </summary>
+    public Transaction(Id fromId, Id toId, Ressource_Type type, int value, ValueType valueType = ValueType.flat, Condition condition = null)
+    {
+        this.fromId = fromId;
+        this.toId = toId;
         this.type = type;
         this.value = value;
         this.valueType = valueType;
@@ -51,13 +78,38 @@ public class Transaction
         }
 
         Village.Transfer(source, destination, type, amount);
-
-        hasExecuted = true;
     }
 
-    public bool HasExecuted() { return hasExecuted; }
+    /// <summary>
+    /// Used in the editor (request creation)
+    /// </summary>
+    public void Fill(Village source, Village destination)
+    {
+        if (fromId == Id.source)
+            this.source = source;
+        else if (fromId == Id.destination)
+            this.source = destination;
+        else
+            this.source = null;
+
+        if (toId == Id.source)
+            this.destination = source;
+        else if (toId == Id.destination)
+            this.destination = destination;
+        else
+            this.destination = null;
+    }
+    /// <summary>
+    /// Used in the editor (request creation)
+    /// </summary>
+    public void Fill(Village source, Village destination, int value)
+    {
+        this.value = value;
+        Fill(source, destination);
+    }
 }
 
+[System.Serializable]
 public class Condition
 {
     System.Func<bool> condition = null;
@@ -72,7 +124,7 @@ public class Condition
         return condition.condition();
     }
 }
-
+[System.Serializable]
 public class Choice
 {
     public string text;

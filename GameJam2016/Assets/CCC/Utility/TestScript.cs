@@ -20,8 +20,7 @@ public class TestScript : MonoBehaviour
         
         if (Input.GetKeyDown(KeyCode.T))
         {
-            frame.CustomFrames(0);
-            RequestManager.SendRequest(frame.Build(Empire.instance.listVillage[0], Empire.instance.capitale));
+            RequestManager.SendRequest(frame.Build(Empire.instance.listVillage[0], Empire.instance.capitale, (int)(Empire.instance.capitale.GetArmy()*0.5)));
         }
         if (Input.GetKeyDown(KeyCode.L))
         {

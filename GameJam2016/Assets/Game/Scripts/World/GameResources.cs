@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+[System.Serializable]
 public enum Ressource_Type
 {
     gold, goldProd, food, foodProd, foodBilan, army, armyProd, happiness, happinessCap, reputation

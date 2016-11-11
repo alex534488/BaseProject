@@ -1,0 +1,55 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d4fa15f82ab2f54b99c5165a4e807de, type: 3}
+  m_Name: Test
+  m_EditorClassIdentifier: 
+  customFrame: -1
+  tag: exemple_village_need_food
+  text: "Bonjour monsieur, je viens du village de [source.name]. Vous voudrions vous
+    acheter de certain de vos soldat. Vous en avez tout de m\xEAme plus de [destination.army+value*1.15]."
+  forceSeparation: 37
+  choices:
+  - text: Vendre [value] soldats.
+    transactions:
+    - type: 5
+      value: 5
+      valueType: 0
+      fromId: 1
+      toId: 0
+      fillValue: '[value]'
+    - type: 0
+      value: 5
+      valueType: 0
+      fromId: 0
+      toId: 1
+      fillValue: '[value]'
+  - text: Vendre [value*0.5] soldats.
+    transactions:
+    - type: 5
+      value: 2
+      valueType: 0
+      fromId: 1
+      toId: 0
+      fillValue: '[value*0.5]'
+    - type: 0
+      value: 2
+      valueType: 0
+      fromId: 0
+      toId: 1
+      fillValue: '[value*0.5]'
+  - text: Manger le messager.
+    transactions:
+    - type: 2
+      value: 1
+      valueType: 0
+      fromId: 2
+      toId: 1
+      fillValue: 1
