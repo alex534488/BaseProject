@@ -197,27 +197,24 @@ public class RequestFrame : ScriptableObject
 
     string ReplaceTerms(string text, Village source, Village destination, int value)
     {
-        if (source != null)
-        {
-            text = text.Replace("source.name", source.nom);
-            text = text.Replace("source.food", source.GetFood().ToString());
-            text = text.Replace("source.foodProd", source.GetFoodProd().ToString());
-            text = text.Replace("source.army", source.GetArmy().ToString());
-            text = text.Replace("source.armyProd", source.GetArmyProd().ToString());
-            text = text.Replace("source.gold", source.GetGold().ToString());
-            text = text.Replace("source.goldProd", source.GetGoldProd().ToString());
-        }
-        if (destination != null)
-        {
-            text = text.Replace("destination.name", destination.nom);
-            text = text.Replace("destination.food", destination.GetFood().ToString());
-            text = text.Replace("destination.foodProd", destination.GetFoodProd().ToString());
-            text = text.Replace("destination.army", destination.GetArmy().ToString());
-            text = text.Replace("destination.armyProd", destination.GetArmyProd().ToString());
-            text = text.Replace("destination.gold", destination.GetGold().ToString());
-            text = text.Replace("destination.goldProd", destination.GetGoldProd().ToString());
-        }
+        text = text.Replace("source.name", source == null ? "" : source.nom);
+        text = text.Replace("source.food", source == null ? "" : source.GetFood().ToString());
+        text = text.Replace("source.foodProd", source == null ? "" : source.GetFoodProd().ToString());
+        text = text.Replace("source.army", source == null ? "" : source.GetArmy().ToString());
+        text = text.Replace("source.armyProd", source == null ? "" : source.GetArmyProd().ToString());
+        text = text.Replace("source.gold", source == null ? "" : source.GetGold().ToString());
+        text = text.Replace("source.goldProd", source == null ? "" : source.GetGoldProd().ToString());
+
+        text = text.Replace("destination.name", destination == null ? "" : destination.nom);
+        text = text.Replace("destination.food", destination == null ? "" : destination.GetFood().ToString());
+        text = text.Replace("destination.foodProd", destination == null ? "" : destination.GetFoodProd().ToString());
+        text = text.Replace("destination.army", destination == null ? "" : destination.GetArmy().ToString());
+        text = text.Replace("destination.armyProd", destination == null ? "" : destination.GetArmyProd().ToString());
+        text = text.Replace("destination.gold", destination == null ? "" : destination.GetGold().ToString());
+        text = text.Replace("destination.goldProd", destination == null ? "" : destination.GetGoldProd().ToString());
+
         text = text.Replace("value", value.ToString());
+
         return text;
     }
     float Operate(float a, float b, char op)
