@@ -2906,6 +2906,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4d9e562241e8a1449b180607529743f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bank: {fileID: 11400000, guid: 9e3236faf5d0bf9448a8b74b4cbfba16, type: 2}
   OnCompletionOfRequests:
     m_PersistentCalls:
       m_Calls: []

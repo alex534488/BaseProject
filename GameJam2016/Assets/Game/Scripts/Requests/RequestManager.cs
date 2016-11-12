@@ -5,7 +5,7 @@ using UnityEngine.Events;
 
 public class RequestManager : MonoBehaviour
 {
-
+    public RequestBank bank;
     static RequestManager requestManager;
 
     List<Request> listRequest = new List<Request>();
@@ -511,7 +511,24 @@ public class RequestManager : MonoBehaviour
         }
     }
 
+    //Request bank methods
 
+    public static RequestFrame GetRequestFrame(string tag)
+    {
+        if(requestManager == null) { Debug.LogError("Error: Request manager instance is null."); return null; }
+        if (requestManager.bank == null) { Debug.LogError("Error: Request manager's bank is null."); return null; }
+
+        return requestManager.bank.GetFrame(tag);
+    }
+
+    public static bool BuildAndSendRequest(string tag, Village source, Village destination, int value)
+    {
+        RequestFrame frame = GetRequestFrame(tag);
+        if (frame == null) return false;
+
+        SendRequest(frame.Build(source, destination, value));
+        return true;
+    }
 
 }
 
