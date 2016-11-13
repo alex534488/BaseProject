@@ -247,7 +247,7 @@ public class RequestFrame : ScriptableObject
                 break;
             case -1:
                 condition = null;
-                if(choices != null && choices.Count > 0)
+                if (choices != null && choices.Count > 0)
                 {
                     foreach (Choice choice in choices)
                     {
@@ -277,6 +277,7 @@ public class RequestFrame : ScriptableObject
 
                     List<Transaction> choixTroisTrans = null;                                           //Transaction du choix 3 (aucune)
 
+                    choices = new List<Choice>(3);
                     choices.Add(                                                                                                          //Premier choix
                         new Choice(
                             "Premier choix: Vendre la poule",                                                                                   //Message
@@ -327,6 +328,8 @@ public class RequestFrameEditor : CCC.EditorUtil.AdvEditor
 
         DrawCustomFrameIndex(frame);
 
+        GUI.enabled = CanEdit();
+
         DrawTag(frame);
 
         DrawTextTips();
@@ -334,6 +337,8 @@ public class RequestFrameEditor : CCC.EditorUtil.AdvEditor
         DrawText(frame);
 
         DrawChoices(frame);
+
+        GUI.enabled = true;
 
         EditorUtility.SetDirty(target);
     }
@@ -370,10 +375,8 @@ public class RequestFrameEditor : CCC.EditorUtil.AdvEditor
     void DrawTag(RequestFrame frame)
     {
         EditorGUILayout.LabelField("Tag", bold);
-        if (!CanEdit())
-            EditorGUILayout.TextField(frame.tag);
-        else
-            frame.tag = EditorGUILayout.TextField(frame.tag);
+
+        frame.tag = EditorGUILayout.TextField(frame.tag);
 
         EditorGUILayout.Space();
     }
@@ -413,10 +416,7 @@ public class RequestFrameEditor : CCC.EditorUtil.AdvEditor
     {
         EditorGUILayout.LabelField("Request Text", bold);
 
-        if (frame.customFrame != -1)
-            GUILayout.TextArea(frame.text);
-        else
-            frame.text = GUILayout.TextArea(frame.text);
+        frame.text = GUILayout.TextArea(frame.text);
 
         EditorGUILayout.Space();
         EditorGUILayout.Space();
@@ -489,10 +489,7 @@ public class RequestFrameEditor : CCC.EditorUtil.AdvEditor
 
         EditorGUILayout.LabelField("Text du choix");
 
-        if (CanEdit())
-            choix.text = EditorGUILayout.TextField(choix.text);
-        else
-            EditorGUILayout.TextField(choix.text);
+        choix.text = GUILayout.TextArea(choix.text);
 
 
         EditorGUILayout.BeginHorizontal();
