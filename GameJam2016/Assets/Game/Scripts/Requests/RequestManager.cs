@@ -521,7 +521,7 @@ public class RequestManager : MonoBehaviour
         return requestManager.bank.GetFrame(tag);
     }
 
-    public static bool BuildAndSendRequest(string tag, Village source, Village destination, int value)
+    public static bool BuildAndSendRequest(string tag, Village source, Village destination, int value = 1)
     {
         RequestFrame frame = GetRequestFrame(tag);
         if (frame == null) return false;

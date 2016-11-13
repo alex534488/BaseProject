@@ -300,8 +300,12 @@ public class Request
 
     void OnCharacterEnter()
     {
-        List<Dialog.Choix> dialogChoix = new List<Dialog.Choix>(choix.Count);
-        foreach (Choice unChoix in choix) dialogChoix.Add(unChoix.ToDialogChoix());
+        List<Dialog.Choix> dialogChoix = null;
+        if(choix != null)
+        {
+            dialogChoix = new List<Dialog.Choix>(choix.Count);
+            foreach (Choice unChoix in choix) dialogChoix.Add(unChoix.ToDialogChoix());
+        }
 
         Dialog.DisplayText(message, dialogChoix, OnTextComplete);
     }
