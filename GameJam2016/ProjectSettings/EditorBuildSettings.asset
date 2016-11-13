@@ -13,3 +13,5 @@ EditorBuildSettings:
     path: Assets/Game/ConseillerPanel.unity
   - enabled: 1
     path: Assets/Game/GameOver.unity
+  - enabled: 1
+    path: Assets/Game/OptionMenu.unity
