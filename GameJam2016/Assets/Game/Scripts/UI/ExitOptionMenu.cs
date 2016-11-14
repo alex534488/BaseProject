@@ -7,6 +7,7 @@ using CCC.Manager;
 public class ExitOptionMenu : MonoBehaviour {
 
     public string SceneName = "OptionMenu";
+    public AudioClip clip;
 
     public void Credits()
     {
@@ -20,6 +21,7 @@ public class ExitOptionMenu : MonoBehaviour {
 
     public void Abandonner()
     {
+        Exit();
         DayManager.main.Lose("Vous avez abandonner votre Empire à sa propre perte.");
     }
 
@@ -38,5 +40,6 @@ public class ExitOptionMenu : MonoBehaviour {
     public void Exit()
     {
         SceneManager.UnloadScene(SceneName);
+        if(clip != null) SoundManager.Play(clip);
     }
 }

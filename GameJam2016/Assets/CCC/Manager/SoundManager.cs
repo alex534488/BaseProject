@@ -146,6 +146,26 @@ namespace CCC.Manager
             instance.mixer.SetFloat("sfx", value);
         }
 
+        public static float GetMaster()
+        {
+            return instance.save.master;
+        }
+
+        public static float GetMusic()
+        {
+            return instance.save.music;
+        }
+
+        public static float GetVoice()
+        {
+            return instance.save.voice;
+        }
+
+        public static float GetSfx()
+        {
+            return instance.save.sfx;
+        }
+
         private void ApplyAll()
         {
             if (instance.mixer == null) return;

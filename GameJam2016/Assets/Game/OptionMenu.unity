@@ -488,8 +488,8 @@ RectTransform:
   m_RootOrder: 1
   m_AnchorMin: {x: 0, y: 0.25}
   m_AnchorMax: {x: 1, y: 0.75}
-  m_AnchoredPosition: {x: -3, y: 0}
-  m_SizeDelta: {x: -6, y: 0.0000038147}
+  m_AnchoredPosition: {x: -7.25, y: 0}
+  m_SizeDelta: {x: 2.5, y: 0.0000038147}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &225672503
 GameObject:
@@ -576,7 +576,7 @@ GameObject:
   - 114: {fileID: 228881557}
   - 114: {fileID: 228881558}
   m_Layer: 5
-  m_Name: Slider_SFX
+  m_Name: Sfx
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -642,7 +642,7 @@ MonoBehaviour:
   m_FillRect: {fileID: 1656640016}
   m_HandleRect: {fileID: 1557463402}
   m_Direction: 0
-  m_MinValue: -80
+  m_MinValue: -40
   m_MaxValue: 20
   m_WholeNumbers: 0
   m_Value: 0
@@ -673,6 +673,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd33d1827f89d6140911594a69b57aae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  slider: {fileID: 228881555}
 --- !u!1 &437712572
 GameObject:
   m_ObjectHideFlags: 0
@@ -724,6 +725,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SceneName: OptionMenu
+  clip: {fileID: 0}
 --- !u!114 &437712575
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1315,6 +1317,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SceneName: OptionMenu
+  clip: {fileID: 0}
 --- !u!114 &847003024
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1565,7 +1568,7 @@ GameObject:
   - 114: {fileID: 1344318627}
   - 114: {fileID: 1344318626}
   m_Layer: 5
-  m_Name: Slider_Music
+  m_Name: Music
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1589,7 +1592,7 @@ RectTransform:
   m_RootOrder: 10
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 77, y: 281}
+  m_AnchoredPosition: {x: 66, y: 281}
   m_SizeDelta: {x: 552, y: 91}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1344318626
@@ -1603,6 +1606,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd33d1827f89d6140911594a69b57aae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  slider: {fileID: 1344318624}
 --- !u!114 &1344318627
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1642,7 +1646,7 @@ MonoBehaviour:
   m_FillRect: {fileID: 1882985364}
   m_HandleRect: {fileID: 1926442307}
   m_Direction: 0
-  m_MinValue: -80
+  m_MinValue: -40
   m_MaxValue: 20
   m_WholeNumbers: 0
   m_Value: 0
@@ -1787,6 +1791,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SceneName: OptionMenu
+  clip: {fileID: 0}
 --- !u!114 &1419736676
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1935,6 +1940,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SceneName: OptionMenu
+  clip: {fileID: 8300000, guid: d1d50eeedb9590a47ad56248d3d808ab, type: 3}
 --- !u!114 &1498913443
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2614,6 +2620,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SceneName: OptionMenu
+  clip: {fileID: 8300000, guid: d1d50eeedb9590a47ad56248d3d808ab, type: 3}
 --- !u!114 &2103244029
 MonoBehaviour:
   m_ObjectHideFlags: 0
