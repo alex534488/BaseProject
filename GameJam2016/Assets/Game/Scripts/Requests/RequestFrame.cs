@@ -247,49 +247,60 @@ public class RequestFrame : ScriptableObject
                 break;
             case -1:
                 condition = null;
-                choices = new List<Choice>(3);
+                if (choices != null && choices.Count > 0)
+                {
+                    foreach (Choice choice in choices)
+                    {
+                        if (choice.transactions != null && choice.transactions.Count > 0)
+                            foreach (Transaction transac in choice.transactions)
+                                transac.condition = null;
+                    }
+                }
                 break;
             case 0:
-                //La requete ne se fait que si la destination a au moins 11 soldat
-                condition = new Condition(delegate
                 {
-                    return destination.GetArmy() > 10;
-                });
+                    //La requete ne se fait que si la destination a au moins 11 soldat
+                    condition = new Condition(delegate
+                    {
+                        return destination.GetArmy() > 10;
+                    });
 
-                tag = "exemple_village_need_food";
-                text = "Je suis un messager venant du village de [source.name].\n\nNos citoyen sont amateur de PFK. Nous désirons donc acheter votre poule.";
+                    tag = "exemple_village_need_food";
+                    text = "Je suis un messager venant du village de [source.name].\n\nNos citoyen sont amateur de PFK. Nous désirons donc acheter votre poule.";
 
-                List<Transaction> choixUnTrans = new List<Transaction>();                           //Transaction du choix 1
-                choixUnTrans.Add(new Transaction(Transaction.Id.source, Transaction.Id.destination, Ressource_Type.gold, 10));       //Le village donne de l'or a la capital
-                choixUnTrans.Add(new Transaction(Transaction.Id.Null, Transaction.Id.source, Ressource_Type.food, 1));                //Le village gagne 1 de food
+                    List<Transaction> choixUnTrans = new List<Transaction>();                           //Transaction du choix 1
+                    choixUnTrans.Add(new Transaction(Transaction.Id.source, Transaction.Id.destination, Ressource_Type.gold, 10));       //Le village donne de l'or a la capital
+                    choixUnTrans.Add(new Transaction(Transaction.Id.Null, Transaction.Id.source, Ressource_Type.food, 1));                //Le village gagne 1 de food
 
-                List<Transaction> choixDeuxTrans = new List<Transaction>();                      //Transaction du choix 2
-                choixDeuxTrans.Add(new Transaction(Transaction.Id.Null, Transaction.Id.destination, Ressource_Type.happiness, 2));    //La capital gagne 2 de bonheur
+                    List<Transaction> choixDeuxTrans = new List<Transaction>();                      //Transaction du choix 2
+                    choixDeuxTrans.Add(new Transaction(Transaction.Id.Null, Transaction.Id.destination, Ressource_Type.happiness, 2));    //La capital gagne 2 de bonheur
 
-                List<Transaction> choixTroisTrans = null;                                           //Transaction du choix 3 (aucune)
+                    List<Transaction> choixTroisTrans = null;                                           //Transaction du choix 3 (aucune)
 
-                choices.Add(                                                                                                          //Premier choix
-                    new Choice(
-                        "Premier choix: Vendre la poule",                                                                                   //Message
-                        delegate { Debug.Log("Ceci est un custom callback, utile quand on veut faire des actions unique custom. "); },       //Custom callback
-                        choixUnTrans                                                                                                        //Transactions
-                        )
-                    );
-                choices.Add(                                                                                                          //Deuxieme choix
-                    new Choice(
-                        "Deuxieme choix: Garder la poule et l'engager dans un cirque.",                                                     //Message
-                        null,                                                                                                               //Custom callback
-                        choixDeuxTrans                                                                                                      //Transactions
-                        )
-                    );
-                choices.Add(                                                                                                          //Troisieme choix
-                    new Choice(
-                        "Troisieme choix: Regarder le mur.",                                                                                //Message
-                        null,                                                                                                               //Custom callback
-                        choixTroisTrans                                                                                                     //Transactions
-                        )
-                    );
-                break;
+                    choices = new List<Choice>(3);
+                    choices.Add(                                                                                                          //Premier choix
+                        new Choice(
+                            "Premier choix: Vendre la poule",                                                                                   //Message
+                            delegate { Debug.Log("Ceci est un custom callback, utile quand on veut faire des actions unique custom. "); },       //Custom callback
+                            choixUnTrans                                                                                                        //Transactions
+                            )
+                        );
+                    choices.Add(                                                                                                          //Deuxieme choix
+                        new Choice(
+                            "Deuxieme choix: Garder la poule et l'engager dans un cirque.",                                                     //Message
+                            null,                                                                                                               //Custom callback
+                            choixDeuxTrans                                                                                                      //Transactions
+                            )
+                        );
+                    choices.Add(                                                                                                          //Troisieme choix
+                        new Choice(
+                            "Troisieme choix: Regarder le mur.",                                                                                //Message
+                            null,                                                                                                               //Custom callback
+                            choixTroisTrans                                                                                                     //Transactions
+                            )
+                        );
+                    break;
+                }
         }
         if (indexExists)
             customFrame = index;
@@ -317,6 +328,8 @@ public class RequestFrameEditor : CCC.EditorUtil.AdvEditor
 
         DrawCustomFrameIndex(frame);
 
+        GUI.enabled = CanEdit();
+
         DrawTag(frame);
 
         DrawTextTips();
@@ -324,6 +337,8 @@ public class RequestFrameEditor : CCC.EditorUtil.AdvEditor
         DrawText(frame);
 
         DrawChoices(frame);
+
+        GUI.enabled = true;
 
         EditorUtility.SetDirty(target);
     }
@@ -360,10 +375,8 @@ public class RequestFrameEditor : CCC.EditorUtil.AdvEditor
     void DrawTag(RequestFrame frame)
     {
         EditorGUILayout.LabelField("Tag", bold);
-        if (!CanEdit())
-            EditorGUILayout.TextField(frame.tag);
-        else
-            frame.tag = EditorGUILayout.TextField(frame.tag);
+
+        frame.tag = EditorGUILayout.TextField(frame.tag);
 
         EditorGUILayout.Space();
     }
@@ -403,10 +416,7 @@ public class RequestFrameEditor : CCC.EditorUtil.AdvEditor
     {
         EditorGUILayout.LabelField("Request Text", bold);
 
-        if (frame.customFrame != -1)
-            GUILayout.TextArea(frame.text);
-        else
-            frame.text = GUILayout.TextArea(frame.text);
+        frame.text = GUILayout.TextArea(frame.text);
 
         EditorGUILayout.Space();
         EditorGUILayout.Space();
@@ -479,10 +489,7 @@ public class RequestFrameEditor : CCC.EditorUtil.AdvEditor
 
         EditorGUILayout.LabelField("Text du choix");
 
-        if (CanEdit())
-            choix.text = EditorGUILayout.TextField(choix.text);
-        else
-            EditorGUILayout.TextField(choix.text);
+        choix.text = GUILayout.TextArea(choix.text);
 
 
         EditorGUILayout.BeginHorizontal();

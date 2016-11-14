@@ -1,15 +1,29 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine.Events;
 using DG.Tweening;
 
-public class DialogText : MonoBehaviour {
+public class DialogText : MonoBehaviour
+{
 
-    public class DialogTextEvent: UnityEvent<DialogText> { }
+    public class DialogTransactionItem
+    {
+        public int value = 0;
+        public Ressource_Type type;
+    }
+    public class DialogTextEvent : UnityEvent<DialogText> { }
     [Header("Component")]
     public Text text;
     public PointerListener button;
+    public GameObject transactionContainer;
+    public Text sourceName;
+    public Text destinationName;
+    public RectTransform leftItemSlot;
+    public RectTransform rightItemSlot;
+    public RectTransform leftItemPrefab;
+    public RectTransform rightItemPrefab;
     [Header("Variables")]
     public Color normalColor = Color.black;
     public Color highlightColor = Color.gray;
@@ -48,10 +62,128 @@ public class DialogText : MonoBehaviour {
             text.text = message;
         }
 
+        //Transaction
+
         hasInit = true;
         gameObject.SetActive(true);
     }
-    
+
+    public void Init(string message, bool isAnimated, List<Transaction> transactions)
+    {
+        if (transactions != null && transactions.Count > 0) DisplayTransactions(transactions);
+        Init(message, isAnimated);
+    }
+
+    public void DisplayTransactions(List<Transaction> transactions)
+    {
+        List<Village> villageConcernée = new List<Village>();
+        Village rightVillage = null;
+        Village leftVillage = null;
+        bool multipleLeftVillages = false;
+
+        //Trouve le village qui sera afficher a droite (fort probablement la capital) et le village qui sera a gauche
+        foreach (Transaction transaction in transactions)
+        {
+            if (transaction.source != null && !villageConcernée.Contains(transaction.source)) villageConcernée.Add(transaction.source);
+            if (transaction.destination != null && !villageConcernée.Contains(transaction.destination)) villageConcernée.Add(transaction.destination);
+        }
+
+        //Met le village de droite (si on tombe sur la capitale, on arrête là. On veut toujours mettre la capitale a droite en priorité)
+        foreach (Village village in villageConcernée)
+        {
+            rightVillage = village;
+            if (rightVillage == Empire.instance.capitale) break;
+        }
+        //Met le village de gauche (n'importe quelle village, sauf celui de droite)
+        foreach (Village village in villageConcernée)
+        {
+            leftVillage = village;
+            if (rightVillage != leftVillage) break;
+        }
+        if (leftVillage == rightVillage) leftVillage = null;
+
+        if (villageConcernée.Count > 2) multipleLeftVillages = true;
+
+
+        List<DialogTransactionItem> leftList = new List<DialogTransactionItem>();
+        List<DialogTransactionItem> rightList = new List<DialogTransactionItem>();
+
+        //Construits les liste de valeurs (compile les transaction en version abrégé)
+        foreach (Transaction transaction in transactions)
+        {
+            if(transaction.source != null)
+            {
+                if(transaction.source == rightVillage)
+                    AddToItems(rightList, transaction.type, -transaction.value);
+                else
+                    AddToItems(leftList, transaction.type, -transaction.value);
+            }
+            if (transaction.destination != null)
+            {
+                if (transaction.destination == rightVillage)
+                    AddToItems(rightList, transaction.type, transaction.value);
+                else
+                    AddToItems(leftList, transaction.type, transaction.value);
+            }
+        }
+
+        //Met les nom des village sur les text
+        if (leftVillage != null)
+        {
+            sourceName.text = multipleLeftVillages? "Villages" : leftVillage.nom; //Si on a eux plus d'1 village a gauche, on va juste ecrire 'Villages'
+            sourceName.gameObject.SetActive(true);
+        }
+        else sourceName.gameObject.SetActive(false);
+
+        if (rightVillage != null)
+        {
+            destinationName.text = rightVillage.nom;
+            destinationName.gameObject.SetActive(true);
+        }
+        else destinationName.gameObject.SetActive(false);
+
+
+        SpawnItems(leftList, leftItemSlot, leftItemPrefab);
+        SpawnItems(rightList, rightItemSlot, rightItemPrefab);
+
+        transactionContainer.SetActive(true);
+    }
+
+    void AddToItems(List<DialogTransactionItem> list, Ressource_Type type, int value)
+    {
+        DialogTransactionItem item = GetItem(list, type);
+        if (item == null)
+        {
+            item = new DialogTransactionItem();
+            item.type = type;
+            list.Add(item);
+        }
+
+        item.value += value;
+    }
+
+    void SpawnItems(List<DialogTransactionItem> list, RectTransform container, RectTransform prefab)
+    {
+        foreach (DialogTransactionItem item in list)
+        {
+            RectTransform tr = ((GameObject)Instantiate(prefab.gameObject, container.transform, false)).GetComponent<RectTransform>();
+            tr.anchoredPosition = Vector2.zero;
+            tr.localScale = Vector2.one;
+            tr.GetComponent<Text>().text = (item.value >= 0 ? "+" : "") + item.value;
+            tr.GetComponentInChildren<Image>().sprite = GameResources.GetIcon(item.type);
+            container = tr.Find("Slot") as RectTransform;
+        }
+    }
+
+    DialogTransactionItem GetItem(List<DialogTransactionItem> list, Ressource_Type type)
+    {
+        foreach (DialogTransactionItem item in list)
+        {
+            if (item.type == type) return item;
+        }
+        return null;
+    }
+
     void Highlight(bool state)
     {
         text.color = state ? highlightColor : normalColor;

@@ -262,7 +262,7 @@ MonoBehaviour:
   initComplete: 0
   stdSource: {fileID: 82000012407735110}
   musicSource: {fileID: 82000013170866002}
-  mixer: {fileID: 0}
+  mixer: {fileID: 24100000, guid: e37bc4e0fd2c6c243ad62392f94f91ac, type: 2}
   save:
     master: 0
     voice: 0

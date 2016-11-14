@@ -6,21 +6,35 @@ using UnityEngine.UI;
 
 public class DialogBox : MonoBehaviour
 {
-
     public PointerListener button;
     public float speed;
 
+    Vector2 sizeDelta;
+    Vector2 bigSizeDelta;
+    RectTransform tr;
+
     void Awake()
     {
-        RectTransform tr = GetComponent<RectTransform>();
-        Vector2 sizeDelta = tr.sizeDelta;
-        tr.sizeDelta = new Vector2(0, sizeDelta.y);
-        tr.DOSizeDelta(sizeDelta, 1 / speed).SetEase(Ease.OutQuad);
+        tr = GetComponent<RectTransform>();
+        sizeDelta = tr.sizeDelta;
+        bigSizeDelta = new Vector2(sizeDelta.x, sizeDelta.y * 1.33333f);
+        SetSmall();
+    }
+
+    public void SetBig(TweenCallback onComplete = null)
+    {
+        tr.DOKill();
+        tr.DOSizeDelta(bigSizeDelta, 1 / speed).SetEase(Ease.OutQuad).OnComplete(onComplete);
+    }
+
+    public void SetSmall(TweenCallback onComplete = null)
+    {
+        tr.DOKill();
+        tr.DOSizeDelta(sizeDelta, 1 / speed).SetEase(Ease.OutQuad).OnComplete(onComplete);
     }
 
     public void Exit()
     {
-        RectTransform tr = GetComponent<RectTransform>();
         tr.DOKill();
         tr.DOSizeDelta(new Vector2(0, tr.sizeDelta.y), 1 / speed).SetEase(Ease.InQuad).OnComplete(OnCompleteDestroy);
     }
