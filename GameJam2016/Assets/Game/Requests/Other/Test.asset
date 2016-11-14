@@ -13,41 +13,47 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   customFrame: -1
   tag: exemple_village_need_food
-  text: "Bonjour monsieur, je viens du village de [source.name]. Vous voudrions vous
-    acheter de certain de vos soldat. Vous en avez tout de m\xEAme plus de [destination.army+value*1.15]."
+  text: "Je suis un messager venant du village de [source.name].\n\nNos citoyen sont
+    amateur de PFK. Nous d\xE9sirons donc acheter votre poule."
   forceSeparation: 37
   choices:
-  - text: Vendre [value] soldats.
+  - text: 'One
+
+      two
+
+      three'
     transactions:
-    - type: 5
-      value: 5
-      valueType: 0
-      fromId: 1
-      toId: 0
-      fillValue: '[value]'
     - type: 0
-      value: 5
+      value: 10
       valueType: 0
       fromId: 0
       toId: 1
-      fillValue: '[value]'
-  - text: Vendre [value*0.5] soldats.
-    transactions:
-    - type: 5
-      value: 2
-      valueType: 0
-      fromId: 1
-      toId: 0
-      fillValue: '[value*0.5]'
-    - type: 0
-      value: 2
-      valueType: 0
-      fromId: 0
-      toId: 1
-      fillValue: '[value*0.5]'
-  - text: Manger le messager.
-    transactions:
+      fillValue: 10
     - type: 2
+      value: 10
+      valueType: 0
+      fromId: 2
+      toId: 0
+      fillValue: 10
+    - type: 0
+      value: 2
+      valueType: 0
+      fromId: 0
+      toId: 1
+      fillValue: 2
+    - type: 0
+      value: 1
+      valueType: 0
+      fromId: 1
+      toId: 0
+      fillValue: 1
+  - text: 'Un
+
+      deux
+
+      trois'
+    transactions:
+    - type: 7
       value: 1
       valueType: 0
       fromId: 2

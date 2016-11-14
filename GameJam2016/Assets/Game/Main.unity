@@ -476,6 +476,7 @@ GameObject:
   - 114: {fileID: 92212411}
   - 114: {fileID: 92212414}
   - 114: {fileID: 92212413}
+  - 114: {fileID: 92212415}
   m_Layer: 5
   m_Name: Image
   m_TagString: Untagged
@@ -585,6 +586,20 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
       PublicKeyToken=null
+--- !u!114 &92212415
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 92212409}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -900027084, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 1}
+  m_EffectDistance: {x: 2, y: 2}
+  m_UseGraphicAlpha: 1
 --- !u!1 &128417605
 GameObject:
   m_ObjectHideFlags: 0
@@ -595,6 +610,7 @@ GameObject:
   - 224: {fileID: 128417606}
   - 222: {fileID: 128417608}
   - 114: {fileID: 128417607}
+  - 114: {fileID: 128417609}
   m_Layer: 5
   m_Name: Image
   m_TagString: Untagged
@@ -632,7 +648,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.46665677, g: 0.7647059, b: 0.41046715, a: 1}
+  m_Color: {r: 0.48627454, g: 0.92549026, b: 0.06666667, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -653,6 +669,20 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 128417605}
+--- !u!114 &128417609
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 128417605}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -900027084, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 1}
+  m_EffectDistance: {x: 2, y: 2}
+  m_UseGraphicAlpha: 1
 --- !u!1 &157022550
 GameObject:
   m_ObjectHideFlags: 0
@@ -2978,6 +3008,7 @@ GameObject:
   - 114: {fileID: 1418466804}
   - 114: {fileID: 1418466807}
   - 82: {fileID: 1418466808}
+  - 114: {fileID: 1418466806}
   m_Layer: 0
   m_Name: DayManager
   m_TagString: Untagged
@@ -3049,6 +3080,26 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
       PublicKeyToken=null
+--- !u!114 &1418466806
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1418466801}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81f9793ea1b649248853c7938dc8f457, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  goldIcon: {fileID: 21300000, guid: 11417e2aa7a73dc40bfdc254e186271d, type: 3}
+  goldProdIcon: {fileID: 21300000, guid: 11417e2aa7a73dc40bfdc254e186271d, type: 3}
+  foodIcon: {fileID: 21300000, guid: e133aec7c7d589145a04ab5f5354d874, type: 3}
+  foodProdIcon: {fileID: 21300000, guid: e133aec7c7d589145a04ab5f5354d874, type: 3}
+  armyIcon: {fileID: 21300000, guid: 48cdcbc442e434843a6813aa7b83de65, type: 3}
+  armyProdIcon: {fileID: 21300000, guid: 48cdcbc442e434843a6813aa7b83de65, type: 3}
+  reputationIcon: {fileID: 10901, guid: 0000000000000000f000000000000000, type: 0}
+  happinessIcon: {fileID: 21300000, guid: 3fa08918485227e4795bd516b283c56a, type: 3}
+  happinessCapIcon: {fileID: 21300000, guid: 3fa08918485227e4795bd516b283c56a, type: 3}
 --- !u!114 &1418466807
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3484,6 +3535,7 @@ GameObject:
   - 224: {fileID: 1553103122}
   - 222: {fileID: 1553103124}
   - 114: {fileID: 1553103123}
+  - 114: {fileID: 1553103125}
   m_Layer: 5
   m_Name: Image
   m_TagString: Untagged
@@ -3521,7 +3573,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0.90196085, b: 0.37254903, a: 1}
+  m_Color: {r: 1, g: 0.7626775, b: 0.33823532, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -3542,6 +3594,20 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1553103121}
+--- !u!114 &1553103125
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1553103121}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -900027084, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 1}
+  m_EffectDistance: {x: 1, y: 1}
+  m_UseGraphicAlpha: 1
 --- !u!1 &1564926734
 GameObject:
   m_ObjectHideFlags: 0
@@ -4468,6 +4534,7 @@ GameObject:
   - 224: {fileID: 1904316101}
   - 222: {fileID: 1904316103}
   - 114: {fileID: 1904316102}
+  - 114: {fileID: 1904316104}
   m_Layer: 5
   m_Name: Image
   m_TagString: Untagged
@@ -4505,7 +4572,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0.8896553, b: 0, a: 1}
+  m_Color: {r: 0.9843137, g: 1, b: 0, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -4526,6 +4593,20 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1904316100}
+--- !u!114 &1904316104
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1904316100}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -900027084, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 1}
+  m_EffectDistance: {x: 2, y: 2}
+  m_UseGraphicAlpha: 1
 --- !u!1 &1924290124
 GameObject:
   m_ObjectHideFlags: 0

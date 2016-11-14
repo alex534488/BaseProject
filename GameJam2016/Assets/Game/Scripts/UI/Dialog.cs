@@ -39,7 +39,7 @@ public class Dialog : MonoBehaviour
     /// <summary>
     /// Spawn la boite de text. Affiche le message puis propose les choix s'il n'en a
     /// </summary>
-    public static void DisplayText(Message message, List<Choix> listeChoix = null, UnityAction dialogComplete = null)
+    public static void DisplayText(Message message, List<Choice> listeChoix = null, UnityAction dialogComplete = null)
     {
         if (IsInDialog())
         {
@@ -70,30 +70,16 @@ public class Dialog : MonoBehaviour
 
     private UnityAction dialogComplete;
 
-    public void Test()
-    {
-        Message message = new Message("Hello, je suis une délicieuse poutine !"
-            +"NAK NAK"
-            +"this is da end!");
-
-        List<Choix> choix = new List<Choix>();
-        choix.Add(new Choix("-Mourir", delegate () { print("choix 1"); }));
-        choix.Add(new Choix("-Vivre", delegate () { print("choix 2"); }));
-        choix.Add(new Choix("-Flatter un chat", delegate () { print("choix 3"); }));
-
-        DisplayText(message, choix);
-    }
-
     void Awake()
     {
         if (master == null) master = this;
     }
 
-    public void MasterDisplayText(Message message, List<Choix> listeChoix = null, UnityAction dialogComplete = null)
+    public void MasterDisplayText(Message message, List<Choice> listeChoix = null, UnityAction dialogComplete = null)
     {
         if (isInDialog) return;
 
-        List<string> messageSplit = TextSplitter.Split(message.text, dialogTextPrefab.text, dialogBoxPrefab.GetComponent<RectTransform>().sizeDelta, message.forceSeparation);
+        List<string> messageSplit = TextSplitter.Split(message.text, dialogTextPrefab.text, dialogBoxPrefab.GetComponent<RectTransform>().sizeDelta - Vector2.one*25, message.forceSeparation);
 
         isInDialog = true;
         this.dialogComplete = dialogComplete;
@@ -107,7 +93,7 @@ public class Dialog : MonoBehaviour
         //currentDialogBox.transform.position = new Vector3(Screen.width/2, Screen.height/2, 0) + screenBottomOffset;
 
         if (messageSplit != null) foreach (string aMessage in messageSplit) queue.Add(aMessage);
-        if (listeChoix != null) foreach (Choix choix in listeChoix) queue.Add(choix);
+        if (listeChoix != null) foreach (Choice choix in listeChoix) queue.Add(choix);
 
         NextText();
     }
@@ -138,25 +124,33 @@ public class Dialog : MonoBehaviour
             });
             text.Init(objString, true);
         }
-        else //Display tous les choix
+        else //Display tous les choix (EST SLMT FAIT A LA FIN, sinon y a des bug a fix)
         {
-            foreach(object choixObj in queue)
-            {
-                Choix choix = choixObj as Choix;
-                DialogText text = Instantiate(dialogTextPrefab.gameObject).GetComponent<DialogText>();
-                currentDialogTexts.Add(text);
+            if (queue.Count > 2) currentDialogBox.SetBig(DisplayAllChoix);
+            else DisplayAllChoix();
 
-                text.transform.SetParent(currentDialogBox.transform, false);
-                text.highlightOnHover = true;
-                text.onChoose.AddListener(delegate (DialogText item)
-                {
-                    if(choix.callback != null) choix.callback.Invoke();
-                    Quit();
-                });
-                text.Init(choix.text, false);
-            }
         }
     }
+
+    void DisplayAllChoix()
+    {
+        foreach (object choixObj in queue)
+        {
+            Choice choix = choixObj as Choice;
+            DialogText text = Instantiate(dialogTextPrefab.gameObject).GetComponent<DialogText>();
+            currentDialogTexts.Add(text);
+
+            text.transform.SetParent(currentDialogBox.transform, false);
+            text.highlightOnHover = true;
+            text.onChoose.AddListener(delegate (DialogText item)
+            {
+                choix.Choose();
+                Quit();
+            });
+            text.Init(choix.text, false, choix.transactions);
+        }
+    }
+
 
     private void OnBoxClick()
     {

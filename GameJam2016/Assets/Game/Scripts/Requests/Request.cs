@@ -139,17 +139,12 @@ public class Choice
         customCallBack = callback;
     }
 
-    void Choose()
+    public void Choose()
     {
         if(transactions != null)
             foreach (Transaction transaction in transactions) transaction.Execute();
 
         if (customCallBack != null) customCallBack();
-    }
-
-    public Dialog.Choix ToDialogChoix()
-    {
-        return new Dialog.Choix(text, Choose);
     }
 }
 
@@ -300,14 +295,7 @@ public class Request
 
     void OnCharacterEnter()
     {
-        List<Dialog.Choix> dialogChoix = null;
-        if(choix != null)
-        {
-            dialogChoix = new List<Dialog.Choix>(choix.Count);
-            foreach (Choice unChoix in choix) dialogChoix.Add(unChoix.ToDialogChoix());
-        }
-
-        Dialog.DisplayText(message, dialogChoix, OnTextComplete);
+        Dialog.DisplayText(message, choix, OnTextComplete);
     }
     void OnTextComplete()
     {
