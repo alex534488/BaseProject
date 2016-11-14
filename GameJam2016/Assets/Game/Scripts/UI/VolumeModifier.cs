@@ -6,16 +6,13 @@ using CCC.Manager;
 
 public class VolumeModifier : MonoBehaviour {
 
-    public GameObject changer;
-
-	public void OnVolumeChange(float newValue)
+	public void OnMusiqueVolumeChange(float newValue)
     {
-        // TODO: Changer le SoundManager pour avoir un seul volume constant que l'on peut changer par newValue
-        //SoundManager
+        SoundManager.SetMusic(newValue);
     }
 
-    public void OnMusicToggle(bool newBool)
+    public void OnEffetVolumeChange(float newValue)
     {
-
+        SoundManager.SetSfx(newValue);
     }
 }
