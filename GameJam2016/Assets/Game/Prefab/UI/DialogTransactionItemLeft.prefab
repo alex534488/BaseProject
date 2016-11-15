@@ -40,7 +40,6 @@ GameObject:
   - 224: {fileID: 224000013997381906}
   - 222: {fileID: 222000011718757770}
   - 114: {fileID: 114000013282331696}
-  - 114: {fileID: 114000012670330070}
   m_Layer: 0
   m_Name: Image
   m_TagString: Untagged
@@ -132,20 +131,6 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
       PublicKeyToken=null
---- !u!114 &114000012670330070
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1000012898773372}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -900027084, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0, g: 0, b: 0, a: 1}
-  m_EffectDistance: {x: 1, y: -1}
-  m_UseGraphicAlpha: 1
 --- !u!114 &114000013282331696
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -232,7 +217,7 @@ RectTransform:
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
   m_AnchoredPosition: {x: 15.2, y: 1.8}
-  m_SizeDelta: {x: 25, y: 25}
+  m_SizeDelta: {x: 35, y: 35}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224000014045646016
 RectTransform:

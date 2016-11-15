@@ -17,11 +17,8 @@ MonoBehaviour:
     amateur de PFK. Nous d\xE9sirons donc acheter votre poule."
   forceSeparation: 37
   choices:
-  - text: 'One
-
-      two
-
-      three'
+  - text: Vendre la peau de l'ours au marchant de [source.name] ainsi que votre troupeau
+      de vache.
     transactions:
     - type: 0
       value: 10
@@ -29,33 +26,32 @@ MonoBehaviour:
       fromId: 0
       toId: 1
       fillValue: 10
-    - type: 2
-      value: 10
-      valueType: 0
-      fromId: 2
-      toId: 0
-      fillValue: 10
-    - type: 0
-      value: 2
-      valueType: 0
-      fromId: 0
-      toId: 1
-      fillValue: 2
-    - type: 0
-      value: 1
+    - type: 3
+      value: 5
       valueType: 0
       fromId: 1
       toId: 0
-      fillValue: 1
-  - text: 'Un
-
-      deux
-
-      trois'
+      fillValue: 5
+  - text: Dire au marchant qu'il est FUKEN sexy.
     transactions:
-    - type: 7
+    - type: 9
+      value: 5
+      valueType: 0
+      fromId: 2
+      toId: 0
+      fillValue: 5
+  - text: "Forcer le marchant a rejoindre les rangs de votre arm\xE9e. C'est pas tous
+      les jour qu'un bel homme comme \xE7a entre dans la capitale."
+    transactions:
+    - type: 5
       value: 1
       valueType: 0
       fromId: 2
       toId: 1
       fillValue: 1
+    - type: 9
+      value: -5
+      valueType: 0
+      fromId: 2
+      toId: 0
+      fillValue: -5
