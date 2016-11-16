@@ -58,6 +58,7 @@ namespace CCC.Utility
 
                 if (currentX > area.x) // deborde en x
                 {
+                    text = text.Insert(lastSpace + 1, "\n");
                     currentX = 0;
                     currentY += lineSize;
 
