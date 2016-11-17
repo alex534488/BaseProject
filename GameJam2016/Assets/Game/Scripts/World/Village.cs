@@ -254,7 +254,7 @@ public class Village : IUpdate
     #region Updates 
     protected void UpdateResources()
     {
-        AddGold(GetGold());
+        AddGold(GetGoldProd());
         AddFood(GetFoodProd());
         AddArmy(GetArmyProd());
     }
