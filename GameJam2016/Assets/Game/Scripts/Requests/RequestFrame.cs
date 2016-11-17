@@ -31,6 +31,7 @@ public class RequestFrame : ScriptableObject
     {
         this.source = source;
         this.destination = destination;
+        this.type = type;
 
         string textTemp = Filter(text, source, destination, value);  //Filtre le text
 

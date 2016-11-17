@@ -14,19 +14,20 @@ MonoBehaviour:
   customFrame: -1
   tag: carriage_return
   text: "Notre empereur, nous sommes de retour de [source.name] et nous avons pris
-    les ressources demand\xE9es au village soit [value] de *resource*."
+    les ressources demand\xE9es au village soit [value] de [type]."
   forceSeparation: 37
+  type: 9
   choices:
   - text: Parfait! Merci beaucoup.
     transactions:
     - type: 0
-      value: 0
+      value: 1
       valueType: 0
       fromId: 0
       toId: 1
       fillValue: '[value]'
     - type: 8
-      value: 0
+      value: -10
       valueType: 0
       fromId: 0
       toId: 2

@@ -38,7 +38,7 @@ public class CarriageManager : MonoBehaviour
                     {
                         if (carriage.amount != 0)
                         {
-                            RequestManager.BuildAndSendRequest("carriage_return", carriage.destination, carriage.provenance, -1 * carriage.amount);
+                            RequestManager.BuildAndSendRequest("carriage_return", carriage.destination, carriage.provenance, -1 * carriage.amount, carriage.resource);
                         } else RequestManager.SendRequest(new Request(carriage, 0));
                     }
                     Empire.instance.capitale.charriot.Set(Empire.instance.capitale.charriot + 1);
