@@ -216,7 +216,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c2b5ca3eeb84a942a7c168cf5147a46, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  requestType: 2
+  requestType: 4
   button: {fileID: 34949604}
 --- !u!114 &34949604
 MonoBehaviour:
@@ -2826,7 +2826,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c2b5ca3eeb84a942a7c168cf5147a46, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  requestType: 1
+  requestType: 2
   button: {fileID: 1230981227}
 --- !u!114 &1230981227
 MonoBehaviour:
