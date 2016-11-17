@@ -14,7 +14,7 @@ public class Transaction
 
     public Village source = null;
     public Village destination = null;
-    public Ressource_Type type = Ressource_Type.gold;
+    public Resource_Type type = Resource_Type.gold;
     public int value = 0;
     public ValueType valueType = ValueType.flat;
     public Condition condition = null;
@@ -32,7 +32,7 @@ public class Transaction
     public string fillValue = "0";
 
     public Transaction() { }
-    public Transaction(Village source, Village destination, Ressource_Type type, int value, ValueType valueType = ValueType.flat, Condition condition = null)
+    public Transaction(Village source, Village destination, Resource_Type type, int value, ValueType valueType = ValueType.flat, Condition condition = null)
     {
         this.source = source;
         this.destination = destination;
@@ -44,7 +44,7 @@ public class Transaction
     /// <summary>
     /// Used in the editor (request creation)
     /// </summary>
-    public Transaction(Id fromId, Id toId, Ressource_Type type, int value, ValueType valueType = ValueType.flat, Condition condition = null)
+    public Transaction(Id fromId, Id toId, Resource_Type type, int value, ValueType valueType = ValueType.flat, Condition condition = null)
     {
         this.fromId = fromId;
         this.toId = toId;
@@ -165,23 +165,23 @@ public class Request
     }
 
     // REQUETE D'AIDE
-    public Request(Seigneur messager, Ressource_Type resource, int amount)
+    public Request(Seigneur messager, Resource_Type resource, int amount)
     {
         switch (resource)
         {
-            case Ressource_Type.gold:
+            case Resource_Type.gold:
                 message = new Dialog.Message("Le village " + messager.village.nom + " a besoin de " + amount + " pièces d'or pour combler ses manquements économiques");
                 choix.Add(new Choice("Chaque village de l'Empire compte! (" + amount + " Or, + Réputation)", delegate () { messager.village.AddGold(amount); Empire.instance.capitale.AddGold(-amount); messager.village.AddReputation(20); }));
                 choix.Add(new Choice("L'or est précieux, faites bon usage de ces quelques pièces \n(" + (amount + 1) / 2 + " Or)", delegate () { messager.village.AddGold((amount + 1) / 2); Empire.instance.capitale.AddGold(-(amount + 1) / 2); }));
                 choix.Add(new Choice("Les caisses sont vides pour vous! (- Réputation)", delegate () { messager.village.AddReputation(-20); }));
                 return;
-            case Ressource_Type.food:
+            case Resource_Type.food:
                 message = new Dialog.Message("Le village " + messager.village.nom + " a besoin de " + amount + " Nourritures pour nourrir les soldats stationnés dans notre village.");
                 choix.Add(new Choice("Chaque village de l'empire compte! (-" + amount + " Nourritures, + Réputation)", delegate () { messager.village.AddFood(amount); Empire.instance.capitale.AddFood(-amount); messager.village.AddReputation(20); }));
                 choix.Add(new Choice("Je peux vous fournir quelques rations de Nourritures mon cher. \n(-" + (amount + 1) / 2 + " Nourriture)", delegate () { messager.village.AddFood((amount + 1) / 2); Empire.instance.capitale.AddFood(-(amount + 1) / 2); }));
                 choix.Add(new Choice("Rome est au bord de la famine également. (- Réputation)", delegate () { messager.village.AddReputation(-20); }));
                 return;
-            case Ressource_Type.army:
+            case Resource_Type.army:
                 message = new Dialog.Message("Le village " + messager.village.nom + " a besoin de " + amount + " Soldats pour se défendre contre une invasion imminente de barbares.");
                 choix.Add(new Choice("Voici davantage de soldats que nécessaire ! \n(" + Mathf.CeilToInt((amount) * 1.5f) + " Soldats)", delegate () { messager.village.AddArmy(Mathf.CeilToInt((amount) * 1.5f)); Empire.instance.capitale.AddArmy(-Mathf.CeilToInt((amount) * 1.5f)); messager.village.AddReputation(20); }));
                 choix.Add(new Choice("Voici le nombre minimum de soldats nécessaire! (" + amount + " Soldats)", delegate () { messager.village.AddArmy(amount); Empire.instance.capitale.AddArmy(-amount); }));
@@ -194,13 +194,13 @@ public class Request
 
     // INVESTISSEMENT
 
-    public Request(Seigneur messager, Ressource_Type resource)
+    public Request(Seigneur messager, Resource_Type resource)
     {
         int random = Mathf.CeilToInt(Random.Range(0, 3));
 
         switch (resource)
         {
-            case Ressource_Type.gold:
+            case Resource_Type.gold:
                 switch (random)
                 {
                     case 1:
@@ -227,13 +227,13 @@ public class Request
                         choix.Add(new Choice(" Refusez la demande du villagois (- Réputation)", delegate () { messager.village.AddReputation(-20); }));
                         return;
                 }
-            case Ressource_Type.food:
+            case Resource_Type.food:
                 switch (random)
                 {
                     default:
                         return;
                 }
-            case Ressource_Type.army:
+            case Resource_Type.army:
                 switch (random)
                 {
                     default:

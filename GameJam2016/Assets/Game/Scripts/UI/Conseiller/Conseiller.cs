@@ -7,7 +7,7 @@ using CCC.Manager;
 public class Conseiller : MonoBehaviour
 {
 
-    public Ressource_Type requestType;
+    public Resource_Type requestType;
     public Button button;
 
     void Awake()

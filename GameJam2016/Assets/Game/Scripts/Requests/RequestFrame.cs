@@ -269,11 +269,11 @@ public class RequestFrame : ScriptableObject
                     text = "Je suis un messager venant du village de [source.name].\n\nNos citoyen sont amateur de PFK. Nous désirons donc acheter votre poule.";
 
                     List<Transaction> choixUnTrans = new List<Transaction>();                           //Transaction du choix 1
-                    choixUnTrans.Add(new Transaction(Transaction.Id.source, Transaction.Id.destination, Ressource_Type.gold, 10));       //Le village donne de l'or a la capital
-                    choixUnTrans.Add(new Transaction(Transaction.Id.Null, Transaction.Id.source, Ressource_Type.food, 1));                //Le village gagne 1 de food
+                    choixUnTrans.Add(new Transaction(Transaction.Id.source, Transaction.Id.destination, Resource_Type.gold, 10));       //Le village donne de l'or a la capital
+                    choixUnTrans.Add(new Transaction(Transaction.Id.Null, Transaction.Id.source, Resource_Type.food, 1));                //Le village gagne 1 de food
 
                     List<Transaction> choixDeuxTrans = new List<Transaction>();                      //Transaction du choix 2
-                    choixDeuxTrans.Add(new Transaction(Transaction.Id.Null, Transaction.Id.destination, Ressource_Type.happiness, 2));    //La capital gagne 2 de bonheur
+                    choixDeuxTrans.Add(new Transaction(Transaction.Id.Null, Transaction.Id.destination, Resource_Type.happiness, 2));    //La capital gagne 2 de bonheur
 
                     List<Transaction> choixTroisTrans = null;                                           //Transaction du choix 3 (aucune)
 
@@ -529,7 +529,7 @@ public class RequestFrameEditor : CCC.EditorUtil.AdvEditor
         EditorGUILayout.Space();
         transaction.fillValue = EditorGUILayout.TextField(transaction.fillValue);
         EditorGUILayout.Space();
-        transaction.type = (Ressource_Type)EditorGUILayout.EnumPopup(transaction.type);
+        transaction.type = (Resource_Type)EditorGUILayout.EnumPopup(transaction.type);
         transaction.valueType = (Transaction.ValueType)EditorGUILayout.EnumPopup(transaction.valueType);
         EditorGUILayout.Space();
         GUILayout.Label("de");

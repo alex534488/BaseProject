@@ -11,7 +11,7 @@ public class DialogText : MonoBehaviour
     public class DialogTransactionItem
     {
         public int value = 0;
-        public Ressource_Type type;
+        public Resource_Type type;
     }
     public class DialogTextEvent : UnityEvent<DialogText> { }
     [Header("Component")]
@@ -142,7 +142,7 @@ public class DialogText : MonoBehaviour
         transactionContainer.SetActive(true);
     }
 
-    void AddToItems(List<DialogTransactionItem> list, Ressource_Type type, int value)
+    void AddToItems(List<DialogTransactionItem> list, Resource_Type type, int value)
     {
         DialogTransactionItem item = GetItem(list, type);
         if (item == null)
@@ -168,7 +168,7 @@ public class DialogText : MonoBehaviour
         }
     }
 
-    DialogTransactionItem GetItem(List<DialogTransactionItem> list, Ressource_Type type)
+    DialogTransactionItem GetItem(List<DialogTransactionItem> list, Resource_Type type)
     {
         foreach (DialogTransactionItem item in list)
         {

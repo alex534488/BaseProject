@@ -22,7 +22,7 @@ public class ConseillerScreenItem : MonoBehaviour
 
 
     Village village;
-    Ressource_Type type;
+    Resource_Type type;
 
     void Awake()
     {
@@ -30,7 +30,7 @@ public class ConseillerScreenItem : MonoBehaviour
         requestButton.onClick.AddListener(OnRequestClick);
     }
 
-    public void Display(Village village, Ressource_Type type)
+    public void Display(Village village, Resource_Type type)
     {
         this.type = type;
         this.village = village;
