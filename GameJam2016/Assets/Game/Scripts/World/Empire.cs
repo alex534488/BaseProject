@@ -8,9 +8,9 @@ public class Empire : IUpdate {
 
     public static Empire instance;
 
-    public int nbVillage = 12;
+    public int nbVillage = 5;
 
-    List<string> nomvillage = new List<string>{ "BREMA", "GOSLARIA", "TREMONIA", "BRUXELLAE", "HAUNIAE", "HISPALIS", "CHRISTINEA", "LUTETIA", "PARTISCUM", "MONAECUM", "AMSTELODAMUM", "EBURACUM" };
+    List<string> nomvillage = new List<string>{ "Mediolanum", "Cremona", "Aquileia", "Neopolis", "Tarentum", "HISPALIS", "CHRISTINEA", "LUTETIA", "PARTISCUM", "MONAECUM", "AMSTELODAMUM", "EBURACUM" };
     List<string> nomseigneur = new List<string> { "Maximus", "Tullus", "Lucius", "Marcus", "Valentinus", "Decimus ", "Caeso", "Septimus", "Sextus", "Tiberius", "Faustus", "Octavius" };
 
     public List<Village> listVillage = new List<Village>();
@@ -52,5 +52,14 @@ public class Empire : IUpdate {
     {
         listVillage.Remove(destroyedVillage);
         map.removeVillage(destroyedVillage);
+    }
+
+    public Village GetVillageByName(string name)
+    {
+        foreach(Village village in listVillage)
+        {
+            if (village.nom == name) return village;
+        }
+        return null;
     }
 }

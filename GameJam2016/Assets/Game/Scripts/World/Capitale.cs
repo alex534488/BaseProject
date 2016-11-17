@@ -137,30 +137,30 @@ public class Capitale : Village
         return base.BuyArmy(amount);
     }
 
-    public override int GetResource(Ressource_Type type)
+    public override int GetResource(Resource_Type type)
     {
         switch (type)
         {
             default:
                 return base.GetResource(type);
-            case Ressource_Type.happiness:
+            case Resource_Type.happiness:
                 return happiness;
-            case Ressource_Type.happinessCap:
+            case Resource_Type.happinessCap:
                 return (int)happiness.MAX;
         }
     }
 
-    protected override void LocalGive(Ressource_Type resource, int amount)
+    protected override void LocalGive(Resource_Type resource, int amount)
     {
         switch (resource)
         {
             default:
                 base.LocalGive(resource, amount);
                 break;
-            case Ressource_Type.happiness:
+            case Resource_Type.happiness:
                 AddHappiness(amount);
                 break;
-            case Ressource_Type.happinessCap:
+            case Resource_Type.happinessCap:
                 AddHappinessCap(amount);
                 break;
         }
@@ -182,7 +182,7 @@ public class Capitale : Village
                 {
                     if (!village.lord.alreadyAsk)
                     {
-                        RequestManager.SendRequest(new Request(village.lord, Ressource_Type.army, village.barbares.nbBarbares - village.GetArmy()));
+                        RequestManager.SendRequest(new Request(village.lord, Resource_Type.army, village.barbares.nbBarbares - village.GetArmy()));
                         count++;
                     }
                 }
@@ -200,7 +200,7 @@ public class Capitale : Village
         count = 0;
     }
 
-    public void SendCartToVillage(Village destination, Ressource_Type resource, int amount)
+    public void SendCartToVillage(Village destination, Resource_Type resource, int amount)
     {
         if (charriot <= 0) return;
 
@@ -219,15 +219,15 @@ public class Capitale : Village
         charriot.Set(charriot - 1); //Enleve 1 charriot a la capital
     }
 
-    public override Stat<int>.StatEvent GetStatEvent(Ressource_Type type)
+    public override Stat<int>.StatEvent GetStatEvent(Resource_Type type)
     {
         switch (type)
         {
             default:
                 return base.GetStatEvent(type);
-            case Ressource_Type.happiness:
+            case Resource_Type.happiness:
                 return happiness.onSet;
-            case Ressource_Type.happinessCap:
+            case Resource_Type.happinessCap:
                 return happiness.onMaxSet;
         }
     }

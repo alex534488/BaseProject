@@ -9,10 +9,10 @@ public class Carriage {
     public int delay;
     public Village provenance;
     public Village destination;
-    public Ressource_Type resource;
+    public Resource_Type resource;
     public int amount;
 
-	public Carriage(int delay, Village destination, Village provenance, Ressource_Type resource, int amount)
+	public Carriage(int delay, Village destination, Village provenance, Resource_Type resource, int amount)
     {
         this.provenance = provenance;
         this.delay = delay;
@@ -25,13 +25,13 @@ public class Carriage {
     {
         switch (resource)
         {
-            case Ressource_Type.gold:
+            case Resource_Type.gold:
                 destination.AddGold(amount);
                 return;
-            case Ressource_Type.food:
+            case Resource_Type.food:
                 destination.AddFood(amount);
                 return;
-            case Ressource_Type.army:
+            case Resource_Type.army:
                 destination.AddArmy(amount);
                 return;
             default:
@@ -43,13 +43,13 @@ public class Carriage {
     {
         switch (resource)
         {
-            case Ressource_Type.gold:
+            case Resource_Type.gold:
                 provenance.AddGold(amount);
                 return;
-            case Ressource_Type.food:
+            case Resource_Type.food:
                 provenance.AddFood(amount);
                 return;
-            case Ressource_Type.army:
+            case Resource_Type.army:
                 provenance.AddArmy(amount);
                 return;
             default:

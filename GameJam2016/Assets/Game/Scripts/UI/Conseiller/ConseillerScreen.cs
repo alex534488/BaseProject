@@ -12,7 +12,7 @@ public class ConseillerScreen : MonoBehaviour {
     public RectTransform container;
     public static string SCENE = "ConseillerPanel";
     List<Village> villages;
-    Ressource_Type type;
+    Resource_Type type;
 
     List<ConseillerScreenItem> items = new List<ConseillerScreenItem>();
 
@@ -24,7 +24,7 @@ public class ConseillerScreen : MonoBehaviour {
     }
 
 
-    public void Init(List<Village> villages, Ressource_Type type)
+    public void Init(List<Village> villages, Resource_Type type)
     {
         this.villages = villages;
         this.type = type;
@@ -46,16 +46,16 @@ public class ConseillerScreen : MonoBehaviour {
         switch (type)
         {
             default:
-            case Ressource_Type.food:
+            case Resource_Type.food:
                 titre.text = "Nourriture de l'empire";
                 break;
-            case Ressource_Type.gold:
+            case Resource_Type.gold:
                 titre.text = "Or de l'empire";
                 break;
-            case Ressource_Type.army:
+            case Resource_Type.army:
                 titre.text = "Armé de l'empire";
                 break;
-            case Ressource_Type.happiness:
+            case Resource_Type.happiness:
                 titre.text = "Bonheur de l'empire";
                 break;
         }

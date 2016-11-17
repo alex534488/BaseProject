@@ -1,13 +1,15 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using UnityEngine.Events;
 
 public class MapLens : MonoBehaviour {
 
-    public Ressource_Type type;
+    public Resource_Type type;
     public Image image;
     public Color normalColor = Color.white;
     public Color selectedColor = Color.white;
+    public static GameResources.ResourceEvent onSelect = new GameResources.ResourceEvent();
 
     static MapLens currentLens = null;
 
@@ -21,6 +23,7 @@ public class MapLens : MonoBehaviour {
     {
         if (currentLens != null) currentLens.Deselect();
         currentLens = this;
+        onSelect.Invoke(type);
 
         //Change color & stuff
         image.color = selectedColor;
