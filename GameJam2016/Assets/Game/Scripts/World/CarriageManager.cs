@@ -19,27 +19,27 @@ public class CarriageManager : MonoBehaviour
 
     public void NewDay()
     {
+        // Compteur de tour
         for (int i = 0; i < listCarriage.Count; i++)
         {
             Carriage carriage = listCarriage[i];
             if (carriage.delay <= 0)
             {
-                print("arrivee");
+                //print("arrivee");
                 if (!carriage.destination.isDestroyed)
                 {
                     if (carriage.amount > 0)                                   // Give resource to village
                     {
+                        // les resources sont deja enlever dans le script capitale donc on ne fait que donner
                         carriage.destination.AddResource(carriage.resource, carriage.amount);
                         carriage.destination.AddReputation(10);
                     }
                     else                                                       //Take resource FROM village to capital (instant)
                     {
-                        int realAmount = carriage.destination.lord.CanYouGive(carriage.resource);
-                        if (realAmount > 0)
+                        if (carriage.amount != 0)
                         {
-                            Village.Transfer(carriage.destination, carriage.provenance, carriage.resource, realAmount);
-                            carriage.destination.AddReputation(-10);
-                            RequestManager.SendRequest(new Request(carriage, realAmount));
+                            // Changement: au lieu d'un transfert, on enleve tout de suite au village, puis on donne a la capitale lors de la request
+                            RequestManager.SendRequest(new Request(carriage, carriage.amount));
                         }
                         else RequestManager.SendRequest(new Request(carriage, 0));
                     }
@@ -62,6 +62,13 @@ public class CarriageManager : MonoBehaviour
     public static void SendCarriage(Carriage carriage)
     {
         carriageManager.listCarriage.Add(carriage);
+        if (carriage.destination.GetType() == typeof(Capitale)) // Si le chariot est une requete de resources a un village
+        {
+            carriage.amount = -1 * carriage.destination.lord.CanYouGive(carriage.resource); // calcul le montant sans en faire l'application
+            
+            carriage.destination.AddResource(carriage.resource, carriage.amount); // retirer les resources du village
+            carriage.destination.AddReputation(-10);
+        }
     }
 
     public static int GetCarriageCountAt(Village village)

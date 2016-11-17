@@ -124,9 +124,11 @@ public class Village : IUpdate
     #region Fonctions modifiant les attributs
 
     public void AddGold(int amount) { gold.Set(gold + amount); }
+    public void DecreaseGold(int amount) { gold.Set(gold - amount); }
     public int GetGold() { return gold; }
 
     public void AddFood(int amount) { food.Set(food + amount); }
+    public void DecreaseFood(int amount) { food.Set(food - amount); }
     public int GetFood() { return food; }
     public int GetFoodBilan() { return foodProd - (army * armyFoodCost); }
 
