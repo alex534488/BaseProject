@@ -19,29 +19,27 @@ public class CarriageManager : MonoBehaviour
 
     public void NewDay()
     {
+        // Compteur de tour
         for (int i = 0; i < listCarriage.Count; i++)
         {
             Carriage carriage = listCarriage[i];
             if (carriage.delay <= 0)
             {
-                print("arrivee");
+                //print("arrivee");
                 if (!carriage.destination.isDestroyed)
                 {
                     if (carriage.amount > 0)                                   // Give resource to village
                     {
                         carriage.destination.AddResource(carriage.resource, carriage.amount);
                         carriage.destination.AddReputation(10);
+                        // NB. les resources sont deja enlevees dans le script capitale donc on ne fait que donner
                     }
                     else                                                       //Take resource FROM village to capital (instant)
                     {
-                        int realAmount = carriage.destination.lord.CanYouGive(carriage.resource);
-                        if (realAmount > 0)
+                        if (carriage.amount != 0)
                         {
-                            Village.Transfer(carriage.destination, carriage.provenance, carriage.resource, realAmount);
-                            carriage.destination.AddReputation(-10);
-                            RequestManager.SendRequest(new Request(carriage, realAmount));
-                        }
-                        else RequestManager.SendRequest(new Request(carriage, 0));
+                            RequestManager.BuildAndSendRequest("carriage_return", carriage.destination, carriage.provenance, -1 * carriage.amount, carriage.resource);
+                        } else RequestManager.SendRequest(new Request(carriage, 0));
                     }
                     Empire.instance.capitale.charriot.Set(Empire.instance.capitale.charriot + 1);
                 }
@@ -62,6 +60,9 @@ public class CarriageManager : MonoBehaviour
     public static void SendCarriage(Carriage carriage)
     {
         carriageManager.listCarriage.Add(carriage);
+
+        // Si le chariot est une requete de resources a un village
+        if (carriage.destination.GetType() == typeof(Capitale)) { carriage.amount = -1 * carriage.destination.lord.CanYouGive(carriage.resource); } // calcul le montant sans en faire l'application
     }
 
     public static int GetCarriageCountAt(Village village)
