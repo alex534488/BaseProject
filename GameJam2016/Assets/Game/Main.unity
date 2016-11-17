@@ -882,8 +882,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bacc813a0b11ab14e81bdfe5b60c9c42, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 7
-  secondeType: 8
+  type: 6
+  secondeType: 7
   totalText: {fileID: 1088013567}
   profitText: {fileID: 885410220}
   statTextPrefab: {fileID: 114000013230344322, guid: 09c9e5e0020184f4e8334293c4ed8286,
@@ -3705,8 +3705,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bacc813a0b11ab14e81bdfe5b60c9c42, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 5
-  secondeType: 6
+  type: 4
+  secondeType: 5
   totalText: {fileID: 966660508}
   profitText: {fileID: 0}
   statTextPrefab: {fileID: 114000013230344322, guid: 09c9e5e0020184f4e8334293c4ed8286,
@@ -4584,7 +4584,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 2
-  secondeType: 4
+  secondeType: 3
   totalText: {fileID: 516564114}
   profitText: {fileID: 489745000}
   statTextPrefab: {fileID: 114000013230344322, guid: 09c9e5e0020184f4e8334293c4ed8286,
