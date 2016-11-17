@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d4fa15f82ab2f54b99c5165a4e807de, type: 3}
+  m_Name: Carriage_Return
+  m_EditorClassIdentifier: 
+  customFrame: -1
+  tag: carriage_return
+  text: "Notre empereur, nous sommes de retour de [source.name] et nous avons pris
+    les ressources demand\xE9es au village soit [value] de *resource*."
+  forceSeparation: 37
+  choices:
+  - text: Parfait! Merci beaucoup.
+    transactions:
+    - type: 0
+      value: 0
+      valueType: 0
+      fromId: 0
+      toId: 1
+      fillValue: '[value]'
+    - type: 8
+      value: 0
+      valueType: 0
+      fromId: 0
+      toId: 2
+      fillValue: -10

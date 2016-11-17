@@ -260,7 +260,7 @@ public class Request
         else
         {
             message = new Dialog.Message(" Notre empereur, nous sommes de retour de " + carriage.destination.nom + " et nous avons pris les ressources demandées au village soit " + amount + " de " + carriage.resource + ".");
-            choix.Add(new Choice("Parfait! Merci beaucoup.", delegate () {  carriage.provenance.AddResource(carriage.resource, (-1 * carriage.amount)); }));
+            choix.Add(new Choice("Parfait! Merci beaucoup.", delegate () { carriage.destination.AddReputation(-10); Village.Transfer(carriage.destination, carriage.provenance, carriage.resource, carriage.amount); }));
         }
     }
 
