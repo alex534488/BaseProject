@@ -5,7 +5,7 @@ using UnityEngine.Events;
 [System.Serializable]
 public enum Resource_Type
 {
-    gold, goldProd, food, foodProd, army, armyProd, happiness, happinessCap, reputation
+    gold, goldProd, food, foodProd, army, armyProd, happiness, happinessCap, reputation, custom
 }
 
 public class GameResources : MonoBehaviour

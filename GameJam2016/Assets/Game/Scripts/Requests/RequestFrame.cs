@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -13,6 +14,7 @@ public class RequestFrame : ScriptableObject
     public string tag = "exemple_village_need_gold";
     public string text = "Entrez une message...";
     public char forceSeparation = '%';
+    public Resource_Type type = Resource_Type.custom;
     public List<Choice> choices = new List<Choice>(3);
     public Condition condition = null;
 
@@ -25,7 +27,7 @@ public class RequestFrame : ScriptableObject
     //      source = null
     //      destination = capitale
 
-    public Request Build(Village source, Village destination, int value = 1)
+    public Request Build(Village source, Village destination, int value = 1, Resource_Type type = Resource_Type.custom)
     {
         this.source = source;
         this.destination = destination;
@@ -48,7 +50,7 @@ public class RequestFrame : ScriptableObject
                     foreach (Transaction transaction in choice.transactions)
                     {
                         int newValue = Mathf.RoundToInt(float.Parse(Filter(transaction.fillValue, source, destination, value)));
-                        transaction.Fill(source, destination, newValue);
+                        transaction.Fill(source, destination, newValue, type);
                     }
 
                 //Ajoute la copie de choix a la liste temporaire
@@ -92,10 +94,13 @@ public class RequestFrame : ScriptableObject
                 string result = ReplaceTerms(sub, source, destination, value);
                 text = text.Remove(index, ending - index + 1);
                 text = text.Insert(index, result);
+
+                ending = text.IndexOf(']', index);
+
                 lastIndex = ending + 1;
             }
         }
-        catch
+        catch (Exception e)
         {
             Debug.LogError("Error in " + name + " text formating.");
         }
@@ -212,6 +217,7 @@ public class RequestFrame : ScriptableObject
         text = text.Replace("destination.armyProd", destination == null ? "" : destination.GetArmyProd().ToString());
         text = text.Replace("destination.gold", destination == null ? "" : destination.GetGold().ToString());
         text = text.Replace("destination.goldProd", destination == null ? "" : destination.GetGoldProd().ToString());
+        text = text.Replace("type", GameResources.ToString(type));
 
         text = text.Replace("value", value.ToString());
 
@@ -406,6 +412,10 @@ public class RequestFrameEditor : CCC.EditorUtil.AdvEditor
             EditorGUILayout.LabelField("     ex: - Donner [value*1.15] soldats au village.");
             EditorGUILayout.LabelField("          - Donner [value] soldats au village.");
             EditorGUILayout.LabelField("          - Donner [value-10] soldats au village.");
+            EditorGUILayout.Space();
+            EditorGUILayout.LabelField("- Utilisez '[type]' pour référer au Resource_type de la requête.");
+            EditorGUILayout.LabelField("   passée.");
+            EditorGUILayout.LabelField("     ex: - Notre ville a besoin de [type].");
         }
 
         EditorGUILayout.Space();

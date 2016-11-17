@@ -102,9 +102,10 @@ public class Transaction
     /// <summary>
     /// Used in the editor (request creation)
     /// </summary>
-    public void Fill(Village source, Village destination, int value)
+    public void Fill(Village source, Village destination, int value, Resource_Type type = Resource_Type.custom)
     {
         this.value = value;
+        if (type != Resource_Type.custom && this.type == Resource_Type.custom) this.type = type;
         Fill(source, destination);
     }
 }
