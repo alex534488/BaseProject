@@ -24,13 +24,13 @@ public class Village : IUpdate
     #region Valeurs Initiales
     protected Stat<int> gold = new Stat<int>(5);
     protected Stat<int> food = new Stat<int>(10);
-    protected Stat<int> army = new Stat<int>(5);
+    protected Stat<int> army = new Stat<int>(5); //S'assurer de modifier la 'foodProd' initiale en conséquent.
     protected Stat<int> reputation = new Stat<int>(100, 0, 100);
     #endregion
 
     #region Production 
     protected Stat<int> goldProd = new Stat<int>(0);
-    protected Stat<int> foodProd = new Stat<int>(3);
+    protected Stat<int> foodProd = new Stat<int>(-2); //Tiens déjà en considération les 5 soldats de départ
     protected Stat<int> armyProd = new Stat<int>(0, 0, int.MaxValue);
     #endregion
 
@@ -123,19 +123,27 @@ public class Village : IUpdate
 
     #region Fonctions modifiant les attributs
 
-    public void AddGold(int amount) { gold.Set(gold + amount); }
-    public void DecreaseGold(int amount) { gold.Set(gold - amount); }
+    public void AddGold(int amount)
+    {
+        if (amount == 0) return;
+        gold.Set(gold + amount);
+    }
     public int GetGold() { return gold; }
 
-    public void AddFood(int amount) { food.Set(food + amount); }
-    public void DecreaseFood(int amount) { food.Set(food - amount); }
+    public void AddFood(int amount)
+    {
+        if (amount == 0) return;
+        food.Set(food + amount);
+    }
     public int GetFood() { return food; }
     public int GetFoodBilan() { return foodProd - (army * armyFoodCost); }
 
-    public void SetArmy(int amount) { army.Set(army + amount); }
+    public void SetArmy(int amount) { AddArmy(amount - army); }
     public void AddArmy(int amount)
     {
+        if (amount == 0) return;
         army.Set(army + amount);
+        AddFoodProd(-amount * armyFoodCost);
 
         //Si le changement est négatif et que les soldat sont à 0, il en acheter.
         //Ceci assure une quantité de soldat >= 0 tout en pénalisant le village.
@@ -144,17 +152,33 @@ public class Village : IUpdate
             BuyArmy(-1 * army);
         }
     }
-    public void AddArmyProd(int amount) { armyProd.Set(armyProd + amount); }
+    public void AddArmyProd(int amount)
+    {
+        if (amount == 0) return;
+        armyProd.Set(armyProd + amount);
+    }
     public int GetArmy() { return army; }
     public int GetArmyProd() { return armyProd; }
 
-    public void AddReputation(int amount) { reputation.Set(reputation + amount); }
+    public void AddReputation(int amount)
+    {
+        if (amount == 0) return;
+        reputation.Set(reputation + amount);
+    }
     public int GetReputation() { return reputation; }
 
-    public void AddFoodProd(int amount) { foodProd.Set(foodProd + amount); }
+    public void AddFoodProd(int amount)
+    {
+        if (amount == 0) return;
+        foodProd.Set(foodProd + amount);
+    }
     public int GetFoodProd() { return foodProd; }
 
-    public void AddGoldProd(int amount) { goldProd.Set(goldProd + amount); }
+    public void AddGoldProd(int amount)
+    {
+        if (amount == 0) return;
+        goldProd.Set(goldProd + amount);
+    }
     public int GetGoldProd() { return goldProd; }
 
     public virtual void AddResource(Ressource_Type type, int amount)
@@ -230,9 +254,9 @@ public class Village : IUpdate
     #region Updates 
     protected void UpdateResources()
     {
-        AddGold(goldProd);
-        AddFood(GetFoodBilan());
-        // AddArmy(productionArmy);
+        AddGold(GetGold());
+        AddFood(GetFoodProd());
+        AddArmy(GetArmyProd());
     }
 
     #endregion
@@ -298,8 +322,6 @@ public class Village : IUpdate
                 return food;
             case Ressource_Type.foodProd:
                 return foodProd;
-            case Ressource_Type.foodBilan:
-                return GetFoodBilan();
             case Ressource_Type.gold:
                 return gold;
             case Ressource_Type.goldProd:

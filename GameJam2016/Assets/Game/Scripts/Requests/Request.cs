@@ -127,7 +127,7 @@ public class Condition
 [System.Serializable]
 public class Choice
 {
-    public string text;
+    public string text = "";
     public UnityAction customCallBack = null;
     public List<Transaction> transactions;
 

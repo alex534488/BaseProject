@@ -20,12 +20,16 @@ public class TestScript : MonoBehaviour
         
         if (Input.GetKeyDown(KeyCode.T))
         {
-            RequestManager.BuildAndSendRequest("exemple", Empire.instance.listVillage[2], Empire.instance.capitale, 5);
+            Test();
         }
         if (Input.GetKeyDown(KeyCode.L))
         {
 
         }
+    }
+    void Test()
+    {
+        RequestManager.BuildAndSendRequest("exemple", Empire.instance.listVillage[2], Empire.instance.capitale, 5);
     }
 
 }

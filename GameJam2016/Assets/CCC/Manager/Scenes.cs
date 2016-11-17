@@ -28,7 +28,7 @@ namespace CCC.Manager
             SceneManager.sceneLoaded += OnSceneLoading;
         }
 
-        #region Load Methods
+        #region Load/Unload Methods
 
         static public void Load(string name, LoadSceneMode mode = LoadSceneMode.Single, UnityAction<Scene> callback = null, bool unique = true)
         {
@@ -46,6 +46,11 @@ namespace CCC.Manager
             ScenePromise scenePromise = new ScenePromise(name, callback);
             loadingScenes.Add(scenePromise);
             SceneManager.LoadSceneAsync(name, mode);
+        }
+
+        static public void UnloadScene(string name)
+        {
+            SceneManager.UnloadScene(name);
         }
 
         #endregion

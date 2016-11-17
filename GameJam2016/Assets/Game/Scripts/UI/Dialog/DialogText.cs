@@ -81,27 +81,20 @@ public class DialogText : MonoBehaviour
         Village leftVillage = null;
         bool multipleLeftVillages = false;
 
-        //Trouve le village qui sera afficher a droite (fort probablement la capital) et le village qui sera a gauche
+        //Ajoutes tous les villages concernées à une liste
         foreach (Transaction transaction in transactions)
         {
             if (transaction.source != null && !villageConcernée.Contains(transaction.source)) villageConcernée.Add(transaction.source);
             if (transaction.destination != null && !villageConcernée.Contains(transaction.destination)) villageConcernée.Add(transaction.destination);
         }
 
-        //Met le village de droite (si on tombe sur la capitale, on arrête là. On veut toujours mettre la capitale a droite en priorité)
+        //Met le village de droite et de gauche. La capitale est a droite en priorité.
         foreach (Village village in villageConcernée)
         {
-            rightVillage = village;
-            if (rightVillage == Empire.instance.capitale) break;
+            if (village == Empire.instance.capitale) rightVillage = village;
+            else if (leftVillage == null) leftVillage = village;
+            else if (rightVillage == null) rightVillage = village;
         }
-        //Met le village de gauche (n'importe quelle village, sauf celui de droite)
-        foreach (Village village in villageConcernée)
-        {
-            leftVillage = village;
-            if (rightVillage != leftVillage) break;
-        }
-        if (leftVillage == rightVillage) leftVillage = null;
-
         if (villageConcernée.Count > 2) multipleLeftVillages = true;
 
 

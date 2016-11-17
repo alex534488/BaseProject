@@ -22,6 +22,7 @@ namespace CCC.Utility
             int lastSpace = 1;
             int lastPotentialSeparator = 0;
             int lastSeparator = -1;
+            List<int> newLineInserts = new List<int>();
 
             float currentX = 0;
             float currentY = lineSize;
@@ -58,10 +59,11 @@ namespace CCC.Utility
 
                 if (currentX > area.x) // deborde en x
                 {
+                    newLineInserts.Add(lastSpace + 1);
                     currentX = 0;
                     currentY += lineSize;
 
-                    i = lastSpace;
+                    i = lastSpace+1;
                 }
 
                 if (currentY > area.y || character == forceSeparation) // deborde en y
@@ -69,6 +71,16 @@ namespace CCC.Utility
                     if (lastPotentialSeparator <= lastSeparator) lastPotentialSeparator = i; // Au cas ou il n'y aurait eu aucun '.' depuis le dernier paragraph
 
                     i = lastPotentialSeparator;
+
+                    //Clear les 'newLinesInserts' qui sont coupé sur la prochaine page
+                    for(int u=0; u < newLineInserts.Count; u++)
+                    {
+                        if (newLineInserts[u] > i)
+                        {
+                            newLineInserts.RemoveAt(u);
+                            u--;
+                        }
+                    }
 
                     int length = i - lastSeparator;
                     if (character == forceSeparation) length -= 1;
@@ -87,6 +99,17 @@ namespace CCC.Utility
                     currentY = lineSize;
                     currentX = 0;
                     hasMetALetter = false;
+                }
+            }
+
+            //Ajoute les \n dans le texte pour couper sur ligne
+            for (int u = 0; u < newLineInserts.Count; u++)
+            {
+                int realIndex = newLineInserts[u] + u;
+                text = text.Insert(realIndex, "\n");
+                if (realIndex <= lastSeparator)
+                {
+                    lastSeparator++;
                 }
             }
 
