@@ -4,7 +4,7 @@ using System.Collections;
 [System.Serializable]
 public enum Ressource_Type
 {
-    gold, goldProd, food, foodProd, foodBilan, army, armyProd, happiness, happinessCap, reputation
+    gold, goldProd, food, foodProd, army, armyProd, happiness, happinessCap, reputation
 }
 
 public class GameResources : MonoBehaviour
@@ -38,7 +38,6 @@ public class GameResources : MonoBehaviour
                 return instance.armyProdIcon;
             case Ressource_Type.food:
                 return instance.foodIcon;
-            case Ressource_Type.foodBilan:
             case Ressource_Type.foodProd:
                 return instance.foodProdIcon;
             case Ressource_Type.gold:
