@@ -16,6 +16,7 @@ MonoBehaviour:
   text: "Je suis un messager venant du village de [source.name].\n\nNos citoyen sont
     amateur de PFK. Nous d\xE9sirons donc acheter votre poule."
   forceSeparation: 37
+  type: 9
   choices:
   - text: Vendre la peau de l'ours au marchant de [source.name] ainsi que votre troupeau
       de vache.
