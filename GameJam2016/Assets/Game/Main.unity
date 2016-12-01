@@ -1186,7 +1186,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   liste:
-    list: 
+    list: 010000000200000003000000
 --- !u!1 &394744879
 GameObject:
   m_ObjectHideFlags: 0
@@ -4447,19 +4447,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 179953bd9ce594c40b0789151c73b90d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  listMusicVictoire:
-  - {fileID: 8300000, guid: 5cfddb1e46ac1334595f415ae535a267, type: 3}
-  - {fileID: 8300000, guid: 48b17ad794b8c8e488b27c48abc46701, type: 3}
-  - {fileID: 8300000, guid: 0f553f052fa449f498f71df08e250562, type: 3}
-  - {fileID: 8300000, guid: 59243bc1227b8c44a818788851c34972, type: 3}
-  - {fileID: 8300000, guid: a3ee015d6d00fda4594d97bc222a6115, type: 3}
-  - {fileID: 8300000, guid: af79811d5f656e145a8023ed3c794e24, type: 3}
-  listMusicDefaite:
-  - {fileID: 8300000, guid: 7250dd9b49d1f864c9d88f5583bc92e7, type: 3}
-  - {fileID: 8300000, guid: 3dedc93c15464ae4b9a0fa5024898869, type: 3}
-  - {fileID: 8300000, guid: 9bde525231d5cfc4fadbfae992878f08, type: 3}
-  - {fileID: 8300000, guid: 2cf5b7bc34d031c4aa963c275980708d, type: 3}
-  - {fileID: 8300000, guid: c66d8220e92c98d43a08b0d24e1b84f4, type: 3}
   victoryMusic:
     list:
     - {fileID: 8300000, guid: 59243bc1227b8c44a818788851c34972, type: 3}
