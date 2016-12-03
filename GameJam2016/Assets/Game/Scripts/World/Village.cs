@@ -142,14 +142,21 @@ public class Village : IUpdate
     public void AddArmy(int amount)
     {
         if (amount == 0) return;
-        army.Set(army + amount);
-        AddFoodProd(-amount * armyFoodCost);
+        int realamount = 0;
 
-        //Si le changement est négatif et que les soldat sont à 0, il en acheter.
-        //Ceci assure une quantité de soldat >= 0 tout en pénalisant le village.
-        if (amount < 0 && army < 0)
+        realamount = army + amount;
+
+        // Si la quantite de soldat est sous 0 apres la modification
+        // La ville doit avoir une penalite!
+        if (realamount < 0)
         {
-            BuyArmy(-1 * army);
+            BuyArmy(realamount);
+            //AddFoodProd(-amount * armyFoodCost); // Pourquoi????
+            // Autres effets negatif/positif ICI
+        }
+        else
+        {
+            army.Set(realamount);
         }
     }
     public void AddArmyProd(int amount)
@@ -243,6 +250,11 @@ public class Village : IUpdate
     {
         int coupTotal = costArmy * amount;
         if (coupTotal > gold) return false;
+        if (coupTotal < 0)
+        {
+            AddGold(coupTotal);
+            return true;
+        }
 
         AddArmy(amount);
         AddGold(-coupTotal);
