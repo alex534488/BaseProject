@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using DG.Tweening;
+using UnityEngine.Events;
 
 public class MapCity : MonoBehaviour {
     public Color criticalColor = Color.red;
@@ -10,13 +12,22 @@ public class MapCity : MonoBehaviour {
     public Image resourceIcon;
     public Text resourceText;
     public Text resourceSecondaryText;
+    public Text cityText;
+    public Button button;
+
+    public class MapCityEvent : UnityEvent<MapCity> { }
+    public MapCityEvent onClick = new MapCityEvent();
 
     private Village village;
     private Resource_Type type;
     private Resource_Type secondType;
 
+    private Tweener highlightAnim;
+    private bool animating = false;
+
     public void Init(Village village)
     {
+        button.onClick.AddListener(OnClick);
         this.village = village;
     }
     
@@ -48,5 +59,32 @@ public class MapCity : MonoBehaviour {
         //Second value
         resourceSecondaryText.color = (secondValue < 0) ?criticalColor: Color.black;
         resourceSecondaryText.text = (secondType == Resource_Type.reputationCap ? "/" : (secondValue >=0 ? "+" : "")) + secondValue;
+    }
+
+    void OnClick()
+    {
+        onClick.Invoke(this);
+    }
+
+    public void Highlight()
+    {
+        animating = true;
+
+        highlight.DOColor(new Color(1, 1, 1, highlight.color.a), 0.25f).SetEase(Ease.InOutSine).OnComplete(delegate()
+        {
+            if (animating)
+            {
+                highlightAnim = highlight.DOColor(new Color(0, 0, 0, highlight.color.a), 0.75f).SetLoops(-1, LoopType.Yoyo).SetEase(Ease.InOutSine);
+            }
+        });
+    }
+
+    public void StopHighlight()
+    {
+        animating = false;
+
+        highlightAnim.Kill();
+        highlight.DOKill();
+        highlightAnim = highlight.DOColor(new Color(0, 0, 0, highlight.color.a), 0.75f).SetEase(Ease.InOutSine);
     }
 }

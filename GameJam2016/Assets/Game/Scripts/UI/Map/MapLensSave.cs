@@ -11,7 +11,7 @@ public class MapLensSave : MonoBehaviour
         int lastOpened = 0;
         if (PlayerPrefs.HasKey("MapLens")) lastOpened = PlayerPrefs.GetInt("MapLens");
 
-        if(lastOpened < 0 && lastOpened >= mapLenses.Length) { Debug.LogError("Error selecting the same map lens has before."); return; }
+        if(lastOpened < 0 || lastOpened >= mapLenses.Length) {return; }
         mapLenses[lastOpened].Select();
     }
 

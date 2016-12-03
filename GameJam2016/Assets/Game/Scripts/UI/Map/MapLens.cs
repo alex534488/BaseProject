@@ -3,7 +3,8 @@ using System.Collections;
 using UnityEngine.UI;
 using UnityEngine.Events;
 
-public class MapLens : MonoBehaviour {
+public class MapLens : MonoBehaviour
+{
 
     public Resource_Type type;
     public Image image;
@@ -32,5 +33,13 @@ public class MapLens : MonoBehaviour {
     public bool IsSelected()
     {
         return currentLens == this;
+    }
+
+    static public Resource_Type CurrentType()
+    {
+        if (currentLens != null)
+            return currentLens.type;
+        else
+            return Resource_Type.custom;
     }
 }
