@@ -2,26 +2,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.Events;
+using CCC.Utility;
 using CCC.Manager;
 
 public class Music : MonoBehaviour
 {
+    public RandomAudioCliptList victoryMusic = new RandomAudioCliptList();
+    public RandomAudioCliptList defeatMusic = new RandomAudioCliptList();
 
-    // Sounds
-    public List<AudioClip> listMusicVictoire = new List<AudioClip>();
-    public List<AudioClip> listMusicDefaite = new List<AudioClip>();
-    
     private bool hasInit = false;
 
     void Awake()
     {
         MasterManager.Sync(Init);
-
-        if (listMusicDefaite.Count <= 1 || listMusicVictoire.Count <= 1)
-        {
-            Debug.LogError("There must be at least 2 victorious clips and 2 losing clips.");
-            enabled = false;
-        }
     }
 
     void Init()
@@ -43,23 +36,17 @@ public class Music : MonoBehaviour
     {
         if (EstimationEmpire.Estimation() > 0.60f) // Somme nous victorieux ?
         {
-            PlayMusicFrom(listMusicVictoire);
+            PlayMusicFrom(victoryMusic);
         }
         else // Somme nous entrain de perdre ?
         {
-            PlayMusicFrom(listMusicDefaite);
+            PlayMusicFrom(defeatMusic);
         }
     }
 
-    void PlayMusicFrom(List<AudioClip> list)
+    void PlayMusicFrom(RandomList<AudioClip> list)
     {
-        int index = Random.Range(0, list.Count - 1); //Choisi un clip dans la liste (EXCLUANT LE DERNIER CLIP)
-        AudioClip pickedClip = list[index];
-
-        SoundManager.PlayMusic(pickedClip, false);
-
-        list[index] = list[list.Count - 1]; //Met le dernier clip à la position du clip qu'on vient juste de choisir
-        list[list.Count-1] = pickedClip; //Met le clip qu'on vient juste de choisir à la dernière position (il ne sera pas choisie la prochaine fois)
+        SoundManager.PlayMusic(list.Pick(), false);
     }
 
 }

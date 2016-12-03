@@ -340,6 +340,8 @@ public class Village : IUpdate
                 return goldProd;
             case Resource_Type.reputation:
                 return reputation;
+            case Resource_Type.reputationCap:
+                return 100;
         }
     }
 

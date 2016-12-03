@@ -68,7 +68,7 @@ public class MapManager : MonoBehaviour {
     {
         foreach(MapCity city in cities)
         {
-            city.Display(type);
+            city.Display(type, GameResources.GetAlternate(type));
         }
     }
 

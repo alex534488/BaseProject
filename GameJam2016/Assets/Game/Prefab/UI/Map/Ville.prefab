@@ -377,9 +377,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bef7805d2743bc45aabbaf1143014ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  criticalColor: {r: 1, g: 0, b: 0, a: 1}
   cityName: Mediolanum
   terrain: {fileID: 114000010343631842}
   highlight: {fileID: 114000011828507354}
+  resourceIcon: {fileID: 114000014171075820}
+  resourceText: {fileID: 114000012139383758}
+  resourceSecondaryText: {fileID: 114000014041521508}
 --- !u!114 &114000014041521508
 MonoBehaviour:
   m_ObjectHideFlags: 1

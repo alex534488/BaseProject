@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.Events;
+using UnityEngine.UI;
 using System.Collections.Generic;
 using CCC.Utility;
 
@@ -79,7 +80,11 @@ public class Dialog : MonoBehaviour
     {
         if (isInDialog) return;
 
-        List<string> messageSplit = TextSplitter.Split(message.text, dialogTextPrefab.text, dialogBoxPrefab.GetComponent<RectTransform>().sizeDelta - Vector2.one*25, message.forceSeparation);
+        RectOffset padder = dialogBoxPrefab.GetComponent<VerticalLayoutGroup>().padding;
+        Vector2 paddingSub = new Vector2(padder.horizontal, padder.vertical);
+        List<string> messageSplit = TextSplitter.Split(message.text, dialogTextPrefab.text,
+            dialogBoxPrefab.GetComponent<RectTransform>().sizeDelta - paddingSub
+            , message.forceSeparation);
 
         isInDialog = true;
         this.dialogComplete = dialogComplete;

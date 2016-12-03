@@ -5,12 +5,22 @@ using UnityEngine.Events;
 [System.Serializable]
 public enum Resource_Type
 {
-    gold, goldProd, food, foodProd, army, armyProd, happiness, happinessCap, reputation, custom
+    gold = 0,
+    goldProd = 1,
+    food = 2,
+    foodProd = 3,
+    army = 4,
+    armyProd = 5,
+    happiness = 6,
+    happinessCap = 7,
+    reputation = 8,
+    custom = 9,
+    reputationCap = 10
 }
 
 public class GameResources : MonoBehaviour
 {
-    public class ResourceEvent:UnityEvent<Resource_Type>{ }
+    public class ResourceEvent : UnityEvent<Resource_Type> { }
     public Sprite goldIcon;
     public Sprite goldProdIcon;
     public Sprite foodIcon;
@@ -30,7 +40,7 @@ public class GameResources : MonoBehaviour
 
     public static Sprite GetIcon(Resource_Type type)
     {
-        if(instance == null) { Debug.LogError("Error: instance is null."); return null; }
+        if (instance == null) { Debug.LogError("Error: instance is null."); return null; }
         switch (type)
         {
             default:
@@ -68,6 +78,8 @@ public class GameResources : MonoBehaviour
                 return Resource_Type.goldProd;
             case Resource_Type.happiness:
                 return Resource_Type.happinessCap;
+            case Resource_Type.reputation:
+                return Resource_Type.reputationCap;
         }
     }
 
