@@ -98,6 +98,8 @@ public class DayManager : MonoBehaviour {
 
     public void Lose(string reason)
     {
+        PlayerPrefs.SetInt("highscore", nbJour);
+
         SoundManager.PlayMusic(loseClip, false, 1, true);
         MainSceneFade.instance.FadeOut(delegate ()
         {
