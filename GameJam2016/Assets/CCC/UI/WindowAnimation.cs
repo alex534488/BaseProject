@@ -14,13 +14,13 @@ namespace CCC.UI
         public CanvasGroup content;
         public Image backBg;
 
-        [Header("Settings")]
+        [Header("Window Bg Settings")]
         [Range(0, 1)]
         public float verticalStart = 1;
         [Range(0, 1)]
         public float horizontalStart = 0;
         [Range(0, 1)]
-        public float bgFadeStart = 1;
+        public float fadeStart = 1;
         public bool openOnAwake = true;
 
         [Header("Open")]
@@ -123,7 +123,7 @@ namespace CCC.UI
             if (bgImage != null)
             {
                 bgImage.DOKill();
-                bgImage.DOFade(bgFadeStart, exitTime).SetDelay(delay);
+                bgImage.DOFade(fadeStart, exitTime).SetDelay(delay);
             }
 
             if (backBg != null)
@@ -180,7 +180,7 @@ namespace CCC.UI
             if (bgImage != null)
             {
                 bgImage.DOKill();
-                bgImage.color = new Color(bgImage.color.r, bgImage.color.g, bgImage.color.b, bgFadeStart);
+                bgImage.color = new Color(bgImage.color.r, bgImage.color.g, bgImage.color.b, fadeStart);
             }
 
             if(backBg != null)
