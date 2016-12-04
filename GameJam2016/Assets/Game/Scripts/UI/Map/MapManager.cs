@@ -107,12 +107,16 @@ public class MapManager : MonoBehaviour
 
     void Send(int amount)
     {
-        print("Send " + amount);
+        if (MapLens.CurrentType() == Resource_Type.custom) return;
+
+        Empire.instance.capitale.SendCartToVillage(currentlySelected.GetVillage(), MapLens.CurrentType(), amount);
     }
 
     void Request()
     {
-        print("Request");
+        if (MapLens.CurrentType() == Resource_Type.custom) return;
+
+        Empire.instance.capitale.SendCartToVillage(currentlySelected.GetVillage(), MapLens.CurrentType(), -1);
     }
 
     void OnDestroy()

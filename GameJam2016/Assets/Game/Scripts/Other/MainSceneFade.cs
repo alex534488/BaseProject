@@ -13,7 +13,7 @@ public class MainSceneFade : MonoBehaviour
 
     List<Tweener> tweens = new List<Tweener>();
 
-    public CanvasGroup uiGroup;
+    public CanvasGroup[] uiGroup;
     public SpriteRenderer blackCover;
     public VignetteAndChromaticAberration vignette;
     public float vignetting = 0.41f;
@@ -31,8 +31,11 @@ public class MainSceneFade : MonoBehaviour
     {
         ClearTweens();
 
-        uiGroup.alpha = 0;
-        uiGroup.interactable = false;
+        foreach (CanvasGroup ui in uiGroup)
+        {
+            ui.alpha = 0;
+            ui.interactable = false;
+        }
 
         vignette.intensity = vignetting;
         vignette.enabled = true;
@@ -44,11 +47,19 @@ public class MainSceneFade : MonoBehaviour
         tweens.Add(blackCover.DOFade(0, blackFade).OnComplete(delegate () //Fade black
         {
             vignette.enabled = false;
-            uiGroup.interactable = true;
-            tweens.Add(uiGroup.DOFade(1, uiFade).OnComplete(delegate () //Fade UI
+
+            bool isFirst = true;
+            foreach (CanvasGroup ui in uiGroup)
             {
-                if (onComplete != null) onComplete();
-            }));
+                ui.interactable = true;
+
+                tweens.Add(ui.DOFade(1, uiFade).OnComplete(delegate () //Fade UI
+                {
+                    if (isFirst && onComplete != null) onComplete();
+
+                    isFirst = false;
+                }));
+            }
         }));
     }
 
@@ -56,24 +67,34 @@ public class MainSceneFade : MonoBehaviour
     {
         ClearTweens();
 
-        uiGroup.alpha = 1;
-        uiGroup.interactable = true;
+        foreach (CanvasGroup ui in uiGroup)
+        {
+            ui.alpha = 1;
+            ui.interactable = true;
+        }
 
         vignette.intensity = 0;
         vignette.enabled = true;
 
         blackCover.color = new Color(0, 0, 0, 0);
 
-        tweens.Add(uiGroup.DOFade(0, uiFade).OnComplete(delegate () //Fade UI
-        {
-            uiGroup.interactable = false;
 
-            tweens.Add(DOTween.To(() => vignette.intensity, x => vignette.intensity = x, vignetting, blackFade)); //Fade vignette
-            tweens.Add(blackCover.DOFade(1, blackFade).OnComplete(delegate () //Fade black
+        bool isFirst = true;
+        foreach (CanvasGroup ui in uiGroup)
+            tweens.Add(ui.DOFade(0, uiFade).OnComplete(delegate () //Fade UI
             {
-                if (onComplete != null) onComplete();
+                ui.interactable = false;
+
+                if (isFirst)
+                {
+                    tweens.Add(DOTween.To(() => vignette.intensity, x => vignette.intensity = x, vignetting, blackFade)); //Fade vignette
+                    tweens.Add(blackCover.DOFade(1, blackFade).OnComplete(delegate () //Fade black
+                    {
+                        if (onComplete != null) onComplete();
+                    }));
+                }
+                isFirst = false;
             }));
-        }));
     }
 
     void ClearTweens()

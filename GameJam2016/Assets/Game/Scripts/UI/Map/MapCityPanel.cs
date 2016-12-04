@@ -7,13 +7,23 @@ using CCC.UI;
 public class MapCityPanel : MonoBehaviour
 {
 
-    [Header("Settings have to be set in the button gameObjects")]
     public WindowAnimation mainPanel;
     public Button hitbox;
     public WindowAnimation extension;
     public Text carriageAmount;
+    [Header("Buttons")]
+    [Space()]
     public Button requestButton;
     public Button sendButton;
+    [Header("High")]
+    public int sendHighAmount;
+    public Button sendHighButton;
+    [Header("Medium")]
+    public int sendMedAmount;
+    public Button sendMedButton;
+    [Header("Low")]
+    public int sendLowAmount;
+    public Button sendLowButton;
 
     public class IntEvent : UnityEvent<int> { }
     public IntEvent onSend = new IntEvent();
@@ -22,9 +32,24 @@ public class MapCityPanel : MonoBehaviour
 
     bool closing = false;
 
+    void Start()
+    {
+        //Add listeners
+        sendLowButton.onClick.AddListener(SendLowClick);
+        sendMedButton.onClick.AddListener(SendMedClick);
+        sendHighButton.onClick.AddListener(SendHighClick);
+
+        //Set texts
+        sendLowButton.GetComponentInChildren<Text>().text = "Send " + sendLowAmount;
+        sendMedButton.GetComponentInChildren<Text>().text = "Send " + sendMedAmount;
+        sendHighButton.GetComponentInChildren<Text>().text = "Send " + sendHighAmount;
+    }
+
     #region Open/close
     public void Open(Vector2 position, bool buttonsEnabled = true)
     {
+        UpdateSendButtons();
+
         //Enable/Disable les boutons (on veut pas que les boutons soit enabled quand on est en mode 'reputation')
         requestButton.interactable = buttonsEnabled;
         sendButton.interactable = buttonsEnabled;
@@ -71,6 +96,7 @@ public class MapCityPanel : MonoBehaviour
 
         extension.gameObject.SetActive(true);
         extension.Open();
+        SetCarriageText(Empire.instance.capitale.charriot);
     }
 
     public void CloseExtension()
@@ -90,18 +116,45 @@ public class MapCityPanel : MonoBehaviour
     {
         onSend.Invoke(amount);
         Close();
+        SetCarriageText(Empire.instance.capitale.charriot);
     }
 
     public void RequestClick()
     {
         onRequest.Invoke();
         Close();
+        SetCarriageText(Empire.instance.capitale.charriot);
     }
 
     void SetCarriageText(int amount)
     {
         if (carriageAmount != null)
-            carriageAmount.text = "Remaining          : " + amount;
+            carriageAmount.text = ": " + amount;
     }
 
+    void UpdateSendButtons()
+    {
+        Village capital = Empire.instance.capitale;
+        Resource_Type type = MapLens.CurrentType();
+        int amount = capital.GetResource(type);
+
+        sendLowButton.interactable = amount >= sendLowAmount;
+        sendMedButton.interactable = amount >= sendMedAmount;
+        sendHighButton.interactable = amount >= sendHighAmount;
+    }
+
+    #region Send Button Events
+    void SendHighClick()
+    {
+        SendClick(sendHighAmount);
+    }
+    void SendMedClick()
+    {
+        SendClick(sendMedAmount);
+    }
+    void SendLowClick()
+    {
+        SendClick(sendLowAmount);
+    }
+    #endregion
 }

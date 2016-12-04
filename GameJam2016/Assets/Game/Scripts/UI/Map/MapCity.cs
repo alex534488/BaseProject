@@ -87,4 +87,9 @@ public class MapCity : MonoBehaviour {
         highlight.DOKill();
         highlightAnim = highlight.DOColor(new Color(0, 0, 0, highlight.color.a), 0.75f).SetEase(Ease.InOutSine);
     }
+
+    public Village GetVillage()
+    {
+        return village;
+    }
 }
