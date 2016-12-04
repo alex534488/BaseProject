@@ -12,7 +12,7 @@ public class Music : MonoBehaviour
 
     private bool hasInit = false;
 
-    void Awake()
+    void Start()
     {
         MasterManager.Sync(Init);
     }

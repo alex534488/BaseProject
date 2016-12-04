@@ -18,7 +18,7 @@ public class IntroScript : MonoBehaviour
     public float fadeOut;
     public float loadDelay;
 
-    void Awake()
+    void Start()
     {
         title.color = new Color(title.color.r, title.color.g, title.color.b, 0);
         MasterManager.Sync(Init);

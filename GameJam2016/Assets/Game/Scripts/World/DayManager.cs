@@ -24,7 +24,7 @@ public class DayManager : MonoBehaviour {
     // Nombre de jours (Points de la partie)
     public int nbJour = 0;
 
-    void Awake()
+    void Start()
     {
         main = this;
 
