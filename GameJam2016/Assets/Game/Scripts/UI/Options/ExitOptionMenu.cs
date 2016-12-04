@@ -3,11 +3,14 @@ using System.Collections;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using CCC.Manager;
+using CCC.UI;
 
 public class ExitOptionMenu : MonoBehaviour {
 
     public string SceneName = "OptionMenu";
     public AudioClip clip;
+    public WindowAnimation Window = null;
+    private bool quit = false;
 
     public void Credits()
     {
@@ -39,7 +42,27 @@ public class ExitOptionMenu : MonoBehaviour {
 
     public void Exit()
     {
-        SceneManager.UnloadScene(SceneName);
-        if(clip != null) SoundManager.Play(clip);
+        if (quit) return;
+
+        quit = true;
+
+        if (Window != null)
+        {
+            Window.Close(
+                delegate ()
+                {
+                    SceneManager.UnloadScene(SceneName);
+                    if (clip != null) SoundManager.Play(clip);
+                    quit = false;
+                }
+            );
+        }
+        else
+        {
+            SceneManager.UnloadScene(SceneName);
+            if (clip != null) SoundManager.Play(clip);
+            quit = false;
+        }
+
     }
 }

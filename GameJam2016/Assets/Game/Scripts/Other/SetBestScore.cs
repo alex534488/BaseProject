@@ -5,7 +5,7 @@ using UnityEngine.UI;
 public class SetBestScore : MonoBehaviour {
 
     public Text affichage;
-    private string text = "Best Score: ";
+    private string text = "Best Score\n";
 
 	void Start () {
         text += PlayerPrefs.GetInt("highscore", 0);
