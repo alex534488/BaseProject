@@ -44,7 +44,6 @@ namespace CCC.Utility
         {
             if (value is IComparable)                           // Can be checked
             {
-                IComparable iValue = value as IComparable;
                 if (min != null && min.CompareTo(value) > 0)            // Check min
                 {
                     QuickSet((T)min);

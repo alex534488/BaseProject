@@ -59,7 +59,7 @@ public class Village : IUpdate
 
         int valN = empire.valeurNouriture;
         int valO = empire.valeurOr;
-        int valS = empire.valeurSoldat;
+        //int valS = empire.valeurSoldat;  //J'ai mis cette valeur en commentaire parce qu'elle n'était pas utilisé. Veut-on l'utiliser ?
 
         coutNourriture = empire.valeurNouriture;
         costArmy = empire.valeurSoldat;

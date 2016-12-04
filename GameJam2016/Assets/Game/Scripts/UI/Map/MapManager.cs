@@ -1,8 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.IO;
+
 
 public class MapManager : MonoBehaviour
 {
+    [System.Serializable]
     public class MapSave
     {
         bool[] cityDestructions;
@@ -126,13 +130,33 @@ public class MapManager : MonoBehaviour
 
     void Load()
     {
-        //Temporaire
-        mapSave = new MapSave(cities.Length);
-        //TO DO
+        string path = GameSave.GetFilePath() + "mapDestruction";
+        if (File.Exists(path))
+        {
+            BinaryFormatter bf = new BinaryFormatter();
+            FileStream file = File.Open(path, FileMode.Open);
+            mapSave = (MapSave)bf.Deserialize(file);
+            file.Close();
+            Debug.Log("Load Map");
+        }
+        else
+        {
+            mapSave = new MapSave(cities.Length);
+            Save();
+        }
     }
 
     void Save()
     {
-        //TO DO
+        if (mapSave == null)
+            return;
+
+        string path = GameSave.GetFilePath() + "mapDestruction";
+
+        BinaryFormatter bf = new BinaryFormatter();
+        FileStream file = File.Open(path, FileMode.OpenOrCreate);
+        bf.Serialize(file, mapSave);
+        file.Close();
+        Debug.Log("Save Map");
     }
 }

@@ -26,7 +26,6 @@ public class Capitale : Village
         new BonheurEvent(10, EventBonheur4()),
         new BonheurEvent(0, EventBonheur5()),
     };
-    List<Request> eventBonheur = new List<Request> { EventBonheur1(), EventBonheur2(), EventBonheur3(), EventBonheur4(), EventBonheur5() };
 
     // Attribut de la Capitale
     public int startBonusGold = 10;
@@ -40,13 +39,13 @@ public class Capitale : Village
     // Scout
     public int coutScout = 10;
 
-    // Seuil de tolerance permis pour les resources de la capitale
-    private int seuilNourritureCapitale;
+    // Seuil de tolerance permis pour les resources de la capitale (pas utilisé pour l'instant)
+    //private int seuilNourritureCapitale;
 
     // Trade
     public Stat<int> charriot = new Stat<int>(3, 0, 3);
     public int nbTour = 2;
-    List<Carriage> listCarriage = new List<Carriage>();
+    //List<Carriage> listCarriage = new List<Carriage>(); //Pas utilisé pour l'instant
 
     public Capitale(Empire empire, int id) : base(empire, id, "ROME", null)
     {
@@ -63,8 +62,6 @@ public class Capitale : Village
 
     public override void Update()
     {
-        seuilNourritureCapitale = GetArmy();
-
         UpdateResources();
 
         CheckResources();

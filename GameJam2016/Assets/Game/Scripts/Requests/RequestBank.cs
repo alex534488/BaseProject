@@ -58,11 +58,9 @@ public class RequestBank : ScriptableObject
 public class RequestBankEditor : Editor
 {
     ReorderableList list;
-    RequestBank bank;
 
     void OnEnable()
     {
-        bank = target as RequestBank;
         list = new ReorderableList(serializedObject, serializedObject.FindProperty("requests"), true, true, true, true);
         list.drawElementCallback =
             (Rect rect, int index, bool isActive, bool isFocused) =>

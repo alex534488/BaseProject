@@ -6,13 +6,8 @@ namespace CCC.Utility
 {
     public class FPSCounter : SlowBehaviour
     {
-        static FPSCounter instance;
         public Text display;
-        void Awake()
-        {
-            instance = this;
-        }
-
+        
         protected override void SlowUpdate()
         {
             base.SlowUpdate();

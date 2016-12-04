@@ -86,6 +86,7 @@ GameObject:
   - 222: {fileID: 222000013102319482}
   - 114: {fileID: 114000010343631842}
   - 114: {fileID: 114000012504653636}
+  - 225: {fileID: 225000013778130814}
   m_Layer: 5
   m_Name: Ville
   m_TagString: Untagged
@@ -495,6 +496,7 @@ MonoBehaviour:
   resourceSecondaryText: {fileID: 114000014041521508}
   cityText: {fileID: 114000012380737272}
   button: {fileID: 114000010103588122}
+  fadeGroup: {fileID: 225000013778130814}
 --- !u!114 &114000013521256084
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -875,3 +877,14 @@ RectTransform:
   m_AnchoredPosition: {x: -369.5, y: 173}
   m_SizeDelta: {x: 384, y: 215.3}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!225 &225000013778130814
+CanvasGroup:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000011878966546}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0

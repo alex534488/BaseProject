@@ -17,7 +17,7 @@ public class Seigneur : IUpdate {
     // Seuil de tolerance permis par le seigneur
     private int seuilNourriture;
     private int seuilGold; // or minimale permis, correspond au coutNourriture de village
-    private int seuilMinimalArmy = 3;
+    //private int seuilMinimalArmy = 3;     //Pas utilisé pour l'instant
     public int seuilArmy = 0;
 
     // Investissement

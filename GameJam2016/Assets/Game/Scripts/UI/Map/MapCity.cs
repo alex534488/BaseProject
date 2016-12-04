@@ -4,7 +4,8 @@ using UnityEngine.UI;
 using DG.Tweening;
 using UnityEngine.Events;
 
-public class MapCity : MonoBehaviour {
+public class MapCity : MonoBehaviour
+{
     public Color criticalColor = Color.red;
     public string cityName;
     public Image terrain;
@@ -14,6 +15,7 @@ public class MapCity : MonoBehaviour {
     public Text resourceSecondaryText;
     public Text cityText;
     public Button button;
+    public CanvasGroup fadeGroup;
 
     public class MapCityEvent : UnityEvent<MapCity> { }
     public MapCityEvent onClick = new MapCityEvent();
@@ -30,10 +32,15 @@ public class MapCity : MonoBehaviour {
         button.onClick.AddListener(OnClick);
         this.village = village;
     }
-    
+
     public void DestroyAnim()
     {
-
+        print("Destruction of " + cityName);
+        fadeGroup.blocksRaycasts = false;
+        fadeGroup.DOFade(0, 1).SetDelay(1).OnComplete(delegate()
+        {
+            gameObject.SetActive(false);
+        });
     }
 
     public void Display(Resource_Type type, Resource_Type secondType)
@@ -57,8 +64,8 @@ public class MapCity : MonoBehaviour {
         else resourceSecondaryText.gameObject.SetActive(true);
 
         //Second value
-        resourceSecondaryText.color = (secondValue < 0) ?criticalColor: Color.black;
-        resourceSecondaryText.text = (secondType == Resource_Type.reputationCap ? "/" : (secondValue >=0 ? "+" : "")) + secondValue;
+        resourceSecondaryText.color = (secondValue < 0) ? criticalColor : Color.black;
+        resourceSecondaryText.text = (secondType == Resource_Type.reputationCap ? "/" : (secondValue >= 0 ? "+" : "")) + secondValue;
     }
 
     void OnClick()
@@ -70,7 +77,7 @@ public class MapCity : MonoBehaviour {
     {
         animating = true;
 
-        highlight.DOColor(new Color(1, 1, 1, highlight.color.a), 0.25f).SetEase(Ease.InOutSine).OnComplete(delegate()
+        highlight.DOColor(new Color(1, 1, 1, highlight.color.a), 0.25f).SetEase(Ease.InOutSine).OnComplete(delegate ()
         {
             if (animating)
             {

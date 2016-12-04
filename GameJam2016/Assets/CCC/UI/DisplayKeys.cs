@@ -15,7 +15,7 @@ namespace CCC.UI
 
         private InputManager manager = MasterManager.master.GetManager<InputManager>() as InputManager;
         private KeyCode newKeyCode;
-        private UnityEvent onKeyDown;
+        private UnityEvent onKeyDown = new UnityEvent();
         private Key currentKey;
 
         void Awake()

@@ -103,7 +103,7 @@ public class RequestFrame : ScriptableObject
         }
         catch (Exception e)
         {
-            Debug.LogError("Error in " + name + " text formating.");
+            Debug.LogError("Error in " + name + " text formating. " + e.Message);
         }
         return text;
     }

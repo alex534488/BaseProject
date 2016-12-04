@@ -14,7 +14,7 @@ namespace CCC.Manager
 {
     public class SoundManager : BaseManager
     {
-        static SoundManager instance;
+        new static SoundManager instance;
         [System.Serializable]
         public class VolumeSave
         {
@@ -88,7 +88,7 @@ namespace CCC.Manager
 
             if (faded)
             {
-                Tweener tween = DOTween.To(() => instance.musicSource.volume, x => instance.musicSource.volume = x, 0, 0.5f).OnComplete(delegate ()
+                DOTween.To(() => instance.musicSource.volume, x => instance.musicSource.volume = x, 0, 0.5f).OnComplete(delegate ()
                 {
                     StopMusic(false, onComplete);
                 });
@@ -235,7 +235,7 @@ namespace CCC.Manager
             {
                 base.OnInspectorGUI();
 
-                SoundManager manager = target as SoundManager;
+                //SoundManager manager = target as SoundManager;
 
                 if (Application.isPlaying)
                 {
