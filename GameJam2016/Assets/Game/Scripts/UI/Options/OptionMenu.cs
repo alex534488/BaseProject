@@ -17,6 +17,6 @@ public class OptionMenu : MonoBehaviour {
     void OnClick()
     {
         //load screen
-        Scenes.Load(SceneName, LoadSceneMode.Additive);
+        Scenes.LoadAsync(SceneName, LoadSceneMode.Additive);
     }
 }

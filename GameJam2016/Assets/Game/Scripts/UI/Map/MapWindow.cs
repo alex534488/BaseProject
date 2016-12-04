@@ -11,7 +11,7 @@ public class MapWindow : MonoBehaviour
 
     public void Open()
     {
-        Scenes.Load("Map", UnityEngine.SceneManagement.LoadSceneMode.Additive);
+        Scenes.LoadAsync("Map", UnityEngine.SceneManagement.LoadSceneMode.Additive);
     }
 
     public void Close()
