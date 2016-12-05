@@ -4723,6 +4723,7 @@ MonoBehaviour:
   - {fileID: 660387532}
   - {fileID: 1347084113}
   panel: {fileID: 608827827}
+  windowAnimation: {fileID: 1864772536}
 --- !u!114 &1864772536
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4740,7 +4741,7 @@ MonoBehaviour:
   verticalStart: 0.75
   horizontalStart: 0.75
   fadeStart: 0
-  openOnAwake: 1
+  openOnAwake: 0
   openTime: 0.4
   openEase: 3
   exitTime: 0.25

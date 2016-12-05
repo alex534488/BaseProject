@@ -71,4 +71,5 @@ MonoBehaviour:
   - {fileID: 114000011669547626, guid: 931a668709ca43b4284706d3ff8bd745, type: 2}
   - {fileID: 114000012538815908, guid: c25aa792203371647ac5c6d8bb7bb71e, type: 2}
   - {fileID: 114000014136003338, guid: 9e58a45c0c1132c44b565a546cc1ffa7, type: 2}
+  - {fileID: 114000012533877902, guid: af4e4b3072bf5f5418348c1652575ee5, type: 2}
   managers: []

@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
-using System.Runtime.Serialization.Formatters.Binary;
-using System.IO;
+using CCC.UI;
+using CCC.Utility;
+using UnityEngine.Events;
 
 
 public class MapManager : MonoBehaviour
@@ -32,13 +33,18 @@ public class MapManager : MonoBehaviour
     public MapSave mapSave;
     public MapCityPanel panel = null;
 
+    public WindowAnimation windowAnimation;
+
     MapCity currentlySelected = null;
 
     void Awake()
     {
-        MapLens.onSelect.AddListener(OnLensSelected);
+        Load(OnLoadComplete);
+    }
 
-        Load();
+    void OnLoadComplete()
+    {
+        MapLens.onSelect.AddListener(OnLensSelected);
 
         bool needToSave = false;
 
@@ -72,17 +78,15 @@ public class MapManager : MonoBehaviour
 
         if (needToSave) Save();
 
-
-
-        //Spawn panel if inexisting
+        
         if (panel != null)
         {
             panel.onRequest.AddListener(Request);
             panel.onSend.AddListener(Send);
             panel.onClose.AddListener(OnPanelClose);
         }
-        else
-            Debug.LogError("CityPanel reference is null.");
+
+        windowAnimation.Open();
     }
 
     void OnLensSelected(Resource_Type type)
@@ -128,35 +132,42 @@ public class MapManager : MonoBehaviour
         MapLens.onSelect.RemoveAllListeners();
     }
 
-    void Load()
+    void Load(UnityAction onComplete = null)
     {
-        string path = GameSave.GetFilePath() + "mapDestruction";
-        if (File.Exists(path))
+        string path = GameSave.GetFilePath() + "mapDestruction.dat";
+
+        if (ThreadSave.Exists(path))
         {
-            BinaryFormatter bf = new BinaryFormatter();
-            FileStream file = File.Open(path, FileMode.Open);
-            mapSave = (MapSave)bf.Deserialize(file);
-            file.Close();
-            Debug.Log("Load Map");
+            ThreadSave.Load(path,
+                delegate (object obj)
+                {
+                    mapSave = (MapSave)obj;
+                    if (onComplete != null)
+                        onComplete();
+                });
         }
         else
         {
             mapSave = new MapSave(cities.Length);
-            Save();
+            Save(onComplete);
         }
     }
 
-    void Save()
+    void Save(UnityAction onComplete = null)
     {
         if (mapSave == null)
+        {
+            if(onComplete != null)onComplete();
             return;
+        }
 
-        string path = GameSave.GetFilePath() + "mapDestruction";
+        string path = GameSave.GetFilePath() + "mapDestruction.dat";
 
-        BinaryFormatter bf = new BinaryFormatter();
-        FileStream file = File.Open(path, FileMode.OpenOrCreate);
-        bf.Serialize(file, mapSave);
-        file.Close();
-        Debug.Log("Save Map");
+        ThreadSave.Save(path,mapSave,
+            delegate ()
+            {
+                if (onComplete != null)
+                    onComplete();
+            });
     }
 }
