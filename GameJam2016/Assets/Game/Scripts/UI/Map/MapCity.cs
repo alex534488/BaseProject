@@ -35,7 +35,6 @@ public class MapCity : MonoBehaviour
 
     public void DestroyAnim()
     {
-        print("Destruction of " + cityName);
         fadeGroup.blocksRaycasts = false;
         fadeGroup.DOFade(0, 1).SetDelay(1).OnComplete(delegate()
         {
@@ -52,6 +51,7 @@ public class MapCity : MonoBehaviour
 
     void UpdateDisplay()
     {
+        if (village == null) return;
         resourceIcon.sprite = GameResources.GetIcon(type);
         int value = village.GetResource(type);
         int secondValue = village.GetResource(secondType);

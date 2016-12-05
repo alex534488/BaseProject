@@ -18,11 +18,12 @@ namespace CCC.Manager
         {
             if(actionList.Count > 0)
             {
-                foreach(UnityAction action in actionList)
+                for(int i=0; i<actionList.Count; i++)
                 {
-                    action();
+                    actionList[i]();
+                    actionList.RemoveAt(i);
+                    i--;
                 }
-                actionList.Clear();
             }
         }
 

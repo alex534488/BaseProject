@@ -17,9 +17,18 @@ public class MapManager : MonoBehaviour
         }
         public void SetDestoyed(int index)
         {
+            SetState(index, true);
+        }
+        public void SetAlive(int index)
+        {
+            SetState(index, false);
+        }
+
+        void SetState(int index, bool state)
+        {
             if (index >= cityDestructions.Length || index < 0) return;
 
-            cityDestructions[index] = true;
+            cityDestructions[index] = state;
         }
 
         public bool WasDestroyed(int index)
@@ -71,6 +80,12 @@ public class MapManager : MonoBehaviour
             }
             else
             {
+                //Si le village n'est pas nul, mais la sauveguarde dit qu'il l'est, changer la sauveguarde
+                if (mapSave.WasDestroyed(i))
+                {
+                    mapSave.SetAlive(i);
+                    needToSave = true;
+                }
                 city.Init(village);
                 city.onClick.AddListener(OnMapCitySelected);
             }

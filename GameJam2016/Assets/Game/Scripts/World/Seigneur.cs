@@ -33,7 +33,7 @@ public class Seigneur : IUpdate {
         seuilNourriture = village.armyFoodCost;
         seuilGold = village.coutNourriture * village.armyFoodCost;
         seuilArmy = 0;
-        cooldown += village.id * 2;
+        cooldown += village.id * 2; // wut ?
     }
 	
 	public void Update ()
