@@ -366,6 +366,11 @@ Prefab:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 224000011054475828, guid: 014c09488c2f2ec4286a5cb73f69c581,
+        type: 2}
+      propertyPath: m_SizeDelta.x
+      value: 35.936954
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 014c09488c2f2ec4286a5cb73f69c581, type: 2}
   m_IsPrefabParent: 0
@@ -4723,6 +4728,7 @@ MonoBehaviour:
   - {fileID: 660387532}
   - {fileID: 1347084113}
   panel: {fileID: 608827827}
+  cityLossClip: {fileID: 8300000, guid: 33653d52a57868147a7612ecd7a44725, type: 3}
   windowAnimation: {fileID: 1864772536}
 --- !u!114 &1864772536
 MonoBehaviour:

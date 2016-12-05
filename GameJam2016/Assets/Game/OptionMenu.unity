@@ -690,7 +690,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd33d1827f89d6140911594a69b57aae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  slider: {fileID: 228881555}
+  slider: {fileID: 228881557}
 --- !u!1 &263175778
 GameObject:
   m_ObjectHideFlags: 0
@@ -1342,7 +1342,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd33d1827f89d6140911594a69b57aae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  slider: {fileID: 228881555}
+  slider: {fileID: 228881557}
 --- !u!114 &787354135
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1769,7 +1769,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd33d1827f89d6140911594a69b57aae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  slider: {fileID: 1344318624}
+  slider: {fileID: 1344318627}
 --- !u!114 &1344318627
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1809,10 +1809,10 @@ MonoBehaviour:
   m_FillRect: {fileID: 1882985364}
   m_HandleRect: {fileID: 1926442307}
   m_Direction: 0
-  m_MinValue: -20
-  m_MaxValue: 10
-  m_WholeNumbers: 1
-  m_Value: 0
+  m_MinValue: -30
+  m_MaxValue: 5
+  m_WholeNumbers: 0
+  m_Value: -5
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
@@ -2104,7 +2104,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SceneName: OptionMenu
-  clip: {fileID: 8300000, guid: d1d50eeedb9590a47ad56248d3d808ab, type: 3}
+  clip: {fileID: 0}
   Window: {fileID: 22440885}
 --- !u!114 &1498913443
 MonoBehaviour:
@@ -2524,7 +2524,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd33d1827f89d6140911594a69b57aae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  slider: {fileID: 1344318624}
+  slider: {fileID: 1344318627}
 --- !u!114 &1930784760
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2900,7 +2900,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SceneName: OptionMenu
-  clip: {fileID: 8300000, guid: d1d50eeedb9590a47ad56248d3d808ab, type: 3}
+  clip: {fileID: 0}
   Window: {fileID: 22440885}
 --- !u!114 &2103244029
 MonoBehaviour:

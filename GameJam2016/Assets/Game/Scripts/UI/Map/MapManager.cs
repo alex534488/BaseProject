@@ -2,6 +2,7 @@
 using System.Collections;
 using CCC.UI;
 using CCC.Utility;
+using CCC.Manager;
 using UnityEngine.Events;
 
 
@@ -41,6 +42,7 @@ public class MapManager : MonoBehaviour
     public MapCity[] cities = new MapCity[0];
     public MapSave mapSave;
     public MapCityPanel panel = null;
+    public AudioClip cityLossClip;
 
     public WindowAnimation windowAnimation;
 
@@ -56,6 +58,7 @@ public class MapManager : MonoBehaviour
         MapLens.onSelect.AddListener(OnLensSelected);
 
         bool needToSave = false;
+        bool cityDestuction = false;
 
         //Init les village
         for (int i = 0; i < cities.Length; i++)
@@ -71,6 +74,7 @@ public class MapManager : MonoBehaviour
                 {
                     mapSave.SetDestoyed(i);
                     needToSave = true;
+                    cityDestuction = true;
                     city.DestroyAnim();
                 }
                 else
@@ -93,6 +97,8 @@ public class MapManager : MonoBehaviour
 
         if (needToSave) Save();
 
+        if (cityDestuction)
+            SoundManager.Play(cityLossClip, 0.75f);
         
         if (panel != null)
         {

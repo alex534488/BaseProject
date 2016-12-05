@@ -6,23 +6,23 @@ using CCC.Manager;
 
 public class VolumeModifier : MonoBehaviour {
 
-    public GameObject slider;
+    public Slider slider;
 
     void Awake()
     {
         if(slider.name == "Sfx")
         {
-            slider.GetComponent<Slider>().value = SoundManager.GetSfx();
+            slider.value = SoundManager.GetSfx();
 
         } else if (slider.name == "Music")
         {
-            slider.GetComponent<Slider>().value = SoundManager.GetMusic();
+            slider.value = SoundManager.GetMusic();
         }
     }
 
 	public void OnMusiqueVolumeChange(float newValue)
     {
-        if(newValue <= -20)
+        if(newValue <= slider.minValue)
         {
             SoundManager.SetMusic(-80);
         } else
@@ -33,7 +33,7 @@ public class VolumeModifier : MonoBehaviour {
 
     public void OnEffetVolumeChange(float newValue)
     {
-        if (newValue <= -20)
+        if (newValue <= slider.minValue)
         {
             SoundManager.SetSfx(-80);
         }
