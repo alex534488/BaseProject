@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.Events;
+using Game.Characters;
 
 
 [System.Serializable]
@@ -156,7 +157,12 @@ public class Request
 
     public Condition condition = null;
     public int delay;
+    IKit characterKit = null;
 
+    public void SetCharacterKit(IKit kit)
+    {
+        characterKit = kit;
+    }
 
     // REQUETE MORT
     public Request(Seigneur messager)
@@ -285,13 +291,13 @@ public class Request
             + " Finalement, il ne faut pas oublier que lorsque vous avez terminer de gérer votre empire pour la journée en cours, il faut appuyer sur le bouton Prochain Jour afin de passer à la prochaine journée." + "\n\n"
             + "Un icone en haut au centre permet de signaler votre gouvernance a débuter depuis combien de temps."
             + "% Je crois que j'ai bien compris, je suis prêt à Gouverner!");
-
+        SetCharacterKit(CharacterBank.GetKit(CharacterBank.StandardTags.Philosopher));
     }
 
     public void DoRequest()
     {
         if (condition != null && !condition) Complete(); //Si la condition n'est pas remplie, ne fait pas la request
-        else CharacterEnter.Enter(OnCharacterEnter);
+        else CharacterEnter.Enter(OnCharacterEnter, characterKit);
     }
 
     void OnCharacterEnter()

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine.Events;
 
 
-public class Empire : IUpdate {
+public class Empire : INewDay {
 
     public static Empire instance;
 
@@ -33,19 +33,19 @@ public class Empire : IUpdate {
         map = new VillageMap(capitale, listVillage.ToArray());
 	}
 	
-	public void Update ()
+	public void NewDay ()
     {
         for(int i = 0; i < listVillage.Count; i++)
         {
             Village ancienVillage = listVillage[i];
-            listVillage[i].Update();
+            listVillage[i].NewDay();
             if (ancienVillage.isDestroyed)
             {
                 i = i - 2;
                 Debug.Log("test");
             }
         }
-        capitale.Update();
+        capitale.NewDay();
     }
 
     public void DeleteVillage(Village destroyedVillage)

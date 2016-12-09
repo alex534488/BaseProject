@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.Events;
+using Game.Characters;
 
 public class CharacterEnter : MonoBehaviour {
     public Transform spawn;
@@ -18,7 +19,7 @@ public class CharacterEnter : MonoBehaviour {
         if (main == null) main = this;
     }
 
-    public static void Enter(UnityAction onEnterComplete = null)
+    public static void Enter(UnityAction onEnterComplete = null, IKit characterKit = null)
     {
         if(currentCharacter != null)
         {
@@ -29,7 +30,7 @@ public class CharacterEnter : MonoBehaviour {
 
         currentCharacter = Instantiate(main.characterPrefab.gameObject).GetComponent<Character>();
 
-        currentCharacter.Init(main.spawn);
+        currentCharacter.Init(main.spawn, characterKit);
 
         //Queue destinations
         foreach(Transform tr in main.moveToEnter)

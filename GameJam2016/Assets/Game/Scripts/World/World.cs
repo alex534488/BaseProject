@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class World : IUpdate {
+public class World : INewDay {
 
     public static World main;
     public Empire empire;
@@ -26,10 +26,10 @@ public class World : IUpdate {
        
     }
 
-    public void Update()
+    public void NewDay()
     {
         barbareManager.Uptade();
-        empire.Update();
+        empire.NewDay();
     }
 
     public List<Village> GiveTarget() // Verifie la liste des villages et retourne le village frontiere le plus faible de la liste

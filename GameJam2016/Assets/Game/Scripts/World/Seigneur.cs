@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.Events;
 
-public class Seigneur : IUpdate {
+public class Seigneur : INewDay {
 
     // Le village dirige par le seigneur
     public Village village;
@@ -36,7 +36,7 @@ public class Seigneur : IUpdate {
         cooldown += village.id * 2; // wut ?
     }
 	
-	public void Update ()
+	public void NewDay ()
     {
         if (village.isAttacked)
         {

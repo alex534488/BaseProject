@@ -60,7 +60,7 @@ public class Capitale : Village
         lord = new Seigneur(this);
     }
 
-    public override void Update()
+    public override void NewDay()
     {
         UpdateResources();
 

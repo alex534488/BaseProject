@@ -1,0 +1,41 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 89e29f04ecfc6f7409a26912b4153db2, type: 3}
+  m_Name: CharBank_citizen
+  m_EditorClassIdentifier: 
+  tag: citizen
+  subBanks: []
+  tempBankObj: {fileID: 0}
+  tempCustomKitObj: {fileID: 0}
+  cheveux:
+  - {fileID: 21300000, guid: 87053452aea3ce14898e0fa388f99cca, type: 3}
+  - {fileID: 21300000, guid: e0df9de486604d641a289c9b9c882821, type: 3}
+  - {fileID: 21300000, guid: 357b02ec62626614ba2b26c63ae378a7, type: 3}
+  - {fileID: 21300000, guid: 825be19e8a1fee94795506508d9d243d, type: 3}
+  - {fileID: 21300000, guid: a667deff2950a0a41b1808f85ce5c4ac, type: 3}
+  tetes:
+  - {fileID: 21300000, guid: 2541c13366a3bf54aa4c6520a8df9de1, type: 3}
+  - {fileID: 21300000, guid: 9b100305891d65c49a63c50b6232f21e, type: 3}
+  - {fileID: 21300000, guid: 13d6fd6a7048524458b1cd7b2a78cb7b, type: 3}
+  - {fileID: 21300000, guid: b295bcadfc8e70c4e80d6336f6b12ddb, type: 3}
+  corps:
+  - sprite: {fileID: 21300000, guid: e55a130cebf9e7f44b44807559b1f98a, type: 3}
+    range:
+      min: {r: 0.712, g: 0.573872, b: 0.573872, a: 1}
+      max: {r: 0.975, g: 0.16185, b: 0.17544031, a: 1}
+  bras:
+  - {fileID: 21300000, guid: 4d1f5d33e08f4ee4eb90f0265196b5ad, type: 3}
+  skinRange:
+    min: {r: 0.741, g: 0.6782151, b: 0.571311, a: 1}
+    max: {r: 0.966, g: 0.8638422, b: 0.504252, a: 1}
+  cheveuxRange:
+    min: {r: 0.403, g: 0.35057294, b: 0.313534, a: 1}
+    max: {r: 1, g: 0.941862, b: 0.291, a: 1}

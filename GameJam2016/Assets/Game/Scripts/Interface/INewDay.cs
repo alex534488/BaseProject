@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public interface IUpdate  {
-    void Update();
+public interface INewDay  {
+    void NewDay();
 }

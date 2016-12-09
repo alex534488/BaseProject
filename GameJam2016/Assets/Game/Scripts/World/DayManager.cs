@@ -71,7 +71,7 @@ public class DayManager : MonoBehaviour {
         nbJour++;
         if(currentday != null) currentday.GetComponentInChildren<Text>().text = "Jour " + nbJour;
 
-        theWorld.Update(); // Update le monde
+        theWorld.NewDay(); // Update le monde
         carriageManager.NewDay();
 
         // Debute la phase des requetes

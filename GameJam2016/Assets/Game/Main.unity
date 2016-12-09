@@ -2804,8 +2804,9 @@ GameObject:
   - 114: {fileID: 1418466807}
   - 82: {fileID: 1418466808}
   - 114: {fileID: 1418466806}
+  - 114: {fileID: 1418466809}
   m_Layer: 0
-  m_Name: DayManager
+  m_Name: Managers
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2987,6 +2988,24 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
+--- !u!114 &1418466809
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1418466801}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 453f736d3d4cc7a45818bb21ec49ec40, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  baseKits:
+  - {fileID: 11400000, guid: e00b5b2c20afb80448ea5e4efa481f76, type: 2}
+  - {fileID: 11400000, guid: d67d467fb3549584e9917c810b5f1491, type: 2}
+  - {fileID: 11400000, guid: 0d35da3a81aad434f8fd28833eb0743f, type: 2}
+  - {fileID: 11400000, guid: 2195d7bf63f0e3f4e8ccbb029bb8d2f3, type: 2}
+  otherKits:
+  - {fileID: 11400000, guid: 3f1218e99d058b047a8262dcce6f5098, type: 2}
 --- !u!1 &1453596837
 GameObject:
   m_ObjectHideFlags: 0

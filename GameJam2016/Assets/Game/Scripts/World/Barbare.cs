@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class Barbare : IUpdate
+public class Barbare : INewDay
 {
     public float facteur = 1.2f;
     public int delay = 3;
@@ -42,7 +42,7 @@ public class Barbare : IUpdate
         
     }
 
-    public void Update() 
+    public void NewDay() 
     {
         if (actualTarget != null)
         {

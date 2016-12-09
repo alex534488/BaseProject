@@ -11,7 +11,7 @@ public struct Ligne
     public int taxe;
 }
 
-public class Village : IUpdate
+public class Village : INewDay
 {
 
     public class StatEvent : UnityEvent<int> { }
@@ -88,7 +88,7 @@ public class Village : IUpdate
         this.lord.nom = nomseigneur;
     }
 
-    public virtual void Update()
+    public virtual void NewDay()
     {
         random = (int)(Random.value * 100);
 
@@ -104,7 +104,7 @@ public class Village : IUpdate
 
         UpdateResources();
 
-        lord.Update();
+        lord.NewDay();
 
 
     }

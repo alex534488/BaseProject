@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System;
 
-public class BarbareManager : IUpdate {
+public class BarbareManager : INewDay {
 
     public List<Barbare> listeBarbare = new List<Barbare>();
 
@@ -23,7 +23,7 @@ public class BarbareManager : IUpdate {
         spawn();
         foreach(Barbare bar in listeBarbare)
         {
-            bar.Update();
+            bar.NewDay();
         }
     }
 
@@ -56,7 +56,7 @@ public class BarbareManager : IUpdate {
 
    
 
-    public void Update()
+    public void NewDay()
     {
         throw new NotImplementedException();
     }
