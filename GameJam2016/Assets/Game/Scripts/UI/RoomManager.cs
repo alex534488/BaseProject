@@ -10,7 +10,7 @@ namespace CCC.Manager
 
         new static RoomManager instance;
 
-        public static List<Scene> listView = new List<Scene>();
+        public static List<Canvas> listView = new List<Canvas>();
 
         protected override void Awake()
         {
@@ -18,7 +18,7 @@ namespace CCC.Manager
             instance = this;
         }
 
-        // Trouve l'index d'une scene dans la liste
+        // Trouve l'index d'un Canvas dans la liste
         public static int FindView(Scene currentView) 
         {
             for (int i = 0; i < listView.Count; i++)
@@ -31,7 +31,7 @@ namespace CCC.Manager
             return -1;
         }
 
-        // Trouve l'index de la prochaine scene dans la liste (direction:gauche/droite)
+        // Trouve l'index du prochain Canvas dans la liste (direction:gauche/droite)
         public static int FindNextView(Scene currentView, int direction)
         {
             int current = FindView(currentView);
@@ -42,12 +42,13 @@ namespace CCC.Manager
             return current;
         }
 
-        // Active une scene dans la liste grace a son index
+        // Active un Canvas dans la liste grace a son index
         public static void ActivateView(int i)
         {
             if (i < 0 || i >= listView.Count) return;
 
-            // Load Scene dans la liste a l'index i via le SceneManager
+            // Load Canvas dans la liste a l'index i via le SceneManager
+            listView[i].gameObject.SetActive(true);
         } 
 	}
 }
