@@ -186,7 +186,7 @@ public class StoryGraphWindow : EditorWindow
     void GraphControl()
     {
         Event ev = Event.current;
-        if (ev.type == EventType.MouseDrag && lastFocus < EditorApplication.timeSinceStartup - 0.05f)
+        if (ev.type == EventType.MouseDrag && EditorApplication.timeSinceStartup - lastFocus > 0.05f)
         {
             anchor += ev.delta;
             Repaint();
@@ -266,7 +266,7 @@ public class StoryGraphWindow : EditorWindow
     {
         StoryGraph.Node node = graphNode.node;
         Vector2 pos = new Vector2(5, 60);
-        Vector2 size = new Vector2(350, 102);
+        Vector2 size = new Vector2(350, 84);
 
         EditorGUI.DrawRect(new Rect(pos.x, pos.y, size.x, size.y), new Color(0.9f, 0.9f, 0.9f));
 
@@ -289,7 +289,6 @@ public class StoryGraphWindow : EditorWindow
 
         node.request = EditorGUILayout.ObjectField("Request", node.request, typeof(RequestFrame), false) as RequestFrame;
         node.arrivalDelay = EditorGUILayout.IntField("Delay", node.arrivalDelay);
-        node.onChooseEvent = EditorGUILayout.Toggle("Event on choose", node.onChooseEvent);
 
         save = true;
         GUILayout.EndArea();

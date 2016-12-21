@@ -15,7 +15,6 @@ public class StoryGraph : ScriptableObject, INewDay
         public int arrivalDelay = 1;
         public string id = "";
         public RequestFrame request = null;
-        public bool onChooseEvent = false;
         public List<string> children = new List<string>();
 
         [System.NonSerialized]
