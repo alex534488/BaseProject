@@ -35,7 +35,7 @@ MonoBehaviour:
       fillValue: 5
   - text: Dire au marchant qu'il est FUKEN sexy.
     transactions:
-    - type: 9
+    - type: 6
       value: 5
       valueType: 0
       fromId: 2
@@ -44,13 +44,13 @@ MonoBehaviour:
   - text: "Forcer le marchant a rejoindre les rangs de votre arm\xE9e. C'est pas tous
       les jour qu'un bel homme comme \xE7a entre dans la capitale."
     transactions:
-    - type: 5
+    - type: 4
       value: 1
       valueType: 0
       fromId: 2
       toId: 1
       fillValue: 1
-    - type: 9
+    - type: 8
       value: -5
       valueType: 0
       fromId: 2

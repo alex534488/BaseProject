@@ -25,6 +25,11 @@ public class Tooltip : MonoBehaviour {
 
     void OnPointerEnter()
     {
+        if(prefab == null)
+        {
+            Debug.LogWarning("Tooltip prefab is null");
+            return;
+        }
         currentTooltip = Instantiate(prefab.gameObject).transform;
         currentTooltip.SetParent(container);
         currentTooltip.localScale = Vector3.one;

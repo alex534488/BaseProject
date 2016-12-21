@@ -158,8 +158,8 @@ namespace Game.Characters
             EditorGUILayout.Space();
 
             EditorGUILayout.LabelField("Add", bold);
-            bank.tempBankObj = EditorGUILayout.ObjectField(bank.tempBankObj, typeof(CharacterGenerator));
-            bank.tempCustomKitObj = EditorGUILayout.ObjectField(bank.tempCustomKitObj, typeof(CustomKit));
+            bank.tempBankObj = EditorGUILayout.ObjectField(bank.tempBankObj, typeof(CharacterGenerator), false);
+            bank.tempCustomKitObj = EditorGUILayout.ObjectField(bank.tempCustomKitObj, typeof(CustomKit), false);
 
             if (bank.tempBankObj != null || bank.tempCustomKitObj != null)
             {

@@ -18,6 +18,7 @@ public class DialogBox : MonoBehaviour
         tr = GetComponent<RectTransform>();
         sizeDelta = tr.sizeDelta;
         bigSizeDelta = new Vector2(sizeDelta.x, sizeDelta.y * 1.33333f);
+        tr.sizeDelta = new Vector2(0, tr.sizeDelta.y);
         SetSmall();
     }
 

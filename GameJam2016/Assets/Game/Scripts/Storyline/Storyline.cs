@@ -3,14 +3,78 @@ using System.Collections;
 using UnityEngine.Events;
 
 public class StorylineEvent: UnityEvent<Storyline> { }
-public abstract class Storyline : MonoBehaviour, IInit, INewDay {
-    public StorylineEvent onComplete = new StorylineEvent();
+/// <summary>
+/// Required for each node:
+/// <para></para>
+///     - Implementation of id_Arrive() method. Ex:
+///         VentePotion_Arrive(out Village source, out Village destination, out int value, out Resource_Type type)
+///         {
+///             ...
+///         }
+/// <para></para>
+/// Optional for each node:
+/// <para></para>
+///     - Implementation of id_Choose() method. Ex:
+///         VentePotion_Choose(int choice, string nextNodeId)
+///         {
+///             ...
+///         }
+/// <para></para>
+///     - Implementation of id_Character() method. Ex:
+///         VentePotion_Choose(out Game.Characters.IKit kit)
+///         {
+///             ...
+///         }
+/// </summary>
+public abstract class Storyline : MonoBehaviour, INewDay {
+    public UnityAction<Storyline> onComplete = null;
+    public StoryGraph storyGraph;
+    bool isComplete = false;
 
-    public void Complete()
+    public bool IsComplete
     {
-        onComplete.Invoke(this);
+        get
+        {
+            return isComplete;
+        }
     }
 
-    abstract public void Init();
-    abstract public void NewDay();
+    public string Tag
+    {
+        get
+        {
+            return storyGraph != null ? storyGraph.tag : "";
+        }
+    }
+
+    protected void Complete()
+    {
+        isComplete = true;
+        if(onComplete != null)onComplete.Invoke(this);
+    }
+
+    /// <summary>
+    /// Initialise et lance le 'storygraph'
+    /// </summary>
+    public virtual void Init(UnityAction<Storyline> onComplete)
+    {
+        this.onComplete = onComplete;
+        if(storyGraph != null) storyGraph.Init(this, Complete);
+    }
+
+    /// <summary>
+    /// Execute NewDay sur le 'storygraph'
+    /// </summary>
+    public virtual void NewDay()
+    {
+        if (storyGraph != null) storyGraph.NewDay();
+    }
+
+    /// <summary>
+    /// Ne fait rien...
+    /// </summary>
+    public virtual void Terminate()
+    {
+
+    }
 }

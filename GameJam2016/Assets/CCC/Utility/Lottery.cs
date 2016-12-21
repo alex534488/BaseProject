@@ -31,6 +31,14 @@ namespace CCC.Utility
             list.Add(new LotteryItem(item, weight));
         }
 
+        public int Count
+        {
+            get
+            {
+                return list.Count;
+            }
+        }
+
         public object Pick()
         {
             if (list.Count <= 0)

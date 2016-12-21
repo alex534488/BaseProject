@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d4fa15f82ab2f54b99c5165a4e807de, type: 3}
+  m_Name: DS_Suicide
+  m_EditorClassIdentifier: 
+  customFrame: -1
+  tag: 
+  text: "Mon empereur, un citoyen c'est couper les veines sur la place publique. Il
+    a \xE9crit: \"NO DRUGS NO LIF\" avec son sang."
+  forceSeparation: 37
+  type: 9
+  choices:
+  - text: "C'est bien dommage. Netoyer la sc\xE8ne."
+    transactions: []
+  - text: Dayum!
+    transactions: []

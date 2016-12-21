@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d4fa15f82ab2f54b99c5165a4e807de, type: 3}
+  m_Name: DS_DemandeWeed
+  m_EditorClassIdentifier: 
+  customFrame: -1
+  tag: ds_demandeWeed
+  text: "Bonjour monsieur toi. J'ai mal au bedon... fort fort fort. J'ai besoin de
+    drogu... ueh d'herbe m\xE9dicinal. pls."
+  forceSeparation: 37
+  type: 9
+  choices:
+  - text: Prenez ces herbes ! Nous n'en avons plein.
+    transactions: []
+  - text: "Non, d\xE9sol\xE9 ce sera pour une fois peut-\xEAtre."
+    transactions: []

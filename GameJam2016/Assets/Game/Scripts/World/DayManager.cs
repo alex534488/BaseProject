@@ -20,6 +20,7 @@ public class DayManager : MonoBehaviour {
     public RequestManager requestManager;
     public CarriageManager carriageManager;
     public BarbareManager barbareManager;
+    public StorylineManager storylineManager;
 
     // Nombre de jours (Points de la partie)
     public int nbJour = 0;
@@ -28,7 +29,7 @@ public class DayManager : MonoBehaviour {
     {
         main = this;
 
-        MasterManager.Sync(null);
+        MasterManager.Sync();
 
         theWorld = new World();
         theWorld.Start();
@@ -36,7 +37,7 @@ public class DayManager : MonoBehaviour {
         if (currentday != null) currentday.GetComponentInChildren<Text>().text = "Jour " + nbJour;
 
         requestManager.OnCompletionOfRequests.AddListener(OnAllRequestComplete);
-        if (scoutButton != null) nextDayButton.onClick.AddListener(OnNextDayClick);
+        if (nextDayButton != null) nextDayButton.onClick.AddListener(OnNextDayClick);
         if(scoutButton != null) scoutButton.onClick.AddListener(ButtonScout);
 
         MainSceneFade.instance.FadeIn(Init);
@@ -45,7 +46,7 @@ public class DayManager : MonoBehaviour {
     public void Init()
     {
         RequestManager.SendRequest(new Request());
-        LaunchDay();
+        NewDay();
     }
 
     void OnNextDayClick()
@@ -58,11 +59,11 @@ public class DayManager : MonoBehaviour {
         DelayManager.CallTo(delegate ()
         {
             DayOfTime.Day(1-EstimationEmpire.Estimation());
-            LaunchDay();
+            NewDay();
         }, 1);
     }
 
-    public void LaunchDay()
+    public void NewDay()
     {
         // Desactive les boutons temporairement
         if (scoutButton != null) nextDayButton.GetComponent<Button>().interactable = false;
@@ -73,6 +74,7 @@ public class DayManager : MonoBehaviour {
 
         theWorld.NewDay(); // Update le monde
         carriageManager.NewDay();
+        storylineManager.NewDay();
 
         // Debute la phase des requetes
         PhaseRequete(); 

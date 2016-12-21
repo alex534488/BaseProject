@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Events;
 using System.Collections;
 using System.Collections.Generic;
 using System;
@@ -7,7 +8,7 @@ using System;
 using UnityEditor;
 #endif
 
-[CreateAssetMenu(menuName = "Request Frame")]
+[CreateAssetMenu(menuName = "Request/Request Frame")]
 public class RequestFrame : ScriptableObject
 {
     public int customFrame = -1;
@@ -27,7 +28,7 @@ public class RequestFrame : ScriptableObject
     //      source = null
     //      destination = capitale
 
-    public Request Build(Village source, Village destination, int value = 1, Resource_Type type = Resource_Type.custom)
+    public Request Build(Village source, Village destination, int value = 1, Resource_Type type = Resource_Type.custom, UnityAction[] callbacks = null)
     {
         this.source = source;
         this.destination = destination;
@@ -43,6 +44,7 @@ public class RequestFrame : ScriptableObject
         {
             //Creer la liste
             choicesTempo = new List<Choice>(choices.Count);
+            int currentChoice = 0;
 
             foreach (Choice choice in choices)
             {
@@ -53,10 +55,23 @@ public class RequestFrame : ScriptableObject
                         int newValue = Mathf.RoundToInt(float.Parse(Filter(transaction.fillValue, source, destination, value)));
                         transaction.Fill(source, destination, newValue, type);
                     }
+                
+                //Determine s'il y a un callback a faire
+                UnityAction callback = null;
+                if (callbacks != null && callbacks.Length > currentChoice)
+                    callback = callbacks[currentChoice];
+
+                //Construit le choix
+                Choice choiceTempo = new Choice(Filter(choice.text, source, destination, value),
+                delegate ()
+                {
+                    if (callback != null) callback();
+                    if(choice.customCallBack != null) choice.customCallBack();
+                }, choice.transactions);
 
                 //Ajoute la copie de choix a la liste temporaire
-                Choice choiceTempo = new Choice(Filter(choice.text, source, destination, value), choice.customCallBack, choice.transactions);
                 choicesTempo.Add(choiceTempo);
+                currentChoice++;
             }
         }
 
@@ -322,12 +337,19 @@ public class RequestFrameEditor : CCC.EditorUtil.AdvEditor
     bool textTips = false;
     RequestFrame frame;
 
+    GUIStyle wrapTextArea = new GUIStyle(EditorStyles.textField);
+
     bool CanEdit() { return frame.customFrame == -1; }
+
+    protected override void Awake()
+    {
+        base.Awake();
+    }
 
     public override void OnInspectorGUI()
     {
-        bold.fontStyle = FontStyle.Bold;
-        centered.alignment = TextAnchor.UpperCenter;
+        wrapTextArea = new GUIStyle(EditorStyles.textField);
+        wrapTextArea.wordWrap = true;
 
         frame = target as RequestFrame;
 
@@ -427,7 +449,8 @@ public class RequestFrameEditor : CCC.EditorUtil.AdvEditor
     {
         EditorGUILayout.LabelField("Request Text", bold);
 
-        frame.text = GUILayout.TextArea(frame.text);
+        //frame.text = GUILayout.TextArea(frame.text);
+        frame.text = EditorGUILayout.TextArea(frame.text, wrapTextArea);
 
         EditorGUILayout.Space();
         EditorGUILayout.Space();
@@ -441,7 +464,7 @@ public class RequestFrameEditor : CCC.EditorUtil.AdvEditor
         {
             GUILayout.Label("Aucun choix pour l'instant", centered);
         }
-
+        //
         int index = 0;
         if (frame.choices != null)
             foreach (Choice choix in frame.choices)
@@ -500,7 +523,7 @@ public class RequestFrameEditor : CCC.EditorUtil.AdvEditor
 
         EditorGUILayout.LabelField("Text du choix");
 
-        choix.text = GUILayout.TextArea(choix.text);
+        choix.text = EditorGUILayout.TextArea(choix.text, wrapTextArea);
 
 
         EditorGUILayout.BeginHorizontal();

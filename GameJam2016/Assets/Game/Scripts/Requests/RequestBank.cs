@@ -7,7 +7,7 @@ using UnityEditor;
 using UnityEditorInternal;
 #endif
 
-[CreateAssetMenu(menuName = "Request Bank")]
+[CreateAssetMenu(menuName = "Request/Request Bank")]
 public class RequestBank : ScriptableObject
 {
     [System.Serializable]

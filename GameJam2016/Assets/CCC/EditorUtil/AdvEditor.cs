@@ -7,15 +7,20 @@ namespace CCC.EditorUtil
 {
     public class AdvEditor : Editor
     {
-        protected GUIStyle bold = new GUIStyle();
-        protected GUIStyle centered = new GUIStyle();
-        protected GUIStyle righted = new GUIStyle();
+        protected GUIStyle bold;
+        protected GUIStyle centered;
+        protected GUIStyle righted;
 
 
-        void Awake()
+        protected virtual void Awake()
         {
+            bold = new GUIStyle();
             bold.fontStyle = FontStyle.Bold;
+
+            centered = new GUIStyle();
             centered.alignment = TextAnchor.MiddleCenter;
+
+            righted = new GUIStyle();
             righted.alignment = TextAnchor.MiddleRight;
         }
     }

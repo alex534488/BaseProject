@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d4fa15f82ab2f54b99c5165a4e807de, type: 3}
+  m_Name: DS_Redemande
+  m_EditorClassIdentifier: 
+  customFrame: -1
+  tag: 
+  text: "Rebonjour toi, j'ai vraiment besoin des m\xE9dicament. Je vous ai apporter
+    tout l'argent que je possede en compensation. S'il vous plait, il me faut vraiment
+    cette drogue."
+  forceSeparation: 37
+  type: 9
+  choices:
+  - text: D'accord, d'accord ... Prenez.
+    transactions:
+    - type: 0
+      value: 0
+      valueType: 0
+      fromId: 2
+      toId: 1
+      fillValue: 10
+  - text: "Jamais, vous ne me semblez qu'\xEAtre un pauvre drogu\xE9. N'avez vous
+      donc pas vue Ramdam ? Ils ont clairement d\xE9montr\xE9 les effet n\xE9ffaste
+      de cette herbe. Allez, rentrez chez vous."
+    transactions: []

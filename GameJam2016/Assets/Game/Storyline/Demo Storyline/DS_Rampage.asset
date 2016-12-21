@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d4fa15f82ab2f54b99c5165a4e807de, type: 3}
+  m_Name: DS_Rampage
+  m_EditorClassIdentifier: 
+  customFrame: -1
+  tag: 
+  text: "Mon empereur, un villageois est devenu fou. Il a semmer la chaos dans le
+    march\xE9. Nous avons du l'abattre. Bien qu'il ait tu\xE9 un de nos meilleur soldat,
+    tout est revenue sous l'ordre. Il \xE9tait probablement sous l'influence ... de
+    la DROGUE!"
+  forceSeparation: 37
+  type: 9
+  choices:
+  - text: Shit
+    transactions: []
+  - text: Fuck
+    transactions: []
