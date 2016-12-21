@@ -1,10 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-using System;
-using UnityStandardAssets.ImageEffects;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using System.Reflection;
 using UnityEngine.Events;
 using CCC.Manager;
 using CCC.Utility;
@@ -20,16 +18,12 @@ public class TestScript : MonoBehaviour
         
         if (Input.GetKeyDown(KeyCode.T))
         {
-            Test();
+            StorylineManager.Launch<DemoStory>();
         }
-        if (Input.GetKeyDown(KeyCode.L))
+        if (Input.GetKeyDown(KeyCode.D))
         {
-
+            StorylineManager.Terminate<DemoStory>();
         }
-    }
-    void Test()
-    {
-        RequestManager.BuildAndSendRequest("exemple", Empire.instance.listVillage[2], Empire.instance.capitale, 5);
     }
 
 }
