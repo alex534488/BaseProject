@@ -11,6 +11,8 @@ public class TestScript : MonoBehaviour
 {
     public Text text;
     public RequestFrame frame;
+    public Camera camera;
+    public int speed = 10;
 
     void Update()
     {
@@ -23,6 +25,14 @@ public class TestScript : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.D))
         {
             StorylineManager.Terminate<DemoStory>();
+        }
+        if (Input.GetKey(KeyCode.RightArrow))
+        {
+            camera.transform.Translate(Vector3.right * (speed * Time.deltaTime));
+        }
+        if (Input.GetKey(KeyCode.LeftArrow))
+        {
+            camera.transform.Translate(Vector3.left * (speed * Time.deltaTime));
         }
     }
 
