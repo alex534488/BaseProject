@@ -18,7 +18,7 @@ MonoBehaviour:
   forceSeparation: 37
   type: 9
   choices:
-  - text: "C'est bien dommage. Netoyer la sc\xE8ne."
+  - text: "C'est bien dommage. Nettoyer la sc\xE8ne."
     transactions: []
   - text: Dayum!
     transactions: []

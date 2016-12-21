@@ -43,85 +43,30 @@ public class DemoStory : Storyline {
     {
         base.NewDay();
     }
-
-    public void DemandeDeWeed_Arrive(out Village source, out Village destination, out int value, out Resource_Type type)
-    {
-        //On fill les donnée 'out'
-        source = null;
-        destination = Empire.instance.capitale;
-        value = 1;
-        type = Resource_Type.custom;
-
-        //On code qqchose d'autre ?
-    }
     public void DemandeDeWeed_Character(out IKit kit)
     {
         //On fill les donnée 'out'
         kit = mcKit;
     }
 
-
-    public void RAMPAGE_Arrive(out Village source, out Village destination, out int value, out Resource_Type type)
-    {
-        //On fill les donnée 'out'
-        source = null;
-        destination = Empire.instance.capitale;
-        value = 1;
-        type = Resource_Type.custom;
-
-        //On code qqchose d'autre ?
-    }
     public void RAMPAGE_Character(out IKit kit)
     {
         //On fill les donnée 'out'
         kit = CharacterBank.GetKit(CharacterBank.StandardTags.Soldier);
     }
 
-
-    public void Redemande_Arrive(out Village source, out Village destination, out int value, out Resource_Type type)
-    {
-        //On fill les donnée 'out'
-        source = null;
-        destination = Empire.instance.capitale;
-        value = 1;
-        type = Resource_Type.custom;
-
-        //On code qqchose d'autre ?
-    }
     public void Redemande_Character(out IKit kit)
     {
         //On fill les donnée 'out'
         kit = mcKit;
     }
 
-
-    public void RAMPAGEvDeux_Arrive(out Village source, out Village destination, out int value, out Resource_Type type)
-    {
-        //On fill les donnée 'out'
-        source = null;
-        destination = Empire.instance.capitale;
-        value = 1;
-        type = Resource_Type.custom;
-
-        //On code qqchose d'autre ?
-    }
     public void RAMPAGEvDeux_Character(out IKit kit)
     {
         //On fill les donnée 'out'
         kit = CharacterBank.GetKit(CharacterBank.StandardTags.Soldier);
     }
-
-
-    public void Suicide_Arrive(out Village source, out Village destination, out int value, out Resource_Type type)
-    {
-        //On fill les donnée 'out'
-        source = null;
-        destination = Empire.instance.capitale;
-        value = 1;
-        type = Resource_Type.custom;
-
-        //On code qqchose d'autre ?
-    }
+    
     public void Suicide_Character(out IKit kit)
     {
         //On fill les donnée 'out'

@@ -4,24 +4,19 @@ using UnityEngine.Events;
 
 public class StorylineEvent: UnityEvent<Storyline> { }
 /// <summary>
-/// Required for each node:
-/// <para></para>
-///     - Implementation of id_Arrive() method. Ex:
-///         VentePotion_Arrive(out Village source, out Village destination, out int value, out Resource_Type type)
-///         {
-///             ...
-///         }
-/// <para></para>
 /// Optional for each node:
 /// <para></para>
-///     - Implementation of id_Choose() method. Ex:
-///         VentePotion_Choose(int choice, string nextNodeId)
+///     - Implementation of id_Arrive(out Village source, out Village destination, out int value, out Resource_Type type)
 ///         {
 ///             ...
 ///         }
 /// <para></para>
-///     - Implementation of id_Character() method. Ex:
-///         VentePotion_Choose(out Game.Characters.IKit kit)
+///     - Implementation of id_Choose(int choice, string nextNodeId)
+///         {
+///             ...
+///         }
+/// <para></para>
+///     - Implementation of id_Character(out Game.Characters.IKit kit)
 ///         {
 ///             ...
 ///         }

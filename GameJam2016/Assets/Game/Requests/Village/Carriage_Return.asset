@@ -20,7 +20,7 @@ MonoBehaviour:
   choices:
   - text: Parfait! Merci beaucoup.
     transactions:
-    - type: 0
+    - type: 9
       value: 1
       valueType: 0
       fromId: 0

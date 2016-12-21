@@ -1584,11 +1584,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd231631dfbbb3e4c8083d13a0c9d63c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  leftbutton: {fileID: 624382606}
-  rightbutton: {fileID: 1448957831}
-  camera: {fileID: 389383145}
-  speed: 10
-  offset: 15
 --- !u!114 &624382605
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3026,6 +3021,7 @@ GameObject:
   - 82: {fileID: 1418466808}
   - 114: {fileID: 1418466806}
   - 114: {fileID: 1418466809}
+  - 114: {fileID: 1418466810}
   m_Layer: 0
   m_Name: Managers
   m_TagString: Untagged
@@ -3050,6 +3046,7 @@ MonoBehaviour:
   scoutButton: {fileID: 0}
   requestManager: {fileID: 1418466805}
   carriageManager: {fileID: 1418466804}
+  storylineManager: {fileID: 1418466810}
   nbJour: 0
 --- !u!4 &1418466803
 Transform:
@@ -3227,6 +3224,19 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 2195d7bf63f0e3f4e8ccbb029bb8d2f3, type: 2}
   otherKits:
   - {fileID: 11400000, guid: 3f1218e99d058b047a8262dcce6f5098, type: 2}
+--- !u!114 &1418466810
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1418466801}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efb4356c9bb1e734f971e87af186058d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  storylinePrefabs:
+  - {fileID: 114000010350179418, guid: e278a318dd9402b49906b55f093fa889, type: 2}
 --- !u!1 &1448957827
 GameObject:
   m_ObjectHideFlags: 0
@@ -3276,11 +3286,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd231631dfbbb3e4c8083d13a0c9d63c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  leftbutton: {fileID: 624382606}
-  rightbutton: {fileID: 1448957831}
-  camera: {fileID: 389383145}
-  speed: 10
-  offset: 15
 --- !u!114 &1448957830
 MonoBehaviour:
   m_ObjectHideFlags: 0

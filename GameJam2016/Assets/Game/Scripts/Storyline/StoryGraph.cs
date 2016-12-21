@@ -25,28 +25,25 @@ public class StoryGraph : ScriptableObject, INewDay
         {
             //Parameters
             Village source = null;
-            Village destination = null;
+            Village destination = Empire.instance.capitale;
             int value = 1;
             Resource_Type type = Resource_Type.custom;
 
             //Find method
             MethodInfo method = graph.controller.GetType().GetMethod(id + "_Arrive");
-            object[] parameters = { source, destination, value, type };
 
             //Invoke method
-            if (method == null)
+            if (method != null)
             {
-                Debug.LogError(graph.controller.name + " must implement the following method: "
-                    + id + "_Arrive(out Village source, out Village destination, out int value, out Resource_Type type){}");
-                return;
-            }
-            method.Invoke(graph.controller, parameters);
+                object[] parameters = { source, destination, value, type };
+                method.Invoke(graph.controller, parameters);
 
-            //Recapture parameters
-            source = (Village)parameters[0];
-            destination = (Village)parameters[1];
-            value = (int)parameters[2];
-            type = (Resource_Type)parameters[3];
+                //Recapture parameters
+                source = (Village)parameters[0];
+                destination = (Village)parameters[1];
+                value = (int)parameters[2];
+                type = (Resource_Type)parameters[3];
+            }
 
             //Build request
             if (request != null)
