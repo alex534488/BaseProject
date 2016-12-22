@@ -22,4 +22,10 @@ public class Singleton<T> : MonoBehaviour where T : class
             Destroy(this.gameObject);
         }
     }
+
+    void OnDestroy()
+    {
+        if ((object)instance == this)
+            instance = null;
+    }
 }
