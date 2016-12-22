@@ -49,27 +49,9 @@ public class DemoStory : Storyline {
         kit = mcKit;
     }
 
-    public void RAMPAGE_Character(out IKit kit)
-    {
-        //On fill les donnée 'out'
-        kit = CharacterBank.GetKit(CharacterBank.StandardTags.Soldier);
-    }
-
     public void Redemande_Character(out IKit kit)
     {
         //On fill les donnée 'out'
         kit = mcKit;
-    }
-
-    public void RAMPAGEvDeux_Character(out IKit kit)
-    {
-        //On fill les donnée 'out'
-        kit = CharacterBank.GetKit(CharacterBank.StandardTags.Soldier);
-    }
-    
-    public void Suicide_Character(out IKit kit)
-    {
-        //On fill les donnée 'out'
-        kit = CharacterBank.GetKit(CharacterBank.StandardTags.Soldier);
     }
 }

@@ -24,3 +24,4 @@ MonoBehaviour:
     transactions: []
   - text: Fuck
     transactions: []
+  characterKit: {fileID: 11400000, guid: 2195d7bf63f0e3f4e8ccbb029bb8d2f3, type: 2}

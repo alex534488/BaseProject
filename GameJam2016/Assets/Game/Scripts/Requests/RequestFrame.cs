@@ -3,6 +3,7 @@ using UnityEngine.Events;
 using System.Collections;
 using System.Collections.Generic;
 using System;
+using Game.Characters;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -18,6 +19,7 @@ public class RequestFrame : ScriptableObject
     public Resource_Type type = Resource_Type.custom;
     public List<Choice> choices = new List<Choice>(3);
     public Condition condition = null;
+    public ScriptableObject characterKit = null;
 
     Village source = null; //Demandant
     Village destination = null; //Demandé
@@ -55,7 +57,7 @@ public class RequestFrame : ScriptableObject
                         int newValue = Mathf.RoundToInt(float.Parse(Filter(transaction.fillValue, source, destination, value)));
                         transaction.Fill(source, destination, newValue, type);
                     }
-                
+
                 //Determine s'il y a un callback a faire
                 UnityAction callback = null;
                 if (callbacks != null && callbacks.Length > currentChoice)
@@ -66,7 +68,7 @@ public class RequestFrame : ScriptableObject
                 delegate ()
                 {
                     if (callback != null) callback();
-                    if(choice.customCallBack != null) choice.customCallBack();
+                    if (choice.customCallBack != null) choice.customCallBack();
                 }, choice.transactions);
 
                 //Ajoute la copie de choix a la liste temporaire
@@ -78,6 +80,9 @@ public class RequestFrame : ScriptableObject
         //Build le message et la request
         Dialog.Message messageTempo = new Dialog.Message(textTemp, forceSeparation);
         Request request = new Request(messageTempo, choicesTempo);
+
+        if (characterKit != null && characterKit is IKitMaker)
+            request.SetCharacterKit((characterKit as IKitMaker).MakeKit());
 
         request.condition = condition;
 
@@ -335,6 +340,7 @@ public class RequestFrameEditor : CCC.EditorUtil.AdvEditor
 {
     int customFrameIndex = -2; // -2 = non-initialisé
     bool textTips = false;
+    bool characterKitFold = false;
     RequestFrame frame;
 
     GUIStyle wrapTextArea = new GUIStyle(EditorStyles.textField);
@@ -355,13 +361,15 @@ public class RequestFrameEditor : CCC.EditorUtil.AdvEditor
 
         //DrawHeader();
 
+        DrawTextTips();
+
         DrawCustomFrameIndex(frame);
 
         GUI.enabled = CanEdit();
 
         DrawTag(frame);
 
-        DrawTextTips();
+        DrawCharacterKit();
 
         DrawText(frame);
 
@@ -371,6 +379,8 @@ public class RequestFrameEditor : CCC.EditorUtil.AdvEditor
 
         EditorUtility.SetDirty(target);
     }
+
+    #region Header
 
     void DrawCustomFrameIndex(RequestFrame frame)
     {
@@ -456,6 +466,37 @@ public class RequestFrameEditor : CCC.EditorUtil.AdvEditor
         EditorGUILayout.Space();
     }
 
+    void DrawCharacterKit()
+    {
+        EditorGUILayout.LabelField("Character Kit", bold);
+
+        if (frame.characterKit != null)
+        {
+            EditorGUILayout.BeginHorizontal();
+            if (GUILayout.Button("X", GUILayout.Width(18), GUILayout.Height(18)))
+                frame.characterKit = null;
+            else
+                EditorGUILayout.LabelField("     " + frame.characterKit.name);
+            EditorGUILayout.EndHorizontal();
+        }
+        characterKitFold = EditorGUILayout.Foldout(characterKitFold, "Set");
+        if (characterKitFold)
+        {
+            ScriptableObject temp = null;
+            temp = EditorGUILayout.ObjectField(null, typeof(CharacterGenerator), false) as ScriptableObject;
+            if (temp == null)
+                temp = EditorGUILayout.ObjectField(null, typeof(CustomKit), false) as ScriptableObject;
+            if (temp != null)
+                frame.characterKit = temp;
+        }
+
+        EditorGUILayout.Space();
+        EditorGUILayout.Space();
+    }
+
+    #endregion
+
+    #region Choices
     void DrawChoices(RequestFrame frame)
     {
         GUILayout.Label("Choix", bold);
@@ -576,5 +617,7 @@ public class RequestFrameEditor : CCC.EditorUtil.AdvEditor
         EditorGUILayout.EndHorizontal();
         return true;
     }
+
+    #endregion
 }
 #endif

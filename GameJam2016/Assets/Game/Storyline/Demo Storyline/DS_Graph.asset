@@ -16,29 +16,24 @@ MonoBehaviour:
   - arrivalDelay: 0
     id: DemandeDeWeed
     request: {fileID: 11400000, guid: 7992478cbe353c944b34cbc31b3fccaf, type: 2}
-    onChooseEvent: 0
     children:
     - RAMPAGE
     - Redemande
   - arrivalDelay: 1
     id: RAMPAGE
     request: {fileID: 11400000, guid: 12ebc43e95fdb5c49bad2bca6695ceda, type: 2}
-    onChooseEvent: 0
     children: []
   - arrivalDelay: 0
     id: Redemande
     request: {fileID: 11400000, guid: 999b171fcaa94ac45aa83874de8f6413, type: 2}
-    onChooseEvent: 0
     children:
     - RAMPAGEvDeux
     - Suicide
   - arrivalDelay: 1
     id: RAMPAGEvDeux
     request: {fileID: 11400000, guid: 12ebc43e95fdb5c49bad2bca6695ceda, type: 2}
-    onChooseEvent: 0
     children: []
   - arrivalDelay: 1
     id: Suicide
     request: {fileID: 11400000, guid: fdadbd5e42fff59409d673e75d56a0d4, type: 2}
-    onChooseEvent: 0
     children: []

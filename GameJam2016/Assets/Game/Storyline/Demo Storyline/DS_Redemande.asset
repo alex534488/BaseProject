@@ -22,7 +22,7 @@ MonoBehaviour:
   - text: D'accord, d'accord ... Prenez.
     transactions:
     - type: 0
-      value: 0
+      value: 10
       valueType: 0
       fromId: 2
       toId: 1
@@ -31,3 +31,4 @@ MonoBehaviour:
       donc pas vue Ramdam ? Ils ont clairement d\xE9montr\xE9 les effet n\xE9ffaste
       de cette herbe. Allez, rentrez chez vous."
     transactions: []
+  characterKit: {fileID: 0}
