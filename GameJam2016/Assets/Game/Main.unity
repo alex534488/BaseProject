@@ -3051,6 +3051,7 @@ GameObject:
   - 114: {fileID: 1418466809}
   - 114: {fileID: 1418466810}
   - 114: {fileID: 1418466811}
+  - 114: {fileID: 1418466812}
   m_Layer: 0
   m_Name: Managers
   m_TagString: Untagged
@@ -3075,6 +3076,7 @@ MonoBehaviour:
   scoutButton: {fileID: 0}
   requestManager: {fileID: 1418466805}
   carriageManager: {fileID: 1418466804}
+  storylineManager: {fileID: 1418466812}
   nbJour: 0
 --- !u!4 &1418466803
 Transform:
@@ -3280,7 +3282,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   modes:
-  - {fileID: 11400000, guid: c26b3d2451d149c4f85f4fbde06224c1, type: 2}
+  - {fileID: 0}
+--- !u!114 &1418466812
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1418466801}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efb4356c9bb1e734f971e87af186058d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  storylinePrefabs:
+  - {fileID: 114000010350179418, guid: e278a318dd9402b49906b55f093fa889, type: 2}
 --- !u!1 &1448957827
 GameObject:
   m_ObjectHideFlags: 0
