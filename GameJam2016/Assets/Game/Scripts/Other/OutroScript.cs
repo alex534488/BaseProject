@@ -45,6 +45,16 @@ public class OutroScript : MonoBehaviour
         title.DOFade(0, fadeOut).OnComplete(Load);
     }
 
+    public void GoToMainMenu()
+    {
+        if (hasClicked) return;
+        hasClicked = true;
+
+        SoundManager.StopMusic(true);
+        uiGroup.DOFade(0, fadeOut);
+        title.DOFade(0, fadeOut).OnComplete(Menu);
+    }
+
     public void Quit()
     {
         Application.Quit();
@@ -53,5 +63,10 @@ public class OutroScript : MonoBehaviour
     void Load()
     {
         Scenes.Load("Main");
+    }
+
+    void Menu()
+    {
+        Scenes.Load("MainMenu");
     }
 }

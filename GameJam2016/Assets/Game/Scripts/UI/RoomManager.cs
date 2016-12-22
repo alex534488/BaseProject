@@ -4,51 +4,69 @@ using System.Collections.Generic;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
-namespace CCC.Manager
+public class RoomManager : Singleton<RoomManager>
 {
-    public class RoomManager : BaseManager {
+    public List<Canvas> listView;
 
-        new static RoomManager instance;
+    public Canvas currentView;
 
-        public static List<Canvas> listView = new List<Canvas>();
+    static public bool DoesViewExist(int i)
+    {
+        if (i < 0 || (i > (instance.listView.Count - 1))) return false;
+        return true;
+    }
 
-        protected override void Awake()
+    // Trouve l'index d'un Canvas dans la liste
+    static public int FindView(Canvas currentView)
+    {
+        for (int i = 0; i < instance.listView.Count ; i++)
         {
-            base.Awake();
-            instance = this;
-        }
-
-        // Trouve l'index d'un Canvas dans la liste
-        public static int FindView(Scene currentView) 
-        {
-            for (int i = 0; i < listView.Count; i++)
+            if (instance.listView[i].name == currentView.name)
             {
-                if(listView[i].name == currentView.name)
-                {
-                    return i;
-                }
+                return i;
             }
-            return -1;
         }
+        return -1;
+    }
 
-        // Trouve l'index du prochain Canvas dans la liste (direction:gauche/droite)
-        public static int FindNextView(Scene currentView, int direction)
-        {
-            int current = FindView(currentView);
-            current += direction;
-            if (current < 0) return ((listView.Count-1) - ((-1 * current) - 1));
-            if (current > listView.Count - 1) return (current - (listView.Count - 1));
+    // Trouve l'index du prochain Canvas dans la liste (direction:gauche/droite)
+    static public int FindNextView(Canvas currentView, int direction)
+    {
+        int current = FindView(currentView);
+        current += direction; 
+        if (!DoesViewExist(current)) return -1;
+        return current;
+    }
 
-            return current;
-        }
+    // Active un Canvas dans la liste grace a son index
+    static public void ActivateView(int i)
+    {
+        if (!DoesViewExist(i)) return;
 
-        // Active un Canvas dans la liste grace a son index
-        public static void ActivateView(int i)
-        {
-            if (i < 0 || i >= listView.Count) return;
+        // Load Canvas dans la liste a l'index i via le SceneManager
+        instance.listView[i].gameObject.SetActive(true);
+    }
 
-            // Load Canvas dans la liste a l'index i via le SceneManager
-            listView[i].gameObject.SetActive(true);
-        } 
-	}
+    static public void DeactivateView(int i)
+    {
+        if (!DoesViewExist(i)) return;
+
+        // Load Canvas dans la liste a l'index i via le SceneManager
+        instance.listView[i].gameObject.SetActive(false);
+    }
+
+    static public List<Canvas> GetListView()
+    {
+        return instance.listView;
+    }
+
+    static public Canvas GetView()
+    {
+        return instance.currentView;
+    }
+
+    static public void SetView(Canvas newView)
+    {
+        instance.currentView = newView;
+    }
 }

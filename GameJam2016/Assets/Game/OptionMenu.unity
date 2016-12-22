@@ -255,7 +255,7 @@ RectTransform:
   m_RootOrder: 5
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: -344.4, y: 51}
+  m_AnchoredPosition: {x: -344, y: 51}
   m_SizeDelta: {x: 454, y: 133}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &60956759
@@ -793,8 +793,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SceneName: OptionMenu
-  clip: {fileID: 0}
   Window: {fileID: 0}
+  abandonButton: {fileID: 0}
 --- !u!114 &437712575
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1464,7 +1464,7 @@ RectTransform:
   m_RootOrder: 0
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -343.7, y: -82.45}
+  m_AnchoredPosition: {x: -344, y: -82.45}
   m_SizeDelta: {x: 478, y: 81}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &847003023
@@ -1479,8 +1479,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SceneName: OptionMenu
-  clip: {fileID: 0}
   Window: {fileID: 0}
+  abandonButton: {fileID: 847003025}
 --- !u!114 &847003024
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1515,7 +1515,7 @@ MonoBehaviour:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 1, g: 0.92302233, b: 0.75735295, a: 1}
     m_PressedColor: {r: 0.7205882, g: 0.66848075, b: 0.55633646, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_DisabledColor: {r: 0.161, g: 0.161, b: 0.161, a: 0.647}
     m_ColorMultiplier: 5
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -1954,8 +1954,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SceneName: OptionMenu
-  clip: {fileID: 0}
   Window: {fileID: 0}
+  abandonButton: {fileID: 0}
 --- !u!114 &1419736676
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2104,8 +2104,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SceneName: OptionMenu
-  clip: {fileID: 0}
   Window: {fileID: 22440885}
+  abandonButton: {fileID: 0}
 --- !u!114 &1498913443
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2900,8 +2900,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SceneName: OptionMenu
-  clip: {fileID: 0}
   Window: {fileID: 22440885}
+  abandonButton: {fileID: 0}
 --- !u!114 &2103244029
 MonoBehaviour:
   m_ObjectHideFlags: 0

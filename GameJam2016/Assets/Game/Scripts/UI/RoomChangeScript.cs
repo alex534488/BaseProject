@@ -8,7 +8,6 @@ public class RoomChangeScript : MonoBehaviour
 {
     public Button leftbutton;
     public Button rightbutton;
-    public Scene currentView;
     public Camera camera;
     public int speed = 10;
     public int offset = 10;
@@ -139,20 +138,28 @@ public class RoomChangeScript : MonoBehaviour
     {
         if (direction == -1)
         {
-            ActivateLeftRoom(); // Create/Render Canvas of the View to the left
-            GotoLeftRoom(); // Rotate camera to the left
+            // Create/Render Canvas of the View to the left
+            if(ActivateLeftRoom()) GotoLeftRoom(); // Rotate camera to the left
         }
         else if(direction == 1)
         {
-            ActivateRightRoom(); // Create/Render Canvas of the View to the Right
-            GotoRightRoom(); // Rotate camera to the right
+            // Create/Render Canvas of the View to the Right
+            if(ActivateRightRoom()) GotoRightRoom(); // Rotate camera to the right
         }
     }
 
     // S'assure que les render pour la piece a gauche est tel qu'on le desire
-    void ActivateLeftRoom()
+    bool ActivateLeftRoom()
     {
-        //RoomManager.ActivateView(RoomManager.FindNextView(currentView,-1));
+        // Piece courante est maintenant la piece de gauche
+        if (RoomManager.DoesViewExist((RoomManager.FindView(RoomManager.GetView()) - 1))) RoomManager.SetView(RoomManager.GetListView()[RoomManager.FindView(RoomManager.GetView()) - 1]);
+        else return false;
+
+        // Activer les canvas qui doivent etre afficher
+        if (RoomManager.FindNextView(RoomManager.GetView(), -1) != -1) RoomManager.ActivateView(RoomManager.FindNextView(RoomManager.GetView(),-1));
+        if (RoomManager.FindNextView(RoomManager.GetView(), 2) != -1) RoomManager.DeactivateView(RoomManager.FindNextView(RoomManager.GetView(), 2));
+
+        return true;
     }
 
     // Deplace la camera vers la piece a gauche de celle courante via l'update
@@ -166,9 +173,17 @@ public class RoomChangeScript : MonoBehaviour
     }
 
     // S'assure que les render pour la piece a droite est tel qu'on le desire
-    void ActivateRightRoom()
+    bool ActivateRightRoom()
     {
-        //RoomManager.ActivateView(RoomManager.FindNextView(currentView, 1));
+        // Piece courante est maintenant la piece de droite
+        if (RoomManager.DoesViewExist((RoomManager.FindView(RoomManager.GetView()) + 1))) RoomManager.SetView(RoomManager.GetListView()[RoomManager.FindView(RoomManager.GetView()) + 1]);
+        else return false;
+
+        // Activer les canvas qui doivent etre afficher
+        if (RoomManager.FindNextView(RoomManager.GetView(), 1) != -1) RoomManager.ActivateView(RoomManager.FindNextView(RoomManager.GetView(), 1));
+        if (RoomManager.FindNextView(RoomManager.GetView(), -2) != -1) RoomManager.DeactivateView(RoomManager.FindNextView(RoomManager.GetView(), -2));
+
+        return true;
     }
 
     // Deplace la camera vers la piece a gauche de celle courante via l'update
@@ -183,5 +198,7 @@ public class RoomChangeScript : MonoBehaviour
 
     // TODO:
     // Fonction specifique au touch screen, positionnement de la camera change en fonction
-    // de la position du doigt du joueur mais se lock sur des vues si on souleve un doigt
+    // de la position du doigt du joueur mais se lock sur des vues si le doigt est relacher
+    // (UTILISE DOTWEEN pour quand le doigt est relacher) sinon autre chose pour le quand
+    // le doigt est appuyer
 }

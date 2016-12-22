@@ -30,13 +30,15 @@ public class DayManager : MonoBehaviour {
 
         MasterManager.Sync(null);
 
+        // ApplyGameMode();
+
         theWorld = new World();
         theWorld.Start();
 
         if (currentday != null) currentday.GetComponentInChildren<Text>().text = "Jour " + nbJour;
 
         requestManager.OnCompletionOfRequests.AddListener(OnAllRequestComplete);
-        if (scoutButton != null) nextDayButton.onClick.AddListener(OnNextDayClick);
+        if (nextDayButton != null) nextDayButton.onClick.AddListener(OnNextDayClick);
         if(scoutButton != null) scoutButton.onClick.AddListener(ButtonScout);
 
         MainSceneFade.instance.FadeIn(Init);
