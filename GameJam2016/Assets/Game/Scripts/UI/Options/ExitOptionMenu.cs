@@ -8,9 +8,22 @@ using CCC.UI;
 public class ExitOptionMenu : MonoBehaviour {
 
     public string SceneName = "OptionMenu";
-    public AudioClip clip;
     public WindowAnimation Window = null;
     private bool quit = false;
+    public Button abandonButton;
+
+    public void Awake()
+    {
+        if (abandonButton == null) return;
+
+        if (SceneManager.GetActiveScene().name != "Main")
+        {
+            abandonButton.interactable = false;
+        } else
+        {
+            abandonButton.interactable = true;
+        }
+    }
 
     public void Credits()
     {
@@ -52,7 +65,6 @@ public class ExitOptionMenu : MonoBehaviour {
                 delegate ()
                 {
                     SceneManager.UnloadScene(SceneName);
-                    if (clip != null) SoundManager.Play(clip);
                     quit = false;
                 }
             );
@@ -60,7 +72,6 @@ public class ExitOptionMenu : MonoBehaviour {
         else
         {
             SceneManager.UnloadScene(SceneName);
-            if (clip != null) SoundManager.Play(clip);
             quit = false;
         }
 

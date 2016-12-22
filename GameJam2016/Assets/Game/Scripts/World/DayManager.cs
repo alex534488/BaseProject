@@ -31,6 +31,8 @@ public class DayManager : MonoBehaviour {
 
         MasterManager.Sync();
 
+        // ApplyGameMode();
+
         theWorld = new World();
         theWorld.Start();
 

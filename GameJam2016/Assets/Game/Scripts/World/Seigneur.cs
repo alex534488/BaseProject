@@ -87,9 +87,7 @@ public class Seigneur : INewDay {
         {
             GoAskEmperor(Resource_Type.food, amount);
             alreadyAsk = true;
-        }
-
-        if (village.GetFood() < seuilNourriture)
+        } else if (village.GetFood() < seuilNourriture)
         {
             if (village.GetGold() < goldneed) NeedGold(goldneed);
             if (village.GetGold() > goldneed) {
@@ -124,9 +122,7 @@ public class Seigneur : INewDay {
         {
             GoAskEmperor(Resource_Type.army, amount);
             alreadyAsk = true;
-        }
-
-        if (village.GetGold() < goldneeded) {
+        } else if (village.GetGold() < goldneeded) {
             NeedGold(goldneeded); ;
             if (village.GetGold() > goldneeded){
                 village.AddGold(-goldneeded);
