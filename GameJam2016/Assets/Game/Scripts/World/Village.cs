@@ -4,6 +4,145 @@ using System.Collections.Generic;
 using UnityEngine.Events;
 using CCC.Utility;
 
+public class Village : INewDay
+{
+    public class StatEvent : UnityEvent<int> { }
+
+    private bool capitale = false;
+
+    #region Stats
+    private Stat<int> armyPower = new Stat<int>(0);
+    private Stat<int> armyCost = new Stat<int>(0);
+    private Stat<int> goldProd = new Stat<int>(1);
+    private Stat<int> materialProd = new Stat<int>(1);
+    private Stat<int> scienceProd = new Stat<int>(0);
+    private Stat<int> food = new Stat<int>(1);
+    #endregion
+
+    //private Architect architect;
+
+    private int mapPosition;
+
+    public virtual void NewDay()
+    {
+        
+    }
+
+    public void SetAsCapital()
+    {
+        capitale = true;
+        scienceProd.Set(1);
+        armyCost.Set(1);
+    }
+
+    public bool IsCapital()
+    {
+        return capitale;
+    }
+
+    #region Stats Method
+    public int Get(Resource_Type type)
+    {
+        switch (type)
+        {
+            default:
+                return 0;
+            case Resource_Type.armyPower:
+                return armyPower;
+            case Resource_Type.armyCost:
+                return armyCost;
+            case Resource_Type.goldProd:
+                return goldProd;
+            case Resource_Type.materialProd:
+                return materialProd;
+            case Resource_Type.scienceProd:
+                return scienceProd;
+            case Resource_Type.food:
+                return food;
+        }
+    }
+
+    public void Set(Resource_Type type, int value)
+    {
+        switch (type)
+        {
+            default:
+                return;
+            case Resource_Type.armyPower:
+                armyPower.Set(value);
+                return;
+            case Resource_Type.armyCost:
+                armyCost.Set(value);
+                return;
+            case Resource_Type.goldProd:
+                goldProd.Set(value);
+                return;
+            case Resource_Type.materialProd:
+                materialProd.Set(value);
+                return;
+            case Resource_Type.scienceProd:
+                scienceProd.Set(value);
+                return;
+            case Resource_Type.food:
+                food.Set(value);
+                return;
+        }
+    }
+
+    public void Add(Resource_Type type, int value)
+    {
+        switch (type)
+        {
+            default:
+                return;
+            case Resource_Type.armyPower:
+                armyPower.Set(armyPower + value);
+                return;
+            case Resource_Type.armyCost:
+                armyCost.Set(armyCost + value);
+                return;
+            case Resource_Type.goldProd:
+                goldProd.Set(goldProd + value);
+                return;
+            case Resource_Type.materialProd:
+                materialProd.Set(materialProd + value);
+                return;
+            case Resource_Type.scienceProd:
+                scienceProd.Set(scienceProd + value);
+                return;
+            case Resource_Type.food:
+                food.Set(food + value);
+                return;
+        }
+    }
+
+    public virtual Stat<int>.StatEvent GetOnSet(Resource_Type type)
+    {
+        switch (type)
+        {
+            default:
+                return null;
+            case Resource_Type.armyPower:
+                return armyPower.onSet;
+            case Resource_Type.armyCost:
+                return armyCost.onSet;
+            case Resource_Type.goldProd:
+                return goldProd.onSet;
+            case Resource_Type.materialProd:
+                return materialProd.onSet;
+            case Resource_Type.scienceProd:
+                return scienceProd.onSet;
+            case Resource_Type.food:
+                return food.onSet;
+        }
+    }
+    #endregion
+}
+
+/*
+
+    ANCIEN SYSTEME!!! (a utiliser comme reference)
+
 public struct Ligne
 {
     public int total;
@@ -347,3 +486,4 @@ public class Village : INewDay
 
     #endregion
 }
+*/

@@ -252,7 +252,7 @@ public class Request
     }
 
     // REQUETE CHARIOT
-    public Request(Carriage carriage, int amount)
+    public Request(Cart carriage, int amount)
     {
         if (amount == -1)
         {

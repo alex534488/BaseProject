@@ -2,13 +2,14 @@
 using System.Collections;
 using UnityEngine.SceneManagement;
 using CCC.Manager;
+using DG.Tweening;
 using UnityEngine.UI;
 
 public class RoomChangeScript : MonoBehaviour
 {
     public Button leftbutton;
     public Button rightbutton;
-    public Camera camera;
+    public Camera cam;
     public int speed = 10;
     public int offset = 10;
 
@@ -26,34 +27,34 @@ public class RoomChangeScript : MonoBehaviour
             {
                 // Valeur absolue
                 float newTransformPos;
-                if (camera.transform.position.x < 0) newTransformPos = (-1 * camera.transform.position.x);
-                else newTransformPos = camera.transform.position.x;
+                if (cam.transform.position.x < 0) newTransformPos = (-1 * cam.transform.position.x);
+                else newTransformPos = cam.transform.position.x;
 
                 // Addition de start position qui est negative et la valeur absolue de la destination (ex: -5 a -10) 
                 if ((newTransformPos + startPosition.x) <= offset)
                 {
-                    camera.transform.Translate(Vector3.left * (speed * Time.deltaTime));
+                    cam.transform.Translate(Vector3.left * (speed * Time.deltaTime));
                 }
                 else
                 {
                     // Instructions a faire une fois que la camera est arrive a destination (pourrait etre mis dans une fonction car il y a repetition)
-                    camera.transform.position = new Vector3(startPosition.x-offset,camera.transform.position.y,camera.transform.position.z);
+                    cam.transform.position = new Vector3(startPosition.x-offset,cam.transform.position.y,cam.transform.position.z);
                     translateLeftOn = false;
                     leftbutton.interactable = true;
                     rightbutton.interactable = true;
                 }
             } else
             {
-                if(camera.transform.position.x <= -1)
+                if(cam.transform.position.x <= -1)
                 {
                     // Valeur absolue de la soustraction entre la destination negative et la startPosition qui est positive (ex: de 1 a -4)
-                    if ((-1 * (camera.transform.position.x - startPosition.x)) <= offset)
+                    if ((-1 * (cam.transform.position.x - startPosition.x)) <= offset)
                     {
-                        camera.transform.Translate(Vector3.left * (speed * Time.deltaTime));
+                        cam.transform.Translate(Vector3.left * (speed * Time.deltaTime));
                     }
                     else
                     {
-                        camera.transform.position = new Vector3(startPosition.x - offset, camera.transform.position.y, camera.transform.position.z);
+                        cam.transform.position = new Vector3(startPosition.x - offset, cam.transform.position.y, cam.transform.position.z);
                         translateLeftOn = false;
                         leftbutton.interactable = true;
                         rightbutton.interactable = true;
@@ -61,13 +62,13 @@ public class RoomChangeScript : MonoBehaviour
                 } else
                 {
                     // Soustraction entre la startposition qui est positive et la destination qui est positive (ex: de 10 a 5)
-                    if ((startPosition.x - camera.transform.position.x) <= offset)
+                    if ((startPosition.x - cam.transform.position.x) <= offset)
                     {
-                        camera.transform.Translate(Vector3.left * (speed * Time.deltaTime));
+                        cam.transform.Translate(Vector3.left * (speed * Time.deltaTime));
                     }
                     else
                     {
-                        camera.transform.position = new Vector3(startPosition.x - offset, camera.transform.position.y, camera.transform.position.z);
+                        cam.transform.position = new Vector3(startPosition.x - offset, cam.transform.position.y, cam.transform.position.z);
                         translateLeftOn = false;
                         leftbutton.interactable = true;
                         rightbutton.interactable = true;
@@ -78,7 +79,7 @@ public class RoomChangeScript : MonoBehaviour
         // On se dirige vers une vue a Droite
         else if (translateRightOn)
         {
-            if (camera.transform.position.x <= -1)
+            if (cam.transform.position.x <= -1)
             {
                 // Valeur absolue
                 float newTransformPos;
@@ -86,13 +87,13 @@ public class RoomChangeScript : MonoBehaviour
                 else newTransformPos = startPosition.x;
 
                 // Addition entre la valeur absolue de la position et une destination negative (ex: de 10 a -5)
-                if ((newTransformPos + camera.transform.position.x) <= offset)
+                if ((newTransformPos + cam.transform.position.x) <= offset)
                 {
-                    camera.transform.Translate(Vector3.right * (speed * Time.deltaTime));
+                    cam.transform.Translate(Vector3.right * (speed * Time.deltaTime));
                 }
                 else
                 {
-                    camera.transform.position = new Vector3(startPosition.x + offset, camera.transform.position.y, camera.transform.position.z);
+                    cam.transform.position = new Vector3(startPosition.x + offset, cam.transform.position.y, cam.transform.position.z);
                     translateRightOn = false;
                     leftbutton.interactable = true;
                     rightbutton.interactable = true;
@@ -103,13 +104,13 @@ public class RoomChangeScript : MonoBehaviour
                 if(startPosition.x <= -1)
                 {
                     // Valeur absolue de la soustraction entre une startposition negative et une destination positive (ex: -4 a 1)
-                    if ((-1 *(startPosition.x - camera.transform.position.x)) <= offset)
+                    if ((-1 *(startPosition.x - cam.transform.position.x)) <= offset)
                     {
-                        camera.transform.Translate(Vector3.right * (speed * Time.deltaTime));
+                        cam.transform.Translate(Vector3.right * (speed * Time.deltaTime));
                     }
                     else
                     {
-                        camera.transform.position = new Vector3(startPosition.x + offset, camera.transform.position.y, camera.transform.position.z);
+                        cam.transform.position = new Vector3(startPosition.x + offset, cam.transform.position.y, cam.transform.position.z);
                         translateRightOn = false;
                         leftbutton.interactable = true;
                         rightbutton.interactable = true;
@@ -117,13 +118,13 @@ public class RoomChangeScript : MonoBehaviour
                 } else
                 {
                     // Soustraction entre une destination positive et une startposition positive (ex: de 5 a 10)
-                    if ((camera.transform.position.x - startPosition.x) <= offset)
+                    if ((cam.transform.position.x - startPosition.x) <= offset)
                     {
-                        camera.transform.Translate(Vector3.right * (speed * Time.deltaTime));
+                        cam.transform.Translate(Vector3.right * (speed * Time.deltaTime));
                     }
                     else
                     {
-                        camera.transform.position = new Vector3(startPosition.x + offset, camera.transform.position.y, camera.transform.position.z);
+                        cam.transform.position = new Vector3(startPosition.x + offset, cam.transform.position.y, cam.transform.position.z);
                         translateRightOn = false;
                         leftbutton.interactable = true;
                         rightbutton.interactable = true;
@@ -166,10 +167,19 @@ public class RoomChangeScript : MonoBehaviour
     void GotoLeftRoom()
     {
         // Initalisation de la translate vers la droite jusqu'a la prochaine salle
-        translateLeftOn = true;
-        startPosition = camera.transform.position;
+        //translateLeftOn = true;
+        //startPosition = cam.transform.position;
+
         leftbutton.interactable = false;
         rightbutton.interactable = false;
+
+        Tweener anim = cam.transform.DOMoveX(-15, 2).SetRelative();
+
+        anim.OnComplete(delegate ()
+        {
+            leftbutton.interactable = true;
+            rightbutton.interactable = true;
+        });
     }
 
     // S'assure que les render pour la piece a droite est tel qu'on le desire
@@ -190,10 +200,22 @@ public class RoomChangeScript : MonoBehaviour
     void GotoRightRoom()
     {
         // Initalisation de la translate vers la droite jusqu'a la prochaine salle
+
+        // Ancienne condition dans utiliser dans le update
+        /*
         translateRightOn = true;
         startPosition = camera.transform.position;
+        */
         leftbutton.interactable = false;
         rightbutton.interactable = false;
+
+        Tweener anim = cam.transform.DOMoveX(15, 2).SetRelative();
+
+        anim.OnComplete(delegate()
+        {
+            leftbutton.interactable = true;
+            rightbutton.interactable = true;
+        });
     }
 
     // TODO:

@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.Events;
 
-public class Carriage {
+public class Cart {
 
     public static int stdDelay = 2;
     public int delay;
@@ -12,7 +12,7 @@ public class Carriage {
     public Resource_Type resource;
     public int amount;
 
-	public Carriage(int delay, Village destination, Village provenance, Resource_Type resource, int amount)
+	public Cart(int delay, Village destination, Village provenance, Resource_Type resource, int amount)
     {
         this.provenance = provenance;
         this.delay = delay;

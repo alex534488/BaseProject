@@ -9,7 +9,9 @@ public class DayManager : MonoBehaviour {
 
     public static DayManager main;
 
+    // Audio
     public AudioClip loseClip;
+
     // Boutton du UI
     public Button nextDayButton;
     public GameObject currentday;
@@ -18,7 +20,6 @@ public class DayManager : MonoBehaviour {
     // Manager et World
     public World theWorld;
     public RequestManager requestManager;
-    public CarriageManager carriageManager;
     public BarbareManager barbareManager;
     public StorylineManager storylineManager;
 
@@ -34,13 +35,15 @@ public class DayManager : MonoBehaviour {
         // ApplyGameMode();
 
         theWorld = new World();
-        theWorld.Start();
 
+        // Ajustement initiale du UI pour afficher la journée courante
         if (currentday != null) currentday.GetComponentInChildren<Text>().text = "Jour " + nbJour;
 
+        // Initialisation du système de requête pour la première journée
         requestManager.OnCompletionOfRequests.AddListener(OnAllRequestComplete);
+
+        // Permet de passer au prochain jour
         if (nextDayButton != null) nextDayButton.onClick.AddListener(OnNextDayClick);
-        if(scoutButton != null) scoutButton.onClick.AddListener(ButtonScout);
 
         MainSceneFade.instance.FadeIn(Init);
     }
@@ -65,41 +68,35 @@ public class DayManager : MonoBehaviour {
         }, 1);
     }
 
+    /// <summary>
+    /// On passe au prochain jour en s'assurant de tout mettre à jour
+    /// </summary>
     public void NewDay()
     {
         // Desactive les boutons temporairement
         if (scoutButton != null) nextDayButton.GetComponent<Button>().interactable = false;
         if (scoutButton != null) scoutButton.GetComponent<Button>().interactable = false;
 
+        // Ajustement de l'Affichage du jour
         nbJour++;
         if(currentday != null) currentday.GetComponentInChildren<Text>().text = "Jour " + nbJour;
-
-        theWorld.NewDay(); // Update le monde
+        
+        // Update l'univers
+        theWorld.NewDay(); 
         carriageManager.NewDay();
         storylineManager.NewDay();
-
-        // Debute la phase des requetes
-        PhaseRequete(); 
-    }
-
-    public void PhaseRequete()
-    {
-        requestManager.NewDay(); // Affiche toutes les requetes
+        requestManager.NewDay();
     }
 
     private void OnAllRequestComplete()
     {
         if (nextDayButton != null) nextDayButton.GetComponent<Button>().interactable = true;
-        if (scoutButton != null) scoutButton.GetComponent<Button>().interactable = true;
         if (nextDayButton != null) nextDayButton.GetComponent<Button>().interactable = true;
     }
 
-    void ButtonScout()
-    {
-        scoutButton.GetComponent<Button>().interactable = false;
-        theWorld.empire.capitale.SendScout(theWorld);
-    }
-
+    /// <summary>
+    /// Fin de la partie en allant faire la scene de game over
+    /// </summary>
     public void Lose(string reason)
     {
         PlayerPrefs.SetInt("highscore", nbJour);

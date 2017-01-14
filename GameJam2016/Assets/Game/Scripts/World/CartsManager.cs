@@ -3,12 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.Events;
 
-public class CarriageManager : MonoBehaviour
+public class CartsManager : INewDay
 {
 
-    static CarriageManager carriageManager;
+    static CartsManager carriageManager;
 
-    List<Carriage> listCarriage = new List<Carriage>();
+    List<Cart> listCarriage = new List<Cart>();
 
     public UnityEvent OnArriveDestination = new UnityEvent();
 
@@ -22,7 +22,7 @@ public class CarriageManager : MonoBehaviour
         // Compteur de tour
         for (int i = 0; i < listCarriage.Count; i++)
         {
-            Carriage carriage = listCarriage[i];
+            Cart carriage = listCarriage[i];
             if (carriage.delay <= 0)
             {
                 //print("arrivee");
@@ -57,7 +57,7 @@ public class CarriageManager : MonoBehaviour
         }
     }
 
-    public static void SendCarriage(Carriage carriage)
+    public static void SendCarriage(Cart carriage)
     {
         carriageManager.listCarriage.Add(carriage);
 
@@ -68,7 +68,7 @@ public class CarriageManager : MonoBehaviour
     public static int GetCarriageCountAt(Village village)
     {
         int amount = 0;
-        foreach (Carriage carriage in carriageManager.listCarriage)
+        foreach (Cart carriage in carriageManager.listCarriage)
         {
             if (carriage.provenance == village || carriage.destination == village) amount++;
         }

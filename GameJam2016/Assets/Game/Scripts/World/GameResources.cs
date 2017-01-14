@@ -5,31 +5,35 @@ using UnityEngine.Events;
 [System.Serializable]
 public enum Resource_Type
 {
-    gold = 0,
-    goldProd = 1,
-    food = 2,
-    foodProd = 3,
-    army = 4,
-    armyProd = 5,
-    happiness = 6,
-    happinessCap = 7,
-    reputation = 8,
-    custom = 9,
-    reputationCap = 10
+    science = 1,
+    scienceProd = 2,
+    gold = 3,
+    goldProd = 4,
+    material = 5,
+    materialProd = 6,
+    citizenProgress = 7,
+    food = 8,
+    happiness = 9,
+    reputation = 10,
+    armyPower = 11,
+    armyCost = 12
 }
 
 public class GameResources : MonoBehaviour
 {
     public class ResourceEvent : UnityEvent<Resource_Type> { }
+    public Sprite scienceIcon;
+    public Sprite scienceProdIcon;
     public Sprite goldIcon;
     public Sprite goldProdIcon;
+    public Sprite materialIcon;
+    public Sprite materialProdIcon;
+    public Sprite citizenProgressIcon;
     public Sprite foodIcon;
-    public Sprite foodProdIcon;
-    public Sprite armyIcon;
-    public Sprite armyProdIcon;
-    public Sprite reputationIcon;
     public Sprite happinessIcon;
-    public Sprite happinessCapIcon;
+    public Sprite reputationIcon;
+    public Sprite armyPowerIcon;
+    public Sprite armyCostIcon;
 
     static GameResources instance;
 
@@ -44,42 +48,30 @@ public class GameResources : MonoBehaviour
         switch (type)
         {
             default:
-            case Resource_Type.army:
-                return instance.armyIcon;
-            case Resource_Type.armyProd:
-                return instance.armyProdIcon;
-            case Resource_Type.food:
-                return instance.foodIcon;
-            case Resource_Type.foodProd:
-                return instance.foodProdIcon;
+            case Resource_Type.science:
+                return instance.scienceIcon;
+            case Resource_Type.scienceProd:
+                return instance.scienceProdIcon;
             case Resource_Type.gold:
                 return instance.goldIcon;
             case Resource_Type.goldProd:
                 return instance.goldProdIcon;
+            case Resource_Type.material:
+                return instance.materialIcon;
+            case Resource_Type.materialProd:
+                return instance.materialProdIcon;
+            case Resource_Type.citizenProgress:
+                return instance.citizenProgressIcon;
+            case Resource_Type.food:
+                return instance.foodIcon;
             case Resource_Type.happiness:
                 return instance.happinessIcon;
-            case Resource_Type.happinessCap:
-                return instance.happinessCapIcon;
             case Resource_Type.reputation:
                 return instance.reputationIcon;
-        }
-    }
-
-    public static Resource_Type GetAlternate(Resource_Type stdType)
-    {
-        switch (stdType)
-        {
-            default: return Resource_Type.goldProd;
-            case Resource_Type.army:
-                return Resource_Type.armyProd;
-            case Resource_Type.food:
-                return Resource_Type.foodProd;
-            case Resource_Type.gold:
-                return Resource_Type.goldProd;
-            case Resource_Type.happiness:
-                return Resource_Type.happinessCap;
-            case Resource_Type.reputation:
-                return Resource_Type.reputationCap;
+            case Resource_Type.armyPower:
+                return instance.armyPowerIcon;
+            case Resource_Type.armyCost:
+                return instance.armyCostIcon;
         }
     }
 
@@ -88,16 +80,30 @@ public class GameResources : MonoBehaviour
         switch (stdType)
         {
             default: return stdType.ToString();
-            case Resource_Type.army:
-                return "armé";
-            case Resource_Type.food:
-                return "nourriture";
+            case Resource_Type.science:
+                return "Science";
+            case Resource_Type.scienceProd:
+                return "Science Production";
             case Resource_Type.gold:
-                return "or";
+                return "Gold";
+            case Resource_Type.goldProd:
+                return "Gold Production";
+            case Resource_Type.material:
+                return "Material";
+            case Resource_Type.materialProd:
+                return "Material Production";
+            case Resource_Type.citizenProgress:
+                return "Citizen Progress";
+            case Resource_Type.food:
+                return "Food";
             case Resource_Type.happiness:
-                return "bonheur";
+                return "Happiness";
             case Resource_Type.reputation:
-                return "réputation";
+                return "Reputation";
+            case Resource_Type.armyPower:
+                return "Army Power";
+            case Resource_Type.armyCost:
+                return "Army Cost";
         }
     }
 }

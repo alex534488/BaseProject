@@ -507,6 +507,53 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 206591843}
+--- !u!1 &225897919
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 225897920}
+  - 114: {fileID: 225897921}
+  m_Layer: 0
+  m_Name: RoomButtons
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &225897920
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 225897919}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -1021.5163, y: -540.00006, z: 0}
+  m_LocalScale: {x: 1.9494587, y: 1.9494587, z: 1}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_Children:
+  - {fileID: 624382603}
+  - {fileID: 1448957828}
+  m_Father: {fileID: 620568655}
+  m_RootOrder: 4
+--- !u!114 &225897921
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 225897919}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd231631dfbbb3e4c8083d13a0c9d63c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  leftbutton: {fileID: 624382606}
+  rightbutton: {fileID: 1448957831}
+  cam: {fileID: 389383145}
+  speed: 10
+  offset: 15
 --- !u!1 &250400159
 GameObject:
   m_ObjectHideFlags: 0
@@ -1309,7 +1356,7 @@ RectTransform:
   m_Children:
   - {fileID: 932130268}
   m_Father: {fileID: 620568655}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
   m_AnchoredPosition: {x: -40, y: 40}
@@ -1514,8 +1561,7 @@ RectTransform:
   - {fileID: 2104225361}
   - {fileID: 1539875817}
   - {fileID: 1041237058}
-  - {fileID: 624382603}
-  - {fileID: 1448957828}
+  - {fileID: 225897920}
   - {fileID: 608255979}
   m_Father: {fileID: 0}
   m_RootOrder: 1
@@ -1547,7 +1593,6 @@ GameObject:
   - 114: {fileID: 624382607}
   - 114: {fileID: 624382606}
   - 114: {fileID: 624382605}
-  - 114: {fileID: 624382604}
   m_Layer: 5
   m_Name: LeftRoom
   m_TagString: Untagged
@@ -1563,32 +1608,16 @@ RectTransform:
   m_GameObject: {fileID: 624382602}
   m_LocalRotation: {x: 0.013702038, y: -0.013744427, z: -0.7071321, w: 0.7068151}
   m_LocalPosition: {x: 0, y: 0, z: 11.427542}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5129629, y: 0.51369655, z: 0.9992666}
   m_LocalEulerAnglesHint: {x: -0.004, y: -2.1590002, z: -90.025}
   m_Children: []
-  m_Father: {fileID: 620568655}
-  m_RootOrder: 4
+  m_Father: {fileID: 225897920}
+  m_RootOrder: 0
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 159.98505, y: -417.03107}
+  m_AnchoredPosition: {x: 82.066414, y: 340.07843}
   m_SizeDelta: {x: 120, y: 120}
   m_Pivot: {x: 0, y: 1}
---- !u!114 &624382604
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 624382602}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 87018460fcc72e84dbc866e3f1762626, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  leftbutton: {fileID: 624382606}
-  rightbutton: {fileID: 1448957831}
-  camera: {fileID: 389383145}
-  speed: 10
-  offset: 15
 --- !u!114 &624382605
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1640,7 +1669,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 624382604}
+      - m_Target: {fileID: 225897921}
         m_MethodName: ChangeRoom
         m_Mode: 3
         m_Arguments:
@@ -3308,7 +3337,6 @@ GameObject:
   - 114: {fileID: 1448957832}
   - 114: {fileID: 1448957831}
   - 114: {fileID: 1448957830}
-  - 114: {fileID: 1448957829}
   m_Layer: 5
   m_Name: RightRoom
   m_TagString: Untagged
@@ -3324,32 +3352,16 @@ RectTransform:
   m_GameObject: {fileID: 1448957827}
   m_LocalRotation: {x: -0.013796114, y: -0.01365026, z: -0.7041433, w: -0.7097926}
   m_LocalPosition: {x: 0, y: 0, z: 11.427542}
-  m_LocalScale: {x: 1, y: 1.0003656, z: 1.0003654}
+  m_LocalScale: {x: 0.5129629, y: 0.5138842, z: 0.9996315}
   m_LocalEulerAnglesHint: {x: 0.020000001, y: 2.1590002, z: -270.444}
   m_Children: []
-  m_Father: {fileID: 620568655}
-  m_RootOrder: 5
+  m_Father: {fileID: 225897920}
+  m_RootOrder: 1
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -160, y: 3.4683228}
+  m_AnchoredPosition: {x: 965.9258, y: 278.7791}
   m_SizeDelta: {x: 120, y: 120}
   m_Pivot: {x: 0, y: 1}
---- !u!114 &1448957829
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1448957827}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 87018460fcc72e84dbc866e3f1762626, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  leftbutton: {fileID: 624382606}
-  rightbutton: {fileID: 1448957831}
-  camera: {fileID: 389383145}
-  speed: 10
-  offset: 15
 --- !u!114 &1448957830
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3401,7 +3413,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1448957829}
+      - m_Target: {fileID: 225897921}
         m_MethodName: ChangeRoom
         m_Mode: 3
         m_Arguments:

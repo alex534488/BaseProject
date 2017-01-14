@@ -5,25 +5,27 @@ using System.Collections.Generic;
 public class World : INewDay {
 
     public static World main;
+
     public Empire empire;
-
     public BarbareManager barbareManager;
+    public Map map;
 
+    // Creation du monde du jeu
     public World()
     {
+        main = this;
+
+        // Creation des barbares
         barbareManager = new BarbareManager();
         barbareManager.Initialize();
+
+        // Creation de l'empire
         empire = new Empire();
-        main = this;
         empire.Start();
-    }
 
-    public void Start ()
-    {
-
-
-       
-       
+        // Creation de la map
+        map = new Map();
+        map.Start();
     }
 
     public void NewDay()
@@ -32,6 +34,7 @@ public class World : INewDay {
         empire.NewDay();
     }
 
+    // TODO: Refaire cette fonctione pour qu'elle utilise la map
     public List<Village> GiveTarget() // Verifie la liste des villages et retourne le village frontiere le plus faible de la liste
     {
         List<Village> ret = new List<Village>();
@@ -56,5 +59,11 @@ public class World : INewDay {
         
 
         return ret;
+    }
+
+    // TODO: Faire la fonctione qui copie world pour en faire une sauvegarde
+    public World CloneState()
+    {
+        return this;
     }
 }
