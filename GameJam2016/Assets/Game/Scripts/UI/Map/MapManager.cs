@@ -110,7 +110,7 @@ public class MapManager : MonoBehaviour
         windowAnimation.Open();
     }
 
-    void OnLensSelected(Resource_Type type)
+    void OnLensSelected(ResourceType type)
     {
         foreach (MapCity city in cities)
         {
@@ -123,7 +123,7 @@ public class MapManager : MonoBehaviour
         currentlySelected = city;
         currentlySelected.Highlight();
 
-        bool buttonsEnabled = MapLens.CurrentType() != Resource_Type.reputation && MapLens.CurrentType() != Resource_Type.custom;
+        bool buttonsEnabled = MapLens.CurrentType() != ResourceType.reputation && MapLens.CurrentType() != ResourceType.custom;
 
         panel.Open(city.cityText.rectTransform.position - (Vector3.up * Screen.height * 0.17f), buttonsEnabled);
     }
@@ -136,14 +136,14 @@ public class MapManager : MonoBehaviour
 
     void Send(int amount)
     {
-        if (MapLens.CurrentType() == Resource_Type.custom) return;
+        if (MapLens.CurrentType() == ResourceType.custom) return;
 
         Empire.instance.capitale.SendCartToVillage(currentlySelected.GetVillage(), MapLens.CurrentType(), amount);
     }
 
     void Request()
     {
-        if (MapLens.CurrentType() == Resource_Type.custom) return;
+        if (MapLens.CurrentType() == ResourceType.custom) return;
 
         Empire.instance.capitale.SendCartToVillage(currentlySelected.GetVillage(), MapLens.CurrentType(), -1);
     }

@@ -6,8 +6,8 @@ using CCC.Utility;
 
 public class CapitalStat : MonoBehaviour
 {
-    public Resource_Type type;
-    public Resource_Type secondeType;
+    public ResourceType type;
+    public ResourceType secondeType;
     public Text totalText;
     public Text profitText;
     Capitale capital;
@@ -37,7 +37,7 @@ public class CapitalStat : MonoBehaviour
         if (totalText != null) totalText.text = "" + currentValue;
         if (profitText != null)
         {
-            if(type == Resource_Type.happiness)
+            if(type == ResourceType.happiness)
             {
                 totalText.text = ""+ currentValue + "/" + altValue;
             }

@@ -26,7 +26,7 @@ public class StoryGraph : ScriptableObject, INewDay
             Village source = null;
             Village destination = Empire.instance.capitale;
             int value = 1;
-            Resource_Type type = Resource_Type.custom;
+            ResourceType type = ResourceType.custom;
 
             //Find method
             MethodInfo method = graph.controller.GetType().GetMethod(id + "_Arrive");
@@ -41,7 +41,7 @@ public class StoryGraph : ScriptableObject, INewDay
                 source = (Village)parameters[0];
                 destination = (Village)parameters[1];
                 value = (int)parameters[2];
-                type = (Resource_Type)parameters[3];
+                type = (ResourceType)parameters[3];
             }
 
             //Build request

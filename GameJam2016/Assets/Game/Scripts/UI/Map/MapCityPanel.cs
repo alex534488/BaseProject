@@ -135,7 +135,7 @@ public class MapCityPanel : MonoBehaviour
     void UpdateSendButtons()
     {
         Village capital = Empire.instance.capitale;
-        Resource_Type type = MapLens.CurrentType();
+        ResourceType type = MapLens.CurrentType();
         int amount = capital.GetResource(type);
 
         sendLowButton.interactable = amount >= sendLowAmount;

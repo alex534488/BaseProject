@@ -6,7 +6,7 @@ using UnityEngine.Events;
 public class MapLens : MonoBehaviour
 {
 
-    public Resource_Type type;
+    public ResourceType type;
     public Image image;
     public Color normalColor = Color.white;
     public Color selectedColor = Color.white;
@@ -35,11 +35,11 @@ public class MapLens : MonoBehaviour
         return currentLens == this;
     }
 
-    static public Resource_Type CurrentType()
+    static public ResourceType CurrentType()
     {
         if (currentLens != null)
             return currentLens.type;
         else
-            return Resource_Type.custom;
+            return ResourceType.custom;
     }
 }

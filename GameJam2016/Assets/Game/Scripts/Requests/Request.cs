@@ -15,7 +15,7 @@ public class Transaction
 
     public Village source = null;
     public Village destination = null;
-    public Resource_Type type = Resource_Type.gold;
+    public ResourceType type = ResourceType.gold;
     public int value = 0;
     public ValueType valueType = ValueType.flat;
     public Condition condition = null;
@@ -33,7 +33,7 @@ public class Transaction
     public string fillValue = "0";
 
     public Transaction() { }
-    public Transaction(Village source, Village destination, Resource_Type type, int value, ValueType valueType = ValueType.flat, Condition condition = null)
+    public Transaction(Village source, Village destination, ResourceType type, int value, ValueType valueType = ValueType.flat, Condition condition = null)
     {
         this.source = source;
         this.destination = destination;
@@ -45,7 +45,7 @@ public class Transaction
     /// <summary>
     /// Used in the editor (request creation)
     /// </summary>
-    public Transaction(Id fromId, Id toId, Resource_Type type, int value, ValueType valueType = ValueType.flat, Condition condition = null)
+    public Transaction(Id fromId, Id toId, ResourceType type, int value, ValueType valueType = ValueType.flat, Condition condition = null)
     {
         this.fromId = fromId;
         this.toId = toId;
@@ -69,12 +69,12 @@ public class Transaction
             case ValueType.destPercent:
                 if (destination == null) { Debug.LogError("Error on transfer type 'destPercent'. Destination is null."); amount = 0; }
                 else
-                    amount = Mathf.RoundToInt((float)value * destination.GetResource(type) / 100f);
+                    amount = Mathf.RoundToInt((float)value * destination.Get(type) / 100f);
                 break;
             case ValueType.sourcePercent:
                 if (source == null) { Debug.LogError("Error on transfer type 'sourcePercent'. Source is null."); amount = 0; }
                 else
-                    amount = Mathf.RoundToInt((float)value * source.GetResource(type) / 100f);
+                    amount = Mathf.RoundToInt((float)value * source.Get(type) / 100f);
                 break;
         }
 
@@ -103,10 +103,10 @@ public class Transaction
     /// <summary>
     /// Used in the editor (request creation)
     /// </summary>
-    public void Fill(Village source, Village destination, int value, Resource_Type type = Resource_Type.custom)
+    public void Fill(Village source, Village destination, int value, ResourceType type = ResourceType.custom)
     {
         this.value = value;
-        if (type != Resource_Type.custom && this.type == Resource_Type.custom) this.type = type;
+        if (type != ResourceType.custom && this.type == ResourceType.custom) this.type = type;
         Fill(source, destination);
     }
 }
@@ -172,23 +172,23 @@ public class Request
     }
 
     // REQUETE D'AIDE
-    public Request(Seigneur messager, Resource_Type resource, int amount)
+    public Request(Seigneur messager, ResourceType resource, int amount)
     {
         switch (resource)
         {
-            case Resource_Type.gold:
+            case ResourceType.gold:
                 message = new Dialog.Message("Le village " + messager.village.nom + " a besoin de " + amount + " pièces d'or pour combler ses manquements économiques");
                 choix.Add(new Choice("Chaque village de l'Empire compte! (" + amount + " Or, + Réputation)", delegate () { messager.village.AddGold(amount); Empire.instance.capitale.AddGold(-amount); messager.village.AddReputation(20); }));
                 choix.Add(new Choice("L'or est précieux, faites bon usage de ces quelques pièces \n(" + (amount + 1) / 2 + " Or)", delegate () { messager.village.AddGold((amount + 1) / 2); Empire.instance.capitale.AddGold(-(amount + 1) / 2); }));
                 choix.Add(new Choice("Les caisses sont vides pour vous! (- Réputation)", delegate () { messager.village.AddReputation(-20); }));
                 return;
-            case Resource_Type.food:
+            case ResourceType.food:
                 message = new Dialog.Message("Le village " + messager.village.nom + " a besoin de " + amount + " Nourritures pour nourrir les soldats stationnés dans notre village.");
                 choix.Add(new Choice("Chaque village de l'empire compte! (-" + amount + " Nourritures, + Réputation)", delegate () { messager.village.AddFood(amount); Empire.instance.capitale.AddFood(-amount); messager.village.AddReputation(20); }));
                 choix.Add(new Choice("Je peux vous fournir quelques rations de Nourritures mon cher. \n(-" + (amount + 1) / 2 + " Nourriture)", delegate () { messager.village.AddFood((amount + 1) / 2); Empire.instance.capitale.AddFood(-(amount + 1) / 2); }));
                 choix.Add(new Choice("Rome est au bord de la famine également. (- Réputation)", delegate () { messager.village.AddReputation(-20); }));
                 return;
-            case Resource_Type.army:
+            case ResourceType.army:
                 message = new Dialog.Message("Le village " + messager.village.nom + " a besoin de " + amount + " Soldats pour se défendre contre une invasion imminente de barbares.");
                 choix.Add(new Choice("Voici davantage de soldats que nécessaire ! \n(" + Mathf.CeilToInt((amount) * 1.5f) + " Soldats)", delegate () { messager.village.AddArmy(Mathf.CeilToInt((amount) * 1.5f)); Empire.instance.capitale.AddArmy(-Mathf.CeilToInt((amount) * 1.5f)); messager.village.AddReputation(20); }));
                 choix.Add(new Choice("Voici le nombre minimum de soldats nécessaire! (" + amount + " Soldats)", delegate () { messager.village.AddArmy(amount); Empire.instance.capitale.AddArmy(-amount); }));
@@ -201,13 +201,13 @@ public class Request
 
     // INVESTISSEMENT
 
-    public Request(Seigneur messager, Resource_Type resource)
+    public Request(Seigneur messager, ResourceType resource)
     {
         int random = Mathf.CeilToInt(Random.Range(0, 3));
 
         switch (resource)
         {
-            case Resource_Type.gold:
+            case ResourceType.gold:
                 switch (random)
                 {
                     case 1:
@@ -234,13 +234,13 @@ public class Request
                         choix.Add(new Choice(" Refusez la demande du villagois (- Réputation)", delegate () { messager.village.AddReputation(-20); }));
                         return;
                 }
-            case Resource_Type.food:
+            case ResourceType.food:
                 switch (random)
                 {
                     default:
                         return;
                 }
-            case Resource_Type.army:
+            case ResourceType.army:
                 switch (random)
                 {
                     default:

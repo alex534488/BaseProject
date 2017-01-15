@@ -21,8 +21,8 @@ public class MapCity : MonoBehaviour
     public MapCityEvent onClick = new MapCityEvent();
 
     private Village village;
-    private Resource_Type type;
-    private Resource_Type secondType;
+    private ResourceType type;
+    private ResourceType secondType;
 
     private Tweener highlightAnim;
     private bool animating = false;
@@ -42,7 +42,7 @@ public class MapCity : MonoBehaviour
         });
     }
 
-    public void Display(Resource_Type type, Resource_Type secondType)
+    public void Display(ResourceType type, ResourceType secondType)
     {
         this.type = type;
         this.secondType = secondType;
@@ -60,12 +60,12 @@ public class MapCity : MonoBehaviour
         resourceText.color = (value < 0) ? criticalColor : Color.black;
         resourceText.text = value.ToString();
 
-        if (secondType == Resource_Type.armyProd && value == 0) resourceSecondaryText.gameObject.SetActive(false);
+        if (secondType == ResourceType.armyProd && value == 0) resourceSecondaryText.gameObject.SetActive(false);
         else resourceSecondaryText.gameObject.SetActive(true);
 
         //Second value
         resourceSecondaryText.color = (secondValue < 0) ? criticalColor : Color.black;
-        resourceSecondaryText.text = (secondType == Resource_Type.reputationCap ? "/" : (secondValue >= 0 ? "+" : "")) + secondValue;
+        resourceSecondaryText.text = (secondType == ResourceType.reputationCap ? "/" : (secondValue >= 0 ? "+" : "")) + secondValue;
     }
 
     void OnClick()

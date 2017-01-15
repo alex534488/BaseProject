@@ -16,7 +16,7 @@ public class RequestFrame : ScriptableObject
     public string tag = "exemple_village_need_gold";
     public string text = "Entrez une message...";
     public char forceSeparation = '%';
-    public Resource_Type type = Resource_Type.custom;
+    public ResourceType type = ResourceType.custom;
     public List<Choice> choices = new List<Choice>(3);
     public Condition condition = null;
     public ScriptableObject characterKit = null;
@@ -30,7 +30,7 @@ public class RequestFrame : ScriptableObject
     //      source = null
     //      destination = capitale
 
-    public Request Build(Village source, Village destination, int value = 1, Resource_Type type = Resource_Type.custom, UnityAction[] callbacks = null)
+    public Request Build(Village source, Village destination, int value = 1, ResourceType type = ResourceType.custom, UnityAction[] callbacks = null)
     {
         this.source = source;
         this.destination = destination;
@@ -296,11 +296,11 @@ public class RequestFrame : ScriptableObject
                     text = "Je suis un messager venant du village de [source.name].\n\nNos citoyen sont amateur de PFK. Nous désirons donc acheter votre poule.";
 
                     List<Transaction> choixUnTrans = new List<Transaction>();                           //Transaction du choix 1
-                    choixUnTrans.Add(new Transaction(Transaction.Id.source, Transaction.Id.destination, Resource_Type.gold, 10));       //Le village donne de l'or a la capital
-                    choixUnTrans.Add(new Transaction(Transaction.Id.Null, Transaction.Id.source, Resource_Type.food, 1));                //Le village gagne 1 de food
+                    choixUnTrans.Add(new Transaction(Transaction.Id.source, Transaction.Id.destination, ResourceType.gold, 10));       //Le village donne de l'or a la capital
+                    choixUnTrans.Add(new Transaction(Transaction.Id.Null, Transaction.Id.source, ResourceType.food, 1));                //Le village gagne 1 de food
 
                     List<Transaction> choixDeuxTrans = new List<Transaction>();                      //Transaction du choix 2
-                    choixDeuxTrans.Add(new Transaction(Transaction.Id.Null, Transaction.Id.destination, Resource_Type.happiness, 2));    //La capital gagne 2 de bonheur
+                    choixDeuxTrans.Add(new Transaction(Transaction.Id.Null, Transaction.Id.destination, ResourceType.happiness, 2));    //La capital gagne 2 de bonheur
 
                     List<Transaction> choixTroisTrans = null;                                           //Transaction du choix 3 (aucune)
 
@@ -604,7 +604,7 @@ public class RequestFrameEditor : CCC.EditorUtil.AdvEditor
         EditorGUILayout.Space();
         transaction.fillValue = EditorGUILayout.TextField(transaction.fillValue);
         EditorGUILayout.Space();
-        transaction.type = (Resource_Type)EditorGUILayout.EnumPopup(transaction.type);
+        transaction.type = (ResourceType)EditorGUILayout.EnumPopup(transaction.type);
         transaction.valueType = (Transaction.ValueType)EditorGUILayout.EnumPopup(transaction.valueType);
         EditorGUILayout.Space();
         GUILayout.Label("de");

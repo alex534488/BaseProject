@@ -33,22 +33,22 @@ public class Village : INewDay
         // Si c'est une capitale
         if (IsCapital())
         {
-            empire.Add(Resource_Type.science, Get(Resource_Type.scienceProd)); // Ajoute la production de science a l'empire
+            empire.Add(ResourceType.science, Get(ResourceType.scienceProd)); // Ajoute la production de science a l'empire
         }
         else // Sinon
         {
-            Add(Resource_Type.material, Get(Resource_Type.materialProd)); // ajoute la production de materiaux a l'empire
+            Add(ResourceType.material, Get(ResourceType.materialProd)); // ajoute la production de materiaux a l'empire
             // Verification du compteur de creation de citoyen, s'il est superieur a son max, on doit generer un
             // evennement et redemarer le compteur
-            if ((empire.Get(Resource_Type.citizenProgress) + Get(Resource_Type.food)) >= empire.Get(Resource_Type.citizenProgressMax))
+            if ((empire.Get(ResourceType.citizenProgress) + Get(ResourceType.food)) >= empire.Get(ResourceType.citizenProgressMax))
             {
-                int temp = empire.Get(Resource_Type.citizenProgress) + Get(Resource_Type.food); // total
-                temp = temp - empire.Get(Resource_Type.citizenProgressMax); // difference du total avec le max
-                empire.Set(Resource_Type.citizenProgress,temp); // le reste est conserver
+                int temp = empire.Get(ResourceType.citizenProgress) + Get(ResourceType.food); // total
+                temp = temp - empire.Get(ResourceType.citizenProgressMax); // difference du total avec le max
+                empire.Set(ResourceType.citizenProgress,temp); // le reste est conserver
                 // Evenement de production d'un citoyen ICI !
             }
         }
-        empire.Add(Resource_Type.gold, Get(Resource_Type.goldProd)); // ajout de la production d'or de tous les villages a l'empire
+        empire.Add(ResourceType.gold, Get(ResourceType.goldProd)); // ajout de la production d'or de tous les villages a l'empire
     }
 
     public void SetAsCapital()
@@ -69,98 +69,98 @@ public class Village : INewDay
     }
 
     #region Stats Method
-    public int Get(Resource_Type type)
+    public int Get(ResourceType type)
     {
         switch (type)
         {
             default:
                 return 0;
-            case Resource_Type.armyPower:
+            case ResourceType.armyPower:
                 return armyPower;
-            case Resource_Type.armyCost:
+            case ResourceType.armyCost:
                 return armyCost;
-            case Resource_Type.goldProd:
+            case ResourceType.goldProd:
                 return goldProd;
-            case Resource_Type.materialProd:
+            case ResourceType.materialProd:
                 return materialProd;
-            case Resource_Type.scienceProd:
+            case ResourceType.scienceProd:
                 return scienceProd;
-            case Resource_Type.food:
+            case ResourceType.food:
                 return food;
         }
     }
 
-    public void Set(Resource_Type type, int value)
+    public void Set(ResourceType type, int value)
     {
         switch (type)
         {
             default:
                 return;
-            case Resource_Type.armyPower:
+            case ResourceType.armyPower:
                 armyPower.Set(value);
                 return;
-            case Resource_Type.armyCost:
+            case ResourceType.armyCost:
                 armyCost.Set(value);
                 return;
-            case Resource_Type.goldProd:
+            case ResourceType.goldProd:
                 goldProd.Set(value);
                 return;
-            case Resource_Type.materialProd:
+            case ResourceType.materialProd:
                 materialProd.Set(value);
                 return;
-            case Resource_Type.scienceProd:
+            case ResourceType.scienceProd:
                 scienceProd.Set(value);
                 return;
-            case Resource_Type.food:
+            case ResourceType.food:
                 food.Set(value);
                 return;
         }
     }
 
-    public void Add(Resource_Type type, int value)
+    public void Add(ResourceType type, int value)
     {
         switch (type)
         {
             default:
                 return;
-            case Resource_Type.armyPower:
+            case ResourceType.armyPower:
                 armyPower.Set(armyPower + value);
                 return;
-            case Resource_Type.armyCost:
+            case ResourceType.armyCost:
                 armyCost.Set(armyCost + value);
                 return;
-            case Resource_Type.goldProd:
+            case ResourceType.goldProd:
                 goldProd.Set(goldProd + value);
                 return;
-            case Resource_Type.materialProd:
+            case ResourceType.materialProd:
                 materialProd.Set(materialProd + value);
                 return;
-            case Resource_Type.scienceProd:
+            case ResourceType.scienceProd:
                 scienceProd.Set(scienceProd + value);
                 return;
-            case Resource_Type.food:
+            case ResourceType.food:
                 food.Set(food + value);
                 return;
         }
     }
 
-    public virtual Stat<int>.StatEvent GetOnSet(Resource_Type type)
+    public virtual Stat<int>.StatEvent GetOnSet(ResourceType type)
     {
         switch (type)
         {
             default:
                 return null;
-            case Resource_Type.armyPower:
+            case ResourceType.armyPower:
                 return armyPower.onSet;
-            case Resource_Type.armyCost:
+            case ResourceType.armyCost:
                 return armyCost.onSet;
-            case Resource_Type.goldProd:
+            case ResourceType.goldProd:
                 return goldProd.onSet;
-            case Resource_Type.materialProd:
+            case ResourceType.materialProd:
                 return materialProd.onSet;
-            case Resource_Type.scienceProd:
+            case ResourceType.scienceProd:
                 return scienceProd.onSet;
-            case Resource_Type.food:
+            case ResourceType.food:
                 return food.onSet;
         }
     }

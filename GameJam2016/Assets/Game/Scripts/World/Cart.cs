@@ -9,10 +9,10 @@ public class Cart {
     public int delay;
     public Village provenance;
     public Village destination;
-    public Resource_Type resource;
+    public ResourceType resource;
     public int amount;
 
-	public Cart(int delay, Village destination, Village provenance, Resource_Type resource, int amount)
+	public Cart(int delay, Village destination, Village provenance, ResourceType resource, int amount)
     {
         this.provenance = provenance;
         this.delay = delay;
@@ -25,13 +25,13 @@ public class Cart {
     {
         switch (resource)
         {
-            case Resource_Type.gold:
+            case ResourceType.gold:
                 destination.AddGold(amount);
                 return;
-            case Resource_Type.food:
+            case ResourceType.food:
                 destination.AddFood(amount);
                 return;
-            case Resource_Type.army:
+            case ResourceType.army:
                 destination.AddArmy(amount);
                 return;
             default:
@@ -43,13 +43,13 @@ public class Cart {
     {
         switch (resource)
         {
-            case Resource_Type.gold:
+            case ResourceType.gold:
                 provenance.AddGold(amount);
                 return;
-            case Resource_Type.food:
+            case ResourceType.food:
                 provenance.AddFood(amount);
                 return;
-            case Resource_Type.army:
+            case ResourceType.army:
                 provenance.AddArmy(amount);
                 return;
             default:
