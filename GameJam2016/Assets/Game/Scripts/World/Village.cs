@@ -25,7 +25,30 @@ public class Village : INewDay
 
     public virtual void NewDay()
     {
-        
+        // Verification sur le village a chaque tour (mort/destruction?)
+    }
+
+    public void UpdateResource(Empire empire)
+    {
+        // Si c'est une capitale
+        if (IsCapital())
+        {
+            empire.Add(Resource_Type.science, Get(Resource_Type.scienceProd)); // Ajoute la production de science a l'empire
+        }
+        else // Sinon
+        {
+            Add(Resource_Type.material, Get(Resource_Type.materialProd)); // ajoute la production de materiaux a l'empire
+            // Verification du compteur de creation de citoyen, s'il est superieur a son max, on doit generer un
+            // evennement et redemarer le compteur
+            if ((empire.Get(Resource_Type.citizenProgress) + Get(Resource_Type.food)) >= empire.Get(Resource_Type.citizenProgressMax))
+            {
+                int temp = empire.Get(Resource_Type.citizenProgress) + Get(Resource_Type.food); // total
+                temp = temp - empire.Get(Resource_Type.citizenProgressMax); // difference du total avec le max
+                empire.Set(Resource_Type.citizenProgress,temp); // le reste est conserver
+                // Evenement de production d'un citoyen ICI !
+            }
+        }
+        empire.Add(Resource_Type.gold, Get(Resource_Type.goldProd)); // ajout de la production d'or de tous les villages a l'empire
     }
 
     public void SetAsCapital()
@@ -38,6 +61,11 @@ public class Village : INewDay
     public bool IsCapital()
     {
         return capitale;
+    }
+
+    public int GetMapPosition()
+    {
+        return mapPosition;
     }
 
     #region Stats Method

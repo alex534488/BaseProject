@@ -18,7 +18,7 @@ public class DayManager : MonoBehaviour {
     public Button scoutButton;
 
     // Manager et World
-    public World theWorld;
+    public Universe universe;
     public RequestManager requestManager;
     public BarbareManager barbareManager;
     public StorylineManager storylineManager;
@@ -34,7 +34,7 @@ public class DayManager : MonoBehaviour {
 
         // ApplyGameMode();
 
-        theWorld = new World();
+        universe = new Universe();
 
         // Ajustement initiale du UI pour afficher la journée courante
         if (currentday != null) currentday.GetComponentInChildren<Text>().text = "Jour " + nbJour;
@@ -80,10 +80,9 @@ public class DayManager : MonoBehaviour {
         // Ajustement de l'Affichage du jour
         nbJour++;
         if(currentday != null) currentday.GetComponentInChildren<Text>().text = "Jour " + nbJour;
-        
+
         // Update l'univers
-        theWorld.NewDay(); 
-        carriageManager.NewDay();
+        universe.NewDay();
         storylineManager.NewDay();
         requestManager.NewDay();
     }

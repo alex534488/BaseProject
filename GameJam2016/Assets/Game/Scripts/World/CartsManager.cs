@@ -6,7 +6,7 @@ using UnityEngine.Events;
 public class CartsManager : INewDay
 {
 
-    static CartsManager carriageManager;
+    static CartsManager cartsManager;
 
     List<Cart> listCarriage = new List<Cart>();
 
@@ -14,7 +14,7 @@ public class CartsManager : INewDay
 
     void Awake()
     {
-        if (carriageManager == null) carriageManager = this;
+        if (cartsManager == null) cartsManager = this;
     }
 
     public void NewDay()
@@ -59,7 +59,7 @@ public class CartsManager : INewDay
 
     public static void SendCarriage(Cart carriage)
     {
-        carriageManager.listCarriage.Add(carriage);
+        cartsManager.listCarriage.Add(carriage);
 
         // Si le chariot est une requete de resources a un village
         if (carriage.destination.GetType() == typeof(Capitale)) { carriage.amount = -1 * carriage.destination.lord.CanYouGive(carriage.resource); } // calcul le montant sans en faire l'application
@@ -68,7 +68,7 @@ public class CartsManager : INewDay
     public static int GetCarriageCountAt(Village village)
     {
         int amount = 0;
-        foreach (Cart carriage in carriageManager.listCarriage)
+        foreach (Cart carriage in cartsManager.listCarriage)
         {
             if (carriage.provenance == village || carriage.destination == village) amount++;
         }

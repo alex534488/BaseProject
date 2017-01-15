@@ -31,43 +31,43 @@ public class Empire : INewDay
     // Empire avance d'une journee
     public virtual void NewDay()
     {
-        UpdateRessource();
+        UpdateResource();
         
-    // autre chose ?
-}
+        // autre chose ?
+    }
 
-    private void UpdateRessource()
+    private void UpdateResource()
     {
         // Pour chaque village
         for (int i = 0; i < listVillage.Count; i++)
         {
-            // Si c'est une capitale
-            if (listVillage[i].IsCapital())
-            {
-                Add(Resource_Type.science, listVillage[i].Get(Resource_Type.scienceProd));
-            } else // Sinon
-            {
-                Add(Resource_Type.material, listVillage[i].Get(Resource_Type.materialProd));
-                // Verification du compteur de creation de citoyen, s'il est superieur a son max, on doit generer un
-                // evennement et redemarer le compteur
-                if ((citizenProgress + listVillage[i].Get(Resource_Type.food)) >= (int)citizenProgress.MAX)
-                {
-                    int temp = citizenProgress + listVillage[i].Get(Resource_Type.food);
-                    temp = temp - (int)citizenProgress.MAX;
-                    citizenProgress.Set(temp);
-                    // Evenement de production d'un citoyen ICI !
-                }
-            }
-            Add(Resource_Type.gold, listVillage[i].Get(Resource_Type.goldProd));
+            // Update les resources
+            listVillage[i].UpdateResource(this);
         }
     }
 
-    /* ?
     public Village GetVillage(int mapPosition)
     {
-        // probleme entre une liste de village et une array de territoire
+        for(int i = 0; i < listVillage.Count; i++)
+        {
+            if (listVillage[i].GetMapPosition() == mapPosition) return listVillage[i];
+        }
+        return null;
     }
-    */
+
+    public Village GetCapitale()
+    {
+        for (int i = 0; i < listVillage.Count; i++)
+        {
+            if (listVillage[i].IsCapital()) return listVillage[i];
+        }
+        return null;
+    }
+
+    public CartsManager GetCartsManager()
+    {
+        return cartManager;
+    }
 
     #region Stats Method
     public int Get(Resource_Type type)
@@ -84,6 +84,8 @@ public class Empire : INewDay
                 return material;
             case Resource_Type.citizenProgress:
                 return citizenProgress;
+            case Resource_Type.citizenProgressMax:
+                return citizenProgressMax;
             case Resource_Type.happiness:
                 return happiness;
             case Resource_Type.reputation:
@@ -108,6 +110,9 @@ public class Empire : INewDay
                 return;
             case Resource_Type.citizenProgress:
                 citizenProgress.Set(value);
+                return;
+            case Resource_Type.citizenProgressMax:
+                citizenProgressMax.Set(value);
                 return;
             case Resource_Type.happiness:
                 happiness.Set(value);
@@ -136,6 +141,9 @@ public class Empire : INewDay
             case Resource_Type.citizenProgress:
                 citizenProgress.Set(citizenProgress + value);
                 return;
+            case Resource_Type.citizenProgressMax:
+                citizenProgressMax.Set(citizenProgressMax + value);
+                return;
             case Resource_Type.happiness:
                 happiness.Set(happiness + value);
                 return;
@@ -159,6 +167,8 @@ public class Empire : INewDay
                 return material.onSet;
             case Resource_Type.citizenProgress:
                 return citizenProgress.onSet;
+            case Resource_Type.citizenProgressMax:
+                return citizenProgressMax.onSet;
             case Resource_Type.happiness:
                 return happiness.onSet;
             case Resource_Type.reputation:

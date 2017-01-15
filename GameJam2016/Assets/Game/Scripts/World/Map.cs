@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class Map : MonoBehaviour {
+public class Map {
 
     public int nbTerritory = 8; // nombre de territoire dans la map
 
@@ -77,6 +77,46 @@ public class Map : MonoBehaviour {
             }
         }
         return zone;
+    }
+
+    /// <summary>
+    ///  Retourne la liste des villages adjacents a tous les territoires
+    /// </summary>
+    public List<Village> GetAllAdjacentVillages(int position)
+    {
+        List<int> zone = new List<int>();
+        List<Village> villages = new List<Village>();
+
+        // Prenons tous les territoires adjacents aux territoires des barbares
+        zone = GetAdjacentEnemyTerritory(2);
+
+        // et pour chacun
+        for (int i = 0; i < zone.Count; i++)
+        {
+            // allons chercher le village correspondant et ajoutons le a la liste
+            villages.Add(World.main.empire.GetVillage(zone[i]));
+        }
+        return villages;
+    }
+
+    /// <summary>
+    ///  Retourne la liste des villages adjacents a un territoire
+    /// </summary>
+    public List<Village> GetAdjacentVillage(int position)
+    {
+        List<int> zone = new List<int>();
+        List<Village> villages = new List<Village>();
+
+        // Prenons tous les territoires adjacents a la position
+        zone = GetAdjacentPositions(position);
+
+        // et pour chacun
+        for(int i = 0; i < zone.Count; i++)
+        {
+            // s'ils ont un village, ajoute le a la liste
+            if (IsEnemyTerritory(2, zone[i])) villages.Add(World.main.empire.GetVillage(zone[i]));
+        }
+        return villages;
     }
 
     /// <summary>

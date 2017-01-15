@@ -16,7 +16,8 @@ public enum Resource_Type
     happiness = 9,
     reputation = 10,
     armyPower = 11,
-    armyCost = 12
+    armyCost = 12,
+    citizenProgressMax = 13
 }
 
 public class GameResources : MonoBehaviour
@@ -34,6 +35,7 @@ public class GameResources : MonoBehaviour
     public Sprite reputationIcon;
     public Sprite armyPowerIcon;
     public Sprite armyCostIcon;
+    public Sprite citizenProgressMax;
 
     static GameResources instance;
 
@@ -72,6 +74,8 @@ public class GameResources : MonoBehaviour
                 return instance.armyPowerIcon;
             case Resource_Type.armyCost:
                 return instance.armyCostIcon;
+            case Resource_Type.citizenProgressMax:
+                return instance.citizenProgressMax;
         }
     }
 
@@ -104,6 +108,8 @@ public class GameResources : MonoBehaviour
                 return "Army Power";
             case Resource_Type.armyCost:
                 return "Army Cost";
+            case Resource_Type.citizenProgressMax:
+                return "Citizen Progress Max";
         }
     }
 }
