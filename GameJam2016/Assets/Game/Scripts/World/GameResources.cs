@@ -17,7 +17,8 @@ public enum Resource_Type
     reputation = 10,
     armyPower = 11,
     armyCost = 12,
-    citizenProgressMax = 13
+    citizenProgressMax = 13,
+    custom
 }
 
 public class GameResources : MonoBehaviour
