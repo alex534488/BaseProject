@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using UnityEngine.Events;
+using UnityEngine;
 
 namespace CCC.Utility
 {
@@ -42,7 +43,7 @@ namespace CCC.Utility
         {
             this.boundMode = boundMode;
             this.min = min;
-            this.min = max;
+            this.max = max;
             Set(value);
         }
 
@@ -52,7 +53,7 @@ namespace CCC.Utility
             {
                 if (min != null && min.CompareTo(value) > 0)            // Check min
                 {
-                    if (boundMode == BoundMode.MinLoop || boundMode == BoundMode.BidirectionalLoop)
+                    if ((boundMode == BoundMode.MinLoop || boundMode == BoundMode.BidirectionalLoop) && max != null)
                         QuickSet(Sub(Sub(value, MIN), MAX)); // équivaut à MAX - (MIN - value)
                     else
                         QuickSet(MIN);
@@ -61,8 +62,12 @@ namespace CCC.Utility
                 }
                 else if (max != null && max.CompareTo(value) < 0)       // Check max
                 {
-                    if (boundMode == BoundMode.MaxLoop || boundMode == BoundMode.BidirectionalLoop)
-                        QuickSet(Add(Sub(MAX, value), MIN)); // équivaut à MIN + (value - MAX)
+                    if ((boundMode == BoundMode.MaxLoop || boundMode == BoundMode.BidirectionalLoop) && min != null)
+                    {
+                        T newVal0 = Sub(MAX, value);
+                        T newVal = Add(newVal0, MIN);
+                        QuickSet(newVal); // équivaut à MIN + (value - MAX)
+                    }
                     else
                         QuickSet(MAX);
                     onMaxReached.Invoke(value);
@@ -98,16 +103,22 @@ namespace CCC.Utility
         #region Private + -
         private T Add(T value, T to)
         {
-            //dynamic a = value;
-            //dynamic b = to;
-            //return a + b;
+            if (typeof(T) == typeof(int))
+                return (T)(object)((int)(object)value + (int)(object)to);
+            else if (typeof(T) == typeof(float))
+                return (T)(object)((float)(object)value + (float)(object)to);
+            else if (typeof(T) == typeof(double))
+                return (T)(object)((double)(object)value + (double)(object)to);
             return this;
         }
-        private T Sub(T value, T to)
+        private T Sub(object value, object to)
         {
-            //dynamic a = value;
-            //dynamic b = to;
-            //return b - a;
+            if (typeof(T) == typeof(int))
+                return (T)(object)((int)(object)to - (int)(object)value);
+            else if (typeof(T) == typeof(float))
+                return (T)(object)((float)(object)to - (float)(object)value);
+            else if (typeof(T) == typeof(double))
+                return (T)(object)((double)(object)to - (double)(object)value);
             return this;
         }
         #endregion
