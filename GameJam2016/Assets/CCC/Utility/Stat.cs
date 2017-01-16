@@ -5,15 +5,15 @@ using UnityEngine;
 
 namespace CCC.Utility
 {
-    [System.Serializable]
+    public enum BoundMode
+    {
+        Cap, MaxLoop, MinLoop, BidirectionalLoop
+    }
+    [Serializable]
     public class Stat<T>
     {
         public class StatEvent : UnityEvent<T> { };
-        public enum BoundMode
-        {
-            Cap, MaxLoop, MinLoop, BidirectionalLoop
-        }
-
+        
         T value;
         IComparable max = null;
         IComparable min = null;
@@ -27,15 +27,21 @@ namespace CCC.Utility
             get { return (T)min; }
             set { min = (IComparable)value; onMinSet.Invoke((T)value); }
         }
+        [NonSerialized]
         public StatEvent onSet = new StatEvent();
+        [NonSerialized]
         public StatEvent onMinReached = new StatEvent();
+        [NonSerialized]
         public StatEvent onMaxReached = new StatEvent();
+        [NonSerialized]
         public StatEvent onMinSet = new StatEvent();
+        [NonSerialized]
         public StatEvent onMaxSet = new StatEvent();
         public BoundMode boundMode = BoundMode.Cap;
 
         public Stat(T value)
         {
+            boundMode = BoundMode.Cap;
             Set(value);
         }
 
@@ -51,25 +57,35 @@ namespace CCC.Utility
         {
             if (value is IComparable)                           // Can be checked
             {
-                if (min != null && min.CompareTo(value) > 0)            // Check min
+                if (min != null && (min.CompareTo(value) > 0 || min.Equals(value)))            // Check min
                 {
-                    if ((boundMode == BoundMode.MinLoop || boundMode == BoundMode.BidirectionalLoop) && max != null)
-                        QuickSet(Sub(Sub(value, MIN), MAX)); // équivaut à MAX - (MIN - value)
+                    if(min.CompareTo(value) > 0)
+                    {
+                        if ((boundMode == BoundMode.MinLoop || boundMode == BoundMode.BidirectionalLoop) && max != null)
+                            QuickSet(Sub(Sub(value, MIN), MAX)); // équivaut à MAX - (MIN - value)
+                        else
+                            QuickSet(MIN);
+                    }
                     else
-                        QuickSet(MIN);
+                        QuickSet(value);
 
                     onMinReached.Invoke(value);
                 }
-                else if (max != null && max.CompareTo(value) < 0)       // Check max
+                else if (max != null && (max.CompareTo(value) < 0 || max.Equals(value)))       // Check max
                 {
-                    if ((boundMode == BoundMode.MaxLoop || boundMode == BoundMode.BidirectionalLoop) && min != null)
+                    if (max.CompareTo(value) < 0)
                     {
-                        T newVal0 = Sub(MAX, value);
-                        T newVal = Add(newVal0, MIN);
-                        QuickSet(newVal); // équivaut à MIN + (value - MAX)
+                        if ((boundMode == BoundMode.MaxLoop || boundMode == BoundMode.BidirectionalLoop) && min != null)
+                        {
+                            T newVal0 = Sub(MAX, value);
+                            T newVal = Add(newVal0, MIN);
+                            QuickSet(newVal); // équivaut à MIN + (value - MAX)
+                        }
+                        else
+                            QuickSet(MAX);
                     }
                     else
-                        QuickSet(MAX);
+                        QuickSet(value);
                     onMaxReached.Invoke(value);
                 }
                 else QuickSet(value);

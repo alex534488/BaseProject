@@ -8,7 +8,7 @@ public class CartsManager : INewDay
 {
     List<Cart> listCarriage = new List<Cart>();
 
-    private Stat<int> availableCarts = new Stat<int>(0, 0, 10, Stat<int>.BoundMode.Cap);
+    private Stat<int> availableCarts = new Stat<int>(0, 0, 10, BoundMode.Cap);
 
     public int AvailableCarts
     {
