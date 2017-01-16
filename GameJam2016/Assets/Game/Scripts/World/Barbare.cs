@@ -4,6 +4,11 @@ using System.Collections.Generic;
 
 public class Barbare : INewDay
 {
+    public void NewDay()
+    {
+
+    }
+    /*
     public float facteur = 1.2f;
     public int delay = 3;
 
@@ -69,10 +74,6 @@ public class Barbare : INewDay
         {
             nextTarget = null;
         }
-
-
-
-
     }
 
     #region Gestion
@@ -291,5 +292,5 @@ public class Barbare : INewDay
     } // Boucle qui se termine lorsque un des deux clans ne possedent plus de unites
 
     #endregion
-
+    */
 }

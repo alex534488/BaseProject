@@ -15,13 +15,11 @@ public class DayManager : MonoBehaviour {
     // Boutton du UI
     public Button nextDayButton;
     public GameObject currentday;
-    public Button scoutButton;
 
-    // Manager et World
-    public Universe universe;
+    // Manager et Universe
     public RequestManager requestManager;
-    public BarbareManager barbareManager;
     public StorylineManager storylineManager;
+    Universe universe;
 
     // Nombre de jours (Points de la partie)
     public int nbJour = 0;
@@ -40,7 +38,7 @@ public class DayManager : MonoBehaviour {
         if (currentday != null) currentday.GetComponentInChildren<Text>().text = "Jour " + nbJour;
 
         // Initialisation du système de requête pour la première journée
-        requestManager.OnCompletionOfRequests.AddListener(OnAllRequestComplete);
+        requestManager.onAllRequestsComplete.AddListener(OnAllRequestComplete);
 
         // Permet de passer au prochain jour
         if (nextDayButton != null) nextDayButton.onClick.AddListener(OnNextDayClick);
@@ -57,8 +55,7 @@ public class DayManager : MonoBehaviour {
     void OnNextDayClick()
     {
         // Desactive les boutons temporairement
-        if (scoutButton != null) nextDayButton.GetComponent<Button>().interactable = false;
-        if (scoutButton != null) scoutButton.GetComponent<Button>().interactable = false;
+        if (nextDayButton != null) nextDayButton.GetComponent<Button>().interactable = false;
 
         DayOfTime.Night();
         DelayManager.CallTo(delegate ()
@@ -74,8 +71,7 @@ public class DayManager : MonoBehaviour {
     public void NewDay()
     {
         // Desactive les boutons temporairement
-        if (scoutButton != null) nextDayButton.GetComponent<Button>().interactable = false;
-        if (scoutButton != null) scoutButton.GetComponent<Button>().interactable = false;
+        if (nextDayButton != null) nextDayButton.GetComponent<Button>().interactable = false;
 
         // Ajustement de l'Affichage du jour
         nbJour++;
@@ -89,7 +85,6 @@ public class DayManager : MonoBehaviour {
 
     private void OnAllRequestComplete()
     {
-        if (nextDayButton != null) nextDayButton.GetComponent<Button>().interactable = true;
         if (nextDayButton != null) nextDayButton.GetComponent<Button>().interactable = true;
     }
 

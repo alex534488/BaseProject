@@ -8,28 +8,31 @@ public class EstimationEmpire
     
     static public float Estimation()
     {
-        if (bonheurDepart == -1)
-            bonheurDepart = Empire.instance.capitale.GetBonheur();
+        //if (bonheurDepart == -1)
+        //    bonheurDepart = Empire.instance.capitale.GetBonheur();
 
-        float a = EstimationVillage();
-        float b = EstimationBonheur();
+        //float a = EstimationVillage();
+        //float b = EstimationBonheur();
 
-        if (a <= b)
-            return a;
+        //if (a <= b)
+        //    return a;
 
-        else
-            return b;
+        //else
+        //    return b;
+        return 1;
     }
 
     private static float EstimationVillage()
     {
-        float nbVillageRestant = Empire.instance.listVillage.Count;
-        return (nbVillageRestant / Empire.instance.nbVillage);
+        //float nbVillageRestant = Empire.instance.listVillage.Count;
+        //return (nbVillageRestant / Empire.instance.nbVillage);
+        return 1;
     }
 
     private static float EstimationBonheur()
     {
-        float nbBonheurRestant = Empire.instance.capitale.GetBonheur();
-        return (nbBonheurRestant / bonheurDepart);
+        //float nbBonheurRestant = Empire.instance.capitale.GetBonheur();
+        //return (nbBonheurRestant / bonheurDepart);
+        return 1;
     }
 }

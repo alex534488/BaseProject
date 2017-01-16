@@ -2,18 +2,16 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class History : MonoBehaviour {
+public class History
+{
     List<World> worlds;
-    //List<StorylineManagerState> storylines;
-    Universe currentUniverse;
-    StorylineManager storylineManager;
 
-    void RecordDay()
+    public void RecordDay(World world)
     {
 
     }
 
-    void LoadPast(int days)
+    public void LoadPast(int days)
     {
 
     }

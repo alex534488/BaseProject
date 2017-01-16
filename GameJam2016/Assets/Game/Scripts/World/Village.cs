@@ -9,6 +9,11 @@ public class Village : INewDay
     public class StatEvent : UnityEvent<int> { }
 
     private bool capitale = false;
+    private string name = "UnNamed";
+
+    //private Architect architect;
+
+    private int mapPosition;
 
     #region Stats
     private Stat<int> armyPower = new Stat<int>(0);
@@ -19,36 +24,32 @@ public class Village : INewDay
     private Stat<int> food = new Stat<int>(1);
     #endregion
 
-    //private Architect architect;
-
-    private int mapPosition;
+    public Village(string name)
+    {
+        this.name = name;
+    }
 
     public virtual void NewDay()
     {
         // Verification sur le village a chaque tour (mort/destruction?)
     }
 
+    /// <summary>
+    /// Met à jour les ressources de l'empire en fonction de la production du village
+    /// </summary>
     public void UpdateResource(Empire empire)
     {
-        // Si c'est une capitale
-        if (IsCapital())
-        {
-            empire.Add(ResourceType.science, Get(ResourceType.scienceProd)); // Ajoute la production de science a l'empire
-        }
-        else // Sinon
-        {
-            Add(ResourceType.material, Get(ResourceType.materialProd)); // ajoute la production de materiaux a l'empire
-            // Verification du compteur de creation de citoyen, s'il est superieur a son max, on doit generer un
-            // evennement et redemarer le compteur
-            if ((empire.Get(ResourceType.citizenProgress) + Get(ResourceType.food)) >= empire.Get(ResourceType.citizenProgressMax))
-            {
-                int temp = empire.Get(ResourceType.citizenProgress) + Get(ResourceType.food); // total
-                temp = temp - empire.Get(ResourceType.citizenProgressMax); // difference du total avec le max
-                empire.Set(ResourceType.citizenProgress,temp); // le reste est conserver
-                // Evenement de production d'un citoyen ICI !
-            }
-        }
-        empire.Add(ResourceType.gold, Get(ResourceType.goldProd)); // ajout de la production d'or de tous les villages a l'empire
+        // + science
+        empire.Add(Empire_ResourceType.science, Get(Village_ResourceType.scienceProd));
+
+        // + matériaux
+        empire.Add(Empire_ResourceType.material, Get(Village_ResourceType.materialProd)); // ajoute la production de materiaux a l'empire
+
+        // + citoyen
+        empire.Add(Empire_ResourceType.citizenProgress, Get(Village_ResourceType.food));
+
+        // + gold
+        empire.Add(Empire_ResourceType.gold, Get(Village_ResourceType.goldProd));
     }
 
     public void SetAsCapital()
@@ -68,103 +69,71 @@ public class Village : INewDay
         return mapPosition;
     }
 
+    public string Name
+    {
+        get { return name; }
+    }
+
     #region Stats Method
-    public int Get(ResourceType type)
-    {
-        switch (type)
-        {
-            default:
-                return 0;
-            case ResourceType.armyPower:
-                return armyPower;
-            case ResourceType.armyCost:
-                return armyCost;
-            case ResourceType.goldProd:
-                return goldProd;
-            case ResourceType.materialProd:
-                return materialProd;
-            case ResourceType.scienceProd:
-                return scienceProd;
-            case ResourceType.food:
-                return food;
-        }
-    }
-
-    public void Set(ResourceType type, int value)
-    {
-        switch (type)
-        {
-            default:
-                return;
-            case ResourceType.armyPower:
-                armyPower.Set(value);
-                return;
-            case ResourceType.armyCost:
-                armyCost.Set(value);
-                return;
-            case ResourceType.goldProd:
-                goldProd.Set(value);
-                return;
-            case ResourceType.materialProd:
-                materialProd.Set(value);
-                return;
-            case ResourceType.scienceProd:
-                scienceProd.Set(value);
-                return;
-            case ResourceType.food:
-                food.Set(value);
-                return;
-        }
-    }
-
-    public void Add(ResourceType type, int value)
-    {
-        switch (type)
-        {
-            default:
-                return;
-            case ResourceType.armyPower:
-                armyPower.Set(armyPower + value);
-                return;
-            case ResourceType.armyCost:
-                armyCost.Set(armyCost + value);
-                return;
-            case ResourceType.goldProd:
-                goldProd.Set(goldProd + value);
-                return;
-            case ResourceType.materialProd:
-                materialProd.Set(materialProd + value);
-                return;
-            case ResourceType.scienceProd:
-                scienceProd.Set(scienceProd + value);
-                return;
-            case ResourceType.food:
-                food.Set(food + value);
-                return;
-        }
-    }
-
-    public virtual Stat<int>.StatEvent GetOnSet(ResourceType type)
+    public Stat<int> GetStat(Village_ResourceType type)
     {
         switch (type)
         {
             default:
                 return null;
-            case ResourceType.armyPower:
-                return armyPower.onSet;
-            case ResourceType.armyCost:
-                return armyCost.onSet;
-            case ResourceType.goldProd:
-                return goldProd.onSet;
-            case ResourceType.materialProd:
-                return materialProd.onSet;
-            case ResourceType.scienceProd:
-                return scienceProd.onSet;
-            case ResourceType.food:
-                return food.onSet;
+            case Village_ResourceType.armyPower:
+                return armyPower;
+            case Village_ResourceType.armyCost:
+                return armyCost;
+            case Village_ResourceType.goldProd:
+                return goldProd;
+            case Village_ResourceType.materialProd:
+                return materialProd;
+            case Village_ResourceType.scienceProd:
+                return scienceProd;
+            case Village_ResourceType.food:
+                return food;
         }
     }
+
+    public int Get(Village_ResourceType type)
+    {
+        Stat<int> stat = GetStat(type);
+        return stat != null ? stat : 0;
+    }
+
+    public void Set(Village_ResourceType type, int value)
+    {
+        Stat<int> stat = GetStat(type);
+        if (stat != null)
+            stat.Set(value);
+    }
+
+    public void Add(Village_ResourceType type, int value)
+    {
+        Set(type, Get(type) + value);
+    }
+
+    public virtual Stat<int>.StatEvent GetOnSetEvent(Village_ResourceType type)
+    {
+        Stat<int> stat = GetStat(type);
+        return stat != null ? stat.onSet : null;
+    }
     #endregion
+
+
+    public static void Transfer(Village source, Village destination, Village_ResourceType resource, int amount)
+    {
+        if (amount < 0) //Swap les deux village si le montant est negatif
+        {
+            Village temp = source;
+            source = destination;
+            destination = temp;
+        }
+
+        if (source != null) source.Add(resource, -amount);
+        if (destination != null) destination.Add(resource, amount);
+    }
 }
 
 /*

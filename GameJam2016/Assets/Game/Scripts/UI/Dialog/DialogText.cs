@@ -91,7 +91,7 @@ public class DialogText : MonoBehaviour
         //Met le village de droite et de gauche. La capitale est a droite en priorité.
         foreach (Village village in villageConcernée)
         {
-            if (village == Empire.instance.capitale) rightVillage = village;
+            if (village == Universe.Capitale) rightVillage = village;
             else if (leftVillage == null) leftVillage = village;
             else if (rightVillage == null) rightVillage = village;
         }
@@ -123,14 +123,14 @@ public class DialogText : MonoBehaviour
         //Met les nom des village sur les text
         if (leftVillage != null)
         {
-            sourceName.text = multipleLeftVillages? "Villages" : leftVillage.nom; //Si on a eux plus d'1 village a gauche, on va juste ecrire 'Villages'
+            sourceName.text = multipleLeftVillages? "Villages" : leftVillage.Name; //Si on a eux plus d'1 village a gauche, on va juste ecrire 'Villages'
             sourceName.gameObject.SetActive(true);
         }
         else sourceName.gameObject.SetActive(false);
 
         if (rightVillage != null)
         {
-            destinationName.text = rightVillage.nom;
+            destinationName.text = rightVillage.Name;
             destinationName.gameObject.SetActive(true);
         }
         else destinationName.gameObject.SetActive(false);

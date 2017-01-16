@@ -8,12 +8,12 @@ public class RemainingCarriage : MonoBehaviour {
 
     void Awake()
     {
-        Empire.instance.capitale.charriot.onSet.AddListener(UpdateDisplay);
+        Universe.CartsManager.OnAvailableCartChange.AddListener(UpdateDisplay);
         UpdateDisplay(0);
     }
 
     void UpdateDisplay(int dummy)
     {
-        text.text = "Restant: " + Empire.instance.capitale.charriot;
+        text.text = "Remaining: " + Universe.CartsManager.AvailableCarts;
     }
 }

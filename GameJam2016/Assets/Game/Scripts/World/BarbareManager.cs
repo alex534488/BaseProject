@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System;
 
 public class BarbareManager : INewDay {
-
+    /*
     public List<Barbare> listeBarbare = new List<Barbare>();
 
    
@@ -18,7 +18,7 @@ public class BarbareManager : INewDay {
         }
 	}
 
-    public void Uptade()
+    public void Update()
     {
         spawn();
         foreach(Barbare bar in listeBarbare)
@@ -54,10 +54,10 @@ public class BarbareManager : INewDay {
         return barbareTotal;
     }
 
-   
+   */
 
     public void NewDay()
     {
-        throw new NotImplementedException();
+        //TODO
     }
 }

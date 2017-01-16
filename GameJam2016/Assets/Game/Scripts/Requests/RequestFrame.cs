@@ -221,26 +221,27 @@ public class RequestFrame : ScriptableObject
         return text;
     }
 
+    //TODO remplacer avec les nouveau termes
     string ReplaceTerms(string text, Village source, Village destination, int value)
     {
-        text = text.Replace("source.name", source == null ? "" : source.nom);
-        text = text.Replace("source.food", source == null ? "" : source.GetFood().ToString());
-        text = text.Replace("source.foodProd", source == null ? "" : source.GetFoodProd().ToString());
-        text = text.Replace("source.army", source == null ? "" : source.GetArmy().ToString());
-        text = text.Replace("source.armyProd", source == null ? "" : source.GetArmyProd().ToString());
-        text = text.Replace("source.gold", source == null ? "" : source.GetGold().ToString());
-        text = text.Replace("source.goldProd", source == null ? "" : source.GetGoldProd().ToString());
+        //text = text.Replace("source.name", source == null ? "" : source.Name);
+        //text = text.Replace("source.food", source == null ? "" : source.Get(Village_ResourceType.food).ToString());
+        //text = text.Replace("source.foodProd", source == null ? "" : source.GetFoodProd().ToString());
+        //text = text.Replace("source.army", source == null ? "" : source.GetArmy().ToString());
+        //text = text.Replace("source.armyProd", source == null ? "" : source.GetArmyProd().ToString());
+        //text = text.Replace("source.gold", source == null ? "" : source.GetGold().ToString());
+        //text = text.Replace("source.goldProd", source == null ? "" : source.GetGoldProd().ToString());
 
-        text = text.Replace("destination.name", destination == null ? "" : destination.nom);
-        text = text.Replace("destination.food", destination == null ? "" : destination.GetFood().ToString());
-        text = text.Replace("destination.foodProd", destination == null ? "" : destination.GetFoodProd().ToString());
-        text = text.Replace("destination.army", destination == null ? "" : destination.GetArmy().ToString());
-        text = text.Replace("destination.armyProd", destination == null ? "" : destination.GetArmyProd().ToString());
-        text = text.Replace("destination.gold", destination == null ? "" : destination.GetGold().ToString());
-        text = text.Replace("destination.goldProd", destination == null ? "" : destination.GetGoldProd().ToString());
-        text = text.Replace("type", GameResources.ToString(type));
+        //text = text.Replace("destination.name", destination == null ? "" : destination.nom);
+        //text = text.Replace("destination.food", destination == null ? "" : destination.GetFood().ToString());
+        //text = text.Replace("destination.foodProd", destination == null ? "" : destination.GetFoodProd().ToString());
+        //text = text.Replace("destination.army", destination == null ? "" : destination.GetArmy().ToString());
+        //text = text.Replace("destination.armyProd", destination == null ? "" : destination.GetArmyProd().ToString());
+        //text = text.Replace("destination.gold", destination == null ? "" : destination.GetGold().ToString());
+        //text = text.Replace("destination.goldProd", destination == null ? "" : destination.GetGoldProd().ToString());
+        //text = text.Replace("type", GameResources.ToString(type));
 
-        text = text.Replace("value", value.ToString());
+        //text = text.Replace("value", value.ToString());
 
         return text;
     }
@@ -289,7 +290,7 @@ public class RequestFrame : ScriptableObject
                     //La requete ne se fait que si la destination a au moins 11 soldat
                     condition = new Condition(delegate
                     {
-                        return destination.GetArmy() > 10;
+                        return destination.Get(Village_ResourceType.armyPower) > 10;
                     });
 
                     tag = "exemple_village_need_food";

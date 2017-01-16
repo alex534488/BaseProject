@@ -13,7 +13,6 @@ public class World : INewDay {
     {
         // Creation des barbares
         barbareManager = new BarbareManager();
-        barbareManager.Initialize();
 
         // Creation de l'empire
         empire = new Empire();
@@ -21,12 +20,12 @@ public class World : INewDay {
 
         // Creation de la map
         map = new Map();
-        map.Start();
+        map.Init();
     }
 
     public void NewDay()
     {
-        barbareManager.Uptade();
+        barbareManager.NewDay();
         empire.NewDay();
     }
 

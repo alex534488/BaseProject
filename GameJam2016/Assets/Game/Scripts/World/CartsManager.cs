@@ -2,23 +2,29 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.Events;
+using CCC.Utility;
 
 public class CartsManager : INewDay
 {
-
-    static CartsManager cartsManager;
-
     List<Cart> listCarriage = new List<Cart>();
 
-    public UnityEvent OnArriveDestination = new UnityEvent();
+    private Stat<int> availableCarts = new Stat<int>(0, 0, 10, Stat<int>.BoundMode.Cap);
 
-    void Awake()
+    public int AvailableCarts
     {
-        if (cartsManager == null) cartsManager = this;
+        get { return availableCarts; }
     }
 
+    public Stat<int>.StatEvent OnAvailableCartChange
+    {
+        get { return availableCarts.onSet; }
+    }
+
+    //TODO: Ce qu'il y a dans cette fonction marchait, mais c'était un peut difficile de s'y retrouver.
+    //      Je propose qu'on tente de la subdivisé en plus petite tache/fonction si possible
     public void NewDay()
     {
+        /*
         // Compteur de tour
         for (int i = 0; i < listCarriage.Count; i++)
         {
@@ -55,23 +61,24 @@ public class CartsManager : INewDay
                 carriage.delay--;
             }
         }
+        */
     }
 
-    public static void SendCarriage(Cart carriage)
-    {
-        cartsManager.listCarriage.Add(carriage);
+    //public static void SendCarriage(Cart carriage)
+    //{
+    //    cartsManager.listCarriage.Add(carriage);
 
-        // Si le chariot est une requete de resources a un village
-        if (carriage.destination.GetType() == typeof(Capitale)) { carriage.amount = -1 * carriage.destination.lord.CanYouGive(carriage.resource); } // calcul le montant sans en faire l'application
-    }
+    //    // Si le chariot est une requete de resources a un village
+    //    if (carriage.destination.GetType() == typeof(Capitale)) { carriage.amount = -1 * carriage.destination.lord.CanYouGive(carriage.resource); } // calcul le montant sans en faire l'application
+    //}
 
-    public static int GetCarriageCountAt(Village village)
-    {
-        int amount = 0;
-        foreach (Cart carriage in cartsManager.listCarriage)
-        {
-            if (carriage.provenance == village || carriage.destination == village) amount++;
-        }
-        return amount;
-    }
+    //public static int GetCarriageCountAt(Village village)
+    //{
+    //    int amount = 0;
+    //    foreach (Cart carriage in cartsManager.listCarriage)
+    //    {
+    //        if (carriage.provenance == village || carriage.destination == village) amount++;
+    //    }
+    //    return amount;
+    //}
 }

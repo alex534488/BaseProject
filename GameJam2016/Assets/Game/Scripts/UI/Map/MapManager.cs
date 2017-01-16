@@ -64,7 +64,7 @@ public class MapManager : MonoBehaviour
         for (int i = 0; i < cities.Length; i++)
         {
             MapCity city = cities[i];
-            Village village = Empire.instance.GetVillageByName(city.cityName);
+            Village village = Universe.Empire.GetVillageByName(city.cityName);
 
             //Si village = null -> detruit
             if (village == null)
@@ -110,11 +110,11 @@ public class MapManager : MonoBehaviour
         windowAnimation.Open();
     }
 
-    void OnLensSelected(ResourceType type)
+    void OnLensSelected(Village_ResourceType type)
     {
         foreach (MapCity city in cities)
         {
-            city.Display(type, GameResources.GetAlternate(type));
+            city.Display(type);//, GameResources.GetAlternate(type));
         }
     }
 
@@ -123,7 +123,7 @@ public class MapManager : MonoBehaviour
         currentlySelected = city;
         currentlySelected.Highlight();
 
-        bool buttonsEnabled = MapLens.CurrentType() != ResourceType.reputation && MapLens.CurrentType() != ResourceType.custom;
+        bool buttonsEnabled = /*MapLens.CurrentType() != Village_ResourceType.reputation &&*/ MapLens.CurrentType() != Village_ResourceType.custom;
 
         panel.Open(city.cityText.rectTransform.position - (Vector3.up * Screen.height * 0.17f), buttonsEnabled);
     }
@@ -136,16 +136,16 @@ public class MapManager : MonoBehaviour
 
     void Send(int amount)
     {
-        if (MapLens.CurrentType() == ResourceType.custom) return;
+        if (MapLens.CurrentType() == Village_ResourceType.custom) return;
 
-        Empire.instance.capitale.SendCartToVillage(currentlySelected.GetVillage(), MapLens.CurrentType(), amount);
+        //Universe.Capitale.SendCartToVillage(currentlySelected.GetVillage(), MapLens.CurrentType(), amount);
     }
 
     void Request()
     {
-        if (MapLens.CurrentType() == ResourceType.custom) return;
+        if (MapLens.CurrentType() == Village_ResourceType.custom) return;
 
-        Empire.instance.capitale.SendCartToVillage(currentlySelected.GetVillage(), MapLens.CurrentType(), -1);
+        //Empire.instance.capitale.SendCartToVillage(currentlySelected.GetVillage(), MapLens.CurrentType(), -1);
     }
 
     void OnDestroy()

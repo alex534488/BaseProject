@@ -24,7 +24,7 @@ public class StoryGraph : ScriptableObject, INewDay
         {
             //Parameters
             Village source = null;
-            Village destination = Empire.instance.capitale;
+            Village destination = Universe.Capitale;
             int value = 1;
             ResourceType type = ResourceType.custom;
 

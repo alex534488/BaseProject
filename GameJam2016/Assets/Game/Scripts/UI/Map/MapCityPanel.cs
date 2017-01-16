@@ -96,7 +96,7 @@ public class MapCityPanel : MonoBehaviour
 
         extension.gameObject.SetActive(true);
         extension.Open();
-        SetCarriageText(Empire.instance.capitale.charriot);
+        UpdateCarriageText();
     }
 
     public void CloseExtension()
@@ -116,27 +116,27 @@ public class MapCityPanel : MonoBehaviour
     {
         onSend.Invoke(amount);
         Close();
-        SetCarriageText(Empire.instance.capitale.charriot);
+        UpdateCarriageText();
     }
 
     public void RequestClick()
     {
         onRequest.Invoke();
         Close();
-        SetCarriageText(Empire.instance.capitale.charriot);
+        UpdateCarriageText();
     }
 
-    void SetCarriageText(int amount)
+    void UpdateCarriageText()
     {
         if (carriageAmount != null)
-            carriageAmount.text = ": " + amount;
+            carriageAmount.text = ": " + Universe.CartsManager.AvailableCarts;
     }
 
     void UpdateSendButtons()
     {
-        Village capital = Empire.instance.capitale;
-        ResourceType type = MapLens.CurrentType();
-        int amount = capital.GetResource(type);
+        Village capital = Universe.Capitale;
+        Village_ResourceType type = MapLens.CurrentType();
+        int amount = capital.Get(type);
 
         sendLowButton.interactable = amount >= sendLowAmount;
         sendMedButton.interactable = amount >= sendMedAmount;

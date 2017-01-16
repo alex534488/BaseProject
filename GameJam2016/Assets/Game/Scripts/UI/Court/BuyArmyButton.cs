@@ -11,29 +11,30 @@ public class BuyArmyButton : MonoBehaviour {
     public AudioClip sellClip;
     public bool sellButton = false;
 
-	void Awake () {
+    void Awake()
+    {
         GetComponent<Button>().onClick.AddListener(OnClick);
-	}
+    }
 
     void OnClick()
     {
         if (sellButton)
         {
-            Empire.instance.capitale.AddArmy(-1);
-            SoundManager.Play(sellClip);
+            //Universe.Capitale.Add(Village_ResourceType.armyPower, -1);
+            //SoundManager.Play(sellClip);
         }
         else
         {
-            bool result = Empire.instance.capitale.BuyArmy(1);
+            //bool result = Empire.instance.capitale.BuyArmy(1);
 
-            if (result)
-            {
-                SoundManager.Play(buyClip);
-            }
-            else
-            {
-                SoundManager.Play(sellClip);
-            }
+            //if (result)
+            //{
+            //    SoundManager.Play(buyClip);
+            //}
+            //else
+            //{
+            //    SoundManager.Play(sellClip);
+            //}
         }
     }
 }

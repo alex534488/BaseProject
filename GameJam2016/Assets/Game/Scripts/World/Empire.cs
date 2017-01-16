@@ -6,16 +6,14 @@ using CCC.Utility;
 
 public class Empire : INewDay
 {
-    public static Empire instance;
-
     #region Stats
     private Stat<int> science = new Stat<int>(0);
     private Stat<int> gold = new Stat<int>(0);
     private Stat<int> material = new Stat<int>(0);
-    private Stat<int> citizenProgress = new Stat<int>(0,0, int.MaxValue);
+    private Stat<int> citizenProgress = new Stat<int>(0,0, 10, Stat<int>.BoundMode.MaxLoop);
     private Stat<int> citizenProgressMax = new Stat<int>(10);
-    private Stat<int> happiness = new Stat<int>(100,0,100);
-    private Stat<int> reputation = new Stat<int>(0,-10,10);
+    private Stat<int> happiness = new Stat<int>(100,0,100, Stat<int>.BoundMode.Cap);
+    private Stat<int> reputation = new Stat<int>(0,-10,10, Stat<int>.BoundMode.Cap);
     #endregion
 
     private List<Village> listVillage = new List<Village>();
@@ -25,7 +23,7 @@ public class Empire : INewDay
     // Initialisation de l'empire
     public void Start()
     {
-        instance = this;
+        citizenProgress.onMaxReached.AddListener(this.NewCitizen);
     }
 
     // Empire avance d'une journee
@@ -46,7 +44,13 @@ public class Empire : INewDay
         }
     }
 
-    public Village GetVillage(int mapPosition)
+    void NewCitizen(int currentCitizenProgress)
+    {
+        // +1 citizen yay !
+        // note: pas besoin de set la variable 'citizenProgress', elle devrais déja être ajusté
+    }
+
+    public Village GetVillageAtPos(int mapPosition)
     {
         for(int i = 0; i < listVillage.Count; i++)
         {
@@ -69,13 +73,28 @@ public class Empire : INewDay
         return cartManager;
     }
 
+    public bool Has(Village village)
+    {
+        return listVillage.Contains(village);
+    }
+
+    public Village GetVillageByName(string name)
+    {
+        foreach (Village village in listVillage)
+        {
+            if (village.Name == name) return village;
+        }
+        return null;
+    }
+
     #region Stats Method
-    public int Get(Empire_ResourceType type)
+
+    private Stat<int> GetStat(Empire_ResourceType type)
     {
         switch (type)
         {
             default:
-                return 0;
+                return null;
             case Empire_ResourceType.science:
                 return science;
             case Empire_ResourceType.gold:
@@ -93,34 +112,17 @@ public class Empire : INewDay
         }
     }
 
+    public int Get(Empire_ResourceType type)
+    {
+        Stat<int> stat = GetStat(type);
+        return stat != null ? stat : 0;
+    }
+
     public void Set(Empire_ResourceType type, int value)
     {
-        switch (type)
-        {
-            default:
-                return;
-            case Empire_ResourceType.science:
-                science.Set(value);
-                return;
-            case Empire_ResourceType.gold:
-                gold.Set(value);
-                return;
-            case Empire_ResourceType.material:
-                material.Set(value);
-                return;
-            case Empire_ResourceType.citizenProgress:
-                citizenProgress.Set(value);
-                return;
-            case Empire_ResourceType.citizenProgressMax:
-                citizenProgressMax.Set(value);
-                return;
-            case Empire_ResourceType.happiness:
-                happiness.Set(value);
-                return;
-            case Empire_ResourceType.reputation:
-                reputation.Set(value);
-                return;
-        }
+        Stat<int> stat = GetStat(type);
+        if(stat != null)
+            stat.Set(value);
     }
 
     public void Add(Empire_ResourceType type, int value)
@@ -128,47 +130,12 @@ public class Empire : INewDay
         Set(type, Get(type) + value);
     }
 
-    public virtual Stat<int>.StatEvent GetOnSet(ResourceType type)
+    public virtual Stat<int>.StatEvent GetOnSetEvent(Empire_ResourceType type)
     {
-        switch (type)
-        {
-            default:
-                return null;
-            case ResourceType.science:
-                return science.onSet;
-            case ResourceType.gold:
-                return gold.onSet;
-            case ResourceType.material:
-                return material.onSet;
-            case ResourceType.citizenProgress:
-                return citizenProgress.onSet;
-            case ResourceType.citizenProgressMax:
-                return citizenProgressMax.onSet;
-            case ResourceType.happiness:
-                return happiness.onSet;
-            case ResourceType.reputation:
-                return reputation.onSet;
-        }
+        Stat<int> stat = GetStat(type);
+        return stat != null ? stat.onSet : null;
     }
     #endregion
-
-    public static void Transfer(Village source, Village destinataire, ResourceType resource, int amount)
-    {
-        if (amount < 0) //Swap les deux village si le montant est negatif
-        {
-            Village temp = source;
-            source = destinataire;
-            destinataire = temp;
-        }
-
-        GiveToVillage(source, resource, -amount);
-        GiveToVillage(destinataire, resource, amount);
-    }
-
-    public static void GiveToVillage(Village village, ResourceType resource, int amount)
-    {
-        if (village != null) village.Add(resource, amount);
-    }
 }
 
 /* ANCIEN SYSTEME!!!

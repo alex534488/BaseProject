@@ -12,7 +12,7 @@ public class MapCity : MonoBehaviour
     public Image highlight;
     public Image resourceIcon;
     public Text resourceText;
-    public Text resourceSecondaryText;
+    //public Text resourceSecondaryText;
     public Text cityText;
     public Button button;
     public CanvasGroup fadeGroup;
@@ -21,8 +21,8 @@ public class MapCity : MonoBehaviour
     public MapCityEvent onClick = new MapCityEvent();
 
     private Village village;
-    private ResourceType type;
-    private ResourceType secondType;
+    private Village_ResourceType type;
+    //private ResourceType secondType;
 
     private Tweener highlightAnim;
     private bool animating = false;
@@ -42,30 +42,30 @@ public class MapCity : MonoBehaviour
         });
     }
 
-    public void Display(ResourceType type, ResourceType secondType)
+    public void Display(Village_ResourceType type)//, ResourceType secondType)
     {
         this.type = type;
-        this.secondType = secondType;
+        //this.secondType = secondType;
         UpdateDisplay();
     }
 
     void UpdateDisplay()
     {
         if (village == null) return;
-        resourceIcon.sprite = GameResources.GetIcon(type);
-        int value = village.GetResource(type);
-        int secondValue = village.GetResource(secondType);
+        resourceIcon.sprite = GameResources.GetIcon(GameResources.Convert(type));
+        int value = village.Get(type);
+        //int secondValue = village.GetResource(secondType);
 
         //First value
         resourceText.color = (value < 0) ? criticalColor : Color.black;
         resourceText.text = value.ToString();
 
-        if (secondType == ResourceType.armyProd && value == 0) resourceSecondaryText.gameObject.SetActive(false);
-        else resourceSecondaryText.gameObject.SetActive(true);
+        //if (secondType == ResourceType.armyProd && value == 0) resourceSecondaryText.gameObject.SetActive(false);
+        //else resourceSecondaryText.gameObject.SetActive(true);
 
         //Second value
-        resourceSecondaryText.color = (secondValue < 0) ? criticalColor : Color.black;
-        resourceSecondaryText.text = (secondType == ResourceType.reputationCap ? "/" : (secondValue >= 0 ? "+" : "")) + secondValue;
+        //resourceSecondaryText.color = (secondValue < 0) ? criticalColor : Color.black;
+        //resourceSecondaryText.text = (secondType == ResourceType.reputationCap ? "/" : (secondValue >= 0 ? "+" : "")) + secondValue;
     }
 
     void OnClick()

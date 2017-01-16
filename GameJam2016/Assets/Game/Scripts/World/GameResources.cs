@@ -47,6 +47,8 @@ public enum Empire_ResourceType
 public class GameResources : MonoBehaviour
 {
     public class ResourceEvent : UnityEvent<ResourceType> { }
+    public class Village_ResourceEvent : UnityEvent<Village_ResourceType> { }
+    public class Empire_ResourceEvent : UnityEvent<Empire_ResourceType> { }
     public Sprite scienceIcon;
     public Sprite scienceProdIcon;
     public Sprite goldIcon;
@@ -134,6 +136,168 @@ public class GameResources : MonoBehaviour
                 return "Army Cost";
             case ResourceType.citizenProgressMax:
                 return "Citizen Progress Max";
+        }
+    }
+
+    public static ResourceType Convert(Village_ResourceType type)
+    {
+        switch (type)
+        {
+            case Village_ResourceType.scienceProd:
+                return ResourceType.scienceProd;
+            case Village_ResourceType.goldProd:
+                return ResourceType.goldProd;
+            case Village_ResourceType.materialProd:
+                return ResourceType.materialProd;
+            case Village_ResourceType.food:
+                return ResourceType.food;
+            case Village_ResourceType.armyPower:
+                return ResourceType.armyPower;
+            case Village_ResourceType.armyCost:
+                return ResourceType.armyCost;
+            default:
+                Debug.LogError("Cannot convert " + type + " to a ResourceType");
+                return ResourceType.custom;
+        }
+    }
+
+    public static ResourceType Convert(Empire_ResourceType type)
+    {
+        switch (type)
+        {
+            case Empire_ResourceType.science:
+                return ResourceType.science;
+            case Empire_ResourceType.gold:
+                return ResourceType.goldProd;
+            case Empire_ResourceType.material:
+                return ResourceType.material;
+            case Empire_ResourceType.citizenProgress:
+                return ResourceType.citizenProgress;
+            case Empire_ResourceType.happiness:
+                return ResourceType.happiness;
+            case Empire_ResourceType.reputation:
+                return ResourceType.reputation;
+            case Empire_ResourceType.citizenProgressMax:
+                return ResourceType.citizenProgressMax;
+            default:
+                Debug.LogError("Cannot convert " + type + " to a ResourceType");
+                return ResourceType.custom;
+        }
+    }
+
+    public static Village_ResourceType Convert_ToVillage(ResourceType type)
+    {
+        switch (type)
+        {
+            case ResourceType.scienceProd:
+                return Village_ResourceType.scienceProd;
+            case ResourceType.goldProd:
+                return Village_ResourceType.goldProd;
+            case ResourceType.materialProd:
+                return Village_ResourceType.materialProd;
+            case ResourceType.food:
+                return Village_ResourceType.food;
+            case ResourceType.armyPower:
+                return Village_ResourceType.armyPower;
+            case ResourceType.armyCost:
+                return Village_ResourceType.armyCost;
+            default:
+                Debug.LogError("Cannot convert " + type + " to a Village_ResourceType");
+                return Village_ResourceType.custom;
+        }
+    }
+
+    public static Empire_ResourceType Convert_ToEmpire(ResourceType type)
+    {
+        switch (type)
+        {
+            case ResourceType.science:
+                return Empire_ResourceType.science;
+            case ResourceType.gold:
+                return Empire_ResourceType.gold;
+            case ResourceType.material:
+                return Empire_ResourceType.material;
+            case ResourceType.citizenProgress:
+                return Empire_ResourceType.citizenProgress;
+            case ResourceType.happiness:
+                return Empire_ResourceType.happiness;
+            case ResourceType.reputation:
+                return Empire_ResourceType.reputation;
+            case ResourceType.citizenProgressMax:
+                return Empire_ResourceType.citizenProgressMax;
+            default:
+                Debug.LogError("Cannot convert " + type + " to a Empire_ResourceType");
+                return Empire_ResourceType.custom;
+        }
+    }
+
+    public static bool IsTypeEmpire(ResourceType type)
+    {
+        switch (type)
+        {
+            case ResourceType.science:
+                return true;
+            case ResourceType.scienceProd:
+                return false;
+            case ResourceType.gold:
+                return true;
+            case ResourceType.goldProd:
+                return false;
+            case ResourceType.material:
+                return true;
+            case ResourceType.materialProd:
+                return false;
+            case ResourceType.citizenProgress:
+                return true;
+            case ResourceType.food:
+                return false;
+            case ResourceType.happiness:
+                return true;
+            case ResourceType.reputation:
+                return true;
+            case ResourceType.armyPower:
+                return false;
+            case ResourceType.armyCost:
+                return false;
+            case ResourceType.citizenProgressMax:
+                return true;
+            default:
+                return false;
+        }
+    }
+
+    public static bool IsTypeVillage(ResourceType type)
+    {
+        switch (type)
+        {
+            case ResourceType.science:
+                return false;
+            case ResourceType.scienceProd:
+                return true;
+            case ResourceType.gold:
+                return false;
+            case ResourceType.goldProd:
+                return true;
+            case ResourceType.material:
+                return false;
+            case ResourceType.materialProd:
+                return true;
+            case ResourceType.citizenProgress:
+                return false;
+            case ResourceType.food:
+                return true;
+            case ResourceType.happiness:
+                return false;
+            case ResourceType.reputation:
+                return false;
+            case ResourceType.armyPower:
+                return true;
+            case ResourceType.armyCost:
+                return true;
+            case ResourceType.citizenProgressMax:
+                return false;
+            default:
+                return false;
         }
     }
 }

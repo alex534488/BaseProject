@@ -6,11 +6,11 @@ using UnityEngine.Events;
 public class MapLens : MonoBehaviour
 {
 
-    public ResourceType type;
+    public Village_ResourceType type;
     public Image image;
     public Color normalColor = Color.white;
     public Color selectedColor = Color.white;
-    public static GameResources.ResourceEvent onSelect = new GameResources.ResourceEvent();
+    public static GameResources.Village_ResourceEvent onSelect = new GameResources.Village_ResourceEvent();
 
     static MapLens currentLens = null;
 
@@ -35,11 +35,11 @@ public class MapLens : MonoBehaviour
         return currentLens == this;
     }
 
-    static public ResourceType CurrentType()
+    static public Village_ResourceType CurrentType()
     {
         if (currentLens != null)
             return currentLens.type;
         else
-            return ResourceType.custom;
+            return Village_ResourceType.custom;
     }
 }

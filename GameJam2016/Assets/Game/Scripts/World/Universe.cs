@@ -9,38 +9,63 @@ public class Universe : INewDay {
     private World world;
     private History history;
 
-	public Universe() {
+	public Universe()
+    {
         main = this;
         world = new World();
+        history = new History();
 	}
 
     public void NewDay()
     {
+        history.RecordDay(world);
+
         world.NewDay();
     }
 
-    public Empire GetEmpire()
+    static public Empire Empire
     {
-        return world.empire;
+        get
+        { return main.world.empire; }
     }
 
-    public Village GetCapitale()
+    static public Village Capitale
     {
-        return world.empire.GetCapitale();
+        get
+        {
+            return main.world.empire.GetCapitale();
+        }
     }
 
-    public BarbareManager GetBarbares()
+    static public BarbareManager Barbares
     {
-        return world.barbareManager;
+        get
+        {
+            return main.world.barbareManager;
+        }
     }
 
-    public Map GetMap()
+    static public Map Map
     {
-        return world.map;
+        get
+        {
+            return main.world.map;
+        }
     }
 
-    public CartsManager GetCartsManager()
+    static public CartsManager CartsManager
     {
-        return world.empire.GetCartsManager();
+        get
+        {
+            return main.world.empire.GetCartsManager();
+        }
+    }
+
+    static public History History
+    {
+        get
+        {
+            return main.history;
+        }
     }
 }

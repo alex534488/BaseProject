@@ -349,13 +349,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bacc813a0b11ab14e81bdfe5b60c9c42, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 4
-  secondeType: 5
-  totalText: {fileID: 1052594764}
-  profitText: {fileID: 0}
-  statTextPrefab: {fileID: 114000013230344322, guid: 09c9e5e0020184f4e8334293c4ed8286,
-    type: 2}
-  offset: {x: 150, y: -20}
 --- !u!1 &177237364
 GameObject:
   m_ObjectHideFlags: 0
@@ -546,14 +539,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 225897919}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dd231631dfbbb3e4c8083d13a0c9d63c, type: 3}
+  m_Script: {fileID: 11500000, guid: 87018460fcc72e84dbc866e3f1762626, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   leftbutton: {fileID: 624382606}
   rightbutton: {fileID: 1448957831}
   cam: {fileID: 389383145}
   speed: 10
-  offset: 15
+  offset: 10
 --- !u!1 &250400159
 GameObject:
   m_ObjectHideFlags: 0
@@ -1953,7 +1946,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   text: "Arm\xE9e de la capital"
-  prefab: {fileID: 1000013068124236, guid: c96900f10ea9ea042804d548c00f1368, type: 2}
+  prefab: {fileID: 0}
   offset: {x: 200, y: -15, z: 0}
   container: {fileID: 1228108866}
 --- !u!114 &807591477
@@ -2695,7 +2688,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   text: Nourriture de la capital
-  prefab: {fileID: 1000013068124236, guid: c96900f10ea9ea042804d548c00f1368, type: 2}
+  prefab: {fileID: 0}
   offset: {x: 150, y: 0, z: 0}
   container: {fileID: 1228108866}
 --- !u!114 &1268942713
@@ -2745,13 +2738,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bacc813a0b11ab14e81bdfe5b60c9c42, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 2
-  secondeType: 3
-  totalText: {fileID: 2078889714}
-  profitText: {fileID: 2023513264}
-  statTextPrefab: {fileID: 114000013230344322, guid: 09c9e5e0020184f4e8334293c4ed8286,
-    type: 2}
-  offset: {x: 150, y: 0}
 --- !u!1 &1332675114
 GameObject:
   m_ObjectHideFlags: 0
@@ -2802,7 +2788,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   text: Or de la capital
-  prefab: {fileID: 1000013068124236, guid: c96900f10ea9ea042804d548c00f1368, type: 2}
+  prefab: {fileID: 0}
   offset: {x: 150, y: 0, z: 0}
   container: {fileID: 1228108866}
 --- !u!114 &1332675117
@@ -2852,13 +2838,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bacc813a0b11ab14e81bdfe5b60c9c42, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 0
-  secondeType: 1
-  totalText: {fileID: 1622061423}
-  profitText: {fileID: 1371657118}
-  statTextPrefab: {fileID: 114000013230344322, guid: 09c9e5e0020184f4e8334293c4ed8286,
-    type: 2}
-  offset: {x: 150, y: 0}
 --- !u!1 &1371657115
 GameObject:
   m_ObjectHideFlags: 0
@@ -3073,7 +3052,6 @@ GameObject:
   - 4: {fileID: 1418466803}
   - 114: {fileID: 1418466802}
   - 114: {fileID: 1418466805}
-  - 114: {fileID: 1418466804}
   - 114: {fileID: 1418466807}
   - 82: {fileID: 1418466808}
   - 114: {fileID: 1418466806}
@@ -3102,9 +3080,7 @@ MonoBehaviour:
   loseClip: {fileID: 8300000, guid: ce77e175f026ad840aab2a5545f71567, type: 3}
   nextDayButton: {fileID: 2104225362}
   currentday: {fileID: 1539875816}
-  scoutButton: {fileID: 0}
   requestManager: {fileID: 1418466805}
-  carriageManager: {fileID: 1418466804}
   storylineManager: {fileID: 1418466812}
   nbJour: 0
 --- !u!4 &1418466803
@@ -3120,22 +3096,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 4
---- !u!114 &1418466804
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1418466801}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 05ee0b055711cd847b8aee0232321dd2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  OnArriveDestination:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
-      PublicKeyToken=null
 --- !u!114 &1418466805
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3148,7 +3108,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bank: {fileID: 11400000, guid: 9e3236faf5d0bf9448a8b74b4cbfba16, type: 2}
-  OnCompletionOfRequests:
+  onAllRequestsComplete:
     m_PersistentCalls:
       m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
@@ -3164,15 +3124,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81f9793ea1b649248853c7938dc8f457, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  scienceIcon: {fileID: 0}
+  scienceProdIcon: {fileID: 0}
   goldIcon: {fileID: 21300000, guid: 9e00302f49b19144fbac3486a2a2916e, type: 3}
   goldProdIcon: {fileID: 21300000, guid: beca89d3b716b4148a940c07b40d01d8, type: 3}
+  materialIcon: {fileID: 0}
+  materialProdIcon: {fileID: 0}
+  citizenProgressIcon: {fileID: 0}
   foodIcon: {fileID: 21300000, guid: e45c217a1d808a54a81e5344a8aaa40f, type: 3}
-  foodProdIcon: {fileID: 21300000, guid: 7ba3d006d04c0ff4bb57c67ccd00e85f, type: 3}
-  armyIcon: {fileID: 21300000, guid: cca2fe0abfab45b4ebc64b6941ed08ef, type: 3}
-  armyProdIcon: {fileID: 21300000, guid: 7b7c93429c44baa458e830d906a7f8b0, type: 3}
-  reputationIcon: {fileID: 21300000, guid: 891983dc30535de499e0da24ec0eb031, type: 3}
   happinessIcon: {fileID: 21300000, guid: 891983dc30535de499e0da24ec0eb031, type: 3}
-  happinessCapIcon: {fileID: 21300000, guid: b3ecd95dd5c6e874e9c00831530989cc, type: 3}
+  reputationIcon: {fileID: 21300000, guid: 891983dc30535de499e0da24ec0eb031, type: 3}
+  armyPowerIcon: {fileID: 0}
+  armyCostIcon: {fileID: 0}
+  citizenProgressMax: {fileID: 0}
 --- !u!114 &1418466807
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3324,7 +3288,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   storylinePrefabs:
-  - {fileID: 114000010350179418, guid: e278a318dd9402b49906b55f093fa889, type: 2}
+  - {fileID: 0}
 --- !u!1 &1448957827
 GameObject:
   m_ObjectHideFlags: 0
@@ -3949,7 +3913,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   text: "Envoyer un \xE9claireur. Il reviendra demain pour vous informer d'une attaque
     barbare."
-  prefab: {fileID: 1000013068124236, guid: 219ff08cfb777d24facaeaf625192d44, type: 2}
+  prefab: {fileID: 0}
   offset: {x: 165, y: 20, z: 0}
   container: {fileID: 1228108866}
 --- !u!114 &1550221459
@@ -4654,7 +4618,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   text: Bonheur de la capital
-  prefab: {fileID: 1000013068124236, guid: c96900f10ea9ea042804d548c00f1368, type: 2}
+  prefab: {fileID: 0}
   offset: {x: 150, y: 0, z: 0}
   container: {fileID: 1228108866}
 --- !u!114 &1987700305
@@ -4704,13 +4668,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bacc813a0b11ab14e81bdfe5b60c9c42, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 6
-  secondeType: 7
-  totalText: {fileID: 1479244727}
-  profitText: {fileID: 206591846}
-  statTextPrefab: {fileID: 114000013230344322, guid: 09c9e5e0020184f4e8334293c4ed8286,
-    type: 2}
-  offset: {x: 150, y: 0}
 --- !u!1 &2023513261
 GameObject:
   m_ObjectHideFlags: 0
@@ -5158,7 +5115,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   text: Passer au prochain jour.
-  prefab: {fileID: 1000013068124236, guid: c96900f10ea9ea042804d548c00f1368, type: 2}
+  prefab: {fileID: 0}
   offset: {x: 0, y: -50, z: 0}
   container: {fileID: 620568655}
 --- !u!114 &2104225366

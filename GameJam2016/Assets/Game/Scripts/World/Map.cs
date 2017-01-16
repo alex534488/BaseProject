@@ -11,14 +11,15 @@ public class Map {
     private int[] teamMap;
 
     // Initialisation
-    public void Start() {
-        InitialMapConfiguration();
+    public void Init()
+    {
         teamMap = new int[nbTerritory];
         adjacencyMap = new bool[nbTerritory][];
         for (int i = 0; i < nbTerritory; i++)
         {
             adjacencyMap[i] = new bool[nbTerritory];
         }
+        InitialMapConfiguration();
     }
 
     /// <summary>
@@ -94,7 +95,7 @@ public class Map {
         for (int i = 0; i < zone.Count; i++)
         {
             // allons chercher le village correspondant et ajoutons le a la liste
-            villages.Add(World.main.empire.GetVillage(zone[i]));
+            villages.Add(Universe.Empire.GetVillageAtPos(zone[i]));
         }
         return villages;
     }
@@ -114,7 +115,7 @@ public class Map {
         for(int i = 0; i < zone.Count; i++)
         {
             // s'ils ont un village, ajoute le a la liste
-            if (IsEnemyTerritory(2, zone[i])) villages.Add(World.main.empire.GetVillage(zone[i]));
+            if (IsEnemyTerritory(2, zone[i])) villages.Add(Universe.Empire.GetVillageAtPos(zone[i]));
         }
         return villages;
     }
