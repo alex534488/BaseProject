@@ -10,10 +10,10 @@ public class Empire : INewDay
     private Stat<int> science = new Stat<int>(0);
     private Stat<int> gold = new Stat<int>(0);
     private Stat<int> material = new Stat<int>(0);
-    private Stat<int> citizenProgress = new Stat<int>(0,0, 10, Stat<int>.BoundMode.MaxLoop);
+    private Stat<int> citizenProgress = new Stat<int>(0,0, 10, BoundMode.MaxLoop);
     private Stat<int> citizenProgressMax = new Stat<int>(10);
-    private Stat<int> happiness = new Stat<int>(100,0,100, Stat<int>.BoundMode.Cap);
-    private Stat<int> reputation = new Stat<int>(0,-10,10, Stat<int>.BoundMode.Cap);
+    private Stat<int> happiness = new Stat<int>(100,0,100, BoundMode.Cap);
+    private Stat<int> reputation = new Stat<int>(0,-10,10, BoundMode.Cap);
     #endregion
 
     private List<Village> listVillage = new List<Village>();

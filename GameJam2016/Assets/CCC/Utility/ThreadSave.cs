@@ -20,7 +20,9 @@ namespace CCC.Utility
             FileStream file = File.Open(path, FileMode.OpenOrCreate);
             bf.Serialize(file, graph);
             file.Close();
-
+            
+            if (MainThread.instance == null)
+                UnityEngine.Debug.Log("MainThread.cs not in the scene.");
             lock (MainThread.instance)
             {
                 MainThread.AddAction(onComplete);
@@ -53,6 +55,11 @@ namespace CCC.Utility
         static public bool Exists(string path)
         {
             return File.Exists(path);
+        }
+
+        static public void Delete(string path)
+        {
+            File.Delete(path);
         }
     }
 }

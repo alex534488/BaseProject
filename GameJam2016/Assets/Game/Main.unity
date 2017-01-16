@@ -980,7 +980,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   text: {fileID: 0}
   frame: {fileID: 0}
-  camera: {fileID: 389383145}
+  cam: {fileID: 0}
   speed: 10
 --- !u!1 &400941563
 GameObject:
@@ -3059,6 +3059,7 @@ GameObject:
   - 114: {fileID: 1418466810}
   - 114: {fileID: 1418466811}
   - 114: {fileID: 1418466812}
+  - 114: {fileID: 1418466804}
   m_Layer: 0
   m_Name: Managers
   m_TagString: Untagged
@@ -3096,6 +3097,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 4
+--- !u!114 &1418466804
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1418466801}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 972ae13c1abcf2a4f9b099ee20f504f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  initComplete: 0
 --- !u!114 &1418466805
 MonoBehaviour:
   m_ObjectHideFlags: 0
