@@ -11,7 +11,7 @@ public class Village : INewDay
     private bool capitale = false;
     private string name = "UnNamed";
 
-    //private Architect architect;
+    private Architect architect;
 
     private int mapPosition;
 
