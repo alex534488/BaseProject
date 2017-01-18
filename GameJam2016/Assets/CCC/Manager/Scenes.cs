@@ -53,6 +53,19 @@ namespace CCC.Manager
             SceneManager.UnloadScene(name);
         }
 
+        static public bool Exists(string sceneName)
+        {
+            for (int i = 0; i < SceneManager.sceneCount; i++)
+            {
+                if (SceneManager.GetSceneAt(i).name == sceneName) return true;
+            }
+            for (int i = 0; i < loadingScenes.Count; i++)
+            {
+                if (loadingScenes[i].name == sceneName) return true;
+            }
+            return false;
+        }
+
         #endregion
 
         #region InLoading Events
@@ -83,19 +96,6 @@ namespace CCC.Manager
         #endregion
 
         #region Internal Utility
-
-        static bool Exists(string sceneName)
-        {
-            for (int i = 0; i < SceneManager.sceneCount; i++)
-            {
-                if (SceneManager.GetSceneAt(i).name == sceneName) return true;
-            }
-            for (int i = 0; i < loadingScenes.Count; i++)
-            {
-                if (loadingScenes[i].name == sceneName) return true;
-            }
-            return false;
-        }
 
         static ScenePromise GetLoadingScene(string name)
         {

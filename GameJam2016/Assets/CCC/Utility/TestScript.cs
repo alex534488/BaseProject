@@ -8,55 +8,42 @@ using CCC.Manager;
 using CCC.Utility;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
+using System;
 
 [System.Serializable]
-public class TestSave
+public class B : A
 {
-    public Stat<int> b = new Stat<int>(5, 0, 10, BoundMode.Cap);
+    public int b = 0;
+    public B(int a, int b) : base(a)
+    {
+        this.b = b;
+    }
+}
+[System.Serializable]
+public class A
+{
+    public int a = 0;
+    public A(int a)
+    {
+        this.a = a;
+    }
 }
 
 public class TestScript : MonoBehaviour
 {
-    public Text text;
-    public RequestFrame frame;
-    public Camera cam;
-    public int speed = 10;
-    TestSave save = new TestSave();
-
-    void Start()
-    {
-        save.b.onMaxReached.AddListener(MaxReached);
-        save.b.onMinReached.AddListener(MinReached);
-    }
-
-    void MaxReached(int value)
-    {
-        print("max reached");
-    }
-    void MinReached(int value)
-    {
-        print("min reached");
-    }
+    public A save;
 
     void Update()
     {
-        //if (Input.GetKeyDown(KeyCode.L)) DayManager.main.Lose("Tu t'est simplement fait pété les chevilles.");
-        
-        if (Input.GetKeyDown(KeyCode.RightArrow))
+        if (Input.GetKeyDown(KeyCode.T))
         {
-            save.b.Set(save.b + 1);
-            print("b = " + save.b);
+            save = new B(1, 2);
+            print(save.GetType());
         }
-        if (Input.GetKeyDown(KeyCode.LeftArrow))
-        {
-            save.b.Set(save.b - 1);
-            print("b = " + save.b);
-        }
-
         if (Input.GetKeyDown(KeyCode.S))
         {
-            //LocalSave();
-            ThreadSave.Save(GameSave.GetFilePath() + "test.dat", save, OnSaveComplete);
+            LocalSave();
+            //ThreadSave.Save(GameSave.GetFilePath() + "test.dat", save, OnSaveComplete);
         }
         if (Input.GetKeyDown(KeyCode.D))
         {
@@ -67,6 +54,14 @@ public class TestScript : MonoBehaviour
             ThreadSave.Load(GameSave.GetFilePath() + "test.dat", OnLoadComplete);
         }
     }
+    void LocalSave()
+    {
+        BinaryFormatter bf = new BinaryFormatter();
+        FileStream file = File.Open(GameSave.GetFilePath() + "test.dat", FileMode.OpenOrCreate);
+        bf.Serialize(file, save);
+        file.Close();
+        OnSaveComplete();
+    }
 
     void OnSaveComplete()
     {
@@ -74,9 +69,10 @@ public class TestScript : MonoBehaviour
     }
     void OnLoadComplete(object graph)
     {
-        save = (TestSave)graph;
+        save = (A)graph;
         print("loaded");
-        print("b = " + save.b);
+        print(save.GetType() + "" + ((B)save).b);
     }
 
 }
+

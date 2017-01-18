@@ -4,14 +4,14 @@ using System.Collections;
 // Classes de haut niveau statique accessible de n'importe ou
 public class Universe : INewDay {
       
-    public static Universe main;
+    public static Universe instance;
 
     private World world;
     private History history;
 
 	public Universe()
     {
-        main = this;
+        instance = this;
         world = new World();
         history = new History();
 	}
@@ -26,14 +26,14 @@ public class Universe : INewDay {
     static public Empire Empire
     {
         get
-        { return main.world.empire; }
+        { return instance.world.empire; }
     }
 
     static public Village Capitale
     {
         get
         {
-            return main.world.empire.GetCapitale();
+            return instance.world.empire.Capitale();
         }
     }
 
@@ -41,7 +41,7 @@ public class Universe : INewDay {
     {
         get
         {
-            return main.world.barbareManager;
+            return instance.world.barbareManager;
         }
     }
 
@@ -49,7 +49,7 @@ public class Universe : INewDay {
     {
         get
         {
-            return main.world.map;
+            return instance.world.map;
         }
     }
 
@@ -57,7 +57,7 @@ public class Universe : INewDay {
     {
         get
         {
-            return main.world.empire.GetCartsManager();
+            return instance.world.empire.CartsManager;
         }
     }
 
@@ -65,7 +65,12 @@ public class Universe : INewDay {
     {
         get
         {
-            return main.history;
+            return instance.history;
         }
+    }
+
+    static public World World
+    {
+        get { return instance.world; }
     }
 }

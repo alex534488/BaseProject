@@ -4,16 +4,31 @@ using System.Collections.Generic;
 
 public class Architect : INewDay
 {
+    Village myVillage;
+
+    public Architect(Village village)
+    {
+        myVillage = village;
+    }
+
+    [System.NonSerialized]
     private List<Building> buildings = new List<Building>(); // Liste de buildings construit dans le village
+    private List<string> buildingsName = new List<string>(); // Liste des NOMS de buildings construit dans le village
+
+    // Dictionnaire contenant tout les behavior particuliere de building
+    private Dictionary<string, BuildingBehavior> behaviors = new Dictionary<string, BuildingBehavior>();
+
+    //Appelé lorsqu'on load une partie 
+    public void OnLoad()
+    {
+        buildings = new List<Building>();
+        foreach (string name in buildingsName)
+            Rebuild(name);
+    }
 
     public void NewDay()
     {
         // TODO : Verification Quotidienne
-    }
-
-    public Building GetBuildingFromBank(string name, Village village)
-    {
-        return BuildingBank.GetBuilding(name, village);
     }
 
     public Building GetBuilding(string name)
@@ -28,17 +43,29 @@ public class Architect : INewDay
         return null;
     }
 
-    // Construire un batiment
-    public void Build(string name, Village village)
+    /// <summary>
+    /// Regénère les liens avec les buildings (seulement appelé lors du OnLoad())
+    /// </summary>
+    private void Rebuild(string name)
     {
-        Building newBuilding = GetBuildingFromBank(name, village); // Trouver le building
+        Building newBuilding = BuildingBank.CreateBuilding(name); // Trouver le building
         buildings.Add(newBuilding); // L'ajouter a la liste de building construit
-        // S'il a un building behavior
-        if (newBuilding.GetComponent<BuildingBehavior>() != null)
+    }
+
+    // Construire un batiment
+    public void Build(string name)
+    {
+        Building newBuilding = BuildingBank.CreateBuilding(name); // Trouver le building
+        buildings.Add(newBuilding); // L'ajouter a la liste de building construit
+        buildingsName.Add(name);
+
+        if (newBuilding.HasBehavior())
         {
-            // Si on effectue seulement la fonction du building behavior
-            if (newBuilding.buildingBehavior.OnBuy()) return;
+            BuildingBehavior behavior = newBuilding.CreateBehavior();
+            behaviors.Add(name, behavior);
+            behavior.OnBuild();
         }
-        newBuilding.Apply(village); // Appliquer la construction du building
+
+        newBuilding.Apply(myVillage); // Appliquer la construction du building
     }
 }

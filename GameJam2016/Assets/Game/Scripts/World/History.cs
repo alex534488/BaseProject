@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class History
 {
-    List<World> worlds;
+    List<World> worlds = new List<World>();
 
     public void RecordDay(World world)
     {
@@ -14,5 +14,13 @@ public class History
     public void LoadPast(int days)
     {
 
+    }
+
+    public World ViewPast(int days)
+    {
+        if (days > worlds.Count || days <= 0)
+            return null;
+
+        return null;
     }
 }

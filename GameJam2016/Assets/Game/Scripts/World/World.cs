@@ -16,11 +16,9 @@ public class World : INewDay {
 
         // Creation de l'empire
         empire = new Empire();
-        empire.Start();
 
         // Creation de la map
         map = new Map();
-        map.Init();
     }
 
     public void NewDay()

@@ -27,6 +27,8 @@ public class Village : INewDay
     public Village(string name)
     {
         this.name = name;
+        architect = new Architect(this);
+        architect.Build("Cultive marde");
     }
 
     public virtual void NewDay()

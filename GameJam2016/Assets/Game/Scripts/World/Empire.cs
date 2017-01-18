@@ -16,12 +16,28 @@ public class Empire : INewDay
     private Stat<int> reputation = new Stat<int>(0,-10,10, BoundMode.Cap);
     #endregion
 
-    private List<Village> listVillage = new List<Village>();
+    private List<Village> villageList = new List<Village>();
 
-    private CartsManager cartManager;
+    private CartsManager cartManager = null;
 
-    // Initialisation de l'empire
-    public void Start()
+    //Appelé 1 seul fois PAR MONDE, au départ
+    public Empire()
+    {
+        cartManager = new CartsManager();
+        SetListeners();
+
+
+        //à enlever
+        villageList.Add(new Village("popo"));
+    }
+
+    //Appelé à chaque recharge de sauvegarde
+    public void OnLoad()
+    {
+        SetListeners();
+    }
+
+    public void SetListeners()
     {
         citizenProgress.onMaxReached.AddListener(this.NewCitizen);
     }
@@ -37,10 +53,10 @@ public class Empire : INewDay
     private void UpdateResource()
     {
         // Pour chaque village
-        for (int i = 0; i < listVillage.Count; i++)
+        for (int i = 0; i < villageList.Count; i++)
         {
             // Update les resources
-            listVillage[i].UpdateResource(this);
+            villageList[i].UpdateResource(this);
         }
     }
 
@@ -52,39 +68,47 @@ public class Empire : INewDay
 
     public Village GetVillageAtPos(int mapPosition)
     {
-        for(int i = 0; i < listVillage.Count; i++)
+        for(int i = 0; i < villageList.Count; i++)
         {
-            if (listVillage[i].GetMapPosition() == mapPosition) return listVillage[i];
+            if (villageList[i].GetMapPosition() == mapPosition) return villageList[i];
         }
         return null;
     }
 
-    public Village GetCapitale()
+    public Village Capitale()
     {
-        for (int i = 0; i < listVillage.Count; i++)
+        for (int i = 0; i < villageList.Count; i++)
         {
-            if (listVillage[i].IsCapital()) return listVillage[i];
+            if (villageList[i].IsCapital()) return villageList[i];
         }
         return null;
     }
 
-    public CartsManager GetCartsManager()
+    public CartsManager CartsManager
     {
-        return cartManager;
+        get
+        {
+            return cartManager;
+        }
     }
 
     public bool Has(Village village)
     {
-        return listVillage.Contains(village);
+        return villageList.Contains(village);
     }
 
     public Village GetVillageByName(string name)
     {
-        foreach (Village village in listVillage)
+        foreach (Village village in villageList)
         {
             if (village.Name == name) return village;
         }
         return null;
+    }
+
+    public List<Village> VillageList
+    {
+        get { return villageList; }
     }
 
     #region Stats Method

@@ -6,13 +6,23 @@ using CCC.Utility;
 
 public class CartsManager : INewDay
 {
-    List<Cart> listCarriage = new List<Cart>();
+    List<Cart> ongoingCarts = new List<Cart>();
 
     private Stat<int> availableCarts = new Stat<int>(0, 0, 10, BoundMode.Cap);
+
+    public CartsManager()
+    {
+
+    }
 
     public int AvailableCarts
     {
         get { return availableCarts; }
+    }
+
+    public int TotalCarts
+    {
+        get { return availableCarts + ongoingCarts.Count; }
     }
 
     public Stat<int>.StatEvent OnAvailableCartChange

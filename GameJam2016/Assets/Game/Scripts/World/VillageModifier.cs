@@ -3,7 +3,7 @@ using System.Collections;
 
 [System.Serializable]
 public class VillageModifier {
-    public Village_ResourceType resource;
+    public Village_ResourceType resource = Village_ResourceType.custom;
     public int amount;
 
     public void ApplyModifier(Village village)

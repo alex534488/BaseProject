@@ -1,29 +1,27 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-// Classe abstraire qui doit être hérité des scripts associés aux buildings
-public interface IBuildingBehavior
-{
-    bool OnBuy();     // action a faire lors d'un achat
-    bool OnDestroy(); // action a faire lors d'une destruction
-    bool OnNewDay();  // action a faire lors d'une nouvelle journee
-    // N.B. Retourner true seulement si on veut que la fonction s'effectue sans le Apply par default du batiment
-}
+//// Classe abstraire qui doit être hérité des scripts associés aux buildings
+//public interface IBuildingBehavior
+//{
+//    bool OnBuy();     // action a faire lors d'un achat
+//    bool OnDestroy(); // action a faire lors d'une destruction
+//    bool OnNewDay();  // action a faire lors d'une nouvelle journee
+//    // N.B. Retourner true seulement si on veut que la fonction s'effectue sans le Apply par default du batiment
+//}
 // Classe par default de buildingBehavior
-public class BuildingBehavior : IBuildingBehavior
+[System.Serializable]
+public class BuildingBehavior //: IBuildingBehavior
 {
-    public bool OnBuy()
+    public virtual void OnBuild()
     {
-        return false;
     }
 
-    public bool OnDestroy()
+    public virtual void OnDestroy()
     {
-        return false;
     }
 
-    public bool OnNewDay()
+    public virtual void OnNewDay()
     {
-        return false;
     }
 }

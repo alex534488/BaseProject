@@ -11,7 +11,7 @@ public class Map {
     private int[] teamMap;
 
     // Initialisation
-    public void Init()
+    public Map()
     {
         teamMap = new int[nbTerritory];
         adjacencyMap = new bool[nbTerritory][];
