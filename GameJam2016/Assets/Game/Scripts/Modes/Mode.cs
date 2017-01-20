@@ -25,19 +25,6 @@ public class Mode : ScriptableObject {
 
     // Ajout de d'autres options ici en les mettant public! (ne pas oublier les valeurs par default)
 
-    // Constructeur d'un mode si on veut le faire en code
-    /* A modifier quand les options de resources seront fixer
-    Mode(// ressources/autres
-         bool Tutorial, 
-         int difficulty, 
-         bool survival, 
-         bool noend)
-    {
-        this.Difficulty = difficulty;
-        this.NoEnd = noend;
-    }
-    */
-
     // Exemple de fonction pour savoir si une resource est active
     public bool IsGoldActive()
     {

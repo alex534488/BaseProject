@@ -10,9 +10,9 @@ public class CartsManager : INewDay
 
     private Stat<int> availableCarts = new Stat<int>(0, 0, 10, BoundMode.Cap);
 
-    public CartsManager()
+    public CartsManager(int startingAmount)
     {
-
+        availableCarts.Set(startingAmount);
     }
 
     public int AvailableCarts
@@ -34,61 +34,48 @@ public class CartsManager : INewDay
     //      Je propose qu'on tente de la subdivisé en plus petite tache/fonction si possible
     public void NewDay()
     {
-        /*
-        // Compteur de tour
-        for (int i = 0; i < listCarriage.Count; i++)
+        // On met a jour les chariots
+        List<Cart> listCart = UpdateCarts();
+
+        // S'il y a au moins un chariot qui a terminer sa route
+        if (listCart.Count > 0)
         {
-            Cart carriage = listCarriage[i];
-            if (carriage.delay <= 0)
+            // Appliquer les modifications a la destination/source
+            for(int i = 0; i < listCart.Count; i++)
             {
-                //print("arrivee");
-                if (!carriage.destination.isDestroyed)
-                {
-                    if (carriage.amount > 0)                                   // Give resource to village
-                    {
-                        carriage.destination.AddResource(carriage.resource, carriage.amount);
-                        carriage.destination.AddReputation(10);
-                        // NB. les resources sont deja enlevees dans le script capitale donc on ne fait que donner
-                    }
-                    else                                                       //Take resource FROM village to capital (instant)
-                    {
-                        if (carriage.amount != 0)
-                        {
-                            RequestManager.BuildAndSendRequest("carriage_return", carriage.destination, carriage.provenance, -1 * carriage.amount, carriage.resource);
-                        } else RequestManager.SendRequest(new Request(carriage, 0));
-                    }
-                    Empire.instance.capitale.charriot.Set(Empire.instance.capitale.charriot + 1);
-                }
-                else
-                {
-                    RequestManager.SendRequest(new Request(carriage, -1));
-                }
-                this.listCarriage.RemoveAt(i);
-                i--;
-            }
-            else
-            {
-                carriage.delay--;
+                listCart[i].Apply();
             }
         }
-        */
     }
 
-    //public static void SendCarriage(Cart carriage)
-    //{
-    //    cartsManager.listCarriage.Add(carriage);
+    private List<Cart> UpdateCarts()
+    {
+        List<Cart> result = new List<Cart>();
+        for (int i = 0; i < ongoingCarts.Count; i++)
+        {
+            if (ongoingCarts[i].Update())
+            {
+                result.Add(ongoingCarts[i]);
+            }
+        }
+        return result;
+    }
 
-    //    // Si le chariot est une requete de resources a un village
-    //    if (carriage.destination.GetType() == typeof(Capitale)) { carriage.amount = -1 * carriage.destination.lord.CanYouGive(carriage.resource); } // calcul le montant sans en faire l'application
-    //}
+    // Envoie le chariot pour envoye une resource specifique a ce village (pour l'instant seulement l'armee)
+    public void SendCartVillage()
+    {
+        // TODO
+    }
 
-    //public static int GetCarriageCountAt(Village village)
-    //{
-    //    int amount = 0;
-    //    foreach (Cart carriage in cartsManager.listCarriage)
-    //    {
-    //        if (carriage.provenance == village || carriage.destination == village) amount++;
-    //    }
-    //    return amount;
-    //}
+    // Envoie le chariot faire des echanges avec les autres villages (donne de l'or)
+    public void SendCartTrade()
+    {
+        // TODO
+    }
+
+    // Envoie le chariot a l'exterieur de la map pour decouvrir des resources aleatoires
+    public void SendCartExplore()
+    {
+        // TODO
+    }
 }

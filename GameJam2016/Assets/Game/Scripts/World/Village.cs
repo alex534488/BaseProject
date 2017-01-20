@@ -136,6 +136,18 @@ public class Village : INewDay
         if (source != null) source.Add(resource, -amount);
         if (destination != null) destination.Add(resource, amount);
     }
+
+    public void ApplyBattleResult(BattleResult result)
+    {
+        if (result.barbareAttack)
+        {
+            Set(Village_ResourceType.armyPower, result.defenderLeft);
+        }
+        else
+        {
+            Set(Village_ResourceType.armyPower, result.invaderLeft);
+        }
+    }
 }
 
 /*

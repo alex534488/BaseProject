@@ -36,19 +36,4 @@ public class BarbareManager : INewDay {
     {
         // TODO: Repartitions de la quantite sur tous les territoires de facon le plus equitable et aleatoire
     }
-
-    // Envoie une certaine quantite de troupe sur une position
-    private void Send(int amount, int position)
-    {
-        // verifie les positions adjacentes
-        // trouve les barbares se trouvant sur ceux-ci
-        // Envoie la quantite requise sur la position en
-        // les deplacant, si pas assez de troupe, on envoie le
-        // maximum possible
-    }
-
-    public void IsBeingAttacked(int position)
-    {
-        // A enlever possiblement, peut etre utile s'il y a des animations relies au barbare lorsqu'un village attaque des barbares
-    }
 }

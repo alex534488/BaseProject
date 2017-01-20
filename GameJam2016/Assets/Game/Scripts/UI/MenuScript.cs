@@ -38,4 +38,9 @@ public class MenuScript : MonoBehaviour {
 
         SceneManager.LoadScene(name);
     }
+
+    public void SetMode(string name)
+    {
+        ModeManager.modeManager.SetCurrentMode(name);
+    }
 }

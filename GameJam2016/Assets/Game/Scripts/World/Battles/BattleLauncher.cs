@@ -14,7 +14,9 @@ public class BattleLauncher {
         BattleResult result = battle.Resolve(barbareAttack);
 
         // 3- Réduire la quantité de soldat dans le village, dans les barbares, etc.
-            // TODO
+        village.ApplyBattleResult(result);
+        barbarianClan.ApplyBattleResult(result);
+        if (!result.defenceWin) Universe.Map.ChangeTerritoryOwner(village.GetMapPosition(), 2);
 
         //Renvoie le résultat de bataille à des fin informative
         return result;

@@ -4,16 +4,16 @@ using System.Collections.Generic;
 
 public class ModeManager : MonoBehaviour {
 
-    static ModeManager modeManager;
+    public static ModeManager modeManager;
 
     public List<Mode> modes = new List<Mode>();
 
-    private Mode currentMode;
+    public Mode currentMode = null;
 
     void Awake()
     {
+        DontDestroyOnLoad(transform.gameObject);
         if (modeManager == null) modeManager = this;
-        currentMode = null;
     }
 
     // Changer le mode

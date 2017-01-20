@@ -3,9 +3,10 @@ using System.Collections;
 
 public struct BattleResult {
 
-    int invaderLeft;
-    int invaderDeath;
-    int defenderLeft;
-    int defenderDeath;
-    bool defenceWin;
+    public int invaderLeft;
+    public int invaderDeath;
+    public int defenderLeft;
+    public int defenderDeath;
+    public bool barbareAttack;
+    public bool defenceWin;
 }

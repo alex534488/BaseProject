@@ -7,12 +7,14 @@ public class BarbarianClan : INewDay
 {
     private int mapPosition;
     private int attackCooldown;
+    private int attackCoolDownCounter;
     private Stat<int> armyPower = new Stat<int>(0);
 
     public BarbarianClan(int armyPower, int attackCooldown)
     {
         this.armyPower.Set(armyPower);
         this.attackCooldown = attackCooldown;
+        attackCoolDownCounter = attackCooldown;
     }
 
     public void NewDay()
@@ -24,7 +26,7 @@ public class BarbarianClan : INewDay
 
         if (enemyTerritories.Count >= 0)
         {
-            if (attackCooldown <= 0)
+            if (attackCoolDownCounter <= 0)
             {
                 // le clan attaque!
                 OnAttacking(Random.Range(0, enemyTerritories.Count-1));
@@ -44,6 +46,11 @@ public class BarbarianClan : INewDay
     public int GetPower()
     {
         return armyPower;
+    }
+    
+    private void SetArmyPower(int power)
+    {
+        armyPower.Set(power);
     }
 
     private void OnAttacking(int position)
@@ -70,6 +77,18 @@ public class BarbarianClan : INewDay
 
     public void Idle()
     {
-        attackCooldown--;
+        attackCoolDownCounter--;
+    }
+
+    public void ApplyBattleResult(BattleResult result)
+    {
+        if (result.barbareAttack)
+        {
+            SetArmyPower(result.invaderLeft);
+        } else
+        {
+            SetArmyPower(result.defenderLeft);
+        }
+        attackCoolDownCounter = attackCooldown;
     }
 }
