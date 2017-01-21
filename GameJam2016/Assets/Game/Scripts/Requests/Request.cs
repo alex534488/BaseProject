@@ -33,6 +33,10 @@ public class Transaction
     public string fillValue = "0";
 
     public Transaction() { }
+
+    /// <summary>
+    /// NOTE: pour transféré des ressources de l'empire, mettre un village quelquonque  de l'empire dans la 'source' afin de dépenser les ressources. Sinon, c'est un gain.
+    /// </summary>
     public Transaction(Village source, Village destination, ResourceType type, int value, ValueType valueType = ValueType.flat, Condition condition = null)
     {
         this.source = source;
@@ -59,34 +63,7 @@ public class Transaction
     {
         if (condition != null && !condition) return;
 
-        int amount = value;
-
-        //Ajuste 'amount'
-        switch (valueType)
-        {
-            case ValueType.destPercent:
-                if (destination == null) { Debug.LogError("Error on transfer type 'destPercent'. Destination is null."); amount = 0; }
-                else
-                {
-                    if (GameResources.IsTypeEmpire(type))
-                        amount = Mathf.RoundToInt((float)value * Universe.Empire.Get(GameResources.Convert_ToEmpire(type)) / 100f);
-                    else
-                        amount = Mathf.RoundToInt((float)value * destination.Get(GameResources.Convert_ToVillage(type)) / 100f);
-                }
-                break;
-            case ValueType.sourcePercent:
-                if (source == null) { Debug.LogError("Error on transfer type 'sourcePercent'. Source is null."); amount = 0; }
-                else
-                {
-                    if (GameResources.IsTypeEmpire(type))
-                        amount = Mathf.RoundToInt((float)value * Universe.Empire.Get(GameResources.Convert_ToEmpire(type)) / 100f);
-                    else
-                        amount = Mathf.RoundToInt((float)value * source.Get(GameResources.Convert_ToVillage(type)) / 100f);
-                }
-                break;
-            default:
-                break;
-        }
+        int amount = GetFlatAmount();
 
         //Si la resource ciblé est une resource de l'empire, on fait un gain / une perte de resource ET NON un transfert
         if (GameResources.IsTypeEmpire(type))
@@ -100,6 +77,33 @@ public class Transaction
         //Sinon, on fait un transfert traditionel entre 2 village
         else
             Village.Transfer(source, destination, GameResources.Convert_ToVillage(type), amount);
+    }
+
+    private int GetFlatAmount()
+    {
+        switch (valueType)
+        {
+            case ValueType.destPercent:
+                if (destination == null) { Debug.LogError("Error on transfer type 'destPercent'. Destination is null."); return 0; }
+                else
+                {
+                    if (GameResources.IsTypeEmpire(type))
+                        return Mathf.RoundToInt((float)value * Universe.Empire.Get(GameResources.Convert_ToEmpire(type)) / 100f);
+                    else
+                        return Mathf.RoundToInt((float)value * destination.Get(GameResources.Convert_ToVillage(type)) / 100f);
+                }
+            case ValueType.sourcePercent:
+                if (source == null) { Debug.LogError("Error on transfer type 'sourcePercent'. Source is null."); return 0; }
+                else
+                {
+                    if (GameResources.IsTypeEmpire(type))
+                        return Mathf.RoundToInt((float)value * Universe.Empire.Get(GameResources.Convert_ToEmpire(type)) / 100f);
+                    else
+                        return Mathf.RoundToInt((float)value * source.Get(GameResources.Convert_ToVillage(type)) / 100f);
+                }
+            default:
+                return 0;
+        }
     }
 
     /// <summary>
@@ -129,6 +133,14 @@ public class Transaction
         this.value = value;
         if (type != ResourceType.custom && this.type == ResourceType.custom) this.type = type;
         Fill(source, destination);
+    }
+
+    public void Split(out Transaction sourceTransaction, out Transaction destinationTransaction)
+    {
+        int flatValue = GetFlatAmount();
+
+        sourceTransaction = new Transaction(source, null, type, flatValue, ValueType.flat, condition);
+        destinationTransaction = new Transaction(null, destination, type, flatValue, ValueType.flat, condition);
     }
 }
 

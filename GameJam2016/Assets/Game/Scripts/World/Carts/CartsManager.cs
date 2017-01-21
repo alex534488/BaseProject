@@ -54,6 +54,24 @@ public class CartsManager : INewDay
         availableCarts.Set(availableCarts + arrivedCartCount);
     }
 
+    public void AddAvailableCart()
+    {
+        availableCarts.Set(availableCarts + 1);
+    }
+
+    /// <summary>
+    /// Returns false if no cart is available
+    /// </summary>
+    public bool SendCart(Cart cart)
+    {
+        if (availableCarts <= 0)
+            return false;
+
+        ongoingCarts.Add(cart);
+        cart.Send();
+        return true;
+    }
+
     // Envoie le chariot pour envoye une resource specifique a ce village (pour l'instant seulement l'armee)
     public void SendCartVillage()
     {
