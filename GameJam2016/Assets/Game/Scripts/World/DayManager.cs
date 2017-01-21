@@ -21,6 +21,9 @@ public class DayManager : MonoBehaviour {
     public StorylineManager storylineManager;
     Universe universe;
 
+    // Mode
+    public Mode currentMode;
+
     // Nombre de jours (Points de la partie)
     public int nbJour = 0;
 
@@ -30,7 +33,7 @@ public class DayManager : MonoBehaviour {
 
         MasterManager.Sync();
 
-        // ApplyGameMode();
+        currentMode = ModeManager.modeManager.GetCurrentMode();
 
         universe = new Universe();
 
@@ -103,5 +106,10 @@ public class DayManager : MonoBehaviour {
                 scene.GetRootGameObjects()[0].GetComponent<OutroScript>().Init(reason);
             });
         });
+    }
+
+    private void ApplyGameMode()
+    {
+
     }
 }

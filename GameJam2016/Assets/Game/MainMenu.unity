@@ -539,6 +539,49 @@ SpriteRenderer:
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
+--- !u!1 &617512149
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 617512151}
+  - 114: {fileID: 617512150}
+  m_Layer: 0
+  m_Name: ModeManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &617512150
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 617512149}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84865389298efc647ac17d75c10e7288, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  modes:
+  - {fileID: 11400000, guid: c26b3d2451d149c4f85f4fbde06224c1, type: 2}
+  currentMode: {fileID: 0}
+--- !u!4 &617512151
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 617512149}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 461.31488, y: 347.9488, z: 73.7038}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 6
 --- !u!1 &691151269
 GameObject:
   m_ObjectHideFlags: 0
@@ -778,6 +821,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a04a9093f37cd8b478860d831ddadb1d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cam: {fileID: 0}
 --- !u!4 &852771194
 Transform:
   m_ObjectHideFlags: 0

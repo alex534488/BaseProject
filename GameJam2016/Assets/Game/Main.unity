@@ -542,11 +542,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87018460fcc72e84dbc866e3f1762626, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  leftbutton: {fileID: 624382606}
-  rightbutton: {fileID: 1448957831}
-  cam: {fileID: 389383145}
-  speed: 10
-  offset: 10
 --- !u!1 &250400159
 GameObject:
   m_ObjectHideFlags: 0

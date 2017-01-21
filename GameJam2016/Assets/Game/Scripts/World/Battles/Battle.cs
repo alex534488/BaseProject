@@ -22,7 +22,7 @@ public class Battle {
     }
 
     //TODO: mettre les formule de combat
-    public BattleResult Resolve()
+    public BattleResult Resolve(bool barbareAttack)
     {
         return new BattleResult();
     }

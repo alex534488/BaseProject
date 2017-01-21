@@ -22,10 +22,12 @@ public class Map {
         InitialMapConfiguration();
     }
 
+    // TODO: Si on le veut, il y aurait moyen de faire de la surcharge de fonction pour en eleminer certaine
+
     /// <summary>
     /// Retourne tous les territoires adjacents aux territoires appartenant a une equipe
     /// </summary>
-    public List<int> GetAdjacentEnemyTerritory(int team)
+    public List<int> GetAllAdjacentEnemyTerritory(int team)
     {
         List<int> zone = new List<int>();
         List<int> temp = new List<int>();
@@ -55,9 +57,17 @@ public class Map {
     /// <summary>
     /// Determine si le territoire appartient a l'equipe
     /// </summary>
-    private bool IsEnemyTerritory(int team, int position)
+    public bool IsEnemyTerritory(int team, int position)
     {
         return teamMap[position] != team;
+    }
+
+    /// <summary>
+    /// Determine si le territoire est adjacent a un autre
+    /// </summary>
+    public bool IsAdjacent(int position1, int position2)
+    {
+        return adjacencyMap[position1][position2];
     }
 
     /// <summary>
@@ -81,6 +91,54 @@ public class Map {
     }
 
     /// <summary>
+    /// Permet d'obtenir les territoires enemies adjacents a une position
+    /// </summary>
+    public List<int> GetAdjacentEnemyTerritory(int position, int team)
+    {
+        List<int> zone = new List<int>();
+
+        // Pour chaque territoire
+        for (int i = 0; i < adjacencyMap[position].Length; i++)
+        {
+            // adjacent a la position
+            if (adjacencyMap[position][i] == true)
+            {
+                // S'il est un territoire enemie
+                if (IsEnemyTerritory(team, i))
+                {
+                    // on ajoute a la zone d'adjacence
+                    zone.Add(i);
+                }
+            }
+        }
+        return zone;
+    }
+
+    /// <summary>
+    /// Permet d'obtenir les territoires alliés adjacents a une position
+    /// </summary>
+    public List<int> GetAdjacentAlliedTerritory(int position, int team)
+    {
+        List<int> zone = new List<int>();
+
+        // Pour chaque territoire
+        for (int i = 0; i < adjacencyMap[position].Length; i++)
+        {
+            // adjacent a la position
+            if (adjacencyMap[position][i] == true)
+            {
+                // S'il est un territoire enemie
+                if (IsEnemyTerritory(team, i))
+                {
+                    // on ajoute a la zone d'adjacence
+                    zone.Add(i);
+                }
+            }
+        }
+        return zone;
+    }
+
+    /// <summary>
     ///  Retourne la liste des villages adjacents a tous les territoires
     /// </summary>
     public List<Village> GetAllAdjacentVillages(int position)
@@ -89,7 +147,7 @@ public class Map {
         List<Village> villages = new List<Village>();
 
         // Prenons tous les territoires adjacents aux territoires des barbares
-        zone = GetAdjacentEnemyTerritory(2);
+        zone = GetAllAdjacentEnemyTerritory(2);
 
         // et pour chacun
         for (int i = 0; i < zone.Count; i++)
@@ -118,6 +176,14 @@ public class Map {
             if (IsEnemyTerritory(2, zone[i])) villages.Add(Universe.Empire.GetVillageAtPos(zone[i]));
         }
         return villages;
+    }
+
+    /// <summary>
+    ///  Retourne un villages sur un territoire
+    /// </summary>
+    public Village GetVillage(int position)
+    {
+        return Universe.Empire.GetVillageAtPos(position);
     }
 
     /// <summary>
