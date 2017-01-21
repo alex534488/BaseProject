@@ -7,7 +7,6 @@ using CCC.UI;
 public class MenuScript : MonoBehaviour {
 
     private static bool fade = true;
-    public Camera cam;
 
     public void Start()
     {
@@ -17,7 +16,7 @@ public class MenuScript : MonoBehaviour {
 
     public void LoadScene(string name)
     {
-        if (SceneManager.GetActiveScene().name == "MainMenu") MainSceneFade.instance.FadeOut();
+        if (SceneManager.GetActiveScene().name != "MainMenu") MainSceneFade.instance.FadeOut();
         SceneManager.LoadScene(name);
     }
 
@@ -28,7 +27,7 @@ public class MenuScript : MonoBehaviour {
 
     public void QuitGame()
     {
-        if (SceneManager.GetActiveScene().name == "MainMenu") MainSceneFade.instance.FadeOut();
+        MainSceneFade.instance.FadeOut();
         Application.Quit();
     }
 
