@@ -35,30 +35,23 @@ public class CartsManager : INewDay
     public void NewDay()
     {
         // On met a jour les chariots
-        List<Cart> listCart = UpdateCarts();
-
-        // S'il y a au moins un chariot qui a terminer sa route
-        if (listCart.Count > 0)
-        {
-            // Appliquer les modifications a la destination/source
-            for(int i = 0; i < listCart.Count; i++)
-            {
-                listCart[i].Apply();
-            }
-        }
+        UpdateCarts();
     }
 
-    private List<Cart> UpdateCarts()
+    private void UpdateCarts()
     {
-        List<Cart> result = new List<Cart>();
+        int arrivedCartCount = 0;
         for (int i = 0; i < ongoingCarts.Count; i++)
         {
-            if (ongoingCarts[i].Update())
+            if (ongoingCarts[i].Progress())
             {
-                result.Add(ongoingCarts[i]);
+                ongoingCarts.RemoveAt(i);
+                arrivedCartCount++;
+                i--;
             }
         }
-        return result;
+        //On remet le cart en 'available'
+        availableCarts.Set(availableCarts + arrivedCartCount);
     }
 
     // Envoie le chariot pour envoye une resource specifique a ce village (pour l'instant seulement l'armee)

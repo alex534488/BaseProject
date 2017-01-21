@@ -542,6 +542,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87018460fcc72e84dbc866e3f1762626, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  leftbutton: {fileID: 0}
+  rightbutton: {fileID: 0}
+  cam: {fileID: 0}
+  speed: 10
+  offset: 10
 --- !u!1 &250400159
 GameObject:
   m_ObjectHideFlags: 0
@@ -3089,6 +3094,7 @@ MonoBehaviour:
   currentday: {fileID: 1539875816}
   requestManager: {fileID: 1418466805}
   storylineManager: {fileID: 1418466812}
+  currentMode: {fileID: 0}
   nbJour: 0
 --- !u!4 &1418466803
 Transform:
@@ -3295,6 +3301,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   modes:
   - {fileID: 0}
+  currentMode: {fileID: 0}
 --- !u!114 &1418466812
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3321,6 +3328,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buildings:
   - {fileID: 11400000, guid: 172905a1e91745240a516e49c00d7b7c, type: 2}
+  - {fileID: 11400000, guid: c5ae211f5639e2b448bd5f9cde17e30d, type: 2}
 --- !u!1 &1448957827
 GameObject:
   m_ObjectHideFlags: 0

@@ -49,17 +49,21 @@ public class Cart {
         this.villageDestination = villageDestination;
     }
 
-    public bool Update()
+    /// <summary>
+    /// Retourne true si le cart est arrivé à sa destination
+    /// </summary>
+    public bool Progress()
     {
         delayCounter--;
         if(delayCounter <= 0)
         {
+            OnArrive();
             return true;
         }
         return false;
     }
 
-    public void Apply()
+    public void OnArrive()
     {
         switch (destination)
         {
