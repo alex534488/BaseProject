@@ -31,7 +31,7 @@ public class Village : INewDay
         architect.Build("Cultive marde");
     }
 
-    public virtual void NewDay()
+    public void NewDay()
     {
         // Verification sur le village a chaque tour (mort/destruction?)
     }
@@ -74,6 +74,11 @@ public class Village : INewDay
     public string Name
     {
         get { return name; }
+    }
+
+    public Architect Architect
+    {
+        get { return architect; }
     }
 
     #region Stats Method

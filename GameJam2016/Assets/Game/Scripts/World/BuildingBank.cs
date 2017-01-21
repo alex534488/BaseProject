@@ -18,4 +18,16 @@ public class BuildingBank : Singleton<BuildingBank>
         }
         return null;
     }
+
+    static public bool Has(string name)
+    {
+        for (int i = 0; i < instance.buildings.Count; i++)
+        {
+            if (instance.buildings[i].GetName() == name)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
 }
