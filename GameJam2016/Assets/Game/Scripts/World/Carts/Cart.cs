@@ -3,19 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.Events;
 
-public enum DestinationType
-{
-    village = 1,
-    tradeRoutes = 2,
-    explore = 3
-}
 
 public class Cart
 {
-
     private int delay;
     private int delayCounter;
-    private DestinationType type;
     private bool sent = false;
     private bool arrived = false;
 
@@ -110,20 +102,7 @@ public class Cart
 
         arrived = true;
 
-        switch (type)
-        {
-            default:
-                return;
-            case DestinationType.village:
-                foreach (Transaction transaction in arriveTransactions)
-                    transaction.Execute();
-                return;
-            case DestinationType.tradeRoutes:
-                // Donne un montant d'or x
-                return;
-            case DestinationType.explore:
-                // Donne des resources d'empire aleatoire
-                return;
-        }
+        foreach (Transaction transaction in arriveTransactions)
+            transaction.Execute();
     }
 }
