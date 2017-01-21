@@ -28,14 +28,6 @@ public class Cart
         get { return sent; }
     }
 
-    /*
-    private List<Village_ResourceType> resourceVillage;
-    private List<Empire_ResourceType> resourceEmpire;
-    private List<int> resourceVillageAmount;
-    private List<int> resourceEmpireAmount;*/
-
-    private List<Transaction> transactions;
-
     private List<Transaction> startTransactions;
     private List<Transaction> arriveTransactions;
 
