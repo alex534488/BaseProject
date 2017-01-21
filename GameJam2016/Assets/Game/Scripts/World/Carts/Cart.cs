@@ -6,7 +6,6 @@ using UnityEngine.Events;
 
 public class Cart
 {
-    private int delay;
     private int delayCounter;
     private bool sent = false;
     private bool arrived = false;
@@ -19,23 +18,31 @@ public class Cart
     {
         get { return sent; }
     }
+    public int MapSource
+    {
+        get { return mapSource; }
+    }
+    public int MapDestination
+    {
+        get { return mapDestination; }
+    }
 
     private List<Transaction> startTransactions;
     private List<Transaction> arriveTransactions;
 
     //Map position
-    private int visualSource;
-    private int visualDestination;
+    private int mapSource;
+    private int mapDestination;
 
     public Cart(int delay, Village visualSource, Village visualDestination, List<Transaction> transactions = null) :
         this(delay, visualDestination.GetMapPosition(), visualSource.GetMapPosition(), transactions)
     { }
 
-    public Cart(int delay, int visualSource, int visualDestination, List<Transaction> transactions = null)
+    public Cart(int delay, int mapSource, int mapDestination, List<Transaction> transactions = null)
     {
-        this.delay = delay;
-        this.visualDestination = visualDestination;
-        this.visualSource = visualSource;
+        delayCounter = delay;
+        this.mapDestination = mapDestination;
+        this.mapSource = mapSource;
         foreach (Transaction transaction in transactions)
             AddTransaction(transaction);
     }
