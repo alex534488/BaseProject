@@ -102,7 +102,7 @@ public class Transaction
                         return Mathf.RoundToInt((float)value * source.Get(GameResources.Convert_ToVillage(type)) / 100f);
                 }
             default:
-                return 0;
+                return value;
         }
     }
 

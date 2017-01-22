@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.Events;
+using System.Collections.ObjectModel;
 
 
 public class Cart
@@ -18,6 +19,10 @@ public class Cart
     {
         get { return sent; }
     }
+    public int RemainingDays
+    {
+        get { return delayCounter; }
+    }
     public int MapSource
     {
         get { return mapSource; }
@@ -25,6 +30,14 @@ public class Cart
     public int MapDestination
     {
         get { return mapDestination; }
+    }
+    public ReadOnlyCollection<Transaction> StartTransactions
+    {
+        get { return startTransactions != null ? startTransactions.AsReadOnly() : null; }
+    }
+    public ReadOnlyCollection<Transaction> ArriveTransactions
+    {
+        get { return arriveTransactions != null ? arriveTransactions.AsReadOnly() : null; }
     }
 
     private List<Transaction> startTransactions;
@@ -43,8 +56,9 @@ public class Cart
         delayCounter = delay;
         this.mapDestination = mapDestination;
         this.mapSource = mapSource;
-        foreach (Transaction transaction in transactions)
-            AddTransaction(transaction);
+        if (transactions != null)
+            foreach (Transaction transaction in transactions)
+                AddTransaction(transaction);
     }
 
     public void AddTransaction(Transaction transaction)
@@ -82,10 +96,11 @@ public class Cart
         sent = true;
 
         //On execute tous les transaction de départ
-        foreach (Transaction transaction in startTransactions)
-        {
-            transaction.Execute();
-        }
+        if (startTransactions != null)
+            foreach (Transaction transaction in startTransactions)
+            {
+                transaction.Execute();
+            }
     }
 
     /// <summary>
@@ -109,7 +124,8 @@ public class Cart
 
         arrived = true;
 
-        foreach (Transaction transaction in arriveTransactions)
-            transaction.Execute();
+        if (arriveTransactions != null)
+            foreach (Transaction transaction in arriveTransactions)
+                transaction.Execute();
     }
 }

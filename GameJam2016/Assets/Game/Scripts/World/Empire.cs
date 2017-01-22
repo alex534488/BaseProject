@@ -23,7 +23,7 @@ public class Empire : INewDay
     //Appelé 1 seul fois PAR MONDE, au départ
     public Empire()
     {
-        cartManager = new CartsManager(3);
+        cartManager = new CartsManager(6);
         SetListeners();
 
 

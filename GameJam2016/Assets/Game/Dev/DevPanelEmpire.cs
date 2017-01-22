@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using UnityEngine.UI;
 
 public class DevPanelEmpire : MonoBehaviour
@@ -9,12 +10,16 @@ public class DevPanelEmpire : MonoBehaviour
     Empire empire;
     Village village = null;
     int buildingPage = 0;
+    int cartPage = 0;
 
 
     public Button mainButton;
 
     [Header("CartManager")]
     public Text cartsLeft;
+    public DevPanelCart[] cartItems;
+    public Button nextCartPage;
+    public Button previousCartPage;
 
     [Header("Villages")]
     public VerticalLayoutGroup villagesVerticalLayout;
@@ -27,7 +32,6 @@ public class DevPanelEmpire : MonoBehaviour
     public int closeup_buildingPerPage = 10;
     public Button previousBuildingPage;
     public Button nextBuildingPage;
-    //private Architect architect;
 
     void Awake()
     {
@@ -44,6 +48,8 @@ public class DevPanelEmpire : MonoBehaviour
         }
         previousBuildingPage.onClick.AddListener(PreviousBuildingPage);
         nextBuildingPage.onClick.AddListener(NextBuildingPage);
+        previousCartPage.onClick.AddListener(PreviousCartPage);
+        nextCartPage.onClick.AddListener(NextCartPage);
     }
 
     public void Show(World world)
@@ -182,6 +188,50 @@ public class DevPanelEmpire : MonoBehaviour
     void UpdateCarts()
     {
         cartsLeft.text = "Carts left: " + empire.CartsManager.AvailableCarts + " / " + empire.CartsManager.TotalCarts;
+
+        ReadOnlyCollection<Cart> ongoingCarts = empire.CartsManager.OngoingCarts;
+        int startIndex = cartItems.Length * cartPage;
+        int endIndex = Mathf.Min(startIndex + cartItems.Length, ongoingCarts.Count);
+
+        int currentIndex = startIndex;
+        for(int i=0; i<cartItems.Length; i++)
+        {
+            if (currentIndex < endIndex)
+                cartItems[i].Show(ongoingCarts[currentIndex]);
+            else
+                cartItems[i].Hide();
+
+            currentIndex++;
+        }
+        UpdateCartArrows();
+    }
+
+    void UpdateCartArrows()
+    {
+        if (empire.CartsManager == null)
+        {
+            previousCartPage.interactable = false;
+            nextCartPage.interactable = false;
+            return;
+        }
+        int total = empire.CartsManager.OngoingCartsCount;
+        int startIndex = cartPage * cartItems.Length;
+        int endIndex = Mathf.Min(startIndex + cartItems.Length, total);
+
+        previousCartPage.interactable = startIndex > 0;
+        nextCartPage.interactable = endIndex < total;
+    }
+
+    void NextCartPage()
+    {
+        cartPage++;
+        UpdateCarts();
+    }
+
+    void PreviousCartPage()
+    {
+        cartPage--;
+        UpdateCarts();
     }
 
     void AddBuildingItem(string name)

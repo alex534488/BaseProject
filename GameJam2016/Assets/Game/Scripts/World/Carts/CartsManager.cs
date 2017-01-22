@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.Events;
 using CCC.Utility;
+using System.Collections.ObjectModel;
 
 public class CartsManager : INewDay
 {
@@ -15,6 +16,11 @@ public class CartsManager : INewDay
         availableCarts.Set(startingAmount);
     }
 
+    public ReadOnlyCollection<Cart> OngoingCarts
+    {
+        get { return ongoingCarts != null ? ongoingCarts.AsReadOnly() : null; }
+    }
+
     public int AvailableCarts
     {
         get { return availableCarts; }
@@ -23,6 +29,11 @@ public class CartsManager : INewDay
     public int TotalCarts
     {
         get { return availableCarts + ongoingCarts.Count; }
+    }
+
+    public int OngoingCartsCount
+    {
+        get { return ongoingCarts.Count; }
     }
 
     public Stat<int>.StatEvent OnAvailableCartChange
@@ -69,6 +80,7 @@ public class CartsManager : INewDay
 
         ongoingCarts.Add(cart);
         cart.Send();
+        availableCarts.Set(availableCarts - 1);
         return true;
     }
 
