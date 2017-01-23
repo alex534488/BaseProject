@@ -12,7 +12,7 @@ public class ModeManager : MonoBehaviour {
 
     void Awake()
     {
-        //DontDestroyOnLoad(transform.gameObject);
+        DontDestroyOnLoad(transform.gameObject);
         if (modeManager == null) modeManager = this;
     }
 

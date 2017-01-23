@@ -647,11 +647,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87018460fcc72e84dbc866e3f1762626, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  leftbutton: {fileID: 0}
-  rightbutton: {fileID: 0}
-  cam: {fileID: 0}
-  speed: 10
-  offset: 10
 --- !u!1 &250400159
 GameObject:
   m_ObjectHideFlags: 0
@@ -3522,7 +3517,6 @@ GameObject:
   - 114: {fileID: 1418466806}
   - 114: {fileID: 1418466809}
   - 114: {fileID: 1418466810}
-  - 114: {fileID: 1418466811}
   - 114: {fileID: 1418466812}
   - 114: {fileID: 1418466813}
   m_Layer: 0
@@ -3622,6 +3616,7 @@ MonoBehaviour:
   audioSource: {fileID: 1418466808}
   nightClip: {fileID: 8300000, guid: 1cebbd05279a8d641951906bfc682398, type: 3}
   dayClip: {fileID: 8300000, guid: 0f6b4ccb96790a24cbe4dab1b71ade1d, type: 3}
+  debug: 0
 --- !u!82 &1418466808
 AudioSource:
   m_ObjectHideFlags: 0
@@ -3730,20 +3725,6 @@ MonoBehaviour:
   - {fileID: 1401984604}
   - {fileID: 1516078599}
   currentView: {fileID: 1401984604}
---- !u!114 &1418466811
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1418466801}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 84865389298efc647ac17d75c10e7288, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  modes:
-  - {fileID: 0}
-  currentMode: {fileID: 0}
 --- !u!114 &1418466812
 MonoBehaviour:
   m_ObjectHideFlags: 0
