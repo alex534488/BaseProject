@@ -2,10 +2,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using System;
+using CCC.Utility;
 
 public class BarbareManager : INewDay {
 
     private List<BarbarianClan> listClans = new List<BarbarianClan>();
+    private int spawnAttackPower = 1;
+    private int spawnAttackCooldown = 1;
 
     public void Init()
     {
@@ -17,6 +20,11 @@ public class BarbareManager : INewDay {
     {
         //TODO: IA qui prend des decisions sur le positionnement et l'appartition des barbares
         // Utilise Spawn et Send
+    }
+
+    public List<BarbarianClan> GetAllClans()
+    {
+        return listClans;
     }
 
     public List<BarbarianClan> GetClans(int position)
@@ -32,8 +40,39 @@ public class BarbareManager : INewDay {
         return result;
     }
 
-    private void Spawn(int amount, List<int> positions)
+    public void Spawn(int amount, List<int> positions)
     {
-        // TODO: Repartitions de la quantite sur tous les territoires de facon le plus equitable et aleatoire
+        List<int> listSpawnPoint = new List<int>();
+        if (positions == null)
+        {
+            listSpawnPoint.Add(0);
+            listSpawnPoint.Add(7);
+        } else
+        {
+            listSpawnPoint = positions;
+        }
+
+        Lottery lot = new Lottery();
+        for (int i = 0; i < listSpawnPoint.Count; i++)
+        {
+            lot.Add(listSpawnPoint[i], 1);
+        }
+
+        for(int i = 0; i < amount; i++)
+        {
+            BarbarianClan newBarbare = new BarbarianClan(spawnAttackPower, spawnAttackCooldown, (int)lot.Pick());
+            listClans.Add(newBarbare);
+        }
+    }
+
+    public void Delete(BarbarianClan clan)
+    {
+        for(int i = 0; i < listClans.Count; i++)
+        {
+            if(listClans[i] == clan)
+            {
+                listClans.Remove(clan);
+            }
+        }
     }
 }

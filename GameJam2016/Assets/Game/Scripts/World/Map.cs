@@ -20,6 +20,7 @@ public class Map {
             adjacencyMap[i] = new bool[nbTerritory];
         }
         InitialMapConfiguration();
+        InitialTeamConfiguration();
     }
 
     // TODO: Si on le veut, il y aurait moyen de faire de la surcharge de fonction pour en eleminer certaine
@@ -59,7 +60,8 @@ public class Map {
     /// </summary>
     public bool IsEnemyTerritory(int team, int position)
     {
-        return teamMap[position] != team;
+        bool result = teamMap[position] != team;
+        return result;
     }
 
     /// <summary>

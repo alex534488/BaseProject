@@ -10,11 +10,27 @@ public class BarbarianClan : INewDay
     private int attackCoolDownCounter;
     private Stat<int> armyPower = new Stat<int>(0);
 
-    public BarbarianClan(int armyPower, int attackCooldown)
+    public BarbarianClan(int armyPower, int attackCooldown, int mapPosition)
     {
         this.armyPower.Set(armyPower);
         this.attackCooldown = attackCooldown;
+        this.mapPosition = mapPosition;
         attackCoolDownCounter = attackCooldown;
+    }
+
+    public int GetCoolDown()
+    {
+        return attackCooldown;
+    }
+
+    public int GetCounter()
+    {
+        return attackCoolDownCounter;
+    }
+
+    public void AddPower(int power)
+    {
+        armyPower.Set(armyPower + power);
     }
 
     public void NewDay()
@@ -63,7 +79,7 @@ public class BarbarianClan : INewDay
     {
         if (Universe.Map.IsAdjacent(mapPosition, newPosition))
         {
-            if (!Universe.Map.IsEnemyTerritory(2, newPosition))
+            if (!(Universe.Map.IsEnemyTerritory(2, newPosition)))
             {
                 mapPosition = newPosition;
             }
