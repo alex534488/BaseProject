@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class DayDisplay : MonoBehaviour
 {
-
+    public int numberSufixSize = 22;
     public Text text;
 
     void Start()
@@ -14,11 +14,11 @@ public class DayDisplay : MonoBehaviour
 
     void UpdateDisplay()
     {
-        string extention = "th day";
+        string extention = "<size=" + numberSufixSize + ">th</size> day";
         if (Universe.World.CurrentDay % 10 == 1)
-            extention = "st day";
+            extention = "<size=" + numberSufixSize + ">st</size> day";
         else if (Universe.World.CurrentDay % 10 == 2)
-            extention = "nd day";
+            extention = "<size=" + numberSufixSize + ">nd</size> day";
         text.text = Universe.World.CurrentDay + extention;
     }
 }

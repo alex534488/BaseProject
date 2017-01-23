@@ -32,3 +32,4 @@ MonoBehaviour:
       fromId: 0
       toId: 2
       fillValue: -10
+  characterKit: {fileID: 0}
