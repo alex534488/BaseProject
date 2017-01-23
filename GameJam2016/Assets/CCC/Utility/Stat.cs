@@ -13,7 +13,7 @@ namespace CCC.Utility
     public class Stat<T>
     {
         public class StatEvent : UnityEvent<T> { };
-        
+
         T value;
         IComparable max = null;
         IComparable min = null;
@@ -59,7 +59,7 @@ namespace CCC.Utility
             {
                 if (min != null && (min.CompareTo(value) > 0 || min.Equals(value)))            // Check min
                 {
-                    if(min.CompareTo(value) > 0)
+                    if (min.CompareTo(value) > 0)
                     {
                         if ((boundMode == BoundMode.MinLoop || boundMode == BoundMode.BidirectionalLoop) && max != null)
                             QuickSet(Sub(Sub(value, MIN), MAX)); // équivaut à MAX - (MIN - value)
@@ -164,8 +164,18 @@ namespace CCC.Utility
             return value.ToString();
         }
 
+        static public bool IsNull(Stat<T> a)
+        {
+            object c = a ?? null;
+            return c == null;
+        }
+
         public static bool operator ==(Stat<T> a, string b)
         {
+            if (IsNull(a))
+            {
+                return b == null;
+            }
             return a.ToString() == b;
         }
         public static bool operator !=(Stat<T> a, string b)
