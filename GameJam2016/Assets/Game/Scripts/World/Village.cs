@@ -152,6 +152,21 @@ public class Village : INewDay
             Set(Village_ResourceType.armyPower, result.invaderLeft);
         }
     }
+
+    public void Attack(int position)
+    {
+        List<BarbarianClan> clansOnPosition = Universe.Barbares.GetClans(position);
+        foreach (BarbarianClan clan in clansOnPosition)
+        {
+            BattleLauncher.LaunchBattle(clan,this);
+            if (armyPower < 1) break; // seuil de retraite possible?
+        }
+        if(armyPower > 0 && Universe.Barbares.GetClans(position) == null)
+        {
+            Universe.Map.ChangeTerritoryOwner(position, 1);
+            // TODO: Construire un village
+        }
+    }
 }
 
 /*

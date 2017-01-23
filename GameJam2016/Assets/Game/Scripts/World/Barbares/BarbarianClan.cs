@@ -66,13 +66,22 @@ public class BarbarianClan : INewDay
     
     private void SetArmyPower(int power)
     {
-        armyPower.Set(power);
+        int result = armyPower.Set(power);
+        if(result <= 0)
+        {
+            // TODO : Kill this clan
+        }
     }
 
     private void OnAttacking(int position)
     {
         Village village = Universe.Map.GetVillage(position);
         BattleLauncher.LaunchBattle(this, village);
+        if(armyPower > 0 && village.Get(Village_ResourceType.armyPower) <= 0)
+        {
+            Universe.Map.ChangeTerritoryOwner(position, 2);
+            // TODO: Detruire le village
+        }
     }
 
     public void OnMoving(int newPosition)
@@ -82,6 +91,9 @@ public class BarbarianClan : INewDay
             if (!(Universe.Map.IsEnemyTerritory(2, newPosition)))
             {
                 mapPosition = newPosition;
+            } else // TODO: A ENLEVER ET REMPLACER PAR LE FUTUR SYSTEM D'AI
+            {
+                OnAttacking(newPosition);
             }
         }
     }

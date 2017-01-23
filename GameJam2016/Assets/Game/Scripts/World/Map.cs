@@ -224,7 +224,17 @@ public class Map {
     {
         teamMap[position] = team;
     }
-	
+
+    public bool[][] GetMap()
+    {
+        return adjacencyMap;
+    }
+
+    public int[] GetTeamMap()
+    {
+        return teamMap;
+    }
+
     // Appartenance initiale des territoires
     private void InitialTeamConfiguration()
     {
