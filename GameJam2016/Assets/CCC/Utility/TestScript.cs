@@ -37,28 +37,31 @@ public class TestScript : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.T))
         {
-            save = new B(1, 2);
-            print(save.GetType());
+            //Transaction t1 = new Transaction(new Village("Toma"), new Village("Boby"), ResourceType.science, 10, Transaction.ValueType.sourcePercent);
+            //Cart cart = new Cart(2, 5, 6, new List<Transaction>() { t1 });
+            //Universe.CartsManager.SendCart(cart);
+            //save = new B(1, 2);
+            //print(save.GetType());
         }
         if (Input.GetKeyDown(KeyCode.S))
         {
             LocalSave();
             //ThreadSave.Save(GameSave.GetFilePath() + "test.dat", save, OnSaveComplete);
         }
-        if (Input.GetKeyDown(KeyCode.D))
-        {
-            ThreadSave.Delete(GameSave.GetFilePath() + "test.dat");
-        }
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-            ThreadSave.Load(GameSave.GetFilePath() + "test.dat", OnLoadComplete);
-        }
+        //if (Input.GetKeyDown(KeyCode.D))
+        //{
+        //    ThreadSave.Delete(GameSave.GetFilePath() + "test.dat");
+        //}
+        //if (Input.GetKeyDown(KeyCode.L))
+        //{
+            //ThreadSave.Load(GameSave.GetFilePath() + "test.dat", OnLoadComplete);
+        //}
     }
     void LocalSave()
     {
         BinaryFormatter bf = new BinaryFormatter();
         FileStream file = File.Open(GameSave.GetFilePath() + "test.dat", FileMode.OpenOrCreate);
-        bf.Serialize(file, save);
+        bf.Serialize(file, Universe.World);
         file.Close();
         OnSaveComplete();
     }

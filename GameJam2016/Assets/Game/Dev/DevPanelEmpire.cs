@@ -7,7 +7,9 @@ using UnityEngine.UI;
 public class DevPanelEmpire : MonoBehaviour
 {
     Color highlightColor = new Color(197.0f / 255.0f, 255.0f / 255.0f, 187.0f / 255.0f);
+    [System.NonSerialized]
     Empire empire;
+    [System.NonSerialized]
     Village village = null;
     int buildingPage = 0;
     int cartPage = 0;

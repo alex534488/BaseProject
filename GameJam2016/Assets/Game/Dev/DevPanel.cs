@@ -4,6 +4,7 @@ using UnityEngine.UI;
 
 public class DevPanel : MonoBehaviour
 {
+    [System.NonSerialized]
     World currentWorld = null;
     int currentDay = 0; // 0 étant ajd, -1, -2, etc. le passé
 

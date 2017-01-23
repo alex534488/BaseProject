@@ -2,7 +2,9 @@
 using System.Collections;
 using System.Collections.ObjectModel;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 
+[System.Serializable]
 public class Architect : INewDay
 {
     Village myVillage;
@@ -24,8 +26,10 @@ public class Architect : INewDay
     }
 
     //Appelé lorsqu'on load une partie 
-    public void OnLoad()
+    [OnDeserialized]
+    public void OnLoad(StreamingContext context)
     {
+        Debug.Log("Rebuild de l'architect");
         buildings = new List<Building>();
         foreach (string name in buildingsName)
             Rebuild(name);

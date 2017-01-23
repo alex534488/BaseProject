@@ -3,8 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.Events;
 using System.Collections.ObjectModel;
+using System.Runtime.Serialization;
 
 
+[System.Serializable]
 public class Cart
 {
     private int delayCounter;
@@ -59,6 +61,12 @@ public class Cart
         if (transactions != null)
             foreach (Transaction transaction in transactions)
                 AddTransaction(transaction);
+    }
+
+    [OnDeserialized]
+    public void OnLoad(StreamingContext context)
+    {
+
     }
 
     public void AddTransaction(Transaction transaction)

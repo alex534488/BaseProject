@@ -5,7 +5,8 @@ using UnityEngine.Events;
 using UnityEngine.UI;
 using CCC.Manager;
 
-public class DayManager : MonoBehaviour {
+public class DayManager : MonoBehaviour
+{
 
     public static DayManager main;
 
@@ -14,18 +15,18 @@ public class DayManager : MonoBehaviour {
 
     // Boutton du UI
     public Button nextDayButton;
-    public GameObject currentday;
 
     // Manager et Universe
     public RequestManager requestManager;
     public StorylineManager storylineManager;
+    [System.NonSerialized]
     Universe universe;
 
     // Mode
     public Mode currentMode;
 
     // Nombre de jours (Points de la partie)
-    public int nbJour = 0;
+    //public int nbJour = 0;
 
     private UnityEvent onNewDayTransition = new UnityEvent();
     private UnityEvent onNewDay = new UnityEvent();
@@ -44,12 +45,10 @@ public class DayManager : MonoBehaviour {
 
         MasterManager.Sync();
 
-        currentMode = ModeManager.modeManager.GetCurrentMode();
+        if (ModeManager.modeManager != null)
+            currentMode = ModeManager.modeManager.GetCurrentMode();
 
         universe = new Universe();
-
-        // Ajustement initiale du UI pour afficher la journée courante
-        if (currentday != null) currentday.GetComponentInChildren<Text>().text = "Jour " + nbJour;
 
         // Initialisation du système de requête pour la première journée
         requestManager.onAllRequestsComplete.AddListener(OnAllRequestComplete);
@@ -88,12 +87,9 @@ public class DayManager : MonoBehaviour {
     public void NewDay()
     {
         DayOfTime.Day(0);
+
         // Desactive les boutons temporairement
         if (nextDayButton != null) nextDayButton.GetComponent<Button>().interactable = false;
-
-        // Ajustement de l'Affichage du jour
-        nbJour++;
-        if(currentday != null) currentday.GetComponentInChildren<Text>().text = "Jour " + nbJour;
 
         // Update l'univers
         universe.NewDay();
@@ -113,7 +109,7 @@ public class DayManager : MonoBehaviour {
     /// </summary>
     public void Lose(string reason)
     {
-        PlayerPrefs.SetInt("highscore", nbJour);
+        PlayerPrefs.SetInt("highscore", Universe.World.CurrentDay);
 
         SoundManager.PlayMusic(loseClip, false, 1, true);
         MainSceneFade.instance.FadeOut(delegate ()

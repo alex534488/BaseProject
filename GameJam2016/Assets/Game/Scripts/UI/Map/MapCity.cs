@@ -20,6 +20,7 @@ public class MapCity : MonoBehaviour
     public class MapCityEvent : UnityEvent<MapCity> { }
     public MapCityEvent onClick = new MapCityEvent();
 
+    [System.NonSerialized]
     private Village village;
     private Village_ResourceType type;
     //private ResourceType secondType;

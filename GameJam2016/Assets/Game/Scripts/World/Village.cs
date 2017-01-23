@@ -3,11 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.Events;
 using CCC.Utility;
+using System.Runtime.Serialization;
 
+[System.Serializable]
 public class Village : INewDay
 {
-    public class StatEvent : UnityEvent<int> { }
-
     private bool capitale = false;
     private string name = "UnNamed";
     private bool isDestroyed = false;
@@ -35,6 +35,12 @@ public class Village : INewDay
         mapPosition = position;
         this.capitale = capitale;
         architect = new Architect(this);
+    }
+
+    [OnDeserialized]
+    public void OnLoad(StreamingContext context)
+    {
+
     }
 
     public void NewDay()

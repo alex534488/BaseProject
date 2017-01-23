@@ -1,6 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+//Temporaire
+using System.Runtime.Serialization.Formatters.Binary;
+using System.IO;
+
 // Classes de haut niveau statique accessible de n'importe ou
 public class Universe : INewDay {
       
@@ -9,12 +13,30 @@ public class Universe : INewDay {
     private World world;
     private History history;
 
-	public Universe()
+	public Universe(World loadedWorld = null, History loadedHistory = null)
     {
         instance = this;
-        world = new World();
-        world.Init();
-        history = new History();
+
+        //World
+        if (loadedWorld != null)
+        {
+            world = loadedWorld;
+        }
+        else
+        {
+            world = new World();
+            world.Init();
+        }
+
+        //History
+        if (loadedHistory != null)
+        {
+            history = loadedHistory;
+        }
+        else
+        {
+            history = new History();
+        }
 	}
 
     public void NewDay()

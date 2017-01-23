@@ -15,6 +15,7 @@ public class BaseCourtStat : MonoBehaviour
     protected bool stopUpdating;
 
     protected int value;
+    [System.NonSerialized]
     protected Empire empire;
 
     protected virtual void Start()

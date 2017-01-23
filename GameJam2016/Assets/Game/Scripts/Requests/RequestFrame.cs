@@ -21,7 +21,9 @@ public class RequestFrame : ScriptableObject
     public Condition condition = null;
     public ScriptableObject characterKit = null;
 
+    [System.NonSerialized]
     Village source = null; //Demandant
+    [System.NonSerialized]//
     Village destination = null; //Demandé
     //  ex: village demande de la nourriture à la capitale.
     //      source = village

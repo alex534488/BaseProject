@@ -4,7 +4,9 @@ using System.Collections.Generic;
 using UnityEngine.Events;
 using CCC.Utility;
 using System.Collections.ObjectModel;
+using System.Runtime.Serialization;
 
+[System.Serializable]
 public class CartsManager : INewDay
 {
     List<Cart> ongoingCarts = new List<Cart>();
@@ -14,6 +16,12 @@ public class CartsManager : INewDay
     public CartsManager(int startingAmount)
     {
         availableCarts.Set(startingAmount);
+    }
+
+    [OnDeserialized]
+    public void OnLoad(StreamingContext context)
+    {
+
     }
 
     public ReadOnlyCollection<Cart> OngoingCarts

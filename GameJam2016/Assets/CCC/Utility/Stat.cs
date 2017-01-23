@@ -2,6 +2,7 @@
 using System.Collections;
 using UnityEngine.Events;
 using UnityEngine;
+using System.Runtime.Serialization;
 
 namespace CCC.Utility
 {
@@ -15,6 +16,7 @@ namespace CCC.Utility
         public class StatEvent : UnityEvent<T> { };
 
         T value;
+        public BoundMode boundMode = BoundMode.Cap;
         IComparable max = null;
         IComparable min = null;
         public T MAX
@@ -37,7 +39,6 @@ namespace CCC.Utility
         public StatEvent onMinSet = new StatEvent();
         [NonSerialized]
         public StatEvent onMaxSet = new StatEvent();
-        public BoundMode boundMode = BoundMode.Cap;
 
         public Stat(T value)
         {
@@ -51,6 +52,16 @@ namespace CCC.Utility
             this.min = min;
             this.max = max;
             Set(value);
+        }
+
+        [OnDeserializing]
+        private void OnLoad(StreamingContext context)
+        {
+            onSet = new StatEvent();
+            onMinReached = new StatEvent();
+            onMaxReached = new StatEvent();
+            onMinSet = new StatEvent();
+            onMaxSet = new StatEvent();
         }
 
         public Stat<T> Set(T value)

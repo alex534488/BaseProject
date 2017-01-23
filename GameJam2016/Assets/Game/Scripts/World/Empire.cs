@@ -3,7 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.Events;
 using CCC.Utility;
+using System.Runtime.Serialization;
 
+[System.Serializable]
 public class Empire : INewDay
 {
     [System.NonSerialized]
@@ -52,7 +54,8 @@ public class Empire : INewDay
     }
 
     //Appelé à chaque recharge de sauvegarde
-    public void OnLoad()
+    [OnDeserialized]
+    public void OnLoad(StreamingContext context)
     {
         SetListeners();
     }

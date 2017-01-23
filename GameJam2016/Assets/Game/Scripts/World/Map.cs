@@ -1,7 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 
+[System.Serializable]
 public class Map {
 
     public int nbTerritory = 8; // nombre de territoire dans la map
@@ -21,6 +23,13 @@ public class Map {
         }
         InitialMapConfiguration();
         InitialTeamConfiguration();
+    }
+
+    //Appelé lors d'un load d'une sauveguarde
+    [OnDeserialized]
+    public void OnLoad(StreamingContext context)
+    {
+        //Vide pour l'instant, il y aura p-e quelque chose un jour
     }
 
     // TODO: Si on le veut, il y aurait moyen de faire de la surcharge de fonction pour en eleminer certaine

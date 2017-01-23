@@ -13,11 +13,14 @@ public class Transaction
     [System.Serializable]
     public enum ValueType { flat, sourcePercent, destPercent }
 
+    [System.NonSerialized] // TEMPORAIRE
     public Village source = null;
+    [System.NonSerialized] // TEMPORAIRE
     public Village destination = null;
-    public ResourceType type = ResourceType.gold;
+    public ResourceType type = ResourceType.gold;//
     public int value = 0;
     public ValueType valueType = ValueType.flat;
+    [System.NonSerialized]
     public Condition condition = null;
     /// <summary>
     /// Used in the editor (request creation)
@@ -37,26 +40,26 @@ public class Transaction
     /// <summary>
     /// NOTE: pour transféré des ressources de l'empire, mettre un village quelquonque  de l'empire dans la 'source' afin de dépenser les ressources. Sinon, c'est un gain.
     /// </summary>
-    public Transaction(Village source, Village destination, ResourceType type, int value, ValueType valueType = ValueType.flat, Condition condition = null)
+    public Transaction(Village source, Village destination, ResourceType type, int value, ValueType valueType = ValueType.flat)
     {
         this.source = source;
         this.destination = destination;
         this.type = type;
         this.value = value;
         this.valueType = valueType;
-        this.condition = condition;
+        //this.condition = condition;
     }
     /// <summary>
     /// Used in the editor (request creation)
     /// </summary>
-    public Transaction(Id fromId, Id toId, ResourceType type, int value, ValueType valueType = ValueType.flat, Condition condition = null)
+    public Transaction(Id fromId, Id toId, ResourceType type, int value, ValueType valueType = ValueType.flat)
     {
         this.fromId = fromId;
         this.toId = toId;
         this.type = type;
         this.value = value;
         this.valueType = valueType;
-        this.condition = condition;
+        //this.condition = condition;
     }
 
     public void Execute()
@@ -139,8 +142,8 @@ public class Transaction
     {
         int flatValue = GetFlatAmount();
 
-        sourceTransaction = new Transaction(source, null, type, flatValue, ValueType.flat, condition);
-        destinationTransaction = new Transaction(null, destination, type, flatValue, ValueType.flat, condition);
+        sourceTransaction = new Transaction(source, null, type, flatValue, ValueType.flat);
+        destinationTransaction = new Transaction(null, destination, type, flatValue, ValueType.flat);
     }
 }
 
