@@ -4,7 +4,9 @@ using System.Collections.Generic;
 using System;
 using CCC.Utility;
 
-public class BarbareManager : INewDay {
+public class BarbareManager : INewDay
+{
+    static public int TEAM = 2;
 
     private List<BarbarianClan> listClans = new List<BarbarianClan>();
     private int spawnAttackPower = 1;
@@ -32,7 +34,7 @@ public class BarbareManager : INewDay {
         List<BarbarianClan> result = new List<BarbarianClan>();
         for (int i = 0; i < listClans.Count; i++)
         {
-            if(listClans[i].GetPosition() == position)
+            if (listClans[i].GetPosition() == position)
             {
                 result.Add(listClans[i]);
             }
@@ -47,7 +49,8 @@ public class BarbareManager : INewDay {
         {
             listSpawnPoint.Add(0);
             listSpawnPoint.Add(7);
-        } else
+        }
+        else
         {
             listSpawnPoint = positions;
         }
@@ -58,7 +61,7 @@ public class BarbareManager : INewDay {
             lot.Add(listSpawnPoint[i], 1);
         }
 
-        for(int i = 0; i < amount; i++)
+        for (int i = 0; i < amount; i++)
         {
             BarbarianClan newBarbare = new BarbarianClan(spawnAttackPower, spawnAttackCooldown, (int)lot.Pick());
             listClans.Add(newBarbare);
@@ -67,9 +70,9 @@ public class BarbareManager : INewDay {
 
     public void Delete(BarbarianClan clan)
     {
-        for(int i = 0; i < listClans.Count; i++)
+        for (int i = 0; i < listClans.Count; i++)
         {
-            if(listClans[i] == clan)
+            if (listClans[i] == clan)
             {
                 listClans.Remove(clan);
             }

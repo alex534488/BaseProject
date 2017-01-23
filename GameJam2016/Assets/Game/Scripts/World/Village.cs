@@ -164,9 +164,8 @@ public class Village : INewDay
             BattleLauncher.LaunchBattle(clan,this);
             if (armyPower < 1) break; // seuil de retraite possible?
         }
-        if(armyPower > 0 && Universe.Barbares.GetClans(position) == null)
+        if(armyPower > 0 && Universe.Barbares.GetClans(position).Count <= 0)
         {
-            Universe.Map.ChangeTerritoryOwner(position, 1);
             Universe.Empire.BuildCity(position);
         }
     }
