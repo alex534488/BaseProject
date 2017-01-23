@@ -79,7 +79,6 @@ public class BarbarianClan : INewDay
         BattleLauncher.LaunchBattle(this, village);
         if(armyPower > 0 && village.Get(Village_ResourceType.armyPower) <= 0)
         {
-            Universe.Map.ChangeTerritoryOwner(position, 2);
             Universe.Empire.DestroyCity(position);
         }
     }
