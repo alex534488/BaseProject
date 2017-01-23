@@ -10,15 +10,20 @@ public class BarbareManager : INewDay
 
     private List<BarbarianClan> listClans = new List<BarbarianClan>();
 
-    // A modifier par un script a part qui gere les difficultes
+    // New BarbaresClan Attack Stats
     List<int> listSpawnPoint = new List<int>();
     private int spawnAttackPower = 1;
     private int spawnAttackCooldown = 1;
+    private float HitRate = 0.6f;
+
+    // Spawn Rate
     private int spawnRate = 1;
     private int spawnCoolDown = 5;
     private int spawnCounter;
+
+    // Progression des stats
     private int count = 0;
-    private int stepMultiplier = 5;
+    private int stepMultiplier = 5; // a utiliser pour la progression des stats des barbares
 
     // A faire en debut de partie pour initialiser les barbres 
     public BarbareManager()
@@ -84,7 +89,7 @@ public class BarbareManager : INewDay
 
         for (int i = 0; i < amount; i++)
         {
-            BarbarianClan newBarbare = new BarbarianClan(spawnAttackPower, spawnAttackCooldown, (int)lot.Pick());
+            BarbarianClan newBarbare = new BarbarianClan(spawnAttackPower, spawnAttackCooldown, (int)lot.Pick(), HitRate);
             listClans.Add(newBarbare);
         }
     }

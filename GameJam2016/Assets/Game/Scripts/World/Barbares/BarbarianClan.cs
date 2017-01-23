@@ -8,13 +8,15 @@ public class BarbarianClan : INewDay
     private int mapPosition;
     private int attackCooldown;
     private int attackCoolDownCounter;
+    private float hitRate;
     private Stat<int> armyPower = new Stat<int>(0);
 
-    public BarbarianClan(int armyPower, int attackCooldown, int mapPosition)
+    public BarbarianClan(int armyPower, int attackCooldown, int mapPosition, float hitRate)
     {
         this.armyPower.Set(armyPower);
         this.attackCooldown = attackCooldown;
         this.mapPosition = mapPosition;
+        this.hitRate = hitRate;
         attackCoolDownCounter = attackCooldown;
     }
 
@@ -38,20 +40,20 @@ public class BarbarianClan : INewDay
         // A changer en machine a etat fini si on veut
 
         List<int> enemyTerritories = new List<int>();
-        enemyTerritories = Universe.Map.GetAdjacentEnemyTerritory(mapPosition, 2);
+        enemyTerritories = Universe.Map.GetAdjacentEnemyTerritory(mapPosition, BarbareManager.TEAM);
 
-        if (enemyTerritories.Count >= 0)
+        if (enemyTerritories.Count > 0)
         {
             if (attackCoolDownCounter <= 0)
             {
                 // le clan attaque!
-                Attack(Random.Range(0, enemyTerritories.Count-1));
-            }
+                Attack(enemyTerritories[Random.Range(0, enemyTerritories.Count-1)]);
+            } 
         } else
         {
             UpdatePosition();
+            attackCoolDownCounter--;
         }
-
     }
 
     private void UpdatePosition()
@@ -91,6 +93,7 @@ public class BarbarianClan : INewDay
             //Ils ont gagné la bataille et le village enemie à été détruit. Le territoire est maintenant à eux
             Move(position);
         }
+        attackCoolDownCounter = attackCooldown;
     }
 
     public void Move(int newPosition)

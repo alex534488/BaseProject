@@ -21,7 +21,6 @@ public class Village : INewDay
     #region Stats
     //Les valeur inséré sont temporaire
     private Stat<int> armyPower = new Stat<int>(10);
-    private Stat<int> armyCost = new Stat<int>(1);
     private Stat<int> goldProd = new Stat<int>(1);
     private Stat<int> materialProd = new Stat<int>(2);
     private Stat<int> scienceProd = new Stat<int>(3);
@@ -70,7 +69,6 @@ public class Village : INewDay
     {
         capitale = true;
         scienceProd.Set(1);
-        armyCost.Set(1);
     }
 
     public bool IsCapital()
@@ -102,8 +100,6 @@ public class Village : INewDay
                 return null;
             case Village_ResourceType.armyPower:
                 return armyPower;
-            case Village_ResourceType.armyCost:
-                return armyCost;
             case Village_ResourceType.goldProd:
                 return goldProd;
             case Village_ResourceType.materialProd:

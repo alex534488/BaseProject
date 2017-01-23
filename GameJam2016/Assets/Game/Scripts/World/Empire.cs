@@ -15,6 +15,8 @@ public class Empire : INewDay
     private Stat<int> science = new Stat<int>(0);
     private Stat<int> gold = new Stat<int>(0);
     private Stat<int> material = new Stat<int>(0);
+    private Stat<int> armyCost = new Stat<int>(1);
+    private Stat<float> armyHitRate = new Stat<float>(0.6f);
     private Stat<int> citizenProgress = new Stat<int>(0, -1, 99, BoundMode.MaxLoop);
     private Stat<int> happiness = new Stat<int>(100, 0, 100, BoundMode.Cap);
     private Stat<int> reputation = new Stat<int>(0, -10, 10, BoundMode.Cap);
@@ -180,6 +182,10 @@ public class Empire : INewDay
                 return happiness;
             case Empire_ResourceType.reputation:
                 return reputation;
+            case Empire_ResourceType.armyCost:
+                return armyCost;
+            case Empire_ResourceType.armyHitRate:
+                return armyHitRate;
         }
     }
 

@@ -2,7 +2,6 @@
 using System.Collections;
 
 public struct BattleResult {
-
     public int invaderLeft;
     public int invaderDeath;
     public int defenderLeft;
