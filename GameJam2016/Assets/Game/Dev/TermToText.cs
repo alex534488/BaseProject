@@ -40,8 +40,6 @@ public class TermToText
                 return "<color=#56A300FF>" + baseText + "</color>";
             case Empire_ResourceType.reputation:
                 return "<color=#A30098FF>" + baseText + "</color>";
-            case Empire_ResourceType.citizenProgressMax:
-                return "<color=#05A300FF>" + baseText + "</color>";
             default:
             case Empire_ResourceType.custom:
                 return "<color=#FF00F7FF>" + baseText + "</color>";

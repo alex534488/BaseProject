@@ -17,7 +17,6 @@ public enum ResourceType
     reputation = 10,
     armyPower = 11,
     armyCost = 12,
-    citizenProgressMax = 13,
     custom = 14
 }
 
@@ -40,7 +39,6 @@ public enum Empire_ResourceType
     citizenProgress = 4,
     happiness = 5,
     reputation = 6,
-    citizenProgressMax = 7,
     custom = 8
 }
 
@@ -100,8 +98,6 @@ public class GameResources : MonoBehaviour
                 return instance.armyPowerIcon;
             case ResourceType.armyCost:
                 return instance.armyCostIcon;
-            case ResourceType.citizenProgressMax:
-                return instance.citizenProgressMax;
         }
     }
 
@@ -134,8 +130,6 @@ public class GameResources : MonoBehaviour
                 return "Army Power";
             case ResourceType.armyCost:
                 return "Army Cost";
-            case ResourceType.citizenProgressMax:
-                return "Citizen Progress Max";
         }
     }
 
@@ -177,8 +171,6 @@ public class GameResources : MonoBehaviour
                 return ResourceType.happiness;
             case Empire_ResourceType.reputation:
                 return ResourceType.reputation;
-            case Empire_ResourceType.citizenProgressMax:
-                return ResourceType.citizenProgressMax;
             default:
                 Debug.LogWarning("Cannot convert " + type + " to a ResourceType");
                 return ResourceType.custom;
@@ -223,8 +215,6 @@ public class GameResources : MonoBehaviour
                 return Empire_ResourceType.happiness;
             case ResourceType.reputation:
                 return Empire_ResourceType.reputation;
-            case ResourceType.citizenProgressMax:
-                return Empire_ResourceType.citizenProgressMax;
             default:
                 Debug.LogWarning("Cannot convert " + type + " to a Empire_ResourceType");
                 return Empire_ResourceType.custom;
@@ -259,8 +249,6 @@ public class GameResources : MonoBehaviour
                 return false;
             case ResourceType.armyCost:
                 return false;
-            case ResourceType.citizenProgressMax:
-                return true;
             default:
                 return false;
         }
@@ -294,8 +282,6 @@ public class GameResources : MonoBehaviour
                 return true;
             case ResourceType.armyCost:
                 return true;
-            case ResourceType.citizenProgressMax:
-                return false;
             default:
                 return false;
         }

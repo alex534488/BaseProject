@@ -20,7 +20,7 @@ public class Village : INewDay
     private Stat<int> armyCost = new Stat<int>(0);
     private Stat<int> goldProd = new Stat<int>(1);
     private Stat<int> materialProd = new Stat<int>(1);
-    private Stat<int> scienceProd = new Stat<int>(0);
+    private Stat<int> scienceProd = new Stat<int>(1);
     private Stat<int> food = new Stat<int>(1);
     #endregion
 
@@ -28,7 +28,6 @@ public class Village : INewDay
     {
         this.name = name;
         architect = new Architect(this);
-        architect.Build("Cultive marde");
     }
 
     public void NewDay()

@@ -10,25 +10,41 @@ public class Empire : INewDay
     private Stat<int> science = new Stat<int>(0);
     private Stat<int> gold = new Stat<int>(0);
     private Stat<int> material = new Stat<int>(0);
-    private Stat<int> citizenProgress = new Stat<int>(0,0, 10, BoundMode.MaxLoop);
-    private Stat<int> citizenProgressMax = new Stat<int>(10);
-    private Stat<int> happiness = new Stat<int>(100,0,100, BoundMode.Cap);
-    private Stat<int> reputation = new Stat<int>(0,-10,10, BoundMode.Cap);
+    private Stat<int> citizenProgress = new Stat<int>(0, 0, 10, BoundMode.MaxLoop);
+    private Stat<int> happiness = new Stat<int>(100, 0, 100, BoundMode.Cap);
+    private Stat<int> reputation = new Stat<int>(0, -10, 10, BoundMode.Cap);
     #endregion
 
     private List<Village> villageList = new List<Village>();
 
     private CartsManager cartManager = null;
 
+    //Events
+    private Stat<int>.StatEvent onMaterialProdSet = new Stat<int>.StatEvent();
+    private Stat<int>.StatEvent onScienceProdSet = new Stat<int>.StatEvent();
+    private Stat<int>.StatEvent onFoodProdSet = new Stat<int>.StatEvent();
+    private Stat<int>.StatEvent onGoldProdSet = new Stat<int>.StatEvent();
+
+    //Fonction appelé lors des events
+    private void OnMaterialProdSet(int input) { onMaterialProdSet.Invoke(GetCumulation(Village_ResourceType.materialProd)); }
+    private void OnScienceProdSet(int input) { onScienceProdSet.Invoke(GetCumulation(Village_ResourceType.scienceProd)); }
+    private void OnFoodProdSet(int input) { onFoodProdSet.Invoke(GetCumulation(Village_ResourceType.food)); }
+    private void OnGoldProdSet(int input) { onGoldProdSet.Invoke(GetCumulation(Village_ResourceType.goldProd)); }
+
     //Appelé 1 seul fois PAR MONDE, au départ
     public Empire()
     {
-        cartManager = new CartsManager(6);
-        SetListeners();
-
-
         //à enlever
         villageList.Add(new Village("popo"));
+        villageList.Add(new Village("papa"));
+        villageList.Add(new Village("pipi"));
+        villageList.Add(new Village("pinpin"));
+        villageList.Add(new Village("robin"));
+
+        cartManager = new CartsManager(6);
+
+
+        SetListeners();
     }
 
     //Appelé à chaque recharge de sauvegarde
@@ -40,13 +56,20 @@ public class Empire : INewDay
     public void SetListeners()
     {
         citizenProgress.onMaxReached.AddListener(this.NewCitizen);
+        foreach (Village village in villageList)
+        {
+            village.GetOnSetEvent(Village_ResourceType.food).AddListener(OnFoodProdSet);
+            village.GetOnSetEvent(Village_ResourceType.scienceProd).AddListener(OnScienceProdSet);
+            village.GetOnSetEvent(Village_ResourceType.materialProd).AddListener(OnMaterialProdSet);
+            village.GetOnSetEvent(Village_ResourceType.goldProd).AddListener(OnGoldProdSet);
+        }
     }
 
     // Empire avance d'une journee
     public virtual void NewDay()
     {
         UpdateResource();
-        
+
         // autre chose ?
     }
 
@@ -68,7 +91,7 @@ public class Empire : INewDay
 
     public Village GetVillageAtPos(int mapPosition)
     {
-        for(int i = 0; i < villageList.Count; i++)
+        for (int i = 0; i < villageList.Count; i++)
         {
             if (villageList[i].GetMapPosition() == mapPosition) return villageList[i];
         }
@@ -113,7 +136,7 @@ public class Empire : INewDay
 
     #region Stats Method
 
-    private Stat<int> GetStat(Empire_ResourceType type)
+    public Stat<int> GetStat(Empire_ResourceType type)
     {
         switch (type)
         {
@@ -127,8 +150,6 @@ public class Empire : INewDay
                 return material;
             case Empire_ResourceType.citizenProgress:
                 return citizenProgress;
-            case Empire_ResourceType.citizenProgressMax:
-                return citizenProgressMax;
             case Empire_ResourceType.happiness:
                 return happiness;
             case Empire_ResourceType.reputation:
@@ -142,10 +163,37 @@ public class Empire : INewDay
         return stat != null ? stat : 0;
     }
 
+    public int GetCumulation(Village_ResourceType type)
+    {
+        int value = 0;
+        foreach (Village village in villageList)
+        {
+            value += village.Get(type);
+        }
+        return value;
+    }
+
+    public Stat<int>.StatEvent GetCumulationEvent(Village_ResourceType type)
+    {
+        switch (type)
+        {
+            case Village_ResourceType.scienceProd:
+                return onScienceProdSet;
+            case Village_ResourceType.goldProd:
+                return onGoldProdSet;
+            case Village_ResourceType.materialProd:
+                return onMaterialProdSet;
+            case Village_ResourceType.food:
+                return onFoodProdSet;
+            default:
+                return null;
+        }
+    }
+
     public void Set(Empire_ResourceType type, int value)
     {
         Stat<int> stat = GetStat(type);
-        if(stat != null)
+        if (stat != null)
             stat.Set(value);
     }
 
@@ -154,7 +202,7 @@ public class Empire : INewDay
         Set(type, Get(type) + value);
     }
 
-    public virtual Stat<int>.StatEvent GetOnSetEvent(Empire_ResourceType type)
+    public Stat<int>.StatEvent GetOnSetEvent(Empire_ResourceType type)
     {
         Stat<int> stat = GetStat(type);
         return stat != null ? stat.onSet : null;

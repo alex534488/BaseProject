@@ -27,6 +27,17 @@ public class DayManager : MonoBehaviour {
     // Nombre de jours (Points de la partie)
     public int nbJour = 0;
 
+    private UnityEvent onNewDayTransition = new UnityEvent();
+    private UnityEvent onNewDay = new UnityEvent();
+    static public UnityEvent OnNewDayTransition
+    {
+        get { return main != null ? main.onNewDayTransition : null; }
+    }
+    static public UnityEvent OnNewDay
+    {
+        get { return main != null ? main.onNewDay : null; }
+    }
+
     void Start()
     {
         main = this;
@@ -51,19 +62,22 @@ public class DayManager : MonoBehaviour {
 
     public void Init()
     {
+        //TODO enlever ca et faire un storyline tutoriel
         RequestManager.SendRequest(new Request());
+        onNewDayTransition.Invoke();
         NewDay();
     }
 
     void OnNextDayClick()
     {
+        onNewDayTransition.Invoke();
+
         // Desactive les boutons temporairement
         if (nextDayButton != null) nextDayButton.GetComponent<Button>().interactable = false;
 
         DayOfTime.Night();
         DelayManager.CallTo(delegate ()
         {
-            DayOfTime.Day(1-EstimationEmpire.Estimation());
             NewDay();
         }, 1);
     }
@@ -84,6 +98,8 @@ public class DayManager : MonoBehaviour {
         universe.NewDay();
         storylineManager.NewDay();
         requestManager.NewDay();
+
+        onNewDay.Invoke();
     }
 
     private void OnAllRequestComplete()
