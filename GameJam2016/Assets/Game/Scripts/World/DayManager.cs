@@ -87,6 +87,7 @@ public class DayManager : MonoBehaviour {
     /// </summary>
     public void NewDay()
     {
+        DayOfTime.Day(0);
         // Desactive les boutons temporairement
         if (nextDayButton != null) nextDayButton.GetComponent<Button>().interactable = false;
 

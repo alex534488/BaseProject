@@ -10,6 +10,8 @@ public class VillagesStat : BaseCourtStat
     {
         base.Start();
 
+        textColor = Color.white; //GameResources.GetBrightColor(GameResources.Convert(type));
+
         //update 'value'
         value = empire.GetCumulation(type);
 

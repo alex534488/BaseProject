@@ -11,6 +11,7 @@ public class BaseCourtStat : MonoBehaviour
     public Text gainTextPrefab;
     public bool animateGain;
     public Vector3 gainAnimOffset;
+    protected Color textColor;
     protected bool stopUpdating;
 
     protected int value;
@@ -60,6 +61,7 @@ public class BaseCourtStat : MonoBehaviour
             return;
 
         Text gainText = Instantiate(gainTextPrefab.gameObject).GetComponent<Text>();
+        gainText.color = textColor;
 
         gainText.text = "" + (amount > 0 ? "+" : "") + amount;
 

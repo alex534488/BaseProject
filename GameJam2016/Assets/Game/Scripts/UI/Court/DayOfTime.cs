@@ -20,6 +20,7 @@ public class DayOfTime : MonoBehaviour
     public AudioSource audioSource;
     public AudioClip nightClip;
     public AudioClip dayClip;
+    public bool debug = false;
 
     void Awake()
     {
@@ -54,7 +55,8 @@ public class DayOfTime : MonoBehaviour
 
     static public void Day(float intensity)
     {
-        print("Ambiant intensity: " + intensity + "%        (0% -> fine     100% ->  deep shit)");
+        if(main.debug)
+            print("Ambiant intensity: " + intensity + "%        (0% -> fine     100% ->  deep shit)");
 
         ClearTweens();
         tweens.Add(DOTween.To(() => main.blueFilter.intensity, x => main.blueFilter.intensity = x, 0, duration));

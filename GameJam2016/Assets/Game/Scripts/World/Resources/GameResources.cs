@@ -286,4 +286,38 @@ public class GameResources : MonoBehaviour
                 return false;
         }
     }
+
+    static public Color GetBrightColor(ResourceType type)
+    {
+        switch (type)
+        {
+            case ResourceType.science:
+                return new Color(0, 0.5f, 1);
+            case ResourceType.scienceProd:
+                return new Color(0, 0.5f, 1);
+            case ResourceType.gold:
+                return new Color(1, 1, 0);
+            case ResourceType.goldProd:
+                return new Color(1, 1, 0);
+            case ResourceType.material:
+                return new Color(0.7f, 0.4f, 0.06f);
+            case ResourceType.materialProd:
+                return new Color(0.7f, 0.4f, 0.06f);
+            case ResourceType.citizenProgress:
+                return new Color(0.5f, 1, 0);
+            case ResourceType.food:
+                return new Color(0.5f, 1, 0);
+            case ResourceType.happiness:
+                return new Color(0, 1, 0.25f);
+            case ResourceType.reputation:
+                return new Color(1, 0, 1);
+            case ResourceType.armyPower:
+                return new Color(1, 0, 0);
+            case ResourceType.armyCost:
+                return new Color(1, 0, 0);
+            default:
+            case ResourceType.custom:
+                return new Color(1, 1, 1);
+        }
+    }
 }
