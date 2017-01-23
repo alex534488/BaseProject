@@ -16,8 +16,13 @@ public class MenuScript : MonoBehaviour {
 
     public void LoadScene(string name)
     {
-        if (SceneManager.GetActiveScene().name != "MainMenu") MainSceneFade.instance.FadeOut();
-        SceneManager.LoadScene(name);
+        if (SceneManager.GetActiveScene().name != "MainMenu") MainSceneFade.instance.FadeOut(OnExitMenuToGameComplete);
+        else SceneManager.LoadScene(name);
+    }
+
+    void OnExitMenuToGameComplete()
+    {
+        SceneManager.LoadScene("Introduction");
     }
 
     public void LoadWindow(string name)

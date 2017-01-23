@@ -35,7 +35,7 @@ public class BarbarianClan : INewDay
 
     public void NewDay()
     {
-        // TODO: Esquise, a changer en machine a etat fini si on veut
+        // A changer en machine a etat fini si on veut
 
         List<int> enemyTerritories = new List<int>();
         enemyTerritories = Universe.Map.GetAdjacentEnemyTerritory(mapPosition, 2);
@@ -49,9 +49,17 @@ public class BarbarianClan : INewDay
             }
         } else
         {
-            // le clan fait autre chose
+            UpdatePosition();
         }
 
+    }
+
+    private void UpdatePosition()
+    {
+        // Deplacement Random pour l'instant
+        List<int> listAdjacentPosition = new List<int>();
+        listAdjacentPosition = Universe.Map.GetAdjacentAlliedTerritory(mapPosition, BarbareManager.TEAM);
+        Move(listAdjacentPosition[Random.Range(0, listAdjacentPosition.Count)]);
     }
 
     public int GetPosition()
@@ -69,7 +77,7 @@ public class BarbarianClan : INewDay
         int result = armyPower.Set(power);
         if(result <= 0)
         {
-            // TODO : Kill this clan
+            Universe.Barbares.Delete(this);
         }
     }
 

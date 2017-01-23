@@ -9,19 +9,41 @@ public class BarbareManager : INewDay
     static public int TEAM = 2;
 
     private List<BarbarianClan> listClans = new List<BarbarianClan>();
+
+    // A modifier par un script a part qui gere les difficultes
+    List<int> listSpawnPoint = new List<int>();
     private int spawnAttackPower = 1;
     private int spawnAttackCooldown = 1;
+    private int spawnRate = 1;
+    private int spawnCoolDown = 5;
+    private int spawnCounter;
+    private int count = 0;
+    private int stepMultiplier = 5;
 
+    // A faire en debut de partie pour initialiser les barbres 
     public BarbareManager()
     {
-        // A faire en debut de partie pour initialiser les barbres 
-        // Utilise Spawn
+        listSpawnPoint.Add(0);
+        listSpawnPoint.Add(7);
+
+        // Spawn un barbare pour débuter la partie
+        Spawn(1, listSpawnPoint);
+
+        spawnCounter = spawnCoolDown;
     }
 
     public void NewDay()
     {
-        //TODO: IA qui prend des decisions sur le positionnement et l'appartition des barbares
-        // Utilise Spawn et Send
+        //TODO: Ajuster en fonctione de la difficulte
+        if(spawnCounter <= 0)
+        {
+            Spawn(spawnRate, listSpawnPoint);
+            spawnCounter = spawnCoolDown;
+            count++;
+        } else
+        {
+            spawnCounter--;
+        }
     }
 
     public List<BarbarianClan> GetAllClans()
@@ -44,21 +66,20 @@ public class BarbareManager : INewDay
 
     public void Spawn(int amount, List<int> positions)
     {
-        List<int> listSpawnPoint = new List<int>();
+        List<int> listPoint = new List<int>();
         if (positions == null)
         {
-            listSpawnPoint.Add(0);
-            listSpawnPoint.Add(7);
+            listPoint = listSpawnPoint;
         }
         else
         {
-            listSpawnPoint = positions;
+            listPoint = positions;
         }
 
         Lottery lot = new Lottery();
-        for (int i = 0; i < listSpawnPoint.Count; i++)
+        for (int i = 0; i < listPoint.Count; i++)
         {
-            lot.Add(listSpawnPoint[i], 1);
+            lot.Add(listPoint[i], 1);
         }
 
         for (int i = 0; i < amount; i++)
