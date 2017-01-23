@@ -25,9 +25,11 @@ public class Village : INewDay
     private Stat<int> food = new Stat<int>(4);
     #endregion
 
-    public Village(string name)
+    public Village(string name, int position, bool capitale = false)
     {
         this.name = name;
+        mapPosition = position;
+        this.capitale = capitale;
         architect = new Architect(this);
     }
 
@@ -165,7 +167,7 @@ public class Village : INewDay
         if(armyPower > 0 && Universe.Barbares.GetClans(position) == null)
         {
             Universe.Map.ChangeTerritoryOwner(position, 1);
-            // TODO: Construire un village
+            Universe.Empire.BuildCity(position);
         }
     }
 }

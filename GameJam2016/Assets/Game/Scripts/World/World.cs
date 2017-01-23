@@ -11,14 +11,14 @@ public class World : INewDay {
     // Creation du monde du jeu
     public World()
     {
+        // Creation de la map
+        map = new Map();
+
         // Creation des barbares
         barbareManager = new BarbareManager();
 
         // Creation de l'empire
         empire = new Empire();
-
-        // Creation de la map
-        map = new Map();
     }
 
     public void NewDay()

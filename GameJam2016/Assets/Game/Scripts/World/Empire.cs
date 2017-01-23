@@ -35,15 +35,12 @@ public class Empire : INewDay
     public Empire()
     {
         //à enlever
-        villageList.Add(new Village("popo"));
-        villageList.Add(new Village("papa"));
-        villageList.Add(new Village("pipi"));
-        villageList.Add(new Village("pinpin"));
-        villageList.Add(new Village("robin"));
+        villageList.Add(new Village(Universe.Map.PositionToRegionName(2),2));
+        villageList.Add(new Village(Universe.Map.PositionToRegionName(4),4,true));
+        villageList.Add(new Village(Universe.Map.PositionToRegionName(5),5));
 
         cartManager = new CartsManager(6);
-
-
+        
         SetListeners();
     }
 
@@ -87,6 +84,22 @@ public class Empire : INewDay
     {
         // +1 citizen yay !
         // note: pas besoin de set la variable 'citizenProgress', elle devrais déja être ajusté
+    }
+
+    public void BuildCity(int position, bool capitale = false)
+    {
+        villageList.Add(new Village(Universe.Map.PositionToRegionName(position), position, capitale));
+    }
+
+    public void DestroyCity(int position)
+    {
+        foreach (Village village in villageList)
+        {
+            if(village.GetMapPosition() == position)
+            {
+                villageList.Remove(village);
+            }
+        }
     }
 
     public Village GetVillageAtPos(int mapPosition)

@@ -80,7 +80,7 @@ public class BarbarianClan : INewDay
         if(armyPower > 0 && village.Get(Village_ResourceType.armyPower) <= 0)
         {
             Universe.Map.ChangeTerritoryOwner(position, 2);
-            // TODO: Detruire le village
+            Universe.Empire.DestroyCity(position);
         }
     }
 
