@@ -10,7 +10,7 @@ public class BarbareManager : INewDay {
     private int spawnAttackPower = 1;
     private int spawnAttackCooldown = 1;
 
-    public void Init()
+    public BarbareManager()
     {
         // A faire en debut de partie pour initialiser les barbres 
         // Utilise Spawn

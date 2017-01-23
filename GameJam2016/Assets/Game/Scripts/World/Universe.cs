@@ -13,6 +13,7 @@ public class Universe : INewDay {
     {
         instance = this;
         world = new World();
+        world.Init();
         history = new History();
 	}
 

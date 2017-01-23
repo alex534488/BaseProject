@@ -9,7 +9,7 @@ public class World : INewDay {
     public Map map;
 
     // Creation du monde du jeu
-    public World()
+    public void Init()
     {
         // Creation de la map
         map = new Map();
