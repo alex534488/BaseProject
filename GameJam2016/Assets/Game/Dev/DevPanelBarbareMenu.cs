@@ -19,7 +19,7 @@ public class DevPanelBarbareMenu : MonoBehaviour {
     {
         if(inputField.text != null)
         {
-            currentClan.OnMoving(int.Parse(inputField.text));
+            currentClan.Move(int.Parse(inputField.text));
             devPanelBarbarian.UpdateDisplay();
         }
     }

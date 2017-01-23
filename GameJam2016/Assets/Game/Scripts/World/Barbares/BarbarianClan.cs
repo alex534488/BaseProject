@@ -45,7 +45,7 @@ public class BarbarianClan : INewDay
             if (attackCoolDownCounter <= 0)
             {
                 // le clan attaque!
-                OnAttacking(Random.Range(0, enemyTerritories.Count-1));
+                Attack(Random.Range(0, enemyTerritories.Count-1));
             }
         } else
         {
@@ -73,17 +73,19 @@ public class BarbarianClan : INewDay
         }
     }
 
-    private void OnAttacking(int position)
+    private void Attack(int position)
     {
         Village village = Universe.Map.GetVillage(position);
         BattleLauncher.LaunchBattle(this, village);
-        if(armyPower > 0 && village.Get(Village_ResourceType.armyPower) <= 0)
+
+        if(armyPower > 0 && village.IsDestroyed)
         {
-            Universe.Empire.DestroyCity(position);
+            //Ils ont gagné la bataille et le village enemie à été détruit. Le territoire est maintenant à eux
+            Move(position);
         }
     }
 
-    public void OnMoving(int newPosition)
+    public void Move(int newPosition)
     {
         if (Universe.Map.IsAdjacent(mapPosition, newPosition))
         {
@@ -92,12 +94,12 @@ public class BarbarianClan : INewDay
                 mapPosition = newPosition;
             } else // TODO: A ENLEVER ET REMPLACER PAR LE FUTUR SYSTEM D'AI
             {
-                OnAttacking(newPosition);
+                Attack(newPosition);
             }
         }
     }
 
-    public void OnDefending()
+    public void Defend()
     {
         // A enlever possiblement, voir IsAttacked() dans barbareManager
     }

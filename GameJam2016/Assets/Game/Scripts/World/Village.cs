@@ -10,7 +10,10 @@ public class Village : INewDay
 
     private bool capitale = false;
     private string name = "UnNamed";
+    private bool isDestroyed = false;
+    public bool IsDestroyed { get { return isDestroyed; } }
 
+    private Empire empire;
     private Architect architect;
 
     private int mapPosition;
@@ -25,8 +28,9 @@ public class Village : INewDay
     private Stat<int> food = new Stat<int>(4);
     #endregion
 
-    public Village(string name, int position, bool capitale = false)
+    public Village(Empire empire, string name, int position, bool capitale = false)
     {
+        this.empire = empire;
         this.name = name;
         mapPosition = position;
         this.capitale = capitale;
@@ -41,7 +45,7 @@ public class Village : INewDay
     /// <summary>
     /// Met à jour les ressources de l'empire en fonction de la production du village
     /// </summary>
-    public void UpdateResource(Empire empire)
+    public void UpdateResource()
     {
         // + science
         empire.Add(Empire_ResourceType.science, Get(Village_ResourceType.scienceProd));
@@ -154,6 +158,14 @@ public class Village : INewDay
         {
             Set(Village_ResourceType.armyPower, result.invaderLeft);
         }
+
+        if (Get(Village_ResourceType.armyPower) < 1)
+            empire.DestroyCity(mapPosition);
+    }
+
+    public void Destroy()
+    {
+        isDestroyed = true;
     }
 
     public void Attack(int position)
@@ -161,12 +173,12 @@ public class Village : INewDay
         List<BarbarianClan> clansOnPosition = Universe.Barbares.GetClans(position);
         foreach (BarbarianClan clan in clansOnPosition)
         {
-            BattleLauncher.LaunchBattle(clan,this);
+            BattleLauncher.LaunchBattle(clan, this);
             if (armyPower < 1) break; // seuil de retraite possible?
         }
-        if(armyPower > 0 && Universe.Barbares.GetClans(position).Count <= 0)
+        if (armyPower > 0 && Universe.Barbares.GetClans(position).Count <= 0)
         {
-            Universe.Empire.BuildCity(position);
+            empire.BuildCity(position);
         }
     }
 }

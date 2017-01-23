@@ -78,7 +78,7 @@ public class Empire : INewDay
         for (int i = 0; i < villageList.Count; i++)
         {
             // Update les resources
-            villageList[i].UpdateResource(this);
+            villageList[i].UpdateResource();
         }
     }
 
@@ -91,7 +91,7 @@ public class Empire : INewDay
     public void BuildCity(int position, bool capitale = false)
     {
         Universe.Map.ChangeTerritoryOwner(position, TEAM);
-        villageList.Add(new Village(Universe.Map.PositionToRegionName(position), position, capitale));
+        villageList.Add(new Village(this, Universe.Map.PositionToRegionName(position), position, capitale));
     }
 
     public void DestroyCity(int position)
@@ -100,6 +100,7 @@ public class Empire : INewDay
         {
             if(village.GetMapPosition() == position)
             {
+                village.Destroy();
                 villageList.Remove(village);
                 Universe.Map.ChangeTerritoryOwner(position, BarbareManager.TEAM);
             }
