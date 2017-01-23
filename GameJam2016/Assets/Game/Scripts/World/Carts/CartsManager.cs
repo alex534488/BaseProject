@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.Events;
 using CCC.Utility;
+using System.Collections.ObjectModel;
 
 public class CartsManager : INewDay
 {
@@ -15,6 +16,11 @@ public class CartsManager : INewDay
         availableCarts.Set(startingAmount);
     }
 
+    public ReadOnlyCollection<Cart> OngoingCarts
+    {
+        get { return ongoingCarts != null ? ongoingCarts.AsReadOnly() : null; }
+    }
+
     public int AvailableCarts
     {
         get { return availableCarts; }
@@ -23,6 +29,11 @@ public class CartsManager : INewDay
     public int TotalCarts
     {
         get { return availableCarts + ongoingCarts.Count; }
+    }
+
+    public int OngoingCartsCount
+    {
+        get { return ongoingCarts.Count; }
     }
 
     public Stat<int>.StatEvent OnAvailableCartChange
@@ -35,30 +46,42 @@ public class CartsManager : INewDay
     public void NewDay()
     {
         // On met a jour les chariots
-        List<Cart> listCart = UpdateCarts();
-
-        // S'il y a au moins un chariot qui a terminer sa route
-        if (listCart.Count > 0)
-        {
-            // Appliquer les modifications a la destination/source
-            for(int i = 0; i < listCart.Count; i++)
-            {
-                listCart[i].Apply();
-            }
-        }
+        UpdateCarts();
     }
 
-    private List<Cart> UpdateCarts()
+    private void UpdateCarts()
     {
-        List<Cart> result = new List<Cart>();
+        int arrivedCartCount = 0;
         for (int i = 0; i < ongoingCarts.Count; i++)
         {
-            if (ongoingCarts[i].Update())
+            if (ongoingCarts[i].Progress())
             {
-                result.Add(ongoingCarts[i]);
+                ongoingCarts.RemoveAt(i);
+                arrivedCartCount++;
+                i--;
             }
         }
-        return result;
+        //On remet le cart en 'available'
+        availableCarts.Set(availableCarts + arrivedCartCount);
+    }
+
+    public void AddAvailableCart()
+    {
+        availableCarts.Set(availableCarts + 1);
+    }
+
+    /// <summary>
+    /// Returns false if no cart is available
+    /// </summary>
+    public bool SendCart(Cart cart)
+    {
+        if (availableCarts <= 0)
+            return false;
+
+        ongoingCarts.Add(cart);
+        cart.Send();
+        availableCarts.Set(availableCarts - 1);
+        return true;
     }
 
     // Envoie le chariot pour envoye une resource specifique a ce village (pour l'instant seulement l'armee)

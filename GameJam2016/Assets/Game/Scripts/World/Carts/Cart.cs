@@ -2,85 +2,130 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.Events;
+using System.Collections.ObjectModel;
 
-public enum DestinationType
+
+public class Cart
 {
-    village = 1,
-    tradeRoutes = 2,
-    explore = 3
-}
-
-public class Cart {
-
-    private int delay;
     private int delayCounter;
+    private bool sent = false;
+    private bool arrived = false;
 
-    private Village provenance;
-    private Village villageDestination;
-    private DestinationType destination;
-
-    private List<Village_ResourceType> resourceVillage;
-    private List<Empire_ResourceType> resourceEmpire;
-    private List<int> resourceVillageAmount;
-    private List<int> resourceEmpireAmount;
-
-	public Cart(int delay, Village provenance, DestinationType destination, List<int> resourceVillageAmount, List<int> resourceEmpireAmount, Village villageDestination = null, List<Village_ResourceType> resourceVillage = null, List<Empire_ResourceType> resourceEmpire = null)
+    public bool Arrived
     {
-        this.delay = delay;
-
-        this.resourceVillage = resourceVillage;
-        this.resourceEmpire = resourceEmpire;
-
-        if(resourceVillage.Count < resourceVillageAmount.Count || resourceVillageAmount.Count < resourceVillage.Count)
-        {
-            // Erreur!
-        }
-
-        if (resourceEmpire.Count < resourceEmpireAmount.Count || resourceEmpireAmount.Count < resourceEmpire.Count)
-        {
-            // Erreur!
-        }
-
-        this.resourceVillageAmount = resourceVillageAmount;
-        this.resourceEmpireAmount = resourceEmpireAmount;
-
-        this.provenance = provenance;
-        this.destination = destination;
-        this.villageDestination = villageDestination;
+        get { return arrived; }
+    }
+    public bool Sent
+    {
+        get { return sent; }
+    }
+    public int RemainingDays
+    {
+        get { return delayCounter; }
+    }
+    public int MapSource
+    {
+        get { return mapSource; }
+    }
+    public int MapDestination
+    {
+        get { return mapDestination; }
+    }
+    public ReadOnlyCollection<Transaction> StartTransactions
+    {
+        get { return startTransactions != null ? startTransactions.AsReadOnly() : null; }
+    }
+    public ReadOnlyCollection<Transaction> ArriveTransactions
+    {
+        get { return arriveTransactions != null ? arriveTransactions.AsReadOnly() : null; }
     }
 
-    public bool Update()
+    private List<Transaction> startTransactions;
+    private List<Transaction> arriveTransactions;
+
+    //Map position
+    private int mapSource;
+    private int mapDestination;
+
+    public Cart(int delay, Village visualSource, Village visualDestination, List<Transaction> transactions = null) :
+        this(delay, visualDestination.GetMapPosition(), visualSource.GetMapPosition(), transactions)
+    { }
+
+    public Cart(int delay, int mapSource, int mapDestination, List<Transaction> transactions = null)
+    {
+        delayCounter = delay;
+        this.mapDestination = mapDestination;
+        this.mapSource = mapSource;
+        if (transactions != null)
+            foreach (Transaction transaction in transactions)
+                AddTransaction(transaction);
+    }
+
+    public void AddTransaction(Transaction transaction)
+    {
+        Transaction start;
+        Transaction arrive;
+
+        transaction.Split(out start, out arrive);
+
+        AddStartTransaction(start);
+        AddArriveTransaction(arrive);
+    }
+
+    public void AddStartTransaction(Transaction transaction)
+    {
+        if (startTransactions == null)
+            startTransactions = new List<Transaction>();
+        startTransactions.Add(transaction);
+    }
+
+    public void AddArriveTransaction(Transaction transaction)
+    {
+        if (arriveTransactions == null)
+            arriveTransactions = new List<Transaction>();
+        arriveTransactions.Add(transaction);
+    }
+
+    //Appelé lorsque le cart est belle et bien envoyé (par le cart manager)
+    // C'est ici qu'on devrais faire payer la source
+    public void Send()
+    {
+        if (sent)
+            return;
+
+        sent = true;
+
+        //On execute tous les transaction de départ
+        if (startTransactions != null)
+            foreach (Transaction transaction in startTransactions)
+            {
+                transaction.Execute();
+            }
+    }
+
+    /// <summary>
+    /// Retourne true si le cart est arrivé à sa destination
+    /// </summary>
+    public bool Progress()
     {
         delayCounter--;
-        if(delayCounter <= 0)
+        if (delayCounter <= 0)
         {
+            Arrive();
             return true;
         }
         return false;
     }
 
-    public void Apply()
+    public void Arrive()
     {
-        switch (destination)
-        {
-            default:
-                return;
-            case DestinationType.village:
-                for(int i = 0; i < resourceVillage.Count; i++)
-                {
-                    villageDestination.Add(resourceVillage[i],resourceVillageAmount[i]);
-                }
-                for (int i = 0; i < resourceEmpire.Count; i++)
-                {
-                    Universe.Empire.Add(resourceEmpire[i], resourceEmpireAmount[i]);
-                }
-                return;
-            case DestinationType.tradeRoutes:
-                // Donne un montant d'or x
-                return;
-            case DestinationType.explore:
-                // Donne des resources d'empire aleatoire
-                return;
-        }
+        if (arrived)
+            return;
+
+        arrived = true;
+
+        if (arriveTransactions != null)
+            foreach (Transaction transaction in arriveTransactions)
+                transaction.Execute();
     }
 }

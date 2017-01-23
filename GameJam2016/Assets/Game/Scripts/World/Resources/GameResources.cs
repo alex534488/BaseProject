@@ -156,7 +156,7 @@ public class GameResources : MonoBehaviour
             case Village_ResourceType.armyCost:
                 return ResourceType.armyCost;
             default:
-                Debug.LogError("Cannot convert " + type + " to a ResourceType");
+                Debug.LogWarning("Cannot convert " + type + " to a ResourceType");
                 return ResourceType.custom;
         }
     }
@@ -180,7 +180,7 @@ public class GameResources : MonoBehaviour
             case Empire_ResourceType.citizenProgressMax:
                 return ResourceType.citizenProgressMax;
             default:
-                Debug.LogError("Cannot convert " + type + " to a ResourceType");
+                Debug.LogWarning("Cannot convert " + type + " to a ResourceType");
                 return ResourceType.custom;
         }
     }
@@ -202,7 +202,7 @@ public class GameResources : MonoBehaviour
             case ResourceType.armyCost:
                 return Village_ResourceType.armyCost;
             default:
-                Debug.LogError("Cannot convert " + type + " to a Village_ResourceType");
+                Debug.LogWarning("Cannot convert " + type + " to a Village_ResourceType");
                 return Village_ResourceType.custom;
         }
     }
@@ -226,7 +226,7 @@ public class GameResources : MonoBehaviour
             case ResourceType.citizenProgressMax:
                 return Empire_ResourceType.citizenProgressMax;
             default:
-                Debug.LogError("Cannot convert " + type + " to a Empire_ResourceType");
+                Debug.LogWarning("Cannot convert " + type + " to a Empire_ResourceType");
                 return Empire_ResourceType.custom;
         }
     }
