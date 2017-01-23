@@ -6,6 +6,8 @@ using CCC.Utility;
 
 public class Empire : INewDay
 {
+    static public int TEAM = 1;
+
     #region Stats
     private Stat<int> science = new Stat<int>(0);
     private Stat<int> gold = new Stat<int>(0);
@@ -35,9 +37,9 @@ public class Empire : INewDay
     public Empire()
     {
         //à enlever
-        villageList.Add(new Village(Universe.Map.PositionToRegionName(2),2));
-        villageList.Add(new Village(Universe.Map.PositionToRegionName(4),4,true));
-        villageList.Add(new Village(Universe.Map.PositionToRegionName(5),5));
+        BuildCity(2);
+        BuildCity(4,true);
+        BuildCity(5);
 
         cartManager = new CartsManager(6);
         
@@ -88,6 +90,7 @@ public class Empire : INewDay
 
     public void BuildCity(int position, bool capitale = false)
     {
+        Universe.Map.ChangeTerritoryOwner(position, TEAM);
         villageList.Add(new Village(Universe.Map.PositionToRegionName(position), position, capitale));
     }
 
@@ -98,6 +101,7 @@ public class Empire : INewDay
             if(village.GetMapPosition() == position)
             {
                 villageList.Remove(village);
+                Universe.Map.ChangeTerritoryOwner(position, BarbareManager.TEAM);
             }
         }
     }

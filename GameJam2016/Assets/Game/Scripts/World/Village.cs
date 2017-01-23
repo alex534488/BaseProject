@@ -166,7 +166,6 @@ public class Village : INewDay
         }
         if(armyPower > 0 && Universe.Barbares.GetClans(position) == null)
         {
-            Universe.Map.ChangeTerritoryOwner(position, 1);
             Universe.Empire.BuildCity(position);
         }
     }
