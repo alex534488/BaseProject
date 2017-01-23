@@ -6,7 +6,8 @@ using CCC.Utility;
 
 public class Empire : INewDay
 {
-    static public int TEAM = 1;
+    [System.NonSerialized]
+    static public int TEAM = 1; //est-ce que TEAM sera bien à 1 lors d'un reload ?
 
     #region Stats
     private Stat<int> science = new Stat<int>(0);
@@ -22,9 +23,13 @@ public class Empire : INewDay
     private CartsManager cartManager = null;
 
     //Events
+    [System.NonSerialized]
     private Stat<int>.StatEvent onMaterialProdSet = new Stat<int>.StatEvent();
+    [System.NonSerialized]
     private Stat<int>.StatEvent onScienceProdSet = new Stat<int>.StatEvent();
+    [System.NonSerialized]
     private Stat<int>.StatEvent onFoodProdSet = new Stat<int>.StatEvent();
+    [System.NonSerialized]
     private Stat<int>.StatEvent onGoldProdSet = new Stat<int>.StatEvent();
 
     //Fonction appelé lors des events
