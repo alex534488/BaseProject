@@ -10,8 +10,8 @@ public class Universe : INewDay {
       
     public static Universe instance;
 
-    private World world;
-    private History history;
+    public World world;
+    public History history;
 
 	public Universe(World loadedWorld = null, History loadedHistory = null)
     {

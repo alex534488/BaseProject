@@ -21,6 +21,7 @@ public class DayManager : MonoBehaviour
     public StorylineManager storylineManager;
     [System.NonSerialized]
     Universe universe;
+    public Universe Universe { get { return universe; } }
 
     // Mode
     public Mode currentMode;
@@ -39,16 +40,17 @@ public class DayManager : MonoBehaviour
         get { return main != null ? main.onNewDay : null; }
     }
 
-    void Start()
+    void Awake()
     {
         main = this;
 
         MasterManager.Sync();
+    }
 
+    void Start()
+    {
         if (ModeManager.modeManager != null)
             currentMode = ModeManager.modeManager.GetCurrentMode();
-
-        universe = new Universe();
 
         // Initialisation du système de requête pour la première journée
         requestManager.onAllRequestsComplete.AddListener(OnAllRequestComplete);
@@ -56,15 +58,26 @@ public class DayManager : MonoBehaviour
         // Permet de passer au prochain jour
         if (nextDayButton != null) nextDayButton.onClick.AddListener(OnNextDayClick);
 
-        MainSceneFade.instance.FadeIn(Init);
+        MainSceneFade.instance.FadeIn(OnFadeInComplete);
     }
 
-    public void Init()
+    public void Init(GameSave save = null)
     {
-        //TODO enlever ca et faire un storyline tutoriel
-        RequestManager.SendRequest(new Request());
-        onNewDayTransition.Invoke();
-        NewDay();
+        if (save != null)
+            universe = new Universe(save.world, null);
+        else
+            universe = new Universe();
+    }
+
+    public void OnFadeInComplete()
+    {
+        if (universe != null)
+        {
+            onNewDayTransition.Invoke();
+            NewDay();
+        }
+        else
+            Debug.LogWarning("Cannot proceed to next day because the universe is null");
     }
 
     void OnNextDayClick()

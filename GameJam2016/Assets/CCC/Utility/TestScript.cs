@@ -60,7 +60,7 @@ public class TestScript : MonoBehaviour
     void LocalSave()
     {
         BinaryFormatter bf = new BinaryFormatter();
-        FileStream file = File.Open(GameSave.GetFilePath() + "test.dat", FileMode.OpenOrCreate);
+        FileStream file = File.Open(GameSave.GetGameFilePath() + "test.dat", FileMode.OpenOrCreate);
         bf.Serialize(file, Universe.World);
         file.Close();
         OnSaveComplete();

@@ -155,11 +155,11 @@ public class MapManager : MonoBehaviour
 
     void Load(UnityAction onComplete = null)
     {
-        string path = GameSave.GetFilePath() + "mapDestruction.dat";
+        string path = GameSave.GetGameFilePath() + "mapDestruction.dat";
 
-        if (ThreadSave.Exists(path))
+        if (CCC.Utility.Saves.Exists(path))
         {
-            ThreadSave.Load(path,
+            CCC.Utility.Saves.ThreadLoad(path,
                 delegate (object obj)
                 {
                     mapSave = (MapSave)obj;
@@ -182,9 +182,9 @@ public class MapManager : MonoBehaviour
             return;
         }
 
-        string path = GameSave.GetFilePath() + "mapDestruction.dat";
+        string path = GameSave.GetGameFilePath() + "mapDestruction.dat";
 
-        ThreadSave.Save(path,mapSave,
+        CCC.Utility.Saves.ThreadSave(path, mapSave,
             delegate ()
             {
                 if (onComplete != null)

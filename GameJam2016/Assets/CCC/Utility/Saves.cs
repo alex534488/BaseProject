@@ -6,15 +6,15 @@ using CCC.Manager;
 
 namespace CCC.Utility
 {
-    public class ThreadSave
+    public class Saves
     {
-        static public void Save(string path, object graph, UnityAction onComplete = null)
+        static public void ThreadSave(string path, object graph, UnityAction onComplete = null)
         {
-            Thread t = new Thread(new ThreadStart(() => SaveMethod(path, graph, onComplete)));
+            Thread t = new Thread(new ThreadStart(() => ThreadSaveMethod(path, graph, onComplete)));
             t.Start();
         }
 
-        static void SaveMethod(string path, object graph, UnityAction onComplete = null)
+        static void ThreadSaveMethod(string path, object graph, UnityAction onComplete = null)
         {
             BinaryFormatter bf = new BinaryFormatter();
             FileStream file = File.Open(path, FileMode.OpenOrCreate);
@@ -29,13 +29,13 @@ namespace CCC.Utility
             }
         }
 
-        static public void Load(string path, UnityAction<object> onComplete)
+        static public void ThreadLoad(string path, UnityAction<object> onComplete)
         {
-            Thread t = new Thread(new ThreadStart(delegate () { LoadMethod(path, onComplete); }));
+            Thread t = new Thread(new ThreadStart(delegate () { ThreadLoadMethod(path, onComplete); }));
             t.Start();
         }
 
-        static void LoadMethod(string path, UnityAction<object> onComplete)
+        static void ThreadLoadMethod(string path, UnityAction<object> onComplete)
         {
             BinaryFormatter bf = new BinaryFormatter();
             FileStream file = File.Open(path, FileMode.Open);
@@ -50,6 +50,23 @@ namespace CCC.Utility
                         onComplete(obj);
                     });
             }
+        }
+
+        static public void InstantSave(string path, object graph)
+        {
+            BinaryFormatter bf = new BinaryFormatter();
+            FileStream file = File.Open(path, FileMode.OpenOrCreate);
+            bf.Serialize(file, graph);
+            file.Close();
+        }
+
+        static public object InstantLoad(string path)
+        {
+            BinaryFormatter bf = new BinaryFormatter();
+            FileStream file = File.Open(path, FileMode.Open);
+            object obj = bf.Deserialize(file);
+            file.Close();
+            return obj;
         }
 
         static public bool Exists(string path)

@@ -14,7 +14,7 @@ public class DevPanelDoor : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             if (Scenes.Exists("DevPanel"))
-                Scenes.UnloadScene("DevPanel");
+                Scenes.Unload("DevPanel");
             else
                 Scenes.Load("DevPanel", UnityEngine.SceneManagement.LoadSceneMode.Additive);
         }
