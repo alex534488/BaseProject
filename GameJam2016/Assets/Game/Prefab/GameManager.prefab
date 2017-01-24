@@ -19,9 +19,9 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 4000014213959552}
-  - 114: {fileID: 114000012538815908}
+  - 114: {fileID: 114000012308764160}
   m_Layer: 0
-  m_Name: DelayManager
+  m_Name: GameManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -40,7 +40,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
---- !u!114 &114000012538815908
+--- !u!114 &114000012308764160
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -48,7 +48,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1000013777072840}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c001838f3aa5aa84abffe4a891b117c2, type: 3}
+  m_Script: {fileID: 11500000, guid: 779f8d527e250c74797871c7b5ce51d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   initComplete: 0
