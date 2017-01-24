@@ -100,12 +100,9 @@ public class BarbarianClan : INewDay
     {
         if (Universe.Map.IsAdjacent(mapPosition, newPosition))
         {
-            if (!(Universe.Map.IsEnemyTerritory(2, newPosition)))
+            if (!(Universe.Map.IsEnemyTerritory(BarbareManager.TEAM, newPosition)))
             {
                 mapPosition = newPosition;
-            } else // TODO: A ENLEVER ET REMPLACER PAR LE FUTUR SYSTEM D'AI
-            {
-                Attack(newPosition);
             }
         }
     }
@@ -129,6 +126,5 @@ public class BarbarianClan : INewDay
         {
             SetArmyPower(result.defenderLeft);
         }
-        attackCoolDownCounter = attackCooldown;
     }
 }

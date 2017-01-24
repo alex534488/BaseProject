@@ -31,7 +31,7 @@ public class RequestManager : MonoBehaviour
 
     public void FirstDay()
     {
-        // TODO: premier jour
+        // TODO: Faire la premier requete du jeu
     }
 
     public static void SendRequest(Request request)

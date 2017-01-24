@@ -96,8 +96,15 @@ public class DayManager : MonoBehaviour
 
     public void FirstDay()
     {
+        DayOfTime.Day(0);
+
+        // Desactive les boutons temporairement
+        if (nextDayButton != null) nextDayButton.GetComponent<Button>().interactable = true; // a changer lorsqu'on aura une requete de depart
+
         universe.world.empire.FirstDay();
         requestManager.FirstDay();
+
+        onNewDay.Invoke();
     }
 
     /// <summary>

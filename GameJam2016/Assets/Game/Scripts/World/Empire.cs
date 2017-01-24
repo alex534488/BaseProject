@@ -84,7 +84,7 @@ public class Empire : INewDay
 
     public void FirstDay()
     {
-        // TODO : premier jour
+        UpdateResource();
     }
 
     private void UpdateResource()
