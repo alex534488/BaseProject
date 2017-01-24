@@ -74,7 +74,7 @@ public class DayManager : MonoBehaviour
         if (universe != null)
         {
             onNewDayTransition.Invoke();
-            NewDay();
+            FirstDay();
         }
         else
             Debug.LogWarning("Cannot proceed to next day because the universe is null");
@@ -92,6 +92,12 @@ public class DayManager : MonoBehaviour
         {
             NewDay();
         }, 1);
+    }
+
+    public void FirstDay()
+    {
+        universe.world.empire.FirstDay();
+        requestManager.FirstDay();
     }
 
     /// <summary>

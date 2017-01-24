@@ -82,6 +82,11 @@ public class Empire : INewDay
         // autre chose ?
     }
 
+    public void FirstDay()
+    {
+        // TODO : premier jour
+    }
+
     private void UpdateResource()
     {
         // Pour chaque village

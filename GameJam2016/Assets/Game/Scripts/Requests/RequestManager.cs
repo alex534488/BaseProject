@@ -29,6 +29,11 @@ public class RequestManager : MonoBehaviour
             onAllRequestsComplete.Invoke();
     }
 
+    public void FirstDay()
+    {
+        // TODO: premier jour
+    }
+
     public static void SendRequest(Request request)
     {
         requestManager.listRequest.Add(request);

@@ -40,8 +40,13 @@ public class BarbareManager : INewDay
 
     public void NewDay()
     {
+        foreach(BarbarianClan clan in listClans)
+        {
+            clan.NewDay();
+        }
+        
         //TODO: Ajuster en fonctione de la difficulte
-        if(spawnCounter <= 0)
+        if (spawnCounter <= 0)
         {
             Spawn(spawnRate, listSpawnPoint);
             spawnCounter = spawnCoolDown;
