@@ -40,9 +40,9 @@ public class BarbareManager : INewDay
 
     public void NewDay()
     {
-        foreach(BarbarianClan clan in listClans)
+        for(int i = 0; i < listClans.Count; i++)
         {
-            clan.NewDay();
+            listClans[i].NewDay();
         }
         
         //TODO: Ajuster en fonctione de la difficulte

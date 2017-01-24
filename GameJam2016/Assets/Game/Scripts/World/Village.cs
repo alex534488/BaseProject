@@ -45,7 +45,10 @@ public class Village : INewDay
 
     public void NewDay()
     {
-        // Verification sur le village a chaque tour (mort/destruction?)
+        if (isDestroyed)
+        {
+            empire.DestroyCity(mapPosition);
+        }
     }
 
     /// <summary>

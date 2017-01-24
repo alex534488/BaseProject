@@ -78,8 +78,6 @@ public class Empire : INewDay
     public virtual void NewDay()
     {
         UpdateResource();
-
-        // autre chose ?
     }
 
     public void FirstDay()
@@ -101,6 +99,7 @@ public class Empire : INewDay
     {
         // +1 citizen yay !
         // note: pas besoin de set la variable 'citizenProgress', elle devrais déja être ajusté
+        
     }
 
     public void BuildCity(int position, bool capitale = false)
@@ -129,6 +128,11 @@ public class Empire : INewDay
             if (villageList[i].GetMapPosition() == mapPosition) return villageList[i];
         }
         return null;
+    }
+
+    public List<Village> GetAllVillage()
+    {
+        return villageList;
     }
 
     public Village Capitale()
