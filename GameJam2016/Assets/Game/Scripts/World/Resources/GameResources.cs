@@ -17,6 +17,7 @@ public enum ResourceType
     reputation = 10,
     armyPower = 11,
     armyCost = 12,
+    armyHitRate = 13,
     custom = 14
 }
 
@@ -27,8 +28,7 @@ public enum Village_ResourceType
     materialProd = 3,
     food = 4,
     armyPower = 5,
-    armyCost = 6,
-    custom = 7
+    custom = 6
 }
 
 public enum Empire_ResourceType
@@ -37,9 +37,11 @@ public enum Empire_ResourceType
     gold = 2,
     material = 3,
     citizenProgress = 4,
-    happiness = 5,
-    reputation = 6,
-    custom = 8
+    armyCost = 5,
+    armyHitRate = 6,
+    happiness = 7,
+    reputation = 8,
+    custom = 9
 }
 
 public class GameResources : MonoBehaviour
@@ -59,6 +61,7 @@ public class GameResources : MonoBehaviour
     public Sprite reputationIcon;
     public Sprite armyPowerIcon;
     public Sprite armyCostIcon;
+    public Sprite armyHitRate;
     public Sprite citizenProgressMax;
 
     static GameResources instance;
@@ -98,6 +101,8 @@ public class GameResources : MonoBehaviour
                 return instance.armyPowerIcon;
             case ResourceType.armyCost:
                 return instance.armyCostIcon;
+            case ResourceType.armyHitRate:
+                return instance.armyHitRate;
         }
     }
 
@@ -130,6 +135,8 @@ public class GameResources : MonoBehaviour
                 return "Army Power";
             case ResourceType.armyCost:
                 return "Army Cost";
+            case ResourceType.armyHitRate:
+                return "Army HitRate";
         }
     }
 
@@ -147,8 +154,6 @@ public class GameResources : MonoBehaviour
                 return ResourceType.food;
             case Village_ResourceType.armyPower:
                 return ResourceType.armyPower;
-            case Village_ResourceType.armyCost:
-                return ResourceType.armyCost;
             default:
                 Debug.LogWarning("Cannot convert " + type + " to a ResourceType");
                 return ResourceType.custom;
@@ -171,6 +176,10 @@ public class GameResources : MonoBehaviour
                 return ResourceType.happiness;
             case Empire_ResourceType.reputation:
                 return ResourceType.reputation;
+            case Empire_ResourceType.armyCost:
+                return ResourceType.armyCost;
+            case Empire_ResourceType.armyHitRate:
+                return ResourceType.armyHitRate;
             default:
                 Debug.LogWarning("Cannot convert " + type + " to a ResourceType");
                 return ResourceType.custom;
@@ -191,8 +200,6 @@ public class GameResources : MonoBehaviour
                 return Village_ResourceType.food;
             case ResourceType.armyPower:
                 return Village_ResourceType.armyPower;
-            case ResourceType.armyCost:
-                return Village_ResourceType.armyCost;
             default:
                 Debug.LogWarning("Cannot convert " + type + " to a Village_ResourceType");
                 return Village_ResourceType.custom;
@@ -215,6 +222,10 @@ public class GameResources : MonoBehaviour
                 return Empire_ResourceType.happiness;
             case ResourceType.reputation:
                 return Empire_ResourceType.reputation;
+            case ResourceType.armyCost:
+                return Empire_ResourceType.armyCost;
+            case ResourceType.armyHitRate:
+                return Empire_ResourceType.armyHitRate;
             default:
                 Debug.LogWarning("Cannot convert " + type + " to a Empire_ResourceType");
                 return Empire_ResourceType.custom;
@@ -248,7 +259,9 @@ public class GameResources : MonoBehaviour
             case ResourceType.armyPower:
                 return false;
             case ResourceType.armyCost:
-                return false;
+                return true;
+            case ResourceType.armyHitRate:
+                return true;
             default:
                 return false;
         }
@@ -281,7 +294,9 @@ public class GameResources : MonoBehaviour
             case ResourceType.armyPower:
                 return true;
             case ResourceType.armyCost:
-                return true;
+                return false;
+            case ResourceType.armyHitRate:
+                return false;
             default:
                 return false;
         }
@@ -314,6 +329,8 @@ public class GameResources : MonoBehaviour
             case ResourceType.armyPower:
                 return new Color(1, 0, 0);
             case ResourceType.armyCost:
+                return new Color(1, 0, 0);
+            case ResourceType.armyHitRate:
                 return new Color(1, 0, 0);
             default:
             case ResourceType.custom:

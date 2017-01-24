@@ -40,6 +40,8 @@ public class TermToText
                 return "<color=#56A300FF>" + baseText + "</color>";
             case Empire_ResourceType.reputation:
                 return "<color=#A30098FF>" + baseText + "</color>";
+            case Empire_ResourceType.armyCost:
+                return "<color=#A30000FF>" + baseText + "</color>";
             default:
             case Empire_ResourceType.custom:
                 return "<color=#FF00F7FF>" + baseText + "</color>";
@@ -61,8 +63,6 @@ public class TermToText
             case Village_ResourceType.food:
                 return "<color=#05A300FF>" + baseText + "</color>";
             case Village_ResourceType.armyPower:
-                return "<color=#A30000FF>" + baseText + "</color>";
-            case Village_ResourceType.armyCost:
                 return "<color=#A30000FF>" + baseText + "</color>";
             default:
             case Village_ResourceType.custom:

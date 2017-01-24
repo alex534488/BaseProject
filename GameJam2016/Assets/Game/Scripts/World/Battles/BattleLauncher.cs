@@ -1,14 +1,21 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class BattleLauncher {
+public class BattleLauncher
+{
     /// <summary>
     /// Lance et résoue une bataille entre des barbares et un village
     /// </summary>
     static public BattleResult LaunchBattle(BarbarianClan barbarianClan, Village village, bool barbareAttack = true)
     {
         // 1- Crée le battle setting en fonction du 'barbarianPower' et du 'village'
-        Battle battle = new Battle(barbarianClan.GetPower(), village.Get(Village_ResourceType.armyPower));
+        Battle battle = null;
+        if (barbareAttack)
+            battle = new Battle(barbarianClan.GetPower(), village.Get(Village_ResourceType.armyPower),
+                Universe.Barbares.HitRate, village.Empire.Get(Empire_ResourceType.armyHitRate));
+        else
+            battle = new Battle(village.Get(Village_ResourceType.armyPower), barbarianClan.GetPower(),
+                village.Empire.Get(Empire_ResourceType.armyHitRate), Universe.Barbares.HitRate);
 
         // 2- Résoudre le combat
         BattleResult result = battle.Resolve(barbareAttack);

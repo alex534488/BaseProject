@@ -139,7 +139,7 @@ public class Map {
             if (adjacencyMap[position][i] == true)
             {
                 // S'il est un territoire enemie
-                if (IsEnemyTerritory(team, i))
+                if (!IsEnemyTerritory(team, i))
                 {
                     // on ajoute a la zone d'adjacence
                     zone.Add(i);
