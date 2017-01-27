@@ -117,6 +117,7 @@ public class Empire : INewDay
                 village.Destroy();
                 villageList.Remove(village);
                 Universe.Map.ChangeTerritoryOwner(position, BarbareManager.TEAM);
+                return;
             }
         }
     }
