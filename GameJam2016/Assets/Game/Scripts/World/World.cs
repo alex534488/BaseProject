@@ -6,7 +6,7 @@ using System.Runtime.Serialization;
 [System.Serializable]
 public class World : INewDay {
 
-    private int currentDay = 0;
+    private int currentDay = 1;
     public int CurrentDay { get { return currentDay; } }
     public Empire empire;
     [System.NonSerialized] //Temporaire

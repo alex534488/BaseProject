@@ -29,7 +29,7 @@ public class RequestManager : MonoBehaviour
             onAllRequestsComplete.Invoke();
     }
 
-    public void FirstDay()
+    public void ArrivalDay()
     {
         // TODO: Faire la premier requete du jeu
     }

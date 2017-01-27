@@ -6,9 +6,9 @@ public class VillagesStat : BaseCourtStat
 {
     public Village_ResourceType type = Village_ResourceType.custom;
 
-    protected override void Start()
+    protected override void Init()
     {
-        base.Start();
+        base.Init();
 
         textColor = Color.white; //GameResources.GetBrightColor(GameResources.Convert(type));
 

@@ -20,6 +20,14 @@ public class BaseCourtStat : MonoBehaviour
 
     protected virtual void Start()
     {
+        DayManager.OnNewDay.AddListener(OnNewDay);
+        DayManager.OnNewDayTransition.AddListener(OnTransitionToNewDay);
+        DayManager.OnArrival.AddListener(OnNewDay);
+        DayManager.SyncToInit(Init);
+    }
+
+    protected virtual void Init()
+    {
         empire = Universe.Empire;
 
         if (empire == null)
@@ -27,10 +35,6 @@ public class BaseCourtStat : MonoBehaviour
             Debug.LogWarning("null empire");
             return;
         }
-        if (DayManager.OnNewDay != null)
-            DayManager.OnNewDay.AddListener(OnNewDay);
-        if (DayManager.OnNewDayTransition != null)
-            DayManager.OnNewDayTransition.AddListener(OnTransitionToNewDay);
     }
 
     //Update la 'value'

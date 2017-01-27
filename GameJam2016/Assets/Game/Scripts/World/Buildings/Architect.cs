@@ -29,7 +29,6 @@ public class Architect : INewDay
     [OnDeserialized]
     public void OnLoad(StreamingContext context)
     {
-        Debug.Log("Rebuild de l'architect");
         buildings = new List<Building>();
         foreach (string name in buildingsName)
             Rebuild(name);

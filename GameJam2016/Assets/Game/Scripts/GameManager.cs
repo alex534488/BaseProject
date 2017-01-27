@@ -8,6 +8,7 @@ public class GameManager : BaseManager
     private static int maxGameCount = 3;
     public static int MaxGameCount { get { return maxGameCount; } }
     private static string gameNamePrefix = "game";
+    private static GameSave loadingSave = null;
     static public string currentGameName = "";
     //static public string CurrentGameName { get { return ((GameManager)instance).currentGameName; } }
 
@@ -50,12 +51,13 @@ public class GameManager : BaseManager
     {
         /*if (Scenes.Exists("Main"))
             Scenes.Unload("Main");*/
-        Scenes.Load("Main", UnityEngine.SceneManagement.LoadSceneMode.Single, LaunchGameComplete);
+        loadingSave = save;
+        Scenes.Load("Main", UnityEngine.SceneManagement.LoadSceneMode.Single, LaunchGameComplete, false);
     }
 
     static private void LaunchGameComplete(UnityEngine.SceneManagement.Scene scene)
     {
-        print("DayManager: " + DayManager.main);
+        DayManager.main.Init(loadingSave);
     }
     
     static public bool SaveCurrentGame()

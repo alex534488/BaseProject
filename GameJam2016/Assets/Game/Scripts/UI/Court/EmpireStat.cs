@@ -6,9 +6,9 @@ public class EmpireStat : BaseCourtStat
 {
     public Empire_ResourceType type = Empire_ResourceType.custom;
     
-    protected override void Start()
+    protected override void Init()
     {
-        base.Start();
+        base.Init();
 
         textColor = Color.white;// GameResources.GetBrightColor(GameResources.Convert(type));
 

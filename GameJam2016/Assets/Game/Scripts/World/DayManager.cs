@@ -29,8 +29,10 @@ public class DayManager : MonoBehaviour
     // Nombre de jours (Points de la partie)
     //public int nbJour = 0;
 
-    private UnityEvent onNewDayTransition = new UnityEvent();
-    private UnityEvent onNewDay = new UnityEvent();
+    private UnityEvent onNewDayTransition = new UnityEvent();       // Début de la nuit
+    private UnityEvent onNewDay = new UnityEvent();                 // Début du jour
+    private UnityEvent onArrival = new UnityEvent();                // Arrivé du joueur dans le jour
+    private UnityEvent onInit = new UnityEvent();                   // Dès que le DayManager initialize le monde
     static public UnityEvent OnNewDayTransition
     {
         get { return main != null ? main.onNewDayTransition : null; }
@@ -39,9 +41,23 @@ public class DayManager : MonoBehaviour
     {
         get { return main != null ? main.onNewDay : null; }
     }
+    static public UnityEvent OnArrival
+    {
+        get { return main != null ? main.onArrival : null; }
+    }
+    static public void SyncToInit (UnityAction action)
+    {
+        if (main == null)
+            return;
+        if (main.universe != null)
+            action();
+        else
+            main.onInit.AddListener(action);
+    }
 
     void Awake()
     {
+        universe = null;
         main = this;
 
         MasterManager.Sync();
@@ -67,6 +83,8 @@ public class DayManager : MonoBehaviour
             universe = new Universe(save.world, null);
         else
             universe = new Universe();
+
+        onInit.Invoke();
     }
 
     public void OnFadeInComplete()
@@ -74,7 +92,7 @@ public class DayManager : MonoBehaviour
         if (universe != null)
         {
             onNewDayTransition.Invoke();
-            FirstDay();
+            ArrivalDay();
         }
         else
             Debug.LogWarning("Cannot proceed to next day because the universe is null");
@@ -94,17 +112,17 @@ public class DayManager : MonoBehaviour
         }, 1);
     }
 
-    public void FirstDay()
+    public void ArrivalDay()
     {
         DayOfTime.Day(0);
 
         // Desactive les boutons temporairement
         if (nextDayButton != null) nextDayButton.GetComponent<Button>().interactable = true; // a changer lorsqu'on aura une requete de depart
 
-        universe.world.empire.FirstDay();
-        requestManager.FirstDay();
+        universe.ArrivalDay();
+        requestManager.ArrivalDay();
 
-        onNewDay.Invoke();
+        onArrival.Invoke();
     }
 
     /// <summary>
@@ -145,6 +163,11 @@ public class DayManager : MonoBehaviour
                 scene.GetRootGameObjects()[0].GetComponent<OutroScript>().Init(reason);
             });
         });
+    }
+
+    void OnDestroy()
+    {
+        main = null;
     }
 
     private void ApplyGameMode()

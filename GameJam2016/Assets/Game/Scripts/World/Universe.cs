@@ -39,10 +39,14 @@ public class Universe : INewDay {
         }
 	}
 
+    public void ArrivalDay()
+    {
+
+    }
+
     public void NewDay()
     {
         history.RecordDay(world);
-
         world.NewDay();
     }
 
