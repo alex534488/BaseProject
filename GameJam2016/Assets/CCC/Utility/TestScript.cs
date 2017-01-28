@@ -37,9 +37,9 @@ public class TestScript : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.T))
         {
-            //Transaction t1 = new Transaction(new Village("Toma"), new Village("Boby"), ResourceType.science, 10, Transaction.ValueType.sourcePercent);
-            //Cart cart = new Cart(2, 5, 6, new List<Transaction>() { t1 });
-            //Universe.CartsManager.SendCart(cart);
+            Transaction t1 = new Transaction(Universe.Empire.GetVillageAtPos(4), Universe.Empire.GetVillageAtPos(2), ResourceType.science, 10, Transaction.ValueType.sourcePercent);
+            Cart cart = new Cart(2, 4, 2, new List<Transaction>() { t1 });
+            Universe.CartsManager.SendCart(cart);
             //save = new B(1, 2);
             //print(save.GetType());
         }

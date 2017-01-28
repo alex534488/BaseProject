@@ -78,6 +78,7 @@ public class Empire : INewDay
     public virtual void NewDay()
     {
         UpdateResource();
+        cartManager.NewDay();
     }
 
     public void FirstDay()

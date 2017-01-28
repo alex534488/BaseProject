@@ -133,7 +133,31 @@ public class Cart
         arrived = true;
 
         if (arriveTransactions != null)
-            foreach (Transaction transaction in arriveTransactions)
-                transaction.Execute();
+            if (DestinationStillExist())
+            {
+                foreach (Transaction transaction in arriveTransactions)
+                    transaction.Execute();
+            } else
+            {
+                CancelCart();
+            }
+    }
+
+    private bool DestinationStillExist()
+    {
+        if (Universe.Map.GetVillage(mapDestination) == null) return false;
+        return true;
+    }
+
+    private void CancelCart()
+    {
+        // Le cart revient vers sa source
+        mapDestination = mapSource;
+
+        foreach (Transaction transaction in arriveTransactions)
+        {
+            transaction.destination = Universe.Map.GetVillage(mapDestination);
+            transaction.Execute();
+        }
     }
 }
