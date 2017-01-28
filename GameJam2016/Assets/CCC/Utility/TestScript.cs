@@ -37,25 +37,16 @@ public class TestScript : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.T))
         {
-            //Transaction t1 = new Transaction(new Village("Toma"), new Village("Boby"), ResourceType.science, 10, Transaction.ValueType.sourcePercent);
-            //Cart cart = new Cart(2, 5, 6, new List<Transaction>() { t1 });
-            //Universe.CartsManager.SendCart(cart);
-            //save = new B(1, 2);
-            //print(save.GetType());
+            GameManager.LoadGame(GameManager.GetGameSaves()[0]);
         }
         if (Input.GetKeyDown(KeyCode.S))
         {
-            LocalSave();
-            //ThreadSave.Save(GameSave.GetFilePath() + "test.dat", save, OnSaveComplete);
+            GameManager.SaveCurrentGame();
         }
-        //if (Input.GetKeyDown(KeyCode.D))
-        //{
-        //    ThreadSave.Delete(GameSave.GetFilePath() + "test.dat");
-        //}
-        //if (Input.GetKeyDown(KeyCode.L))
-        //{
-            //ThreadSave.Load(GameSave.GetFilePath() + "test.dat", OnLoadComplete);
-        //}
+        if (Input.GetKeyDown(KeyCode.N))
+        {
+            GameManager.NewGame();
+        }
     }
     void LocalSave()
     {
