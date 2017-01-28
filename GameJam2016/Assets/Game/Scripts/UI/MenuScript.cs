@@ -17,12 +17,14 @@ public class MenuScript : MonoBehaviour {
     public void LoadScene(string name)
     {
         if (SceneManager.GetActiveScene().name != "MainMenu") MainSceneFade.instance.FadeOut(OnExitMenuToGameComplete);
-        else SceneManager.LoadScene(name);
+        else SceneManager.LoadScene(name); // Permet daller a des scenes dans le menu sans FadeOut
     }
+
+    public 
 
     void OnExitMenuToGameComplete()
     {
-        SceneManager.LoadScene("Introduction");
+        GameManager.NewGame();
     }
 
     public void LoadWindow(string name)
