@@ -62,7 +62,8 @@ public class CartsManager : INewDay
         int arrivedCartCount = 0;
         for (int i = 0; i < ongoingCarts.Count; i++)
         {
-            if (ongoingCarts[i].Progress())
+            ongoingCarts[i].Progress();
+            if(ongoingCarts[i].IsArrived)
             {
                 ongoingCarts.RemoveAt(i);
                 arrivedCartCount++;
