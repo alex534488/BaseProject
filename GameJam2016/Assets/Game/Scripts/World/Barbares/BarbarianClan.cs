@@ -10,14 +10,23 @@ public class BarbarianClan : INewDay
     private int attackCoolDownCounter;
     private float hitRate;
     private Stat<int> armyPower = new Stat<int>(0);
+    private BarbareLeader leader;
 
-    public BarbarianClan(int armyPower, int attackCooldown, int mapPosition, float hitRate)
+    public BarbarianClan(int armyPower, int attackCooldown, int mapPosition, float hitRate, BarbareLeader leader = null)
     {
         this.armyPower.Set(armyPower);
         this.attackCooldown = attackCooldown;
         this.mapPosition = mapPosition;
         this.hitRate = hitRate;
         attackCoolDownCounter = attackCooldown;
+        if(leader == null)
+        {
+            this.leader = new BarbareLeader(this);
+        } else
+        {
+            this.leader = leader;
+        }
+        
     }
 
     public int GetCoolDown()
@@ -37,29 +46,16 @@ public class BarbarianClan : INewDay
 
     public void NewDay()
     {
-        // A changer en machine a etat fini si on veut
-
-        List<int> enemyTerritories = new List<int>();
-        enemyTerritories = Universe.Map.GetAdjacentEnemyTerritory(mapPosition, BarbareManager.TEAM);
-
-        if (enemyTerritories.Count > 0)
+        if(leader != null)
         {
-            if (attackCoolDownCounter <= 0)
-            {
-                // le clan attaque!
-                Attack(enemyTerritories[Random.Range(0, enemyTerritories.Count-1)]);
-            } else
-            {
-                attackCoolDownCounter--;
-            }
+            leader.NewDay();
         } else
         {
-            UpdatePosition();
-            attackCoolDownCounter--;
+            // Si pas de leader ?
         }
     }
 
-    private void UpdatePosition()
+    public void UpdatePosition()
     {
         // Deplacement Random pour l'instant
         List<int> listAdjacentPosition = new List<int>();
@@ -86,7 +82,7 @@ public class BarbarianClan : INewDay
         }
     }
 
-    private void Attack(int position)
+    public void Attack(int position)
     {
         Village village = Universe.Map.GetVillage(position);
         BattleLauncher.LaunchBattle(this, village);
@@ -129,5 +125,10 @@ public class BarbarianClan : INewDay
         {
             SetArmyPower(result.defenderLeft);
         }
+    }
+
+    public void DecreaseCounter(int amount)
+    {
+        attackCoolDownCounter -= amount;
     }
 }
