@@ -12,8 +12,8 @@ public class BarbareManager : INewDay
 
     // New BarbaresClan Attack Stats
     List<int> listSpawnPoint = new List<int>();
-    private int spawnAttackPower = 1;
-    private int spawnAttackCooldown = 1;
+    private int spawnAttackPower = 5;
+    private int spawnAttackCooldown = 3;
     private int hitRate = 60;
     public int HitRate { get { return hitRate; } }
 

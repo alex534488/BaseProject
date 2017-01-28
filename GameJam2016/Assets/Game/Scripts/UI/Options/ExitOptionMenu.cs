@@ -41,6 +41,11 @@ public class ExitOptionMenu : MonoBehaviour {
         DayManager.main.Lose("Vous avez abandonner votre Empire à sa propre perte.");
     }
 
+    public void LoadGame()
+    {
+        Scenes.LoadAsync("LoadGameScene", LoadSceneMode.Additive);
+    }
+
     public void Annuler()
     {
         SoundManager.Load();
