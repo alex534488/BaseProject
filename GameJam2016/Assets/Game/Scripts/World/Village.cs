@@ -37,6 +37,12 @@ public class Village : INewDay
         architect = new Architect(this);
     }
 
+    //TODO
+    public Village(Village clone)
+    {
+
+    }
+
     [OnDeserialized]
     public void OnLoad(StreamingContext context)
     {

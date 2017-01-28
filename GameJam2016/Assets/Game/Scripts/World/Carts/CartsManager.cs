@@ -13,25 +13,14 @@ public class CartsManager : INewDay
 
     private Stat<int> availableCarts = new Stat<int>(0, 0, 10, BoundMode.Cap);
 
-    public CartsManager(int startingAmount)
+    public int AvailableCarts
     {
-        availableCarts.Set(startingAmount);
-    }
-
-    [OnDeserialized]
-    public void OnLoad(StreamingContext context)
-    {
-
+        get { return availableCarts; }
     }
 
     public ReadOnlyCollection<Cart> OngoingCarts
     {
         get { return ongoingCarts != null ? ongoingCarts.AsReadOnly() : null; }
-    }
-
-    public int AvailableCarts
-    {
-        get { return availableCarts; }
     }
 
     public int TotalCarts
@@ -42,6 +31,17 @@ public class CartsManager : INewDay
     public int OngoingCartsCount
     {
         get { return ongoingCarts.Count; }
+    }
+
+    public CartsManager(int startingAmount)
+    {
+        availableCarts.Set(startingAmount);
+    }
+
+    [OnDeserialized]
+    public void OnLoad(StreamingContext context)
+    {
+
     }
 
     public Stat<int>.StatEvent OnAvailableCartChange
@@ -62,7 +62,8 @@ public class CartsManager : INewDay
         int arrivedCartCount = 0;
         for (int i = 0; i < ongoingCarts.Count; i++)
         {
-            if (ongoingCarts[i].Progress())
+            ongoingCarts[i].Progress();
+            if(ongoingCarts[i].IsArrived)
             {
                 ongoingCarts.RemoveAt(i);
                 arrivedCartCount++;

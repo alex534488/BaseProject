@@ -13,7 +13,7 @@ public class Cart
     private bool sent = false;
     private bool arrived = false;
 
-    public bool Arrived
+    public bool IsArrived
     {
         get { return arrived; }
     }
@@ -114,15 +114,14 @@ public class Cart
     /// <summary>
     /// Retourne true si le cart est arrivé à sa destination
     /// </summary>
-    public bool Progress()
+    public void Progress()
     {
         delayCounter--;
-        if (delayCounter <= 0)
+
+        if (delayCounter <= 0 && !arrived)
         {
             Arrive();
-            return true;
         }
-        return false;
     }
 
     public void Arrive()
@@ -133,7 +132,7 @@ public class Cart
         arrived = true;
 
         if (arriveTransactions != null)
-            if (DestinationStillExist())
+            if (VillageStillExists(mapDestination))
             {
                 foreach (Transaction transaction in arriveTransactions)
                     transaction.Execute();
@@ -143,20 +142,25 @@ public class Cart
             }
     }
 
-    private bool DestinationStillExist()
+    private bool VillageStillExists(int pos)
     {
-        if (Universe.Map.GetVillage(mapDestination) == null) return false;
-        return true;
+        Village village = Universe.Map.GetVillage(pos);
+        return village == null ? false : village.IsDestroyed;
     }
 
     private void CancelCart()
     {
-        // Le cart revient vers sa source
+        // Le cart redonne les ressources à sa source
         mapDestination = mapSource;
+
+        if (!VillageStillExists(mapDestination))
+            return;
+
+        Village dest = Universe.Map.GetVillage(mapDestination);
 
         foreach (Transaction transaction in arriveTransactions)
         {
-            transaction.destination = Universe.Map.GetVillage(mapDestination);
+            transaction.destination = dest;
             transaction.Execute();
         }
     }

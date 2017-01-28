@@ -46,8 +46,8 @@ public class Universe : INewDay {
 
     public void NewDay()
     {
-        history.RecordDay(world);
         world.NewDay();
+        history.RecordDay(world); //Enregistre le DÉBUT de la journée
     }
 
     static public Empire Empire

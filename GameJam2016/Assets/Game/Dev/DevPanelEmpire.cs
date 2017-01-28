@@ -35,6 +35,9 @@ public class DevPanelEmpire : MonoBehaviour
     public Button previousBuildingPage;
     public Button nextBuildingPage;
 
+    [Header("Empire stats")]
+    public Text empireStats;
+
     void Awake()
     {
         //Set les listeners sur la listes des villages
@@ -85,7 +88,10 @@ public class DevPanelEmpire : MonoBehaviour
     {
         village = empire.VillageList[index];
         buildingPage = 0;
-        villagesVerticalLayout.transform.GetChild(index).GetComponent<Button>().image.color = highlightColor;
+        for (int i = 0; i < villagesVerticalLayout.transform.childCount; i++)
+        {
+            villagesVerticalLayout.transform.GetChild(i).GetComponent<Button>().image.color = i == index ? highlightColor : Color.white;
+        }
         UpdateCloseup();
     }
 
@@ -99,6 +105,21 @@ public class DevPanelEmpire : MonoBehaviour
 
         //Close-up
         UpdateCloseup();
+
+        UpdateEmpireStat();
+    }
+
+    void UpdateEmpireStat()
+    {
+        empireStats.text =
+            "happiness: " + empire.Get(Empire_ResourceType.happiness) + "\n\n"
+            + "reputation: " + empire.Get(Empire_ResourceType.reputation) + "\n\n"
+            + "citizen progress: " + empire.Get(Empire_ResourceType.citizenProgress) + " + " + empire.GetCumulation(Village_ResourceType.food) + "\n"
+            + "gold: " + empire.Get(Empire_ResourceType.gold) + " + " + empire.GetCumulation(Village_ResourceType.goldProd) + "\n"
+            + "material: " + empire.Get(Empire_ResourceType.material) + " + " + empire.GetCumulation(Village_ResourceType.materialProd) + "\n"
+            + "science: " + empire.Get(Empire_ResourceType.science) + " + " + empire.GetCumulation(Village_ResourceType.food) + "\n\n"
+            + "army cost: " + empire.Get(Empire_ResourceType.armyCost) + "\n"
+            + "army hit rate: " + empire.Get(Empire_ResourceType.armyHitRate);
     }
 
     void UpdateCloseup()
@@ -195,7 +216,7 @@ public class DevPanelEmpire : MonoBehaviour
         int endIndex = Mathf.Min(startIndex + cartItems.Length, ongoingCarts.Count);
 
         int currentIndex = startIndex;
-        for(int i=0; i<cartItems.Length; i++)
+        for (int i = 0; i < cartItems.Length; i++)
         {
             if (currentIndex < endIndex)
                 cartItems[i].Show(ongoingCarts[currentIndex]);
@@ -246,14 +267,14 @@ public class DevPanelEmpire : MonoBehaviour
         obj.GetComponentInChildren<Button>().onClick.AddListener(
             delegate ()
             {
-                DestroyBuilding(obj.transform.GetSiblingIndex() -1);
+                DestroyBuilding(obj.transform.GetSiblingIndex() - 1);
             });
     }
 
     void ClearBuildingItems()
     {
-        for(int i=1; i< buildingVerticalLayout.transform.childCount; i++)
-        { 
+        for (int i = 1; i < buildingVerticalLayout.transform.childCount; i++)
+        {
             Destroy(buildingVerticalLayout.transform.GetChild(i).gameObject);
         }
     }
