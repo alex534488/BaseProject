@@ -48,7 +48,10 @@ public class BarbarianClan : INewDay
             {
                 // le clan attaque!
                 Attack(enemyTerritories[Random.Range(0, enemyTerritories.Count-1)]);
-            } 
+            } else
+            {
+                attackCoolDownCounter--;
+            }
         } else
         {
             UpdatePosition();
