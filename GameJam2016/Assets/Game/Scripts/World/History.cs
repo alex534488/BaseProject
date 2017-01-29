@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using CCC.Utility;
 
+[System.Serializable]
 public class History
 {
     private int worldCountLimit = 2;
@@ -18,7 +19,10 @@ public class History
 
     public void LoadPast(int days)
     {
+        World world = ViewPast(days);
 
+        if (world != null)
+            Universe.instance.SetWorldTo(world);
     }
 
     public World ViewPast(int days)

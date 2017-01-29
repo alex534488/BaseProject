@@ -1661,10 +1661,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefix: 
   text: {fileID: 1610132353}
+  positiveColor: {r: 0, g: 0, b: 0, a: 1}
+  negativeColor: {r: 0, g: 0, b: 0, a: 1}
   gainTextPrefab: {fileID: 114000013230344322, guid: 09c9e5e0020184f4e8334293c4ed8286,
     type: 2}
   animateGain: 1
   gainAnimOffset: {x: 80, y: 0, z: 0}
+  positiveGainColor: {r: 0.75, g: 1, b: 0.5, a: 1}
+  negativeGainColor: {r: 1, g: 0.5, b: 0.5, a: 1}
   type: 8
 --- !u!1 &608255978
 GameObject:
@@ -1864,10 +1868,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefix: +
   text: {fileID: 1393216106}
+  positiveColor: {r: 0.22, g: 0.43, b: 0, a: 1}
+  negativeColor: {r: 0.43, g: 0, b: 0, a: 1}
   gainTextPrefab: {fileID: 114000013230344322, guid: 09c9e5e0020184f4e8334293c4ed8286,
     type: 2}
   animateGain: 0
   gainAnimOffset: {x: 0, y: 0, z: 0}
+  positiveGainColor: {r: 0.75, g: 1, b: 0.5, a: 1}
+  negativeGainColor: {r: 1, g: 0.5, b: 0.5, a: 1}
   type: 2
 --- !u!114 &619199687
 MonoBehaviour:
@@ -1882,10 +1890,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefix: 
   text: {fileID: 59774634}
+  positiveColor: {r: 0, g: 0, b: 0, a: 1}
+  negativeColor: {r: 0, g: 0, b: 0, a: 1}
   gainTextPrefab: {fileID: 114000013230344322, guid: 09c9e5e0020184f4e8334293c4ed8286,
     type: 2}
   animateGain: 1
   gainAnimOffset: {x: 80, y: 0, z: 0}
+  positiveGainColor: {r: 0.75, g: 1, b: 0.5, a: 1}
+  negativeGainColor: {r: 1, g: 0.5, b: 0.5, a: 1}
   type: 2
 --- !u!1 &620568651
 GameObject:
@@ -2359,7 +2371,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_Color: {r: 0.43137252, g: 0, b: 0, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -2945,10 +2957,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefix: +
   text: {fileID: 1371657118}
+  positiveColor: {r: 0.22, g: 0.43, b: 0, a: 1}
+  negativeColor: {r: 0.43, g: 0, b: 0, a: 1}
   gainTextPrefab: {fileID: 114000013230344322, guid: 09c9e5e0020184f4e8334293c4ed8286,
     type: 2}
   animateGain: 0
   gainAnimOffset: {x: 0, y: 0, z: 0}
+  positiveGainColor: {r: 0.75, g: 1, b: 0.5, a: 1}
+  negativeGainColor: {r: 1, g: 0.5, b: 0.5, a: 1}
   type: 1
 --- !u!114 &1332675118
 MonoBehaviour:
@@ -2963,10 +2979,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefix: 
   text: {fileID: 1622061423}
+  positiveColor: {r: 0, g: 0, b: 0, a: 1}
+  negativeColor: {r: 0, g: 0, b: 0, a: 1}
   gainTextPrefab: {fileID: 114000013230344322, guid: 09c9e5e0020184f4e8334293c4ed8286,
     type: 2}
   animateGain: 1
   gainAnimOffset: {x: 80, y: 0, z: 0}
+  positiveGainColor: {r: 0.75, g: 1, b: 0.5, a: 1}
+  negativeGainColor: {r: 1, g: 0.5, b: 0.5, a: 1}
   type: 1
 --- !u!1 &1345342173
 GameObject:
@@ -3210,10 +3230,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefix: +
   text: {fileID: 361865740}
+  positiveColor: {r: 0.22, g: 0.43, b: 0, a: 1}
+  negativeColor: {r: 0.43, g: 0, b: 0, a: 1}
   gainTextPrefab: {fileID: 114000013230344322, guid: 09c9e5e0020184f4e8334293c4ed8286,
     type: 2}
   animateGain: 0
   gainAnimOffset: {x: 0, y: 0, z: 0}
+  positiveGainColor: {r: 0.75, g: 1, b: 0.5, a: 1}
+  negativeGainColor: {r: 1, g: 0.5, b: 0.5, a: 1}
   type: 3
 --- !u!114 &1376365296
 MonoBehaviour:
@@ -3228,10 +3252,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefix: 
   text: {fileID: 343453540}
+  positiveColor: {r: 0, g: 0, b: 0, a: 1}
+  negativeColor: {r: 0, g: 0, b: 0, a: 1}
   gainTextPrefab: {fileID: 114000013230344322, guid: 09c9e5e0020184f4e8334293c4ed8286,
     type: 2}
   animateGain: 1
   gainAnimOffset: {x: 80, y: 0, z: 0}
+  positiveGainColor: {r: 0.75, g: 1, b: 0.5, a: 1}
+  negativeGainColor: {r: 1, g: 0.5, b: 0.5, a: 1}
   type: 3
 --- !u!1 &1393216103
 GameObject:
@@ -3736,10 +3764,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefix: +
   text: {fileID: 831953571}
+  positiveColor: {r: 0.22, g: 0.43, b: 0, a: 1}
+  negativeColor: {r: 0.43, g: 0, b: 0, a: 1}
   gainTextPrefab: {fileID: 114000013230344322, guid: 09c9e5e0020184f4e8334293c4ed8286,
     type: 2}
   animateGain: 0
   gainAnimOffset: {x: 0, y: 0, z: 0}
+  positiveGainColor: {r: 0.75, g: 1, b: 0.5, a: 1}
+  negativeGainColor: {r: 1, g: 0.5, b: 0.5, a: 1}
   type: 4
 --- !u!114 &1447823767
 MonoBehaviour:
@@ -3754,10 +3786,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefix: 
   text: {fileID: 732916912}
+  positiveColor: {r: 0, g: 0, b: 0, a: 1}
+  negativeColor: {r: 0, g: 0, b: 0, a: 1}
   gainTextPrefab: {fileID: 114000013230344322, guid: 09c9e5e0020184f4e8334293c4ed8286,
     type: 2}
   animateGain: 1
   gainAnimOffset: {x: 80, y: 0, z: 0}
+  positiveGainColor: {r: 0.75, g: 1, b: 0.5, a: 1}
+  negativeGainColor: {r: 1, g: 0.5, b: 0.5, a: 1}
   type: 4
 --- !u!1 &1448957827
 GameObject:
@@ -4716,10 +4752,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefix: 
   text: {fileID: 1345342177}
+  positiveColor: {r: 0, g: 0, b: 0, a: 1}
+  negativeColor: {r: 0, g: 0, b: 0, a: 1}
   gainTextPrefab: {fileID: 114000013230344322, guid: 09c9e5e0020184f4e8334293c4ed8286,
     type: 2}
   animateGain: 1
   gainAnimOffset: {x: 80, y: 0, z: 0}
+  positiveGainColor: {r: 0.75, g: 1, b: 0.5, a: 1}
+  negativeGainColor: {r: 1, g: 0.5, b: 0.5, a: 1}
   type: 7
 --- !u!1 &1847773196
 GameObject:

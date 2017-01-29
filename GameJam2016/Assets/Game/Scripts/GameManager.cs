@@ -71,7 +71,8 @@ public class GameManager : BaseManager
             return false;
         }
 
-        GameSave save = new GameSave(currentGameName, DayManager.main.Universe.world);
+        Universe universe = DayManager.main.Universe;
+        GameSave save = new GameSave(currentGameName, universe.world, universe.history);
 
         GameSave.Save(save);
 

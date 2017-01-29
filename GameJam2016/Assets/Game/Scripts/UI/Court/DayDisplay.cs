@@ -10,12 +10,13 @@ public class DayDisplay : MonoBehaviour
     void Start()
     {
         DayManager.OnNewDay.AddListener(UpdateDisplay);
-        DayManager.SyncToInit(Init);
+        DayManager.SyncToUniverseInit(Init);
     }
 
     void Init()
     {
         UpdateDisplay();
+        Universe.OnSetNewWorld.AddListener(UpdateDisplay);
     }
 
     void UpdateDisplay()
