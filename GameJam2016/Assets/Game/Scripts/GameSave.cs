@@ -9,16 +9,17 @@ public class GameSave
 {
     public string name;
     public World world;
+    public History history;
 
-    //public History history;
     //public RequestManagerSave
     //public StorylineSave
     //etc.
 
-    public GameSave(string name, World world)//, history, requestManagerSave, etc.
+    public GameSave(string name, World world, History history)//, history, requestManagerSave, etc.
     {
         this.name = name;
         this.world = world;
+        this.history = history;
     }
 
     static public GameSave Load(string gameName)

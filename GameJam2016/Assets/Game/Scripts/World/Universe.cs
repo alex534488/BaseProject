@@ -1,9 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
-
-//Temporaire
-using System.Runtime.Serialization.Formatters.Binary;
-using System.IO;
+using UnityEngine.Events;
 
 // Classes de haut niveau statique accessible de n'importe ou
 public class Universe : INewDay {
@@ -12,8 +9,10 @@ public class Universe : INewDay {
 
     public World world;
     public History history;
+    public UnityEvent onSetNewWorld = new UnityEvent();
+    static public UnityEvent OnSetNewWorld { get { return instance.onSetNewWorld; } }
 
-	public Universe(World loadedWorld = null, History loadedHistory = null)
+    public Universe(World loadedWorld = null, History loadedHistory = null)
     {
         instance = this;
 
@@ -36,12 +35,19 @@ public class Universe : INewDay {
         else
         {
             history = new History();
+            history.RecordDay(world); // premier enregistrement
         }
 	}
 
     public void ArrivalDay()
     {
 
+    }
+
+    public void SetWorldTo(World world)
+    {
+        this.world = world;
+        onSetNewWorld.Invoke();
     }
 
     public void NewDay()

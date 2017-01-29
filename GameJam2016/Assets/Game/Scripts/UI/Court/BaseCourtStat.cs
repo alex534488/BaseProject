@@ -8,12 +8,17 @@ public class BaseCourtStat : MonoBehaviour
 
     public string prefix;
     public Text text;
+    public Color positiveColor = new Color(0.22f, 0.43f, 0);
+    public Color negativeColor = new Color(0.43f, 0, 0);
+    [Header("Gain anim")]
     public Text gainTextPrefab;
     public bool animateGain;
     public Vector3 gainAnimOffset;
-    protected Color textColor;
-    protected bool stopUpdating;
+    public Color positiveGainColor = new Color(0.75f, 1, 0.5f);
+    public Color negativeGainColor = new Color(1, 0.5f, 0.5f);
 
+    protected bool stopUpdating;
+    protected bool skipGainAnimation;
     protected int value;
     [System.NonSerialized]
     protected Empire empire;
@@ -23,10 +28,16 @@ public class BaseCourtStat : MonoBehaviour
         DayManager.OnNewDay.AddListener(OnNewDay);
         DayManager.OnNewDayTransition.AddListener(OnTransitionToNewDay);
         DayManager.OnArrival.AddListener(OnNewDay);
-        DayManager.SyncToInit(Init);
+        DayManager.SyncToUniverseInit(Init);
     }
 
-    protected virtual void Init()
+    private void Init()
+    {
+        Universe.OnSetNewWorld.AddListener(LinkToEmpire);
+        LinkToEmpire();
+    }
+
+    protected virtual void LinkToEmpire()
     {
         empire = Universe.Empire;
 
@@ -45,9 +56,14 @@ public class BaseCourtStat : MonoBehaviour
 
         if (animateGain)
         {
-            int delta = newValue - value;
-            if (delta != 0)
-                GainAnimation(delta);
+            if (skipGainAnimation)
+                skipGainAnimation = false;
+            else
+            {
+                int delta = newValue - value;
+                if (delta != 0)
+                    GainAnimation(delta);
+            }
         }
 
         value = newValue;
@@ -66,9 +82,9 @@ public class BaseCourtStat : MonoBehaviour
             return;
 
         Text gainText = Instantiate(gainTextPrefab.gameObject).GetComponent<Text>();
-        gainText.color = textColor;
 
         gainText.text = "" + (amount > 0 ? "+" : "") + amount;
+        gainText.color = amount < 0 ? negativeGainColor : positiveGainColor;
 
         gainText.rectTransform.SetParent(text.GetComponent<RectTransform>(), true);
         gainText.transform.localScale = Vector3.one;
@@ -84,6 +100,7 @@ public class BaseCourtStat : MonoBehaviour
     {
         if (text != null)
             text.text = prefix + value.ToString();
+        text.color = value < 0 ? negativeColor : positiveColor;
     }
 
     protected virtual void OnNewDay()

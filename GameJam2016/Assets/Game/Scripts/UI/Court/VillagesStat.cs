@@ -6,11 +6,9 @@ public class VillagesStat : BaseCourtStat
 {
     public Village_ResourceType type = Village_ResourceType.custom;
 
-    protected override void Init()
+    protected override void LinkToEmpire()
     {
-        base.Init();
-
-        textColor = Color.white; //GameResources.GetBrightColor(GameResources.Convert(type));
+        base.LinkToEmpire();
 
         //update 'value'
         value = empire.GetCumulation(type);

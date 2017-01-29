@@ -6,11 +6,9 @@ public class EmpireStat : BaseCourtStat
 {
     public Empire_ResourceType type = Empire_ResourceType.custom;
     
-    protected override void Init()
+    protected override void LinkToEmpire()
     {
-        base.Init();
-
-        textColor = Color.white;// GameResources.GetBrightColor(GameResources.Convert(type));
+        base.LinkToEmpire();
 
         //update 'value'
         value = empire.Get(type);

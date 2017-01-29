@@ -45,7 +45,7 @@ public class DayManager : MonoBehaviour
     {
         get { return main != null ? main.onArrival : null; }
     }
-    static public void SyncToInit (UnityAction action)
+    static public void SyncToUniverseInit (UnityAction action)
     {
         if (main == null)
             return;
@@ -80,7 +80,7 @@ public class DayManager : MonoBehaviour
     public void Init(GameSave save = null)
     {
         if (save != null)
-            universe = new Universe(save.world, null);
+            universe = new Universe(save.world, save.history);
         else
             universe = new Universe();
 
@@ -168,6 +168,7 @@ public class DayManager : MonoBehaviour
     void OnDestroy()
     {
         main = null;
+        Universe.instance = null;
     }
 
     private void ApplyGameMode()
