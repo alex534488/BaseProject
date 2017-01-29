@@ -8,11 +8,11 @@ public class DevPanelMap : MonoBehaviour
     public Text text;
     Color highlightColor = new Color(197.0f / 255.0f, 255.0f / 255.0f, 187.0f / 255.0f);
 
-    public void Show()
+    public void Show(World world)
     {
         mainButton.image.color = highlightColor;
         gameObject.SetActive(true);
-        text.text = GetInfo();
+        text.text = GetInfo(world);
     }
     public void Hide()
     {
@@ -20,10 +20,10 @@ public class DevPanelMap : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-    string GetInfo()
+    string GetInfo(World world)
     {
         string result = "";
-        Map map = Universe.Map;
+        Map map = world.map;
         for(int i = 0; i < map.nbTerritory; i++)
         {
             result += "- Territoire #" + i + " : ";

@@ -100,7 +100,7 @@ public class DevPanel : MonoBehaviour
             case Category.map:
                 empireDisplay.Hide();
                 barbarianDisplay.Hide();
-                mapDisplay.Show();
+                mapDisplay.Show(currentWorld);
                 break;
         }
     }
