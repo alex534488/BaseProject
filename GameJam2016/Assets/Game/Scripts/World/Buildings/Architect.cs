@@ -91,6 +91,9 @@ public class Architect : INewDay
             return;
         }
 
+        // verification de si on peut construire ce batiment
+        if (!IsBuildable(newBuilding)) return;
+
         buildings.Add(newBuilding); // L'ajouter a la liste de building construit
         buildingsName.Add(name);
 
@@ -106,5 +109,45 @@ public class Architect : INewDay
         }
 
         newBuilding.Apply(myVillage); // Appliquer la construction du building
+    }
+
+    public List<Building> GetAllBuildableBuildings()
+    {
+        List<Building> result = new List<Building>();
+        List<Building> temp = BuildingBank.GetAllBuildings();
+
+        foreach(Building building in temp)
+        {
+            if (IsBuildable(building)) result.Add(building);
+        }
+
+        return result;
+    }
+
+    public void GetAllAvailableBuildings()
+    {
+        // TODO: En fonction de la science
+    }
+
+    public bool IsAvailable(Building building)
+    {
+        // TODO: En fonction de la science
+        return false;
+    }
+
+    public bool IsBuildable(Building building)
+    {
+        int result = 0; // Ici on considere qu'il ne peut avoir 2 batiments pareil dans un village
+        foreach (Building requirementsBuilding in building.listRequirements)
+        {
+            foreach(Building existingBuilding in buildings)
+            {
+                if(existingBuilding == requirementsBuilding)
+                {
+                    result++;
+                }
+            }
+        }
+        return result==building.listRequirements.Count;
     }
 }

@@ -26,7 +26,11 @@ public class Building : ScriptableObject
     // Batiment pour la capitale?
     [Tooltip("Le batiment peut etre construit dans la capitale")]
     public bool IsAvailableInCapital = false;
-    
+
+    // Liste de batiment requis pour faire celui-ci
+    [Tooltip("Liste de batiment requis pour faire celui-ci")]
+    public List<Building> listRequirements;
+
     [HideInInspector]
     public string behaviorType;
 

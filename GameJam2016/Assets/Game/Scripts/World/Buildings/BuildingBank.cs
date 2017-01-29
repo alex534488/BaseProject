@@ -30,4 +30,9 @@ public class BuildingBank : Singleton<BuildingBank>
         }
         return false;
     }
+
+    static public List<Building> GetAllBuildings()
+    {
+        return instance.buildings;
+    }
 }
