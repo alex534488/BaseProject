@@ -18,7 +18,6 @@ public class RequestFrame : ScriptableObject
     public char forceSeparation = '%';
     public ResourceType type = ResourceType.custom;
     public List<Choice> choices = new List<Choice>(3);
-    public Condition condition = null;
     public ScriptableObject characterKit = null;
 
     [System.NonSerialized]
@@ -85,9 +84,7 @@ public class RequestFrame : ScriptableObject
 
         if (characterKit != null && characterKit is IKitMaker)
             request.SetCharacterKit((characterKit as IKitMaker).MakeKit());
-
-        request.condition = condition;
-
+        
         return request;
     }
 
@@ -276,24 +273,10 @@ public class RequestFrame : ScriptableObject
                 indexExists = false;
                 break;
             case -1:
-                condition = null;
-                if (choices != null && choices.Count > 0)
-                {
-                    foreach (Choice choice in choices)
-                    {
-                        if (choice.transactions != null && choice.transactions.Count > 0)
-                            foreach (Transaction transac in choice.transactions)
-                                transac.condition = null;
-                    }
-                }
+
                 break;
             case 0:
                 {
-                    //La requete ne se fait que si la destination a au moins 11 soldat
-                    condition = new Condition(delegate
-                    {
-                        return destination.Get(Village_ResourceType.armyPower) > 10;
-                    });
 
                     tag = "exemple_village_need_food";
                     text = "Je suis un messager venant du village de [source.name].\n\nNos citoyen sont amateur de PFK. Nous désirons donc acheter votre poule.";

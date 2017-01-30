@@ -6,7 +6,7 @@ using CCC.Utility;
 [System.Serializable]
 public class History
 {
-    private int worldCountLimit = 2;
+    private int worldCountLimit = 3;
     List<World> worlds = new List<World>();
 
     public void RecordDay(World world)

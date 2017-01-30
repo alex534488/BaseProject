@@ -20,8 +20,6 @@ public class Transaction
     public ResourceType type = ResourceType.gold;//
     public int value = 0;
     public ValueType valueType = ValueType.flat;
-    [System.NonSerialized]
-    public Condition condition = null;
     /// <summary>
     /// Used in the editor (request creation)
     /// </summary>
@@ -64,8 +62,6 @@ public class Transaction
 
     public void Execute()
     {
-        if (condition != null && !condition) return;
-
         int amount = GetFlatAmount();
 
         //Si la resource ciblé est une resource de l'empire, on fait un gain / une perte de resource ET NON un transfert
