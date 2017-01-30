@@ -7,6 +7,7 @@ public class DevPanelBarbareClanInteract : MonoBehaviour
 {
     public string sceneName;
     public BarbarianClan currentClan;
+    public World currentWorld;
     public DevPanelBarbarian devPanelBarbarian;
 
     public void ShowInteractMenu()
@@ -22,7 +23,7 @@ public class DevPanelBarbareClanInteract : MonoBehaviour
         {
             if (currentClan != null)
             {
-                buttons[i].GetComponent<DevPanelBarbareMenu>().SetCurrentClan(currentClan);
+                buttons[i].GetComponent<DevPanelBarbareMenu>().SetCurrentClan(currentClan, currentWorld);
                 buttons[i].GetComponent<DevPanelBarbareMenu>().devPanelBarbarian = devPanelBarbarian;
             }
             else

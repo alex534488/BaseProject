@@ -9,10 +9,12 @@ public class DevPanelBarbareMenu : MonoBehaviour {
     public InputField inputField;
     public BarbarianClan currentClan;
     public DevPanelBarbarian devPanelBarbarian;
+    public World world;
 
-    public void SetCurrentClan(BarbarianClan currentClan)
+    public void SetCurrentClan(BarbarianClan currentClan, World world)
     {
         this.currentClan = currentClan;
+        this.world = world;
     }
 
     public void OnClickMoveTo()
@@ -20,7 +22,7 @@ public class DevPanelBarbareMenu : MonoBehaviour {
         if(inputField.text != null)
         {
             currentClan.Move(int.Parse(inputField.text));
-            devPanelBarbarian.UpdateDisplay();
+            devPanelBarbarian.UpdateDisplay(world);
         }
     }
 
@@ -29,7 +31,7 @@ public class DevPanelBarbareMenu : MonoBehaviour {
         if (inputField.text != null)
         {
             currentClan.AddPower(int.Parse(inputField.text));
-            devPanelBarbarian.UpdateDisplay();
+            devPanelBarbarian.UpdateDisplay(world);
         }
     }
 
@@ -41,14 +43,14 @@ public class DevPanelBarbareMenu : MonoBehaviour {
             {
                 currentClan.NewDay();
             }
-            devPanelBarbarian.UpdateDisplay();
+            devPanelBarbarian.UpdateDisplay(world);
         }
     }
 
     public void OnDelete()
     {
         Universe.Barbares.Delete(currentClan);
-        devPanelBarbarian.UpdateDisplay();
+        devPanelBarbarian.UpdateDisplay(world);
         Scenes.Unload("InteractBarbare");
     }
 

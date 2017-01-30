@@ -58,6 +58,13 @@ public class ExitOptionMenu : MonoBehaviour {
         Exit();
     }
 
+    public void SaveAndQuit()
+    {
+        GameManager.SaveCurrentGame();
+        MainSceneFade.instance.FadeOut(); // A changer la fluiditer n'est pas bonne
+        Scenes.LoadAsync("MainMenu");
+    }
+
     public void Exit()
     {
         if (quit) return;

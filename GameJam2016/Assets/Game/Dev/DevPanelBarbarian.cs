@@ -10,13 +10,15 @@ public class DevPanelBarbarian : MonoBehaviour
     public GameObject barbarelistCountainer;
     public GameObject spawnButton;
     private BarbareManager barbareManager;
+    private World world;
     Color highlightColor = new Color(197.0f / 255.0f, 255.0f / 255.0f, 187.0f / 255.0f);
 
-    public void Show()
+    public void Show(World world)
     {
         mainButton.image.color = highlightColor;
         gameObject.SetActive(true);
-        UpdateDisplay();
+        this.world = world;
+        UpdateDisplay(world);
     }
     public void Hide()
     {
@@ -25,9 +27,9 @@ public class DevPanelBarbarian : MonoBehaviour
         Clear();
     }
 
-    public void UpdateDisplay()
+    public void UpdateDisplay(World world)
     {
-        barbareManager = Universe.Barbares;
+        barbareManager = world.barbareManager;
         List<BarbarianClan> listBarbares = barbareManager.GetAllClans();
 
         Clear();
@@ -37,14 +39,15 @@ public class DevPanelBarbarian : MonoBehaviour
             newBarbareButton.transform.GetComponentInChildren<Text>().text = "Barbare Clan " + i + " | Position : " + listBarbares[i].GetPosition() + " | ArmyPower: " + listBarbares[i].GetPower() + " | AttackCoolDown : " + listBarbares[i].GetCoolDown() + " | CoolDownCounter: " + listBarbares[i].GetCounter();
             newBarbareButton.transform.SetParent(barbarelistCountainer.transform);
             newBarbareButton.GetComponent<DevPanelBarbareClanInteract>().currentClan = listBarbares[i];
+            newBarbareButton.GetComponent<DevPanelBarbareClanInteract>().currentWorld = world;
             newBarbareButton.GetComponent<DevPanelBarbareClanInteract>().devPanelBarbarian = this;
         }
     }
 
     public void OnClickSpawnBarbarianClan()
     {
-        Universe.Barbares.Spawn(1, null);
-        UpdateDisplay();
+        barbareManager.Spawn(1, null);
+        UpdateDisplay(world);
     }
 
     private void Clear()
