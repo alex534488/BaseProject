@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using System.Collections;
-using Game.Characters;
 using UnityEngine.Events;
 
 public class DemoStory : Storyline {

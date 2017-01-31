@@ -1,52 +1,50 @@
 ﻿using UnityEngine;
+using CCC.Utility;
 using System.Collections;
 
-namespace Game.Characters
+[System.Serializable]
+public class Kit : IKit
 {
-    [System.Serializable]
-    public class Kit : IKit
+    public int head = -1;
+    public int body = -1;
+    public int arms = -1;
+    public int hair = -1;
+    public SerializableColor skinColor;
+    public SerializableColor bodyColor;
+    public SerializableColor hairColor;
+
+    public Sprite Head()
     {
-        public Sprite head;
-        public Sprite body;
-        public Sprite arms;
-        public Sprite hair;
-        public Color skinColor;
-        public Color bodyColor;
-        public Color hairColor;
+        return SpriteBank.GetSprite(head);
+    }
 
-        public Sprite Head()
-        {
-            return head;
-        }
+    public Sprite Body()
+    {
+        return SpriteBank.GetSprite(body);
+    }
 
-        public Sprite Body()
-        {
-            return body;
-        }
+    public Sprite Arms()
+    {
+        return SpriteBank.GetSprite(arms);
+    }
 
-        public Sprite Arms()
-        {
-            return arms;
-        }
+    public Sprite Hair()
+    {
+        return SpriteBank.GetSprite(hair);
+    }
 
-        public Sprite Hair()
-        {
-            return hair;
-        }
+    public Color SkinColor()
+    {
+        return skinColor;
+    }
 
-        public Color SkinColor()
-        {
-            return skinColor;
-        }
+    public Color HairColor()
+    {
+        return hairColor;
+    }
 
-        public Color HairColor()
-        {
-            return hairColor;
-        }
-
-        public Color BodyColor()
-        {
-            return bodyColor;
-        }
+    public Color BodyColor()
+    {
+        return bodyColor;
     }
 }

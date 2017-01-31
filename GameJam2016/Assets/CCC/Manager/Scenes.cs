@@ -26,6 +26,7 @@ namespace CCC.Manager
         {
             base.Init();
             SceneManager.sceneLoaded += OnSceneLoading;
+            CompleteInit();
         }
 
         #region Load/Unload Methods

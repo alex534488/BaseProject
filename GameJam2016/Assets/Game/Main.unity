@@ -1277,8 +1277,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce29cb859d78b634c9d7b447327d88d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  save:
-    a: 0
 --- !u!114 &389383153
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3699,7 +3697,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   storylinePrefabs:
-  - {fileID: 0}
+  - {fileID: 114000010350179418, guid: e278a318dd9402b49906b55f093fa889, type: 2}
 --- !u!114 &1418466813
 MonoBehaviour:
   m_ObjectHideFlags: 0

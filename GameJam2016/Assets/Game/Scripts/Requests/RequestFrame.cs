@@ -3,7 +3,6 @@ using UnityEngine.Events;
 using System.Collections;
 using System.Collections.Generic;
 using System;
-using Game.Characters;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -31,7 +30,7 @@ public class RequestFrame : ScriptableObject
     //      source = null
     //      destination = capitale
 
-    public Request Build(Village source, Village destination, int value = 1, ResourceType type = ResourceType.custom, UnityAction[] callbacks = null)
+    public Request Build(Village source, Village destination, int value = 1, ResourceType type = ResourceType.custom, Command[] commands = null)
     {
         this.source = source;
         this.destination = destination;
@@ -60,17 +59,12 @@ public class RequestFrame : ScriptableObject
                     }
 
                 //Determine s'il y a un callback a faire
-                UnityAction callback = null;
-                if (callbacks != null && callbacks.Length > currentChoice)
-                    callback = callbacks[currentChoice];
+                Command command = null;
+                if (commands != null && commands.Length > currentChoice)
+                    command = commands[currentChoice];
 
                 //Construit le choix
-                Choice choiceTempo = new Choice(Filter(choice.text, source, destination, value),
-                delegate ()
-                {
-                    if (callback != null) callback();
-                    if (choice.customCallBack != null) choice.customCallBack();
-                }, choice.transactions);
+                Choice choiceTempo = new Choice(Filter(choice.text, source, destination, value), command, choice.transactions);
 
                 //Ajoute la copie de choix a la liste temporaire
                 choicesTempo.Add(choiceTempo);
@@ -294,7 +288,7 @@ public class RequestFrame : ScriptableObject
                     choices.Add(                                                                                                          //Premier choix
                         new Choice(
                             "Premier choix: Vendre la poule",                                                                                   //Message
-                            delegate { Debug.Log("Ceci est un custom callback, utile quand on veut faire des actions unique custom. "); },       //Custom callback
+                            new Command(CommandType.Print, "Hello, ceci sera print si le joueur choisi la première option"),                     //Custom callback
                             choixUnTrans                                                                                                        //Transactions
                             )
                         );

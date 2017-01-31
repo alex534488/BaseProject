@@ -15,6 +15,7 @@ public class DialogIcon
 
 public class Dialog : MonoBehaviour
 {
+    [System.Serializable]
     public class Message
     {
         public string text;

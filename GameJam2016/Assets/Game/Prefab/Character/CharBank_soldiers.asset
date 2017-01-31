@@ -15,24 +15,14 @@ MonoBehaviour:
   subBanks: []
   tempBankObj: {fileID: 0}
   tempCustomKitObj: {fileID: 0}
-  cheveux:
-  - {fileID: 21300000, guid: 87053452aea3ce14898e0fa388f99cca, type: 3}
-  - {fileID: 21300000, guid: e0df9de486604d641a289c9b9c882821, type: 3}
-  - {fileID: 21300000, guid: 357b02ec62626614ba2b26c63ae378a7, type: 3}
-  - {fileID: 21300000, guid: 825be19e8a1fee94795506508d9d243d, type: 3}
-  - {fileID: 21300000, guid: a667deff2950a0a41b1808f85ce5c4ac, type: 3}
-  tetes:
-  - {fileID: 21300000, guid: 2541c13366a3bf54aa4c6520a8df9de1, type: 3}
-  - {fileID: 21300000, guid: 9b100305891d65c49a63c50b6232f21e, type: 3}
-  - {fileID: 21300000, guid: 13d6fd6a7048524458b1cd7b2a78cb7b, type: 3}
-  - {fileID: 21300000, guid: b295bcadfc8e70c4e80d6336f6b12ddb, type: 3}
+  cheveux: 0200000000000000010000000300000004000000
+  tetes: 0e000000100000000f0000000d000000
   corps:
-  - sprite: {fileID: 21300000, guid: dfc58b64cba366b40b0634c104e329ad, type: 3}
+  - sprite: 6
     range:
       min: {r: 0.397, g: 0.397, b: 0.397, a: 1}
       max: {r: 0.797, g: 0.797, b: 0.797, a: 1}
-  bras:
-  - {fileID: 21300000, guid: 849c8d2f43f9fe54b8a926ebf91960f5, type: 3}
+  bras: 0c000000
   skinRange:
     min: {r: 0.30147058, g: 0.2741135, b: 0.23496972, a: 1}
     max: {r: 0.9558824, g: 0.8395788, b: 0.30925608, a: 1}

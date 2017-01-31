@@ -11,6 +11,7 @@ public class RequestManager : MonoBehaviour
     List<Request> listRequest = new List<Request>();
     List<Request> listRandomRequest = new List<Request>();
 
+    public bool isInRequest = false;
     public UnityEvent onAllRequestsComplete = new UnityEvent();
 
     void Awake()
@@ -24,9 +25,21 @@ public class RequestManager : MonoBehaviour
         //GetRandomRequest(1);
 
         if (listRequest.Count > 0)
-            listRequest[0].DoRequest();
+            ExecuteNextRequest();
         else
             onAllRequestsComplete.Invoke();
+    }
+
+    public static void ExecuteNextRequest()
+    {
+        if (requestManager.listRequest.Count <= 0 || requestManager.isInRequest)
+        {
+            Debug.LogWarning("Cannot execute next request. Either a request is already ongoing or the request list is empty");
+            return;
+        }
+
+        requestManager.isInRequest = true;
+        requestManager.listRequest[0].DoRequest();
     }
 
     public void ArrivalDay()
@@ -36,7 +49,11 @@ public class RequestManager : MonoBehaviour
 
     public static void SendRequest(Request request)
     {
+        bool executeRequest = requestManager.listRandomRequest.Count <= 0 && !requestManager.isInRequest;
         requestManager.listRequest.Add(request);
+
+        if (executeRequest)
+            ExecuteNextRequest();
     }
 
     //void GetRandomRequest(int amount)
@@ -47,15 +64,17 @@ public class RequestManager : MonoBehaviour
     //        //GenerateRandomRequests();
     //}
 
-    public static void DoNextRequest()
+    public static void OnRequestComplete()
     {
+        //Remove request from list
         requestManager.listRequest.Remove(requestManager.listRequest[0]);
+        requestManager.isInRequest = false;
+
+        //Do next request ?
         if (requestManager.listRequest.Count <= 0)
-        {
             requestManager.onAllRequestsComplete.Invoke();
-            return;
-        }
-        requestManager.listRequest[0].DoRequest();
+        else
+            ExecuteNextRequest();
     }
 
     public static void DeleteRequest(Request request)
@@ -531,12 +550,12 @@ private Request PotionEvent3()
         return requestManager.bank.GetFrame(tag);
     }
 
-    public static bool BuildAndSendRequest(string tag, Village source, Village destination, int value = 1, ResourceType type = ResourceType.custom, UnityAction[] callbacks = null)
+    public static bool BuildAndSendRequest(string tag, Village source, Village destination, int value = 1, ResourceType type = ResourceType.custom, Command[] commands = null)
     {
         RequestFrame frame = GetRequestFrame(tag);
         if (frame == null) return false;
 
-        SendRequest(frame.Build(source, destination, value, type, callbacks));
+        SendRequest(frame.Build(source, destination, value, type, commands));
         return true;
     }
 

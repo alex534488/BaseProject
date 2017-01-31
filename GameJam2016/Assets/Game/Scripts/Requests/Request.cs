@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.Events;
-using Game.Characters;
 
 
 [System.Serializable]
@@ -143,34 +142,33 @@ public class Transaction
     }
 }
 
-[System.Serializable]
-public class Condition
-{
-    System.Func<bool> condition = null;
-    public Condition(System.Func<bool> condition)
-    {
-        this.condition = condition;
-    }
+//public class Condition
+//{
+//    System.Func<bool> condition = null;
+//    public Condition(System.Func<bool> condition)
+//    {
+//        this.condition = condition;
+//    }
 
-    public static implicit operator bool (Condition condition)
-    {
-        if (condition.condition == null) return true;
-        return condition.condition();
-    }
-}
+//    public static implicit operator bool (Condition condition)
+//    {
+//        if (condition.condition == null) return true;
+//        return condition.condition();
+//    }
+//}
 [System.Serializable]
 public class Choice
 {
     public string text = "";
-    public UnityAction customCallBack = null;
+    public Command command = null;
     public List<Transaction> transactions;
 
     public Choice() { }
-    public Choice(string text, UnityAction callback = null, List<Transaction> transactions = null)
+    public Choice(string text, Command command = null, List<Transaction> transactions = null)
     {
         this.text = text;
         this.transactions = transactions;
-        customCallBack = callback;
+        this.command = command;
     }
 
     public void Choose()
@@ -178,16 +176,16 @@ public class Choice
         if (transactions != null)
             foreach (Transaction transaction in transactions) transaction.Execute();
 
-        if (customCallBack != null) customCallBack();
+        if (command != null) command.Execute();
     }
 }
 
+[System.Serializable]
 public class Request
 {
     public Dialog.Message message;
     List<Choice> choix = new List<Choice>();
 
-    public Condition condition = null;
     public int delay;
     IKit characterKit = null;
 
@@ -328,8 +326,7 @@ public class Request
 
     public void DoRequest()
     {
-        if (condition != null && !condition) Complete(); //Si la condition n'est pas remplie, ne fait pas la request
-        else CharacterEnter.Enter(OnCharacterEnter, characterKit);
+        CharacterEnter.Enter(OnCharacterEnter, characterKit);
     }
 
     void OnCharacterEnter()
@@ -346,6 +343,6 @@ public class Request
     }
     void Complete()
     {
-        RequestManager.DoNextRequest();
+        RequestManager.OnRequestComplete();
     }
 }

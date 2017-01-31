@@ -14,5 +14,7 @@ MonoBehaviour:
   requests:
   - frame: {fileID: 11400000, guid: 05a1b7e82db3fb54381cf2e132dfff5a, type: 2}
     weight: 1
+  - frame: {fileID: 11400000, guid: ad4758d31c2a0cd41b2489d8be4bf6d8, type: 2}
+    weight: 1
   - frame: {fileID: 11400000, guid: 2c13853aa1c682441bb066e43326beb8, type: 2}
     weight: 1

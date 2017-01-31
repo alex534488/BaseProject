@@ -72,4 +72,12 @@ public abstract class Storyline : MonoBehaviour, INewDay {
     {
 
     }
+
+    /// <summary>
+    /// Fait progresser la storyline, selon un choix de 0 à 2
+    /// </summary>
+    public void Progress(int choice)
+    {
+        storyGraph.Progress(choice);
+    }
 }

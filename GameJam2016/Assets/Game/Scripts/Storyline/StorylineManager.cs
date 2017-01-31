@@ -21,11 +21,29 @@ public class StorylineManager : Singleton<StorylineManager>, INewDay
         }
     }
 
-    Storyline GetStoryline<T>() where T : Storyline
+    T GetStoryline<T>() where T : Storyline
     {
         foreach (Storyline storyline in storylinePrefabs)
         {
             if (storyline is T)
+                return storyline as T;
+        }
+        Debug.LogWarning("Cannot find storyline of type: " + typeof(T).ToString());
+        return null;
+    }
+
+    static public T GetOngoing<T>() where T : Storyline
+    {
+        return GetOngoing(typeof(T)) as T;
+    }
+
+    static public Storyline GetOngoing(System.Type type)
+    {
+        if (instance == null || instance.ongoing == null)
+            return null;
+        foreach (Storyline storyline in instance.ongoing)
+        {
+            if (storyline.GetType() == type)
                 return storyline;
         }
         return null;
@@ -150,6 +168,7 @@ public class StorylineManager : Singleton<StorylineManager>, INewDay
         storyline.Terminate();
         instance.ongoing.Remove(storyline);
         Destroy(storyline.gameObject);
+        print("terminate");
     }
 
     /// <summary>
@@ -192,14 +211,7 @@ public class StorylineManager : Singleton<StorylineManager>, INewDay
 
     static bool IsOngoing(System.Type type)
     {
-        if (instance == null || instance.ongoing == null)
-            return false;
-        foreach (Storyline storyline in instance.ongoing)
-        {
-            if (storyline.GetType() == type)
-                return true;
-        }
-        return false;
+        return GetOngoing(type) != null;
     }
 
     /// <summary>

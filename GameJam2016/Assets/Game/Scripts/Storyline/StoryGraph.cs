@@ -47,29 +47,22 @@ public class StoryGraph : ScriptableObject, INewDay
             //Build request
             if (request != null)
             {
-                UnityAction[] callbacks =
+                string className = graph.controller.GetType().ToString();
+
+                Command[] commands =
                 {
-                    delegate()
-                    {
-                        OnChoose(0);
-                    },
-                    delegate()
-                    {
-                        OnChoose(1);
-                    },
-                    delegate()
-                    {
-                        OnChoose(2);
-                    }
+                    Command.ProgressStoryline(className, "0"),
+                    Command.ProgressStoryline(className, "1"),
+                    Command.ProgressStoryline(className, "2")
                 };
-                Request rq = request.Build(source, destination, value, type, callbacks);
+                Request rq = request.Build(source, destination, value, type, commands);
                 MethodInfo characterGetter = graph.controller.GetType().GetMethod(id + "_Character");
                 if (characterGetter != null)
                 {
-                    Game.Characters.IKit kit = null;
+                    IKit kit = null;
                     object[] parameter = { kit };
                     characterGetter.Invoke(graph.controller, parameter);
-                    kit = parameter[0] as Game.Characters.IKit;
+                    kit = parameter[0] as IKit;
                     rq.SetCharacterKit(kit);
                 }
                 RequestManager.SendRequest(rq);
@@ -259,5 +252,15 @@ public class StoryGraph : ScriptableObject, INewDay
         //Il ne sont pas parenté
         parent = null;
         childrenIndex = -1;
+    }
+
+    public void Progress(int choice)
+    {
+        if(currentNode == null)
+        {
+            Debug.Log("Cannot progress into storyline, current node is null");
+            return;
+        }
+        currentNode.OnChoose(choice);
     }
 }
