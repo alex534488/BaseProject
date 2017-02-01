@@ -30,6 +30,7 @@ public class DayManager : MonoBehaviour
     private UnityEvent onNewDay = new UnityEvent();                 // Début du jour
     private UnityEvent onArrival = new UnityEvent();                // Arrivé du joueur dans le jour
     private UnityEvent onInit = new UnityEvent();                   // Dès que le DayManager initialize le monde
+    private bool isInDayTransition = false;
     static public UnityEvent OnNewDayTransition
     {
         get { return main != null ? main.onNewDayTransition : null; }
@@ -42,6 +43,7 @@ public class DayManager : MonoBehaviour
     {
         get { return main != null ? main.onArrival : null; }
     }
+    static public bool IsTransitionningToNewDay { get { return main.isInDayTransition; } }
     static public void SyncToUniverseInit (UnityAction action)
     {
         if (main == null)
@@ -71,9 +73,16 @@ public class DayManager : MonoBehaviour
     public void Init(GameSave save = null)
     {
         if (save != null)
-            universe = new Universe(save.world, save.history);
+        {
+            universe = new Universe(save.currentWorld, save.history);
+            RequestManager.ApplyMailBox(save.currentMailBox);
+        }
         else
+        {
             universe = new Universe();
+
+            universe.history.RecordDay();
+        }
 
         onInit.Invoke();
     }
@@ -90,6 +99,7 @@ public class DayManager : MonoBehaviour
 
     public void OnNextDayClick()
     {
+        isInDayTransition = true;
         onNewDayTransition.Invoke();
 
         DayOfTime.Night();
@@ -99,8 +109,10 @@ public class DayManager : MonoBehaviour
         }, 1);
     }
 
+    //Est appelé lorsque le joueur entre dans une partie (loadé ou nouvelle)
     public void ArrivalDay()
     {
+        isInDayTransition = false;
         DayOfTime.Day(0);
 
         universe.ArrivalDay();
@@ -114,12 +126,15 @@ public class DayManager : MonoBehaviour
     /// </summary>
     public void NewDay()
     {
+        isInDayTransition = false;
         DayOfTime.Day(0);
 
         // Update l'univers
         universe.NewDay();
         storylineManager.NewDay();
         requestManager.NewDay();
+
+        universe.history.RecordDay();
 
         //C'est important de laisser le 'onNewDay' apres les 'core components'
         onNewDay.Invoke();

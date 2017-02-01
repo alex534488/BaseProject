@@ -43,7 +43,7 @@ public class DevPanel : MonoBehaviour
 
     public void NextDay()
     {
-        World world = Universe.History.ViewPast(-(currentDay + 1));
+        World world = Universe.History.ViewPastWorld(-(currentDay + 1));
         if (world != null)
         {
             currentDay++;
@@ -53,7 +53,7 @@ public class DevPanel : MonoBehaviour
 
     public void PreviousDay()
     {
-        World world = Universe.History.ViewPast(-(currentDay - 1));
+        World world = Universe.History.ViewPastWorld(-(currentDay - 1));
         if (world != null)
         {
             currentDay--;
@@ -107,8 +107,8 @@ public class DevPanel : MonoBehaviour
 
     void CheckDayButtons()
     {
-        previousDay.interactable = Universe.History.ViewPast(-(currentDay - 1)) != null;
-        nextDay.interactable = Universe.History.ViewPast(-(currentDay + 1)) != null;
+        previousDay.interactable = Universe.History.ViewPastWorld(-(currentDay - 1)) != null;
+        nextDay.interactable = Universe.History.ViewPastWorld(-(currentDay + 1)) != null;
     }
 
     void ErrorNullWorld()

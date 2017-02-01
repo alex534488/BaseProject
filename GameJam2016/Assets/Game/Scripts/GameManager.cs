@@ -72,7 +72,7 @@ public class GameManager : BaseManager
         }
 
         Universe universe = DayManager.main.Universe;
-        GameSave save = new GameSave(currentGameName, universe.world, universe.history);
+        GameSave save = new GameSave(currentGameName, universe.world, universe.history, RequestManager.GetMailBox);
 
         GameSave.Save(save);
 

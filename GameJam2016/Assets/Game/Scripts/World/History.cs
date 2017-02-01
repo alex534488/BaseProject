@@ -6,32 +6,66 @@ using CCC.Utility;
 [System.Serializable]
 public class History
 {
-    private int worldCountLimit = 3;
-    List<World> worlds = new List<World>();
-
-    public void RecordDay(World world)
+    [System.Serializable]
+    public class HistoryDay
     {
-        if (worlds.Count >= worldCountLimit)
-            worlds.RemoveAt(0);
+        public World world;
+        public RequestManager.MailBox mailBox;
+        public HistoryDay(World world, RequestManager.MailBox mailBox)
+        {
+            this.world = world;
+            this.mailBox = mailBox;
+        }
+    }
 
-        worlds.Add(ObjectCopier.Clone(world));
+    private int recordsCountLimit = 3;
+    List<HistoryDay> past = new List<HistoryDay>();
+
+    public void RecordDay()
+    {
+        RequestManager.MailBox mailBoxClone = ObjectCopier.Clone(RequestManager.GetMailBox);
+        World worldClone = ObjectCopier.Clone(Universe.World);
+        HistoryDay day = new HistoryDay(worldClone, mailBoxClone);
+
+        if (past.Count >= recordsCountLimit)
+            past.RemoveAt(0);
+
+        past.Add(day);
     }
 
     public void LoadPast(int days)
     {
-        World world = ViewPast(days);
+        if (past.Count <= 0)
+            throw new System.Exception("Cannot load past because there are no recorded days");
 
-        if (world != null)
-            Universe.instance.SetWorldTo(world);
+        HistoryDay newDay = past[past.Count - 1];
+        past.RemoveAt(past.Count - 1);
+
+        for (int i = 0; i < days; i++)
+        {
+            if (past.Count <= 0)
+                break;
+            newDay = past[past.Count - 1];
+            past.RemoveAt(past.Count - 1);
+        }
+
+        if (newDay != null)
+        {
+            Universe.instance.SetWorldTo(newDay.world);
+            RequestManager.ApplyMailBox(newDay.mailBox);
+            RecordDay();
+        }
+        else
+            Debug.LogError("Error loading past");
     }
 
-    public World ViewPast(int days)
+    public World ViewPastWorld(int days)
     {
-        if (days >= worlds.Count || days < 0)
+        if (days >= past.Count || days < 0)
             return null;
 
-        int index = (worlds.Count - 1) - days;
+        int index = (past.Count - 1) - days;
 
-        return worlds[index];
+        return past[index].world;
     }
 }

@@ -35,13 +35,11 @@ public class Universe : INewDay {
         else
         {
             history = new History();
-            history.RecordDay(world); // premier enregistrement
         }
 	}
 
     public void ArrivalDay()
     {
-
     }
 
     public void SetWorldTo(World world)
@@ -53,7 +51,6 @@ public class Universe : INewDay {
     public void NewDay()
     {
         world.NewDay();
-        history.RecordDay(world); //Enregistre le DÉBUT de la journée
     }
 
     static public Empire Empire

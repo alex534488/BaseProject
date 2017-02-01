@@ -57,7 +57,9 @@ public class RequestManager : Singleton<RequestManager>
     }
 
     public RequestBank bank;
+    [System.NonSerialized]
     private MailBox mailBox = new MailBox();
+    static public MailBox GetMailBox { get { return instance.mailBox; } }
 
     public bool isRequesting = false;
     static public bool IsRequesting { get { return instance.isRequesting; } }
@@ -81,6 +83,15 @@ public class RequestManager : Singleton<RequestManager>
         }
     }
 
+    static public void ApplyMailBox(MailBox mailBox)
+    {
+        //TODO
+        instance.mailBox = mailBox;
+
+        if (!instance.isRequesting && instance.mailBox.pendingMail.Count > 0 && !DayManager.IsTransitionningToNewDay)
+            ExecuteNextRequest();
+    }
+
     public static void ExecuteNextRequest()
     {
         if (instance.mailBox.pendingMail.Count <= 0)
@@ -94,7 +105,6 @@ public class RequestManager : Singleton<RequestManager>
 
         if (!wasInRequest)
         {
-            print("begin requests");
             instance.onBeginRequests.Invoke();
         }
 
@@ -119,7 +129,6 @@ public class RequestManager : Singleton<RequestManager>
         {
             instance.isRequesting = false;
             instance.onCompleteRequests.Invoke();
-            print("completed all requests for today");
         }
     }
 
@@ -132,7 +141,7 @@ public class RequestManager : Singleton<RequestManager>
     {
         instance.mailBox.AddMail(new RequestPacket(request, delay, priority));
 
-        if (!instance.isRequesting && instance.mailBox.pendingMail.Count > 0)
+        if (!instance.isRequesting && instance.mailBox.pendingMail.Count > 0 && !DayManager.IsTransitionningToNewDay)
             ExecuteNextRequest();
     }
 
