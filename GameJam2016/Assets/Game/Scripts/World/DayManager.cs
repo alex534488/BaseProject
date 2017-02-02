@@ -76,13 +76,14 @@ public class DayManager : MonoBehaviour
         {
             universe = new Universe(save.currentWorld, save.history);
             RequestManager.ApplyMailBox(save.currentMailBox);
+            StorylineManager.ApplySaveState(save.currentStorylines);
         }
         else
         {
             universe = new Universe();
-
             universe.history.RecordDay();
         }
+        universe.history.OnPastLoaded.AddListener(ArrivalDay);
 
         onInit.Invoke();
     }
@@ -109,7 +110,7 @@ public class DayManager : MonoBehaviour
         }, 1);
     }
 
-    //Est appelé lorsque le joueur entre dans une partie (loadé ou nouvelle)
+    //Est appelé lorsque le joueur entre dans le milieu d'une journé (chargement d'une sauvegarde, rewind dans History)
     public void ArrivalDay()
     {
         isInDayTransition = false;
@@ -117,6 +118,7 @@ public class DayManager : MonoBehaviour
 
         universe.ArrivalDay();
         requestManager.ArrivalDay();
+        storylineManager.ArrivalDay();
 
         onArrival.Invoke();
     }

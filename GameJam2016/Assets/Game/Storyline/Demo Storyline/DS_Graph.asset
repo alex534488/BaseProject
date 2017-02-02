@@ -23,7 +23,7 @@ MonoBehaviour:
     id: RAMPAGE
     request: {fileID: 11400000, guid: 12ebc43e95fdb5c49bad2bca6695ceda, type: 2}
     children: []
-  - arrivalDelay: 0
+  - arrivalDelay: 2
     id: Redemande
     request: {fileID: 11400000, guid: 999b171fcaa94ac45aa83874de8f6413, type: 2}
     children:

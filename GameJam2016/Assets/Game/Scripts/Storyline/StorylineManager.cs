@@ -5,6 +5,28 @@ using CCC.Utility;
 
 public class StorylineManager : Singleton<StorylineManager>, INewDay
 {
+    [System.Serializable]
+    public class StorylineSave
+    {
+        public System.Type classType;
+        public object savedData;
+        public StoryGraph.SaveState graphSave;
+        public StorylineSave(System.Type classType, object savedData, StoryGraph.SaveState graphSave)
+        {
+            this.graphSave = graphSave;
+            this.classType = classType;
+            this.savedData = savedData;
+        }
+    }
+    [System.Serializable]
+    public class StorylineManagerSave
+    {
+        public List<StorylineSave> saveList;
+        public StorylineManagerSave(int capacity = 1)
+        {
+            saveList = new List<StorylineSave>(capacity);
+        }
+    }
 
     public List<Storyline> storylinePrefabs = new List<Storyline>();
     List<Storyline> ongoing = new List<Storyline>();
@@ -21,6 +43,10 @@ public class StorylineManager : Singleton<StorylineManager>, INewDay
         }
     }
 
+    public void ArrivalDay()
+    {
+    }
+
     T GetStoryline<T>() where T : Storyline
     {
         foreach (Storyline storyline in storylinePrefabs)
@@ -30,6 +56,35 @@ public class StorylineManager : Singleton<StorylineManager>, INewDay
         }
         Debug.LogWarning("Cannot find storyline of type: " + typeof(T).ToString());
         return null;
+    }
+    Storyline GetStoryline(System.Type classType)
+    {
+        foreach (Storyline storyline in storylinePrefabs)
+        {
+            if (storyline.GetType() == classType)
+                return storyline;
+        }
+        Debug.LogWarning("Cannot find storyline of type: " + classType.ToString());
+        return null;
+    }
+
+    static public StorylineManagerSave GetSaveState()
+    {
+        StorylineManagerSave save = new StorylineManagerSave(instance.ongoing.Count);
+        foreach (Storyline storyline in instance.ongoing)
+        {
+            save.saveList.Add(new StorylineSave(storyline.GetType(), storyline.GetSavedData(), storyline.storyGraph.GetSaveState()));
+        }
+        return save;
+    }
+
+    static public void ApplySaveState(StorylineManagerSave save)
+    {
+        Terminate();
+        foreach (StorylineSave storylineSave in save.saveList)
+        {
+            Launch(instance.GetStoryline(storylineSave.classType), storylineSave);
+        }
     }
 
     static public T GetOngoing<T>() where T : Storyline
@@ -89,10 +144,11 @@ public class StorylineManager : Singleton<StorylineManager>, INewDay
         Launch(instance.GetStoryline<T>());
     }
 
-    static private void Launch(Storyline storyline)
+    static private void Launch(Storyline storyline, StorylineSave save = null)
     {
         if (storyline == null)
             return;
+        print("launch");
         if (IsOngoing(storyline.GetType()))
         {
             Debug.LogError("Cannot launch " + storyline.name + " storyline because one of the same type is already ongoing.");
@@ -102,7 +158,10 @@ public class StorylineManager : Singleton<StorylineManager>, INewDay
         Storyline obj = Instantiate(storyline.gameObject).GetComponent<Storyline>();
 
         instance.ongoing.Add(obj);
-        obj.Init(End);
+        if (save == null)
+            obj.Init(End, null, null);
+        else
+            obj.Init(End, save.graphSave, save.savedData);
     }
 
     /// <summary>
@@ -168,7 +227,6 @@ public class StorylineManager : Singleton<StorylineManager>, INewDay
         storyline.Terminate();
         instance.ongoing.Remove(storyline);
         Destroy(storyline.gameObject);
-        print("terminate");
     }
 
     /// <summary>

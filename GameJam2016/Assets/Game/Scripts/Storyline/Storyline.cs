@@ -51,10 +51,10 @@ public abstract class Storyline : MonoBehaviour, INewDay {
     /// <summary>
     /// Initialise et lance le 'storygraph'
     /// </summary>
-    public virtual void Init(UnityAction<Storyline> onComplete)
+    public virtual void Init(UnityAction<Storyline> onComplete, StoryGraph.SaveState graphSave, object savedData = null)
     {
         this.onComplete = onComplete;
-        if(storyGraph != null) storyGraph.Init(this, Complete);
+        if(storyGraph != null) storyGraph.Init(this, Complete, graphSave);
     }
 
     /// <summary>
@@ -66,11 +66,19 @@ public abstract class Storyline : MonoBehaviour, INewDay {
     }
 
     /// <summary>
-    /// Ne fait rien...
+    /// Appelé lors de la destruction de la storyline. On néttoie le mess qu'on a fait s'il y a lieu.
     /// </summary>
     public virtual void Terminate()
     {
 
+    }
+
+    /// <summary>
+    /// Doit retourner les donnée à sauvegarder
+    /// </summary>
+    public virtual object GetSavedData()
+    {
+        return null;
     }
 
     /// <summary>

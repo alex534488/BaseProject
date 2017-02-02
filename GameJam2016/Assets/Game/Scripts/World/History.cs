@@ -2,6 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using CCC.Utility;
+using UnityEngine.Events;
+using System.Runtime.Serialization;
 
 [System.Serializable]
 public class History
@@ -11,21 +13,30 @@ public class History
     {
         public World world;
         public RequestManager.MailBox mailBox;
-        public HistoryDay(World world, RequestManager.MailBox mailBox)
+        public StorylineManager.StorylineManagerSave storylinesSave;
+        public HistoryDay(World world, RequestManager.MailBox mailBox, StorylineManager.StorylineManagerSave storylinesSave)
         {
             this.world = world;
             this.mailBox = mailBox;
+            this.storylinesSave = storylinesSave;
         }
     }
 
-    private int recordsCountLimit = 3;
+    private int recordsCountLimit = 5;
     List<HistoryDay> past = new List<HistoryDay>();
+    [System.NonSerialized]
+    private UnityEvent onPastLoaded = new UnityEvent();
+    public UnityEvent OnPastLoaded { get { return onPastLoaded; } }
+
+    [OnDeserialized]
+    public void OnLoad(StreamingContext context)
+    {
+        onPastLoaded = new UnityEvent();
+    }
 
     public void RecordDay()
     {
-        RequestManager.MailBox mailBoxClone = ObjectCopier.Clone(RequestManager.GetMailBox);
-        World worldClone = ObjectCopier.Clone(Universe.World);
-        HistoryDay day = new HistoryDay(worldClone, mailBoxClone);
+        HistoryDay day = ObjectCopier.Clone(new HistoryDay(Universe.World, RequestManager.GetMailBox, StorylineManager.GetSaveState()));
 
         if (past.Count >= recordsCountLimit)
             past.RemoveAt(0);
@@ -39,21 +50,21 @@ public class History
             throw new System.Exception("Cannot load past because there are no recorded days");
 
         HistoryDay newDay = past[past.Count - 1];
-        past.RemoveAt(past.Count - 1);
 
         for (int i = 0; i < days; i++)
         {
             if (past.Count <= 0)
                 break;
-            newDay = past[past.Count - 1];
             past.RemoveAt(past.Count - 1);
+            newDay = past[past.Count - 1];
         }
 
         if (newDay != null)
         {
             Universe.instance.SetWorldTo(newDay.world);
             RequestManager.ApplyMailBox(newDay.mailBox);
-            RecordDay();
+            StorylineManager.ApplySaveState(newDay.storylinesSave);
+            onPastLoaded.Invoke();
         }
         else
             Debug.LogError("Error loading past");

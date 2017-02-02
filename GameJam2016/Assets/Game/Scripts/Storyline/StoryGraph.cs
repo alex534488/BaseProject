@@ -8,6 +8,22 @@ using System.Reflection;
 public class StoryGraph : ScriptableObject, INewDay
 {
     [System.Serializable]
+    public class SaveState
+    {
+        public string currentNodeId;
+        public string lastExecutedNodeId;
+        public int delay;
+        public bool isComplete;
+
+        public SaveState(string currentNodeId, string lastExecutedNodeId, int delay, bool isComplete)
+        {
+            this.currentNodeId = currentNodeId;
+            this.lastExecutedNodeId = lastExecutedNodeId;
+            this.delay = delay;
+            this.isComplete = isComplete;
+        }
+    }
+    [System.Serializable]
     public class Node
     {
         public Node() { }
@@ -105,25 +121,44 @@ public class StoryGraph : ScriptableObject, INewDay
 
     UnityAction onComplete = null;
 
-    public void Init(Object controller, UnityAction onComplete = null)
+    public void Init(Object controller, UnityAction onComplete = null, SaveState saveState = null)
     {
         this.controller = controller;
 
         if (nodes == null || nodes.Count <= 0)
+            throw new System.Exception("This story does not have any node.");
+
+        foreach (Node node in nodes)
         {
-            Debug.LogError("This story does not have any node.");
+            node.graph = this;
         }
+
+        this.onComplete = onComplete;
+
+        //Aucune sauvegarde
+        if (saveState == null)
+        {
+            BranchTo(nodes[0]);
+            isComplete = false;
+        }
+        //Avec sauvegarde
         else
         {
-            foreach (Node node in nodes)
-            {
-                node.graph = this;
-            }
-
-            BranchTo(nodes[0]);
+            currentNode = GetNode(saveState.currentNodeId);
+            lastExectuedNode = GetNode(saveState.lastExecutedNodeId);
+            isComplete = saveState.isComplete;
+            delay = saveState.delay;
         }
-        this.onComplete = onComplete;
-        isComplete = false;
+    }
+
+    public SaveState GetSaveState()
+    {
+        return new SaveState(
+            currentNode != null ? currentNode.id : "", 
+            lastExectuedNode != null ? lastExectuedNode.id : "",
+            delay,
+            isComplete
+            );
     }
 
     void Complete()
@@ -139,6 +174,7 @@ public class StoryGraph : ScriptableObject, INewDay
         if (isComplete)
             return;
 
+        Debug.Log("delay before --: " + delay);
         delay--;
 
         //Execute le noeud apres le delai
@@ -200,7 +236,7 @@ public class StoryGraph : ScriptableObject, INewDay
             return;
 
         currentNode = node;
-        delay = node.arrivalDelay;
+        this.delay = delay;
 
         if (delay == 0)
             Execute(node);
@@ -256,7 +292,7 @@ public class StoryGraph : ScriptableObject, INewDay
 
     public void Progress(int choice)
     {
-        if(currentNode == null)
+        if (currentNode == null)
         {
             Debug.Log("Cannot progress into storyline, current node is null");
             return;
