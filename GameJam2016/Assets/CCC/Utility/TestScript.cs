@@ -38,50 +38,41 @@ public class A
 [System.Serializable]
 public class TestScript : MonoBehaviour
 {
-    IKit kit = null;
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.T))
         {
             StorylineManager.Launch<DemoStory>();
-            //Universe.History.LoadPast(2);
+            print("Launching Demo storyline");
+        }
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            RequestManager.SendRequest((Request)Saves.InstantLoad(Application.persistentDataPath + "/rq.dat"), 1);
+            print("request sent. 1 day of delay");
+        }
+        if (Input.GetKeyDown(KeyCode.H))
+        {
+            //RequestManager.SendRequest((Request)Saves.InstantLoad(Application.persistentDataPath + "/rq.dat"), 1);
+            Universe.History.LoadPast(4);
+            print("Rollback 4 days");
         }
         if (Input.GetKeyDown(KeyCode.L))
         {
-            RequestManager.SendRequest((Request)Saves.InstantLoad(Application.persistentDataPath + "/rq.dat"));
-            //GameManager.LoadGame(GameManager.GetGameSaves()[0]);
+            //RequestManager.ApplyMailBox((RequestManager.MailBox)Saves.InstantLoad(Application.persistentDataPath + "/mailbox.dat"));
+            GameManager.LoadGame(GameManager.GetGameSaves()[0]);
             print("Loaded");
         }
         if (Input.GetKeyDown(KeyCode.S))
         {
-            List<Choice> choix = new List<Choice>
-            {
-                new Choice("Choix 1", new Command(CommandType.Print, "click sur choix 1")),
-                new Choice("Choix 2", new Command(CommandType.Print, "click sur choix 2")),
-                new Choice("Choix 3", new Command(CommandType.Print, "click sur choix 3")),
-            };
-            Request rq = new Request(new Dialog.Message("Texte de presentation"), choix);
-            rq.SetCharacterKit(kit);
-            Saves.InstantSave(Application.persistentDataPath + "/rq.dat", rq);
-            //GameManager.SaveCurrentGame();
+            //Saves.InstantSave(Application.persistentDataPath + "/mailbox.dat", RequestManager.GetMailBox);
+            GameManager.SaveCurrentGame();
             print("Saved");
         }
         if (Input.GetKeyDown(KeyCode.N))
         {
-            kit = CharacterBank.GetRandomKit();
-            //GameManager.NewGame();
+            GameManager.NewGame();
             print("New Game");
         }
     }
-
-    void Print1()
-    {
-        print("1");
-    }
-    void Print2()
-    {
-        print("2");
-    }
-
 }
 

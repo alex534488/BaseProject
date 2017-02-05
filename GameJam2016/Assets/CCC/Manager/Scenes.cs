@@ -49,9 +49,9 @@ namespace CCC.Manager
             SceneManager.LoadSceneAsync(name, mode);
         }
 
-        static public void Unload(string name)
+        static public void UnloadAsync(string name)
         {
-            SceneManager.UnloadScene(name);
+            SceneManager.UnloadSceneAsync(name);
         }
 
         static public bool Exists(string sceneName)

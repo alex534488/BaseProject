@@ -51,11 +51,11 @@ public class DevPanelBarbareMenu : MonoBehaviour {
     {
         Universe.Barbares.Delete(currentClan);
         devPanelBarbarian.UpdateDisplay(world);
-        Scenes.Unload("InteractBarbare");
+        Scenes.UnloadAsync("InteractBarbare");
     }
 
     public void Leave()
     {
-        Scenes.Unload("InteractBarbare");
+        Scenes.UnloadAsync("InteractBarbare");
     }
 }

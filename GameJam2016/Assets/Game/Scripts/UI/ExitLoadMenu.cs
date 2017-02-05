@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 using CCC.Manager;
 using CCC.UI;
 using UnityEngine.Events;
@@ -20,7 +19,7 @@ public class ExitLoadMenu : MonoBehaviour {
     {
         if (displayButton == null) return;
 
-        if (SceneManager.GetActiveScene().name != "Main")
+        if (!Scenes.Exists("Main"))
         {
             displayButton.interactable = false;
         }
@@ -62,14 +61,14 @@ public class ExitLoadMenu : MonoBehaviour {
             Window.Close(
                 delegate ()
                 {
-                    SceneManager.UnloadScene(SceneName);
+                    Scenes.UnloadAsync(SceneName);
                     quit = false;
                 }
             );
         }
         else
         {
-            SceneManager.UnloadScene(SceneName);
+            Scenes.UnloadAsync(SceneName);
             quit = false;
         }
 
