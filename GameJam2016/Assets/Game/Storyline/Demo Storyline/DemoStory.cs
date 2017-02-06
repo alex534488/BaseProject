@@ -57,7 +57,6 @@ public class DemoStory : Storyline
     //On enlève tous les effets, objets, etc. qui traine dans la scène en lien avec cette storyline
     public override void Terminate()
     {
-        print("terminate");
         base.Terminate();
         //Rien à détruire dans ce cas
     }
@@ -67,15 +66,20 @@ public class DemoStory : Storyline
     {
         base.NewDay();
     }
-    public void DemandeDeWeed_Character(out IKit kit)
+
+    public Request DemandeDeWeed_Arrive(Request requestToBeSent)
     {
-        //On fill les donnée 'out'
-        kit = data.mcKit;
+        requestToBeSent.choix[0].condition = new Condition(ConditionType.AlwaysTrue);
+        return requestToBeSent;
     }
 
-    public void Redemande_Character(out IKit kit)
+    public IKit DemandeDeWeed_Character()
     {
-        //On fill les donnée 'out'
-        kit = data.mcKit;
+        return data.mcKit;
+    }
+
+    public IKit Redemande_Character()
+    {
+        return data.mcKit;
     }
 }

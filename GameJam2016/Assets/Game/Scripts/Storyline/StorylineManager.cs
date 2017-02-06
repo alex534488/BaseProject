@@ -148,7 +148,6 @@ public class StorylineManager : Singleton<StorylineManager>, INewDay
     {
         if (storyline == null)
             return;
-        print("launch");
         if (IsOngoing(storyline.GetType()))
         {
             Debug.LogError("Cannot launch " + storyline.name + " storyline because one of the same type is already ongoing.");

@@ -46,7 +46,7 @@ public class StoryGraph : ScriptableObject, INewDay
             ResourceType type = ResourceType.custom;
 
             //Find method
-            MethodInfo method = graph.controller.GetType().GetMethod(id + "_Arrive");
+            MethodInfo method = graph.controller.GetType().GetMethod(id + "_FillTransaction");
 
             //Invoke method
             if (method != null)
@@ -74,13 +74,16 @@ public class StoryGraph : ScriptableObject, INewDay
                 };
                 Request rq = request.Build(source, destination, value, type, commands);
                 MethodInfo characterGetter = graph.controller.GetType().GetMethod(id + "_Character");
-                if (characterGetter != null)
+                if (characterGetter != null && characterGetter.ReturnType == typeof(IKit))
                 {
-                    IKit kit = null;
-                    object[] parameter = { kit };
-                    characterGetter.Invoke(graph.controller, parameter);
-                    kit = parameter[0] as IKit;
+                    IKit kit = (IKit)characterGetter.Invoke(graph.controller, null);
                     rq.SetCharacterKit(kit);
+                }
+                MethodInfo rqGetter = graph.controller.GetType().GetMethod(id + "_Arrive");
+                if (rqGetter != null && rqGetter.ReturnType == typeof(Request))
+                {
+                    object[] parameters = { rq };
+                    rq = (Request)rqGetter.Invoke(graph.controller, parameters);
                 }
                 RequestManager.SendRequest(rq);
             }

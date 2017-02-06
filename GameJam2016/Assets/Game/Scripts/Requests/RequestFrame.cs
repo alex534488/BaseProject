@@ -64,7 +64,7 @@ public class RequestFrame : ScriptableObject
                     command = commands[currentChoice];
 
                 //Construit le choix
-                Choice choiceTempo = new Choice(Filter(choice.text, source, destination, value), command, choice.transactions);
+                Choice choiceTempo = new Choice(Filter(choice.text, source, destination, value), choice.condition, command, choice.transactions);
 
                 //Ajoute la copie de choix a la liste temporaire
                 choicesTempo.Add(choiceTempo);
@@ -288,6 +288,7 @@ public class RequestFrame : ScriptableObject
                     choices.Add(                                                                                                          //Premier choix
                         new Choice(
                             "Premier choix: Vendre la poule",                                                                                   //Message
+                            null,                                                                                                               //Condition
                             new Command(CommandType.Print, "Hello, ceci sera print si le joueur choisi la première option"),                     //Custom callback
                             choixUnTrans                                                                                                        //Transactions
                             )
@@ -295,6 +296,7 @@ public class RequestFrame : ScriptableObject
                     choices.Add(                                                                                                          //Deuxieme choix
                         new Choice(
                             "Deuxieme choix: Garder la poule et l'engager dans un cirque.",                                                     //Message
+                            null,                                                                                                               //Condition
                             null,                                                                                                               //Custom callback
                             choixDeuxTrans                                                                                                      //Transactions
                             )
@@ -302,6 +304,7 @@ public class RequestFrame : ScriptableObject
                     choices.Add(                                                                                                          //Troisieme choix
                         new Choice(
                             "Troisieme choix: Regarder le mur.",                                                                                //Message
+                            null,                                                                                                               //Condition
                             null,                                                                                                               //Custom callback
                             choixTroisTrans                                                                                                     //Transactions
                             )

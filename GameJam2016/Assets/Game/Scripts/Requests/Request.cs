@@ -162,13 +162,20 @@ public class Choice
     public string text = "";
     public Command command = null;
     public List<Transaction> transactions;
+    public Condition condition;
 
     public Choice() { }
-    public Choice(string text, Command command = null, List<Transaction> transactions = null)
+    public Choice(string text, Condition condition, Command command = null, List<Transaction> transactions = null)
     {
         this.text = text;
         this.transactions = transactions;
         this.command = command;
+        this.condition = condition;
+    }
+
+    public bool IsAvailable()
+    {
+        return condition != null ? condition.Execute() : true;
     }
 
     public void Choose()
@@ -184,7 +191,7 @@ public class Choice
 public class Request
 {
     public Dialog.Message message;
-    List<Choice> choix = new List<Choice>();
+    public List<Choice> choix = new List<Choice>();
 
     public int delay;
     IKit characterKit = null;

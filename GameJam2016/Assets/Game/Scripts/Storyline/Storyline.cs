@@ -6,17 +6,22 @@ public class StorylineEvent: UnityEvent<Storyline> { }
 /// <summary>
 /// Optional for each node:
 /// <para></para>
-///     - Implementation of id_Arrive(out Village source, out Village destination, out int value, out Resource_Type type)
+///     - Implementation of: Request id_Arrive(Request requestToBeSent)
 ///         {
 ///             ...
 ///         }
 /// <para></para>
-///     - Implementation of id_Choose(int choice, string nextNodeId)
+///     - Implementation of: void id_FillTransaction(out Village source, out Village destination, out int value, out Resource_Type type)
 ///         {
 ///             ...
 ///         }
 /// <para></para>
-///     - Implementation of id_Character(out Game.Characters.IKit kit)
+///     - Implementation of: void id_Choose(int choice, string nextNodeId)
+///         {
+///             ...
+///         }
+/// <para></para>
+///     - Implementation of: IKit id_Character()
 ///         {
 ///             ...
 ///         }
