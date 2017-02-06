@@ -38,6 +38,8 @@ public class A
 [System.Serializable]
 public class TestScript : MonoBehaviour
 {
+    Stat<int> stat = new Stat<int>(5);
+
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.T))
@@ -52,19 +54,16 @@ public class TestScript : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.H))
         {
-            //RequestManager.SendRequest((Request)Saves.InstantLoad(Application.persistentDataPath + "/rq.dat"), 1);
             Universe.History.LoadPast(4);
             print("Rollback 4 days");
         }
         if (Input.GetKeyDown(KeyCode.L))
         {
-            //RequestManager.ApplyMailBox((RequestManager.MailBox)Saves.InstantLoad(Application.persistentDataPath + "/mailbox.dat"));
             GameManager.LoadGame(GameManager.GetGameSaves()[0]);
             print("Loaded");
         }
         if (Input.GetKeyDown(KeyCode.S))
         {
-            //Saves.InstantSave(Application.persistentDataPath + "/mailbox.dat", RequestManager.GetMailBox);
             GameManager.SaveCurrentGame();
             print("Saved");
         }
