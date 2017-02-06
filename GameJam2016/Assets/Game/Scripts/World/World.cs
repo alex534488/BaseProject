@@ -9,7 +9,6 @@ public class World : INewDay {
     private int currentDay = 1;
     public int CurrentDay { get { return currentDay; } }
     public Empire empire;
-    [System.NonSerialized] //Temporaire
     public BarbareManager barbareManager;
     public Map map;
 
@@ -21,15 +20,10 @@ public class World : INewDay {
 
         // Creation des barbares
         barbareManager = new BarbareManager();
+        barbareManager.Init();
 
         // Creation de l'empire
         empire = new Empire();
-    }
-
-    [OnDeserialized]
-    public void OnLoad(StreamingContext context)
-    {
-        barbareManager = new BarbareManager(); //Temporaire
     }
 
     public void NewDay()
