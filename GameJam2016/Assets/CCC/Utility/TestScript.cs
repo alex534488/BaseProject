@@ -10,63 +10,69 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
 using System;
 
-[System.Serializable]
-public class B : A
+public class Fonction
 {
-    public int b = 0;
-    public B(int a, int b) : base(a)
+    public static void TestFonction()
     {
-        this.b = b;
+        Debug.Log("1");
+
     }
 }
+
 [System.Serializable]
 public class A
 {
-    public int a = 0;
-    public A(int a)
+    int number = 5;
+    public UnityAction a = null;
+    public A(UnityAction a)
     {
         this.a = a;
     }
+
+    public void Exectute()
+    {
+        a();
+    }
 }
 
+[System.Serializable]
 public class TestScript : MonoBehaviour
 {
-    public A save;
-
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.T))
         {
+            StorylineManager.Launch<DemoStory>();
+            print("Launching Demo storyline");
+        }
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            RequestManager.SendRequest((Request)Saves.InstantLoad(Application.persistentDataPath + "/rq.dat"), 1);
+            print("request sent. 1 day of delay");
+        }
+        if (Input.GetKeyDown(KeyCode.H))
+        {
+            //RequestManager.SendRequest((Request)Saves.InstantLoad(Application.persistentDataPath + "/rq.dat"), 1);
+            Universe.History.LoadPast(4);
+            print("Rollback 4 days");
+        }
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            //RequestManager.ApplyMailBox((RequestManager.MailBox)Saves.InstantLoad(Application.persistentDataPath + "/mailbox.dat"));
             GameManager.LoadGame(GameManager.GetGameSaves()[0]);
+            print("Loaded");
         }
         if (Input.GetKeyDown(KeyCode.S))
         {
+            //Saves.InstantSave(Application.persistentDataPath + "/mailbox.dat", RequestManager.GetMailBox);
             GameManager.SaveCurrentGame();
+            print("Saved");
         }
         if (Input.GetKeyDown(KeyCode.N))
         {
             GameManager.NewGame();
+            print("New Game");
         }
     }
-    void LocalSave()
-    {
-        BinaryFormatter bf = new BinaryFormatter();
-        FileStream file = File.Open(GameSave.GetGameFilePath() + "test.dat", FileMode.OpenOrCreate);
-        bf.Serialize(file, Universe.World);
-        file.Close();
-        OnSaveComplete();
-    }
-
-    void OnSaveComplete()
-    {
-        print("saved");
-    }
-    void OnLoadComplete(object graph)
-    {
-        save = (A)graph;
-        print("loaded");
-        print(save.GetType() + "" + ((B)save).b);
-    }
-
 }
 

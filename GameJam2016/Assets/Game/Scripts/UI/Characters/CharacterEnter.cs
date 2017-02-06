@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.Events;
-using Game.Characters;
 
 public class CharacterEnter : MonoBehaviour {
     public Transform spawn;

@@ -44,7 +44,7 @@ public class SavedGameDisplay : MonoBehaviour {
         {
             GameObject newGameSaveButton = Instantiate(buttonPrefab);
             newGameSaveButton.name = "" + i;
-            newGameSaveButton.transform.GetComponentInChildren<Text>().text = "Gamesave : " + i + " | Day " + listGameSaves[i].world.CurrentDay;
+            newGameSaveButton.transform.GetComponentInChildren<Text>().text = "Gamesave : " + i + " | Day " + listGameSaves[i].currentWorld.CurrentDay;
             newGameSaveButton.transform.SetParent(container.transform);
         }
     }

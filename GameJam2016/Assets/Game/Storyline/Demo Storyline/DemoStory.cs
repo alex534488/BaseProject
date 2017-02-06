@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
-using Game.Characters;
 using UnityEngine.Events;
 
-public class DemoStory : Storyline {
+public class DemoStory : Storyline
+{
 
     /// <summary>
     /// Histoire:
@@ -21,13 +21,36 @@ public class DemoStory : Storyline {
     ///     - Comment faire persister un même personnage à travers plusieurs request
     /// </summary>
 
-    IKit mcKit;
+    //C'est très important de mettre les données en 'System.Serializable'
+    [System.Serializable]
+    public class Data
+    {
+        public IKit mcKit;
+    }
+
+    Data data;
 
     //Sera appelé au lancement de la storyline
-    public override void Init(UnityAction<Storyline> onComplete)
+    public override void Init(UnityAction<Storyline> onComplete, StoryGraph.SaveState graphSave, object savedData)
     {
-        mcKit = CharacterBank.GetKit(CharacterBank.StandardTags.Beggar);
-        base.Init(onComplete);
+        //Avec sauvegarde
+        if (savedData != null)
+        {
+            data = savedData as Data;
+        }
+        //Sans sauvegarde
+        else
+        {
+            data = new Data();
+            data.mcKit = CharacterBank.GetRandomKit(); //CharacterBank.GetKit(CharacterBank.StandardTags.Beggar);
+        }
+
+        base.Init(onComplete, graphSave);
+    }
+
+    public override object GetSavedData()
+    {
+        return data;
     }
 
     //Sera appelé quand la storyline se termine (est détruite de la scène)
@@ -43,15 +66,20 @@ public class DemoStory : Storyline {
     {
         base.NewDay();
     }
-    public void DemandeDeWeed_Character(out IKit kit)
+
+    public Request DemandeDeWeed_Arrive(Request requestToBeSent)
     {
-        //On fill les donnée 'out'
-        kit = mcKit;
+        requestToBeSent.choix[0].condition = new Condition(ConditionType.AlwaysTrue);
+        return requestToBeSent;
     }
 
-    public void Redemande_Character(out IKit kit)
+    public IKit DemandeDeWeed_Character()
     {
-        //On fill les donnée 'out'
-        kit = mcKit;
+        return data.mcKit;
+    }
+
+    public IKit Redemande_Character()
+    {
+        return data.mcKit;
     }
 }

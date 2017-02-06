@@ -2,36 +2,81 @@
 using System.Collections;
 using System.Collections.Generic;
 using CCC.Utility;
+using UnityEngine.Events;
+using System.Runtime.Serialization;
 
 [System.Serializable]
 public class History
 {
-    private int worldCountLimit = 2;
-    List<World> worlds = new List<World>();
-
-    public void RecordDay(World world)
+    [System.Serializable]
+    public class HistoryDay
     {
-        if (worlds.Count >= worldCountLimit)
-            worlds.RemoveAt(0);
+        public World world;
+        public RequestManager.MailBox mailBox;
+        public StorylineManager.StorylineManagerSave storylinesSave;
+        public HistoryDay(World world, RequestManager.MailBox mailBox, StorylineManager.StorylineManagerSave storylinesSave)
+        {
+            this.world = world;
+            this.mailBox = mailBox;
+            this.storylinesSave = storylinesSave;
+        }
+    }
 
-        worlds.Add(ObjectCopier.Clone(world));
+    private int recordsCountLimit = 5;
+    List<HistoryDay> past = new List<HistoryDay>();
+    [System.NonSerialized]
+    private UnityEvent onPastLoaded = new UnityEvent();
+    public UnityEvent OnPastLoaded { get { return onPastLoaded; } }
+
+    [OnDeserialized]
+    public void OnLoad(StreamingContext context)
+    {
+        onPastLoaded = new UnityEvent();
+    }
+
+    public void RecordDay()
+    {
+        HistoryDay day = ObjectCopier.Clone(new HistoryDay(Universe.World, RequestManager.GetMailBox, StorylineManager.GetSaveState()));
+
+        if (past.Count >= recordsCountLimit)
+            past.RemoveAt(0);
+
+        past.Add(day);
     }
 
     public void LoadPast(int days)
     {
-        World world = ViewPast(days);
+        if (past.Count <= 0)
+            throw new System.Exception("Cannot load past because there are no recorded days");
 
-        if (world != null)
-            Universe.instance.SetWorldTo(world);
+        HistoryDay newDay = past[past.Count - 1];
+
+        for (int i = 0; i < days; i++)
+        {
+            if (past.Count <= 0)
+                break;
+            past.RemoveAt(past.Count - 1);
+            newDay = past[past.Count - 1];
+        }
+
+        if (newDay != null)
+        {
+            Universe.instance.SetWorldTo(newDay.world);
+            RequestManager.ApplyMailBox(newDay.mailBox);
+            StorylineManager.ApplySaveState(newDay.storylinesSave);
+            onPastLoaded.Invoke();
+        }
+        else
+            Debug.LogError("Error loading past");
     }
 
-    public World ViewPast(int days)
+    public World ViewPastWorld(int days)
     {
-        if (days >= worlds.Count || days < 0)
+        if (days >= past.Count || days < 0)
             return null;
 
-        int index = (worlds.Count - 1) - days;
+        int index = (past.Count - 1) - days;
 
-        return worlds[index];
+        return past[index].world;
     }
 }

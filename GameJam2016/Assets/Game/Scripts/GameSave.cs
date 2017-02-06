@@ -8,18 +8,23 @@ using CCC.Utility;
 public class GameSave
 {
     public string name;
-    public World world;
+    public World currentWorld;
+    public RequestManager.MailBox currentMailBox;
+    public StorylineManager.StorylineManagerSave currentStorylines;
     public History history;
 
     //public RequestManagerSave
     //public StorylineSave
     //etc.
 
-    public GameSave(string name, World world, History history)//, history, requestManagerSave, etc.
+    public GameSave(string name, World world, History history, RequestManager.MailBox mailBox,
+        StorylineManager.StorylineManagerSave storylines)
     {
         this.name = name;
-        this.world = world;
+        this.currentWorld = world;
         this.history = history;
+        this.currentMailBox = mailBox;
+        this.currentStorylines = storylines;
     }
 
     static public GameSave Load(string gameName)

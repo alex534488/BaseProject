@@ -3,7 +3,6 @@ using UnityEngine.Events;
 using System.Collections;
 using System.Collections.Generic;
 using System;
-using Game.Characters;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -18,7 +17,6 @@ public class RequestFrame : ScriptableObject
     public char forceSeparation = '%';
     public ResourceType type = ResourceType.custom;
     public List<Choice> choices = new List<Choice>(3);
-    public Condition condition = null;
     public ScriptableObject characterKit = null;
 
     [System.NonSerialized]
@@ -32,7 +30,7 @@ public class RequestFrame : ScriptableObject
     //      source = null
     //      destination = capitale
 
-    public Request Build(Village source, Village destination, int value = 1, ResourceType type = ResourceType.custom, UnityAction[] callbacks = null)
+    public Request Build(Village source, Village destination, int value = 1, ResourceType type = ResourceType.custom, Command[] commands = null)
     {
         this.source = source;
         this.destination = destination;
@@ -61,17 +59,12 @@ public class RequestFrame : ScriptableObject
                     }
 
                 //Determine s'il y a un callback a faire
-                UnityAction callback = null;
-                if (callbacks != null && callbacks.Length > currentChoice)
-                    callback = callbacks[currentChoice];
+                Command command = null;
+                if (commands != null && commands.Length > currentChoice)
+                    command = commands[currentChoice];
 
                 //Construit le choix
-                Choice choiceTempo = new Choice(Filter(choice.text, source, destination, value),
-                delegate ()
-                {
-                    if (callback != null) callback();
-                    if (choice.customCallBack != null) choice.customCallBack();
-                }, choice.transactions);
+                Choice choiceTempo = new Choice(Filter(choice.text, source, destination, value), choice.condition, command, choice.transactions);
 
                 //Ajoute la copie de choix a la liste temporaire
                 choicesTempo.Add(choiceTempo);
@@ -85,9 +78,7 @@ public class RequestFrame : ScriptableObject
 
         if (characterKit != null && characterKit is IKitMaker)
             request.SetCharacterKit((characterKit as IKitMaker).MakeKit());
-
-        request.condition = condition;
-
+        
         return request;
     }
 
@@ -276,24 +267,10 @@ public class RequestFrame : ScriptableObject
                 indexExists = false;
                 break;
             case -1:
-                condition = null;
-                if (choices != null && choices.Count > 0)
-                {
-                    foreach (Choice choice in choices)
-                    {
-                        if (choice.transactions != null && choice.transactions.Count > 0)
-                            foreach (Transaction transac in choice.transactions)
-                                transac.condition = null;
-                    }
-                }
+
                 break;
             case 0:
                 {
-                    //La requete ne se fait que si la destination a au moins 11 soldat
-                    condition = new Condition(delegate
-                    {
-                        return destination.Get(Village_ResourceType.armyPower) > 10;
-                    });
 
                     tag = "exemple_village_need_food";
                     text = "Je suis un messager venant du village de [source.name].\n\nNos citoyen sont amateur de PFK. Nous désirons donc acheter votre poule.";
@@ -311,13 +288,15 @@ public class RequestFrame : ScriptableObject
                     choices.Add(                                                                                                          //Premier choix
                         new Choice(
                             "Premier choix: Vendre la poule",                                                                                   //Message
-                            delegate { Debug.Log("Ceci est un custom callback, utile quand on veut faire des actions unique custom. "); },       //Custom callback
+                            null,                                                                                                               //Condition
+                            new Command(CommandType.Print, "Hello, ceci sera print si le joueur choisi la première option"),                     //Custom callback
                             choixUnTrans                                                                                                        //Transactions
                             )
                         );
                     choices.Add(                                                                                                          //Deuxieme choix
                         new Choice(
                             "Deuxieme choix: Garder la poule et l'engager dans un cirque.",                                                     //Message
+                            null,                                                                                                               //Condition
                             null,                                                                                                               //Custom callback
                             choixDeuxTrans                                                                                                      //Transactions
                             )
@@ -325,6 +304,7 @@ public class RequestFrame : ScriptableObject
                     choices.Add(                                                                                                          //Troisieme choix
                         new Choice(
                             "Troisieme choix: Regarder le mur.",                                                                                //Message
+                            null,                                                                                                               //Condition
                             null,                                                                                                               //Custom callback
                             choixTroisTrans                                                                                                     //Transactions
                             )

@@ -15,6 +15,7 @@ public class DialogIcon
 
 public class Dialog : MonoBehaviour
 {
+    [System.Serializable]
     public class Message
     {
         public string text;
@@ -97,8 +98,13 @@ public class Dialog : MonoBehaviour
         currentDialogBox.button.onClick.AddListener(OnBoxClick);
         //currentDialogBox.transform.position = new Vector3(Screen.width/2, Screen.height/2, 0) + screenBottomOffset;
 
-        if (messageSplit != null) foreach (string aMessage in messageSplit) queue.Add(aMessage);
-        if (listeChoix != null) foreach (Choice choix in listeChoix) queue.Add(choix);
+        if (messageSplit != null)
+            foreach (string aMessage in messageSplit)
+                queue.Add(aMessage);
+        if (listeChoix != null)
+            foreach (Choice choix in listeChoix)
+                if (choix.IsAvailable())
+                    queue.Add(choix);
 
         NextText();
     }
@@ -159,7 +165,7 @@ public class Dialog : MonoBehaviour
 
     private void OnBoxClick()
     {
-        if(currentDialogTexts.Count == 1) currentDialogTexts[0].button.OnPointerClick(null);
+        if (currentDialogTexts.Count == 1) currentDialogTexts[0].button.OnPointerClick(null);
     }
 
     private void EndItem()
@@ -173,7 +179,7 @@ public class Dialog : MonoBehaviour
         foreach (DialogText text in currentDialogTexts) text.Exit();
         currentDialogTexts.Clear();
 
-        if(currentDialogBox != null) currentDialogBox.Exit();
+        if (currentDialogBox != null) currentDialogBox.Exit();
         currentDialogBox = null;
 
         isInDialog = false;

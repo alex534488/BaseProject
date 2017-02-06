@@ -16,7 +16,7 @@ public class ExitOptionMenu : MonoBehaviour {
     {
         if (abandonButton == null) return;
 
-        if (SceneManager.GetActiveScene().name != "Main")
+        if (!Scenes.Exists("Main"))
         {
             abandonButton.interactable = false;
         } else
@@ -76,14 +76,14 @@ public class ExitOptionMenu : MonoBehaviour {
             Window.Close(
                 delegate ()
                 {
-                    SceneManager.UnloadScene(SceneName);
+                    Scenes.UnloadAsync(SceneName);
                     quit = false;
                 }
             );
         }
         else
         {
-            SceneManager.UnloadScene(SceneName);
+            Scenes.UnloadAsync(SceneName);
             quit = false;
         }
 

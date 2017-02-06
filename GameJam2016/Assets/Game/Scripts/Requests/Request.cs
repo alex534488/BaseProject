@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.Events;
-using Game.Characters;
 
 
 [System.Serializable]
@@ -20,8 +19,6 @@ public class Transaction
     public ResourceType type = ResourceType.gold;//
     public int value = 0;
     public ValueType valueType = ValueType.flat;
-    [System.NonSerialized]
-    public Condition condition = null;
     /// <summary>
     /// Used in the editor (request creation)
     /// </summary>
@@ -64,8 +61,6 @@ public class Transaction
 
     public void Execute()
     {
-        if (condition != null && !condition) return;
-
         int amount = GetFlatAmount();
 
         //Si la resource ciblé est une resource de l'empire, on fait un gain / une perte de resource ET NON un transfert
@@ -147,34 +142,40 @@ public class Transaction
     }
 }
 
-[System.Serializable]
-public class Condition
-{
-    System.Func<bool> condition = null;
-    public Condition(System.Func<bool> condition)
-    {
-        this.condition = condition;
-    }
+//public class Condition
+//{
+//    System.Func<bool> condition = null;
+//    public Condition(System.Func<bool> condition)
+//    {
+//        this.condition = condition;
+//    }
 
-    public static implicit operator bool (Condition condition)
-    {
-        if (condition.condition == null) return true;
-        return condition.condition();
-    }
-}
+//    public static implicit operator bool (Condition condition)
+//    {
+//        if (condition.condition == null) return true;
+//        return condition.condition();
+//    }
+//}
 [System.Serializable]
 public class Choice
 {
     public string text = "";
-    public UnityAction customCallBack = null;
+    public Command command = null;
     public List<Transaction> transactions;
+    public Condition condition;
 
     public Choice() { }
-    public Choice(string text, UnityAction callback = null, List<Transaction> transactions = null)
+    public Choice(string text, Condition condition, Command command = null, List<Transaction> transactions = null)
     {
         this.text = text;
         this.transactions = transactions;
-        customCallBack = callback;
+        this.command = command;
+        this.condition = condition;
+    }
+
+    public bool IsAvailable()
+    {
+        return condition != null ? condition.Execute() : true;
     }
 
     public void Choose()
@@ -182,16 +183,16 @@ public class Choice
         if (transactions != null)
             foreach (Transaction transaction in transactions) transaction.Execute();
 
-        if (customCallBack != null) customCallBack();
+        if (command != null) command.Execute();
     }
 }
 
+[System.Serializable]
 public class Request
 {
     public Dialog.Message message;
-    List<Choice> choix = new List<Choice>();
+    public List<Choice> choix = new List<Choice>();
 
-    public Condition condition = null;
     public int delay;
     IKit characterKit = null;
 
@@ -199,113 +200,6 @@ public class Request
     {
         characterKit = kit;
     }
-
-    //// REQUETE MORT
-    //public Request(Seigneur messager)
-    //{
-    //    message = new Dialog.Message("Bonjour Empereur. J'ai de mauvaises nouvelles. Le village " + messager.village.nom + " a malheureusement été détruit par une invasion barbare.");
-    //    choix.Add(new Choice("C'est malheureux en effet, mais l'Empire survivra!", delegate () { }));
-    //}
-
-    //// REQUETE D'AIDE
-    //public Request(Seigneur messager, ResourceType resource, int amount)
-    //{
-    //    switch (resource)
-    //    {
-    //        case ResourceType.gold:
-    //            message = new Dialog.Message("Le village " + messager.village.nom + " a besoin de " + amount + " pièces d'or pour combler ses manquements économiques");
-    //            choix.Add(new Choice("Chaque village de l'Empire compte! (" + amount + " Or, + Réputation)", delegate () { messager.village.AddGold(amount); Empire.instance.capitale.AddGold(-amount); messager.village.AddReputation(20); }));
-    //            choix.Add(new Choice("L'or est précieux, faites bon usage de ces quelques pièces \n(" + (amount + 1) / 2 + " Or)", delegate () { messager.village.AddGold((amount + 1) / 2); Empire.instance.capitale.AddGold(-(amount + 1) / 2); }));
-    //            choix.Add(new Choice("Les caisses sont vides pour vous! (- Réputation)", delegate () { messager.village.AddReputation(-20); }));
-    //            return;
-    //        case ResourceType.food:
-    //            message = new Dialog.Message("Le village " + messager.village.nom + " a besoin de " + amount + " Nourritures pour nourrir les soldats stationnés dans notre village.");
-    //            choix.Add(new Choice("Chaque village de l'empire compte! (-" + amount + " Nourritures, + Réputation)", delegate () { messager.village.AddFood(amount); Empire.instance.capitale.AddFood(-amount); messager.village.AddReputation(20); }));
-    //            choix.Add(new Choice("Je peux vous fournir quelques rations de Nourritures mon cher. \n(-" + (amount + 1) / 2 + " Nourriture)", delegate () { messager.village.AddFood((amount + 1) / 2); Empire.instance.capitale.AddFood(-(amount + 1) / 2); }));
-    //            choix.Add(new Choice("Rome est au bord de la famine également. (- Réputation)", delegate () { messager.village.AddReputation(-20); }));
-    //            return;
-    //        case ResourceType.army:
-    //            message = new Dialog.Message("Le village " + messager.village.nom + " a besoin de " + amount + " Soldats pour se défendre contre une invasion imminente de barbares.");
-    //            choix.Add(new Choice("Voici davantage de soldats que nécessaire ! \n(" + Mathf.CeilToInt((amount) * 1.5f) + " Soldats)", delegate () { messager.village.AddArmy(Mathf.CeilToInt((amount) * 1.5f)); Empire.instance.capitale.AddArmy(-Mathf.CeilToInt((amount) * 1.5f)); messager.village.AddReputation(20); }));
-    //            choix.Add(new Choice("Voici le nombre minimum de soldats nécessaire! (" + amount + " Soldats)", delegate () { messager.village.AddArmy(amount); Empire.instance.capitale.AddArmy(-amount); }));
-    //            choix.Add(new Choice("Les barbares sont à nos portes également.", delegate () { messager.village.AddReputation(-20); }));
-    //            return;
-    //        default:
-    //            return;
-    //    }
-    //}
-
-    //// INVESTISSEMENT
-
-    //public Request(Seigneur messager, ResourceType resource)
-    //{
-    //    int random = Mathf.CeilToInt(Random.Range(0, 3));
-
-    //    switch (resource)
-    //    {
-    //        case ResourceType.gold:
-    //            switch (random)
-    //            {
-    //                case 1:
-    //                    message = new Dialog.Message("Je représente le village " + messager.village.nom + "\n\nNotre récolte a été incroyablement abondante cette saison." + "\n\n" +
-    //                                "Nous voudrions semer davantage pour améliorer nos réserves de nourritures. \n\nPar contre, cela necessiterait de nouveaux investissements majeurs.");
-    //                    choix.Add(new Choice("Payez entièrement les frais des nouvelles semances \n(-40 Or, +2 Production Nourriture, + Réputation)", delegate () { Empire.instance.capitale.AddGold(-40); messager.village.AddReputation(20); messager.village.AddFoodProd(2); }));
-    //                    choix.Add(new Choice("Aidez les villagois à construire la mine \n(-20 Or Capitale, -20 Or Village, +2 Production Nourriture)", delegate () { Empire.instance.capitale.AddGold(-20); messager.village.AddGold(-20); messager.village.AddFoodProd(2); }));
-    //                    choix.Add(new Choice("Refusez la demande du villageois (- Réputation)", delegate () { messager.village.AddReputation(-20); }));
-    //                    return;
-    //                case 2:
-    //                    message = new Dialog.Message("Salutation votre majesté. Je viens du village " + messager.village.nom + " qui pourrait bénéficier de votre support." + "\n\n"
-    //                               + "En effet, bien que nous ne manquons de rien, nos infrastructures commencent à veillir. \n\nCertains batiments risquent de s'éffondrer ou ne sont carrément plus utilisables"
-    //                               + "Nous aimerions reconstruire quelques batiments de votre choix afin de pour pouvoir poursuivre nos activités" + "\n\n"
-    //                               + "Êtes-vous en mesure de nous apporter votre aide mon seigneur?");
-    //                    choix.Add(new Choice("Réparez toutes les fermes de votre village \n(-40 Or Capitale, -20 Or Village, +4 Production Or, + Réputation)", delegate () { Empire.instance.capitale.AddGold(-40); messager.village.AddGold(-20); messager.village.AddReputation(20); messager.village.AddGoldProd(4); }));
-    //                    choix.Add(new Choice("Réparez les exploitations minières de votre village \n(-20 Or Capitale, -20 Or Village, +2 Production Nourriture, + Réputation)", delegate () { Empire.instance.capitale.AddGold(-20); messager.village.AddGold(-20); messager.village.AddFoodProd(2); messager.village.AddReputation(20); }));
-    //                    choix.Add(new Choice("Refusez la demande de l'architecte (- Réputation)", delegate () { messager.village.AddReputation(-20); }));
-    //                    return;
-    //                default:
-    //                    message = new Dialog.Message("Je suis du village " + messager.village.nom + " et vous serez heureux d'apprendre que notre économie se porte à merveille!" + "\n\n" +
-    //                                "Je viens en tant que messager pour vous informer que nous voudrions une aide financière pour investir dans une nouvelle mine d'or.");
-    //                    choix.Add(new Choice(" Payez entièrement les frais de constructions de la mine \n(-40 Or , +4 Production Or, + Réputation)", delegate () { Empire.instance.capitale.AddGold(-40); messager.village.AddReputation(20); messager.village.AddGoldProd(4); }));
-    //                    choix.Add(new Choice(" Aidez les villagois à construire la mine \n(-20 Or Capitale, -20 Or Village, +4 Production Or)", delegate () { Empire.instance.capitale.AddGold(-20); messager.village.AddGold(-20); messager.village.AddGoldProd(4); }));
-    //                    choix.Add(new Choice(" Refusez la demande du villagois (- Réputation)", delegate () { messager.village.AddReputation(-20); }));
-    //                    return;
-    //            }
-    //        case ResourceType.food:
-    //            switch (random)
-    //            {
-    //                default:
-    //                    return;
-    //            }
-    //        case ResourceType.army:
-    //            switch (random)
-    //            {
-    //                default:
-    //                    return;
-    //            }
-    //        default:
-    //            return;
-    //    }
-    //}
-
-    //// REQUETE CHARIOT
-    //public Request(Cart carriage, int amount)
-    //{
-    //    if (amount == -1)
-    //    {
-    //        message = new Dialog.Message(" Notre empereur, la carravan qui était parti pour " + carriage.destination.nom + " est revenu vide car le village avait été détruit.");
-    //        choix.Add(new Choice("C'est vraiment dommage, l'Empire avait besoin de ces resources.", delegate () { }));
-    //    }
-    //    else if (amount == 0)
-    //    {
-    //        message = new Dialog.Message(" Notre empereur, la carravan qui était parti pour " + carriage.destination.nom + " est revenu vide car le seigneur du village a refusé de nous donner de ses ressources.");
-    //        choix.Add(new Choice("C'est vraiment dommage, l'Empire avait besoin de ces resources.", delegate () { }));
-    //    }
-    //    else
-    //    {
-    //        message = new Dialog.Message(" Notre empereur, nous sommes de retour de " + carriage.destination.nom + " et nous avons pris les ressources demandées au village soit " + amount + " de " + carriage.resource + ".");
-    //        choix.Add(new Choice("Parfait! Merci beaucoup.", delegate () { carriage.destination.AddReputation(-10); Village.Transfer(carriage.destination, carriage.provenance, carriage.resource, carriage.amount); }));
-    //    }
-    //}
 
     // REQUETE CLASSIQUE
     public Request(Dialog.Message message, List<Choice> choix)
@@ -332,8 +226,7 @@ public class Request
 
     public void DoRequest()
     {
-        if (condition != null && !condition) Complete(); //Si la condition n'est pas remplie, ne fait pas la request
-        else CharacterEnter.Enter(OnCharacterEnter, characterKit);
+        CharacterEnter.Enter(OnCharacterEnter, characterKit);
     }
 
     void OnCharacterEnter()
@@ -350,6 +243,6 @@ public class Request
     }
     void Complete()
     {
-        RequestManager.DoNextRequest();
+        RequestManager.OnRequestComplete();
     }
 }

@@ -24,13 +24,13 @@ public class MapWindow : MonoBehaviour
         {
             mapWindow.Close(delegate ()
             {
-                Scenes.Unload("Map");
+                Scenes.UnloadAsync("Map");
                 quitting = false;
             });
         }
         else
         {
-            Scenes.Unload("Map");
+            Scenes.UnloadAsync("Map");
             quitting = false;
         }
     }

@@ -8,6 +8,22 @@ using System.Reflection;
 public class StoryGraph : ScriptableObject, INewDay
 {
     [System.Serializable]
+    public class SaveState
+    {
+        public string currentNodeId;
+        public string lastExecutedNodeId;
+        public int delay;
+        public bool isComplete;
+
+        public SaveState(string currentNodeId, string lastExecutedNodeId, int delay, bool isComplete)
+        {
+            this.currentNodeId = currentNodeId;
+            this.lastExecutedNodeId = lastExecutedNodeId;
+            this.delay = delay;
+            this.isComplete = isComplete;
+        }
+    }
+    [System.Serializable]
     public class Node
     {
         public Node() { }
@@ -15,6 +31,7 @@ public class StoryGraph : ScriptableObject, INewDay
         public int arrivalDelay = 1;
         public string id = "";
         public RequestFrame request = null;
+        public float x=0, y=0;
         public List<string> children = new List<string>();
 
         [System.NonSerialized]
@@ -29,7 +46,7 @@ public class StoryGraph : ScriptableObject, INewDay
             ResourceType type = ResourceType.custom;
 
             //Find method
-            MethodInfo method = graph.controller.GetType().GetMethod(id + "_Arrive");
+            MethodInfo method = graph.controller.GetType().GetMethod(id + "_FillTransaction");
 
             //Invoke method
             if (method != null)
@@ -47,30 +64,26 @@ public class StoryGraph : ScriptableObject, INewDay
             //Build request
             if (request != null)
             {
-                UnityAction[] callbacks =
+                string className = graph.controller.GetType().ToString();
+
+                Command[] commands =
                 {
-                    delegate()
-                    {
-                        OnChoose(0);
-                    },
-                    delegate()
-                    {
-                        OnChoose(1);
-                    },
-                    delegate()
-                    {
-                        OnChoose(2);
-                    }
+                    Command.ProgressStoryline(className, "0"),
+                    Command.ProgressStoryline(className, "1"),
+                    Command.ProgressStoryline(className, "2")
                 };
-                Request rq = request.Build(source, destination, value, type, callbacks);
+                Request rq = request.Build(source, destination, value, type, commands);
                 MethodInfo characterGetter = graph.controller.GetType().GetMethod(id + "_Character");
-                if (characterGetter != null)
+                if (characterGetter != null && characterGetter.ReturnType == typeof(IKit))
                 {
-                    Game.Characters.IKit kit = null;
-                    object[] parameter = { kit };
-                    characterGetter.Invoke(graph.controller, parameter);
-                    kit = parameter[0] as Game.Characters.IKit;
+                    IKit kit = (IKit)characterGetter.Invoke(graph.controller, null);
                     rq.SetCharacterKit(kit);
+                }
+                MethodInfo rqGetter = graph.controller.GetType().GetMethod(id + "_Arrive");
+                if (rqGetter != null && rqGetter.ReturnType == typeof(Request))
+                {
+                    object[] parameters = { rq };
+                    rq = (Request)rqGetter.Invoke(graph.controller, parameters);
                 }
                 RequestManager.SendRequest(rq);
             }
@@ -86,13 +99,14 @@ public class StoryGraph : ScriptableObject, INewDay
             if (graph.currentNode == this)
             {
                 // Branche au prochain noeud s'il existe
-                if (choice < children.Count)
+                if (choice < children.Count && choice >= 0)
                 {
                     graph.BranchTo(children[choice]);
                 }
-                //S'il n'y a pas d'enfant, complete !
-                if (children.Count <= 0)
+                else
+                {
                     graph.Complete();
+                }
             }
         }
     }
@@ -112,25 +126,44 @@ public class StoryGraph : ScriptableObject, INewDay
 
     UnityAction onComplete = null;
 
-    public void Init(Object controller, UnityAction onComplete = null)
+    public void Init(Object controller, UnityAction onComplete = null, SaveState saveState = null)
     {
         this.controller = controller;
 
         if (nodes == null || nodes.Count <= 0)
+            throw new System.Exception("This story does not have any node.");
+
+        foreach (Node node in nodes)
         {
-            Debug.LogError("This story does not have any node.");
+            node.graph = this;
         }
+
+        this.onComplete = onComplete;
+
+        //Aucune sauvegarde
+        if (saveState == null)
+        {
+            BranchTo(nodes[0]);
+            isComplete = false;
+        }
+        //Avec sauvegarde
         else
         {
-            foreach (Node node in nodes)
-            {
-                node.graph = this;
-            }
-
-            BranchTo(nodes[0]);
+            currentNode = GetNode(saveState.currentNodeId);
+            lastExectuedNode = GetNode(saveState.lastExecutedNodeId);
+            isComplete = saveState.isComplete;
+            delay = saveState.delay;
         }
-        this.onComplete = onComplete;
-        isComplete = false;
+    }
+
+    public SaveState GetSaveState()
+    {
+        return new SaveState(
+            currentNode != null ? currentNode.id : "", 
+            lastExectuedNode != null ? lastExectuedNode.id : "",
+            delay,
+            isComplete
+            );
     }
 
     void Complete()
@@ -145,7 +178,7 @@ public class StoryGraph : ScriptableObject, INewDay
     {
         if (isComplete)
             return;
-
+        
         delay--;
 
         //Execute le noeud apres le delai
@@ -207,7 +240,7 @@ public class StoryGraph : ScriptableObject, INewDay
             return;
 
         currentNode = node;
-        delay = node.arrivalDelay;
+        this.delay = delay;
 
         if (delay == 0)
             Execute(node);
@@ -259,5 +292,15 @@ public class StoryGraph : ScriptableObject, INewDay
         //Il ne sont pas parenté
         parent = null;
         childrenIndex = -1;
+    }
+
+    public void Progress(int choice)
+    {
+        if (currentNode == null)
+        {
+            Debug.Log("Cannot progress into storyline, current node is null");
+            return;
+        }
+        currentNode.OnChoose(choice);
     }
 }

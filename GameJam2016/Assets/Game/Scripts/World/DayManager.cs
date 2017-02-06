@@ -13,9 +13,6 @@ public class DayManager : MonoBehaviour
     // Audio
     public AudioClip loseClip;
 
-    // Boutton du UI
-    public Button nextDayButton;
-
     // Manager et Universe
     public RequestManager requestManager;
     public StorylineManager storylineManager;
@@ -33,6 +30,7 @@ public class DayManager : MonoBehaviour
     private UnityEvent onNewDay = new UnityEvent();                 // Début du jour
     private UnityEvent onArrival = new UnityEvent();                // Arrivé du joueur dans le jour
     private UnityEvent onInit = new UnityEvent();                   // Dès que le DayManager initialize le monde
+    private bool isInDayTransition = false;
     static public UnityEvent OnNewDayTransition
     {
         get { return main != null ? main.onNewDayTransition : null; }
@@ -45,6 +43,7 @@ public class DayManager : MonoBehaviour
     {
         get { return main != null ? main.onArrival : null; }
     }
+    static public bool IsTransitionningToNewDay { get { return main.isInDayTransition; } }
     static public void SyncToUniverseInit (UnityAction action)
     {
         if (main == null)
@@ -68,21 +67,23 @@ public class DayManager : MonoBehaviour
         if (ModeManager.modeManager != null)
             currentMode = ModeManager.modeManager.GetCurrentMode();
 
-        // Initialisation du système de requête pour la première journée
-        requestManager.onAllRequestsComplete.AddListener(OnAllRequestComplete);
-
-        // Permet de passer au prochain jour
-        if (nextDayButton != null) nextDayButton.onClick.AddListener(OnNextDayClick);
-
         MainSceneFade.instance.FadeIn(OnFadeInComplete);
     }
 
     public void Init(GameSave save = null)
     {
         if (save != null)
-            universe = new Universe(save.world, save.history);
+        {
+            universe = new Universe(save.currentWorld, save.history);
+            RequestManager.ApplyMailBox(save.currentMailBox);
+            StorylineManager.ApplySaveState(save.currentStorylines);
+        }
         else
+        {
             universe = new Universe();
+            universe.history.RecordDay();
+        }
+        universe.history.OnPastLoaded.AddListener(ArrivalDay);
 
         onInit.Invoke();
     }
@@ -91,19 +92,16 @@ public class DayManager : MonoBehaviour
     {
         if (universe != null)
         {
-            onNewDayTransition.Invoke();
             ArrivalDay();
         }
         else
             Debug.LogWarning("Cannot proceed to next day because the universe is null");
     }
 
-    void OnNextDayClick()
+    public void OnNextDayClick()
     {
+        isInDayTransition = true;
         onNewDayTransition.Invoke();
-
-        // Desactive les boutons temporairement
-        if (nextDayButton != null) nextDayButton.GetComponent<Button>().interactable = false;
 
         DayOfTime.Night();
         DelayManager.CallTo(delegate ()
@@ -112,15 +110,15 @@ public class DayManager : MonoBehaviour
         }, 1);
     }
 
+    //Est appelé lorsque le joueur entre dans le milieu d'une journé (chargement d'une sauvegarde, rewind dans History)
     public void ArrivalDay()
     {
+        isInDayTransition = false;
         DayOfTime.Day(0);
-
-        // Desactive les boutons temporairement
-        if (nextDayButton != null) nextDayButton.GetComponent<Button>().interactable = true; // a changer lorsqu'on aura une requete de depart
 
         universe.ArrivalDay();
         requestManager.ArrivalDay();
+        storylineManager.ArrivalDay();
 
         onArrival.Invoke();
     }
@@ -130,22 +128,18 @@ public class DayManager : MonoBehaviour
     /// </summary>
     public void NewDay()
     {
+        isInDayTransition = false;
         DayOfTime.Day(0);
-
-        // Desactive les boutons temporairement
-        if (nextDayButton != null) nextDayButton.GetComponent<Button>().interactable = false;
 
         // Update l'univers
         universe.NewDay();
         storylineManager.NewDay();
         requestManager.NewDay();
 
-        onNewDay.Invoke();
-    }
+        universe.history.RecordDay();
 
-    private void OnAllRequestComplete()
-    {
-        if (nextDayButton != null) nextDayButton.GetComponent<Button>().interactable = true;
+        //C'est important de laisser le 'onNewDay' apres les 'core components'
+        onNewDay.Invoke();
     }
 
     /// <summary>
