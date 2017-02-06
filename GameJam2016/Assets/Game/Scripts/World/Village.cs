@@ -139,6 +139,11 @@ public class Village : INewDay
         Set(type, Get(type) + value);
     }
 
+    public void Remove(Village_ResourceType type, int value)
+    {
+        Set(type, Get(type) - value);
+    }
+
     public virtual Stat<int>.StatEvent GetOnSetEvent(Village_ResourceType type)
     {
         Stat<int> stat = GetStat(type);

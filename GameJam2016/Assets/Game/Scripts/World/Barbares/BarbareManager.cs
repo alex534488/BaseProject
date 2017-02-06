@@ -44,12 +44,6 @@ public class BarbareManager : INewDay
         Spawn(1, listSpawnPoint);
     }
 
-    [OnDeserialized]
-    public void OnLoad(StreamingContext context)
-    {
-        Debug.Log("IT WORKS");
-    }
-
     public void NewDay()
     {
         for(int i = 0; i < listClans.Count; i++)

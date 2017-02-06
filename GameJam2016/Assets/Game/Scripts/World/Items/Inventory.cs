@@ -39,6 +39,7 @@ public class Inventory : INewDay
         {
             if (inventory[i].HasBehavior())
             {
+                inventory[i].OnNewDay();
                 behaviors[i].OnNewDay();
             }
         }

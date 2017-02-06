@@ -9,4 +9,9 @@ public class EmpireModifier : MonoBehaviour {
     {
         empire.Add(resource, amount);
     }
+
+    public void DeApplyModifier(Empire empire)
+    {
+        empire.Remove(resource, amount);
+    }
 }

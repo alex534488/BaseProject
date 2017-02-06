@@ -26,6 +26,11 @@ public class Empire : INewDay
 
     private CartsManager cartManager = null;
 
+    // INVENTAIRE
+    private Inventory inventory;
+    [System.NonSerialized]
+    static private int startSlot = 2;
+
     //Events
     [System.NonSerialized]
     private Stat<int>.StatEvent onMaterialProdSet = new Stat<int>.StatEvent();
@@ -51,6 +56,7 @@ public class Empire : INewDay
         BuildCity(5);
 
         cartManager = new CartsManager(6);
+        inventory = new Inventory(this, startSlot);
 
         SetListeners();
     }
@@ -156,6 +162,11 @@ public class Empire : INewDay
         get { return cartManager; }
     }
 
+    public Inventory Inventory
+    {
+        get { return inventory; }
+    }
+
     public bool Has(Village village)
     {
         return villageList.Contains(village);
@@ -245,6 +256,11 @@ public class Empire : INewDay
     public void Add(Empire_ResourceType type, int value)
     {
         Set(type, Get(type) + value);
+    }
+
+    public void Remove(Empire_ResourceType type, int value)
+    {
+        Set(type, Get(type) - value);
     }
 
     public Stat<int>.StatEvent GetOnSetEvent(Empire_ResourceType type)

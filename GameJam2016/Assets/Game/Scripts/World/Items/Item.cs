@@ -17,12 +17,25 @@ public class Item : ScriptableObject
     [Tooltip("Description de l'item")]
     public string description = "utilite de l'item ici";
 
+    // Duree
+    [Tooltip("Duree de l'effet")]
+    public string duration = "(en nombre de jours)";
+
     // Modificateur de Stats
     public List<VillageModifier> villageModifierList;
     public List<EmpireModifier> empireModifierList;
 
     [HideInInspector]
     public string behaviorType;
+
+    private int counter = 0;
+    private Empire myEmpire;
+
+    public void OnNewDay()
+    {
+        counter++;
+        if (counter >= int.Parse(duration)) DeApply();
+    }
 
     // Obtenir le nom du batiment
     public string GetName()
@@ -33,7 +46,34 @@ public class Item : ScriptableObject
     // Applique les modifications necessaire lors de l'achat de l'item
     public void Apply(Empire empire)
     {
-        // apply the effect of this item on the empire
+        for (int i = 0; i < villageModifierList.Count; i++)
+        {
+            for(int j = 0; i < empire.VillageList.Count; i++)
+            {
+                villageModifierList[i].ApplyModifier(empire.VillageList[j]);
+            }
+        }
+        for (int i = 0; i < empireModifierList.Count; i++)
+        {
+            empireModifierList[i].ApplyModifier(empire);
+        }
+        myEmpire = empire;
+    }
+
+    // Retire les modifications necessaire lors de l'achat de l'item
+    private void DeApply()
+    {
+        for (int i = 0; i < villageModifierList.Count; i++)
+        {
+            for (int j = 0; i < myEmpire.VillageList.Count; i++)
+            {
+                villageModifierList[i].DeApplyModifier(myEmpire.VillageList[j]);
+            }
+        }
+        for (int i = 0; i < empireModifierList.Count; i++)
+        {
+            empireModifierList[i].DeApplyModifier(myEmpire);
+        }
     }
 
     public bool HasBehavior()
@@ -86,7 +126,7 @@ public class ItemEditor : Editor
         // Assignation du script
         MonoScript script = null;
         script = EditorGUILayout.ObjectField(script, typeof(MonoScript), false) as MonoScript;
-        if (script != null && script.GetClass().IsSubclassOf(typeof(BuildingBehavior)))
+        if (script != null && script.GetClass().IsSubclassOf(typeof(ItemBehavior)))
         {
             item.behaviorType = script.GetClass().AssemblyQualifiedName;
             EditorUtility.SetDirty(item);
