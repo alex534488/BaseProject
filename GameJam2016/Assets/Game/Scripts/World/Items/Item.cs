@@ -21,6 +21,10 @@ public class Item : ScriptableObject
     [Tooltip("Duree de l'effet")]
     public string duration = "(en nombre de jours)";
 
+    // Icone
+    [Tooltip("Image correspondant a l'item")]
+    public Sprite icon;
+
     // Modificateur de Stats
     public List<VillageModifier> villageModifierList;
     public List<EmpireModifier> empireModifierList;
