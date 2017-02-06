@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using CCC.Utility;
 
+[System.Serializable]
 public class BarbarianClan : INewDay
 {
     private int mapPosition;

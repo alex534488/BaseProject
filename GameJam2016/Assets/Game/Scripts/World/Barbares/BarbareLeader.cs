@@ -3,10 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using CCC.Utility;
 
-
+[System.Serializable]
 public class BarbareLeader : INewDay
 {
-    private BarbarianClan myClan;
+    protected BarbarianClan myClan;
 
     public BarbareLeader(BarbarianClan myClan)
     {
@@ -44,9 +44,9 @@ public class BarbareLeader : INewDay
 }
 
 // Exemple de classe qui heriterait de barbareleader
+[System.Serializable]
 public class BarbareLeaderTest : BarbareLeader
 {
-    private BarbarianClan myClan;
     private int armypower; // Cet exemple de leader donne un bonus de ArmyPower a son clan
 
     public BarbareLeaderTest(BarbarianClan myClan, int armypower) : base(myClan)

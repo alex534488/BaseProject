@@ -19,6 +19,10 @@ public class Building : ScriptableObject
     [Tooltip("Description du batiment")]
     public string description = "utilite du batiment ici";
 
+    // Icone
+    [Tooltip("Image correspondant au building")]
+    public Sprite icon;
+
     // Batiment de village?
     [Tooltip("Le batiment peut etre construit dans les villages")]
     public bool IsAvailableInVillage = false;

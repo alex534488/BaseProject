@@ -3,9 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using System;
 using CCC.Utility;
+using System.Runtime.Serialization;
 
+[System.Serializable]
 public class BarbareManager : INewDay
 {
+    [System.NonSerialized]
     static public int TEAM = 2;
 
     private List<BarbarianClan> listClans = new List<BarbarianClan>();
@@ -32,10 +35,13 @@ public class BarbareManager : INewDay
         listSpawnPoint.Add(0);
         listSpawnPoint.Add(7);
 
+        spawnCounter = spawnCoolDown;
+    }
+
+    public void Init()
+    {
         // Spawn un barbare pour débuter la partie
         Spawn(1, listSpawnPoint);
-
-        spawnCounter = spawnCoolDown;
     }
 
     public void NewDay()

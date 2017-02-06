@@ -10,4 +10,9 @@ public class VillageModifier {
     {
         village.Add(resource, amount);
     }
+
+    public void DeApplyModifier(Village village)
+    {
+        village.Remove(resource, amount);
+    }
 }
