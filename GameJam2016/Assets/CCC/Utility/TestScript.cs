@@ -40,38 +40,9 @@ public class TestScript : MonoBehaviour
 {
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.T))
+        if (Input.GetKeyDown(KeyCode.A))
         {
-            StorylineManager.Launch<DemoStory>();
-            print("Launching Demo storyline");
-        }
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            RequestManager.SendRequest((Request)Saves.InstantLoad(Application.persistentDataPath + "/rq.dat"), 1);
-            print("request sent. 1 day of delay");
-        }
-        if (Input.GetKeyDown(KeyCode.H))
-        {
-            //RequestManager.SendRequest((Request)Saves.InstantLoad(Application.persistentDataPath + "/rq.dat"), 1);
-            Universe.History.LoadPast(4);
-            print("Rollback 4 days");
-        }
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-            //RequestManager.ApplyMailBox((RequestManager.MailBox)Saves.InstantLoad(Application.persistentDataPath + "/mailbox.dat"));
-            GameManager.LoadGame(GameManager.GetGameSaves()[0]);
-            print("Loaded");
-        }
-        if (Input.GetKeyDown(KeyCode.S))
-        {
-            //Saves.InstantSave(Application.persistentDataPath + "/mailbox.dat", RequestManager.GetMailBox);
-            GameManager.SaveCurrentGame();
-            print("Saved");
-        }
-        if (Input.GetKeyDown(KeyCode.N))
-        {
-            GameManager.NewGame();
-            print("New Game");
+            print("Example");
         }
     }
 }
