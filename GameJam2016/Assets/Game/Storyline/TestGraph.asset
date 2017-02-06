@@ -11,9 +11,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 222b2c77376626745b3dc45bf3926bf3, type: 3}
   m_Name: TestGraph
   m_EditorClassIdentifier: 
+  tag: 
   nodes:
   - arrivalDelay: 1
     id: TBD_Top
     request: {fileID: 0}
-    onChooseEvent: 0
+    x: -108.52432
+    y: -8.815134
+    children:
+    - TBD_
+  - arrivalDelay: 1
+    id: TBD_
+    request: {fileID: 0}
+    x: 101.8762
+    y: -32.520756
     children: []

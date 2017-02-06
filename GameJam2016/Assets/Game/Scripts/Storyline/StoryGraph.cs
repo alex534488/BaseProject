@@ -31,6 +31,7 @@ public class StoryGraph : ScriptableObject, INewDay
         public int arrivalDelay = 1;
         public string id = "";
         public RequestFrame request = null;
+        public float x=0, y=0;
         public List<string> children = new List<string>();
 
         [System.NonSerialized]
@@ -95,13 +96,14 @@ public class StoryGraph : ScriptableObject, INewDay
             if (graph.currentNode == this)
             {
                 // Branche au prochain noeud s'il existe
-                if (choice < children.Count)
+                if (choice < children.Count && choice >= 0)
                 {
                     graph.BranchTo(children[choice]);
                 }
-                //S'il n'y a pas d'enfant, complete !
-                if (children.Count <= 0)
+                else
+                {
                     graph.Complete();
+                }
             }
         }
     }
@@ -173,8 +175,7 @@ public class StoryGraph : ScriptableObject, INewDay
     {
         if (isComplete)
             return;
-
-        Debug.Log("delay before --: " + delay);
+        
         delay--;
 
         //Execute le noeud apres le delai

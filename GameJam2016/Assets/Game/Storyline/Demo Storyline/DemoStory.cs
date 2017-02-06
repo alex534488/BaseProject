@@ -57,6 +57,7 @@ public class DemoStory : Storyline
     //On enlève tous les effets, objets, etc. qui traine dans la scène en lien avec cette storyline
     public override void Terminate()
     {
+        print("terminate");
         base.Terminate();
         //Rien à détruire dans ce cas
     }

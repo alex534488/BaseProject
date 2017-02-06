@@ -22,3 +22,4 @@ MonoBehaviour:
     transactions: []
   - text: "Non, d\xE9sol\xE9 ce sera pour une autre fois peut-\xEAtre."
     transactions: []
+  characterKit: {fileID: 0}
