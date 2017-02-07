@@ -18,8 +18,8 @@ public class Item : ScriptableObject
     public string description = "utilite de l'item ici";
 
     // Duree
-    [Tooltip("Duree de l'effet")]
-    public string duration = "(en nombre de jours)";
+    [Tooltip("Duree de l'effet (en jours)")]
+    public int duration = 1;
 
     // Icone
     [Tooltip("Image correspondant a l'item")]
@@ -33,12 +33,14 @@ public class Item : ScriptableObject
     public string behaviorType;
 
     private int counter = 0;
+    [System.NonSerialized]
     private Empire myEmpire;
 
     public void OnNewDay()
     {
         counter++;
-        if (counter >= int.Parse(duration)) DeApply();
+        if (counter > duration)
+            DeApply();
     }
 
     // Obtenir le nom du batiment
@@ -47,21 +49,25 @@ public class Item : ScriptableObject
         return nom;
     }
 
+    public void SetEmpire(Empire empire)
+    {
+        myEmpire = empire;
+    }
+
     // Applique les modifications necessaire lors de l'achat de l'item
-    public void Apply(Empire empire)
+    public void Apply()
     {
         for (int i = 0; i < villageModifierList.Count; i++)
         {
-            for(int j = 0; i < empire.VillageList.Count; i++)
+            for (int j = 0; j < myEmpire.VillageList.Count; j++)
             {
-                villageModifierList[i].ApplyModifier(empire.VillageList[j]);
+                villageModifierList[i].ApplyModifier(myEmpire.VillageList[j]);
             }
         }
         for (int i = 0; i < empireModifierList.Count; i++)
         {
-            empireModifierList[i].ApplyModifier(empire);
+            empireModifierList[i].ApplyModifier(myEmpire);
         }
-        myEmpire = empire;
     }
 
     // Retire les modifications necessaire lors de l'achat de l'item

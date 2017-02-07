@@ -461,9 +461,7 @@ public class StoryGraphWindow : EditorWindow
         Vector2 adjustedPosition = new Vector2(graphNode.node.x, graphNode.node.y) * scale + anchor;
 
         float leftBorder = adjustedPosition.x - (cellSize.x / 2);
-        float rightBorder = adjustedPosition.x + (cellSize.x / 2);
         float topBorder = adjustedPosition.y - (cellSize.y / 2);
-        float botBorder = adjustedPosition.y + (cellSize.y / 2);
 
         GUI.color = Color.white;
 
