@@ -50,12 +50,19 @@ public class Inventory : INewDay
     /// </summary>
     public void AddItem(string name)
     {
+        if(!CanAddItem)
+        {
+            Debug.LogWarning("Inventory full!");
+            return;
+        }
         Item item = ItemBank.GetItem(name);
         if (item == null)
         {
             Debug.LogWarning("Cannot give " + name + " to empire. The item does not exist.");
             return;
         }
+
+        item.SetEmpire(myEmpire);
 
         inventory.Add(item);
         itemsName.Add(name);
@@ -74,106 +81,57 @@ public class Inventory : INewDay
     /// <summary>
     /// Es ce que l'item existe dans l'inventaire
     /// </summary>
-    public bool Has(string name)
+    public int CountOf(string name)
     {
+        int count = 0;
         for(int i = 0; i < itemsName.Count; i++)
         {
-            if (itemsName[i] == name) return true;
+            if (itemsName[i] == name)
+                count++;
         }
-        return false;
+        return count;
     }
+
+    public int ItemCount { get { return itemsName.Count; } }
+
+    public bool CanAddItem { get { return ItemCount < maxItemSlot; } }
 
     /// <summary>
     /// Supprimer un item
     /// </summary>
-    public void DeleteItem(string name)
+    public void DeleteItem(int index)
     {
-        inventory.Remove(GetItemInInventoryByName(name));
-        itemsName.Remove(name);
-        behaviors.Remove(GetItemBehaviorByName(name));
-        GetItemBehaviorByName(name).OnNewDay();
-    }
+        behaviors[index].OnDelete();
 
+        inventory.RemoveAt(index);
+        itemsName.RemoveAt(index);
+        behaviors.RemoveAt(index);
+    }
 
     /// <summary>
     /// Utilise un item
     /// </summary>
-    public void UseItem(string name, bool delete = true)
+    public void UseItem(int index, bool delete = true)
     {
-        Item item = GetItemInInventoryByName(name);
-        if (item == null) return;
+        //Applique les effets de l'item
+        inventory[index].Apply();
 
-        item.Apply(myEmpire);
+        //Fait l'event sur la behavior (s'il y a lieu)
+        if (behaviors[index] != null)
+            behaviors[index].OnUse();
 
-        if (item.HasBehavior()) GetItemBehaviorByName(name).OnUse();
-
-        if(delete) DeleteItem(name);
+        //Delete l'item
+        if(delete)
+            DeleteItem(index);
     }
 
     /// <summary>
     /// Remplace un item par un autre grace a leur nom
     /// </summary>
-    public void ReplaceItem(string name, string newItem)
+    public void ReplaceItem(int index, string newItemName)
     {
-        Item item = ItemBank.GetItem(name);
-        if (item == null)
-        {
-            Debug.LogWarning("Cannot give " + name + " to empire. The item does not exist.");
-            return;
-        }
-
-        bool foundIt = false;
-        int index = 0;
-        // Searching for the item to replace
-        for (int i = 0; i < itemsName.Count; i++)
-        {
-            if (itemsName[i] == name)
-            {
-                foundIt = true;
-                itemsName[i] = newItem;
-                inventory[i] = item;
-                index = i;
-                break;
-            }
-        }
-        if (foundIt)
-        {
-            if (item.HasBehavior())
-            {
-                ItemBehavior behavior = item.CreateBehavior();
-                behaviors[index] = behavior;
-                if (inventory[index].HasBehavior()) GetItemBehaviorByName(name).OnDelete();
-                behavior.OnGet();
-            }
-            else
-            {
-                behaviors[index] = null;
-            }
-        }
-    }
-
-    /// <summary>
-    /// Retourne l'item grace a son nom
-    /// </summary>
-    public Item GetItemInInventoryByName(string name)
-    {
-        for (int i = 0; i < itemsName.Count; i++)
-        {
-            if (itemsName[i] == name) return inventory[i];
-        }
-        return null;
-    }
-
-    /// <summary>
-    /// Retourne un itemBehavior grace au nom de l'item
-    /// </summary>
-    public ItemBehavior GetItemBehaviorByName(string name)
-    {
-        for (int i = 0; i < itemsName.Count; i++)
-        {
-            if (itemsName[i] == name) return behaviors[i];
-        }
-        return null;
+        DeleteItem(index);
+        AddItem(newItemName);
     }
 
     /// <summary>
@@ -182,6 +140,7 @@ public class Inventory : INewDay
     private void ReAdd(string name)
     {
         Item newItem = ItemBank.GetItem(name); // Trouver le building
+        newItem.SetEmpire(myEmpire);
         inventory.Add(newItem); // L'ajouter a la liste de building construit
     }
 }
