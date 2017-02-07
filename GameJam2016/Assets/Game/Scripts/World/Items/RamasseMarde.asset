@@ -14,8 +14,10 @@ MonoBehaviour:
   nom: RamasseMarde
   description: Utile pour ramasser la merde des vaches
   duration: 2
+  icon: {fileID: 0}
   villageModifierList:
   - resource: 4
     amount: 20
   empireModifierList: []
-  behaviorType: 
+  behaviorType: RamasseMardeBehavior, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+    PublicKeyToken=null
