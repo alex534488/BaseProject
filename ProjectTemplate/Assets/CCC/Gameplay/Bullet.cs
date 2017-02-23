@@ -14,7 +14,6 @@ namespace CCC.Gameplay
 
         private static List<Bullet> inactiveBullets = new List<Bullet>();
         private float timer = 0;
-        private Vector3 direction;
         private UnityAction hitCallback;
 
         public static void Shoot(Vector3 direction, Vector3 position, Bullet bulletprefab, UnityAction hitCallback = null)
@@ -36,8 +35,6 @@ namespace CCC.Gameplay
 
         public void Init(Vector3 direction, Vector3 position, UnityAction hitCallback = null)
         {
-            this.direction = direction;
-
             transform.rotation = Quaternion.LookRotation(direction, Vector3.up);
             transform.position = position;
 

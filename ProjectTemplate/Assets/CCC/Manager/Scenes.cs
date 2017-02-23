@@ -26,9 +26,10 @@ namespace CCC.Manager
         {
             base.Init();
             SceneManager.sceneLoaded += OnSceneLoading;
+            CompleteInit();
         }
 
-        #region Load Methods
+        #region Load/Unload Methods
 
         static public void Load(string name, LoadSceneMode mode = LoadSceneMode.Single, UnityAction<Scene> callback = null, bool unique = true)
         {
@@ -46,6 +47,24 @@ namespace CCC.Manager
             ScenePromise scenePromise = new ScenePromise(name, callback);
             loadingScenes.Add(scenePromise);
             SceneManager.LoadSceneAsync(name, mode);
+        }
+
+        static public void UnloadAsync(string name)
+        {
+            SceneManager.UnloadSceneAsync(name);
+        }
+
+        static public bool Exists(string sceneName)
+        {
+            for (int i = 0; i < SceneManager.sceneCount; i++)
+            {
+                if (SceneManager.GetSceneAt(i).name == sceneName) return true;
+            }
+            for (int i = 0; i < loadingScenes.Count; i++)
+            {
+                if (loadingScenes[i].name == sceneName) return true;
+            }
+            return false;
         }
 
         #endregion
@@ -78,19 +97,6 @@ namespace CCC.Manager
         #endregion
 
         #region Internal Utility
-
-        static bool Exists(string sceneName)
-        {
-            for (int i = 0; i < SceneManager.sceneCount; i++)
-            {
-                if (SceneManager.GetSceneAt(i).name == sceneName) return true;
-            }
-            for (int i = 0; i < loadingScenes.Count; i++)
-            {
-                if (loadingScenes[i].name == sceneName) return true;
-            }
-            return false;
-        }
 
         static ScenePromise GetLoadingScene(string name)
         {

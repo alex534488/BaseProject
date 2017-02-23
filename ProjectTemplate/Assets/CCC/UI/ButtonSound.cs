@@ -9,7 +9,7 @@ namespace CCC.UI
     public class ButtonSound : MonoBehaviour
     {
         public AudioClip clip;
-        void Awake()
+        void Start()
         {
             MasterManager.Sync();
             GetComponent<Button>().onClick.AddListener(OnClick);

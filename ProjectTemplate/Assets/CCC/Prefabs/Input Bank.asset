@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   keys:
   - name: 
-    keyCode: 0
+    keyCode: 42
     openInInspector: 1
     onModify:
       m_PersistentCalls:
@@ -21,15 +21,7 @@ MonoBehaviour:
       m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
         PublicKeyToken=null
   - name: 
-    keyCode: 0
-    openInInspector: 1
-    onModify:
-      m_PersistentCalls:
-        m_Calls: []
-      m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
-  - name: Teset
-    keyCode: 43
+    keyCode: 42
     openInInspector: 1
     onModify:
       m_PersistentCalls:
@@ -37,7 +29,7 @@ MonoBehaviour:
       m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
         PublicKeyToken=null
   - name: 
-    keyCode: 0
+    keyCode: 42
     openInInspector: 1
     onModify:
       m_PersistentCalls:
@@ -45,15 +37,7 @@ MonoBehaviour:
       m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
         PublicKeyToken=null
   - name: 
-    keyCode: 0
-    openInInspector: 1
-    onModify:
-      m_PersistentCalls:
-        m_Calls: []
-      m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
-  - name: 
-    keyCode: 0
+    keyCode: 42
     openInInspector: 1
     onModify:
       m_PersistentCalls:
