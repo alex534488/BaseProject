@@ -16,6 +16,13 @@ namespace CCC.Gameplay
         private float timer = 0;
         private UnityAction hitCallback;
 
+        /// <summary>
+        /// Tire un projectile dans une direction à partir d'une position. Lors de la collision, un UnityAction peut être appelé
+        /// </summary>
+        /// <param name="direction"></param>
+        /// <param name="position"></param>
+        /// <param name="bulletprefab"></param>
+        /// <param name="hitCallback"></param>
         public static void Shoot(Vector3 direction, Vector3 position, Bullet bulletprefab, UnityAction hitCallback = null)
         {
             if (bulletprefab.gameObject == null) return;

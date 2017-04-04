@@ -7,6 +7,10 @@ using System.Runtime.Serialization;
 
 namespace CCC.Utility
 {
+    // Cette librairie permet d'utiliser une structure de données enregistrant des types de
+    // données identifiant une statistique dans le jeu et pouvant être manipulé de diverses facons
+
+
     public enum BoundMode
     {
         Cap, MaxLoop, MinLoop, BidirectionalLoop
