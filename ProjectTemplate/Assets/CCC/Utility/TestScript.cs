@@ -4,17 +4,12 @@ using System;
 using CCC.Manager;
 using CCC.Utility;
 
-public class TestScript : SlowBehaviour
+public class TestScript : MonoBehaviour
 {
-    public bool test;
-    protected override void SlowUpdate()
-    {
-        base.SlowUpdate();
-        print("hello");
-    }
-
-    void Start()
-    {
-        MasterManager.Sync(null);
-    }
+    public StatInt power;
+    public StatFloat speed;
+    public Vector2 vector;
+    public int test;
+    public int tester;
+    public int testing;
 }

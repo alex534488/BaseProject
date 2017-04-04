@@ -97,8 +97,14 @@
     <Compile Include="Assets\CCC\AI\Personnage.cs" />
     <Compile Include="Assets\CCC\AI\States.cs" />
     <Compile Include="Assets\CCC\AI\StatesIdle.cs" />
+    <Compile Include="Assets\CCC\Attributes\Colored.cs" />
+    <Compile Include="Assets\CCC\Attributes\ReadOnly.cs" />
     <Compile Include="Assets\CCC\EditorUtil\AdvEditor.cs" />
     <Compile Include="Assets\CCC\Gameplay\Bullet.cs" />
+    <Compile Include="Assets\CCC\Gameplay\FragmentTree.cs" />
+    <Compile Include="Assets\CCC\Gameplay\LinkedShape.cs" />
+    <Compile Include="Assets\CCC\Gameplay\Shape.cs" />
+    <Compile Include="Assets\CCC\Gameplay\Triangle.cs" />
     <Compile Include="Assets\CCC\Manager\BaseManager.cs" />
     <Compile Include="Assets\CCC\Manager\DelayManager.cs" />
     <Compile Include="Assets\CCC\Manager\InputBank.cs" />
@@ -126,7 +132,10 @@
     <Compile Include="Assets\CCC\Utility\SerializableColor.cs" />
     <Compile Include="Assets\CCC\Utility\Singleton.cs" />
     <Compile Include="Assets\CCC\Utility\SlowBehaviour.cs" />
-    <Compile Include="Assets\CCC\Utility\Stat.cs" />
+    <Compile Include="Assets\CCC\Utility\Stat\Stat.cs" />
+    <Compile Include="Assets\CCC\Utility\Stat\StatFloat.cs" />
+    <Compile Include="Assets\CCC\Utility\Stat\StatInt.cs" />
+    <Compile Include="Assets\CCC\Utility\Stat\StatNumber.cs" />
     <Compile Include="Assets\CCC\Utility\TestScript.cs" />
     <Compile Include="Assets\CCC\Utility\TextSplitter.cs" />
     <Compile Include="Assets\CCC\Utility\UnitFormation.cs" />

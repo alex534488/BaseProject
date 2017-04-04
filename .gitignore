@@ -18,3 +18,4 @@ GameJam2016/GameJam2016.CSharp.csproj.user
 GameJam2016/GameJam2016.Plugins.csproj
 GameJam2016/GameJam2016.Editor.csproj
 GameJam2016/GameJam2016.csproj
+*.csproj
