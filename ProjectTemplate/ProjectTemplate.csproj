@@ -123,6 +123,7 @@
     <Compile Include="Assets\CCC\UI\WindowAnimation.cs" />
     <Compile Include="Assets\CCC\Utility\ActionQueue.cs" />
     <Compile Include="Assets\CCC\Utility\FPSCounter.cs" />
+    <Compile Include="Assets\CCC\Utility\Lock.cs" />
     <Compile Include="Assets\CCC\Utility\Lottery.cs" />
     <Compile Include="Assets\CCC\Utility\ObjectCopier.cs" />
     <Compile Include="Assets\CCC\Utility\PublicSingleton.cs" />
