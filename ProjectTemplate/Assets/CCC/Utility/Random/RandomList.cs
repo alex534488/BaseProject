@@ -10,11 +10,16 @@ namespace CCC.Utility
     public class RandomList<T> 
     {
         [SerializeField]
-        List<T> list;
+        List<T> list = new List<T>();
 
-        public RandomList()
+        public RandomList() { }
+
+        public RandomList(List<T> list)
         {
-            list = new List<T>();
+            foreach (T item in list)
+            {
+                this.list.Add(item);
+            } 
         }
 
         /// <summary>
