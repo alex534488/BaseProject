@@ -5,8 +5,9 @@ using UnityEngine;
 
 namespace CCC.Utility
 {
+    // Structure de données contenant une liste et permettant de la manipulé avec du aléatoire
     [System.Serializable]
-    public class RandomList<T>
+    public class RandomList<T> 
     {
         [SerializeField]
         List<T> list;
@@ -16,7 +17,10 @@ namespace CCC.Utility
             list = new List<T>();
         }
 
-        //Returns a random element (from 0 to count -1). Then put the element at the end of the list, preventing it from being selected twice in a row.
+        /// <summary>
+        /// Returns a random element (from 0 to count -1). Then put the element at the end of the list, preventing it from being selected twice in a row.
+        /// </summary>
+        /// <returns></returns>
         public T Pick()
         {
             if (list.Count > 1)
@@ -33,6 +37,9 @@ namespace CCC.Utility
             }
         }
 
+        /// <summary>
+        /// Place un élément à la fin de la liste
+        /// </summary>
         public void PlaceInLast(T item)
         {
             if (list.Contains(item))
@@ -50,6 +57,15 @@ namespace CCC.Utility
             //Swap chosen element with element at end of list
             list[topIndex] = list[index];
             list[index] = temp;
+        }
+
+        /// <summary>
+        /// Permet d'obtenir la liste
+        /// </summary>
+        /// <returns></returns>
+        public List<T> GetList()
+        {
+            return list;
         }
     }
     [System.Serializable]

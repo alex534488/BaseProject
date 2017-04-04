@@ -8,10 +8,14 @@ namespace CCC.Utility
     {
         int Weight();
     }
+
+    // Structure de données permettant de choisir un élément ayant une chance d'être pigé
+    // parmis un lot d'éléments ayant également leur propre chance d'être pigé (weight)
     public class Lottery
     {
         class LotteryItem
         {
+            // Constructeur d'un élément qui va faire parti du lot
             public LotteryItem(object obj, int weight)
             {
                 this.obj = obj;
@@ -21,16 +25,26 @@ namespace CCC.Utility
             public int weight = 1;
         }
 
-        ArrayList list = new ArrayList();
+        ArrayList list = new ArrayList(); // Liste des objets du lot
+
         public void Add(ILottery item)
         {
             Add(item, item.Weight());
         }
+
+        /// <summary>
+        /// Ajout d'un objet dans le lot en fonction de sa chance d'être sélectionné
+        /// </summary>
+        /// <param name="item"></param>
+        /// <param name="weight"></param>
         public void Add(object item, int weight)
         {
             list.Add(new LotteryItem(item, weight));
         }
 
+        /// <summary>
+        /// Nombre d'éléments dans le lot
+        /// </summary>
         public int Count
         {
             get
@@ -39,6 +53,10 @@ namespace CCC.Utility
             }
         }
 
+        /// <summary>
+        /// Sélection d'un élément de facon aléatoire en fonction de leurs chance d'être pigé
+        /// </summary>
+        /// <returns></returns>
         public object Pick()
         {
             if (list.Count <= 0)

@@ -6,6 +6,9 @@ namespace CCC.Utility
 {
     public class Randomizer
     {
+        /// <summary>
+        /// Prend une liste et la mélange/brasse pour obtenir un ordenancement aléatoire
+        /// </summary>
         public static void ShuffleList<T>(ref List<T> list)
         {
             int chosen = -1;

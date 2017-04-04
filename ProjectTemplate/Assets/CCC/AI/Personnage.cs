@@ -11,24 +11,23 @@ public class Personnage : MonoBehaviour {
     // Evennements
     public PersonnageEvent onDeath = new PersonnageEvent();
     
-    // Detecteur
-    public Detector detector;
+    // Surroundings Detector
+    
 
     // Attributs
-    public int damage = 1;
-    public int hp = 10;
+    
 
     // Apparence (Prefab)
     public GameObject sprite;
 
-    // Etats
-    private List<States> states = new List<States>();
-    public States currentStates;
+    // States
+    private List<States> states = new List<States>(); // État possible
+    public States currentStates; // État courrant
 
-    // Enemy
+    // Enemies
     public List<string> enemyTags;
 
-    ///////////////////////
+
 
     protected virtual void Awake()
     {
@@ -42,7 +41,7 @@ public class Personnage : MonoBehaviour {
         currentStates.Update();
     }
 
-    ///////////////////////
+    
 
     public States ChangeState(States newState)
     {
@@ -93,7 +92,5 @@ public class Personnage : MonoBehaviour {
         return null;
     }
 
-    ///////////////////////
-
-    // Ajouter fonctions specifique aux attributs ou aux personnages
+    
 }
