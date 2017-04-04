@@ -139,7 +139,6 @@
     <Compile Include="Assets\CCC\Utility\DesignPatern\ActionQueue.cs" />
     <Compile Include="Assets\CCC\Utility\DesignPatern\PublicSingleton.cs" />
     <Compile Include="Assets\CCC\Utility\DesignPatern\Singleton.cs" />
-    <Compile Include="Assets\CCC\Utility\DesignPatern\Stat.cs" />
     <Compile Include="Assets\CCC\Utility\EscapeToKill.cs" />
     <Compile Include="Assets\CCC\Utility\FPSCounter.cs" />
     <Compile Include="Assets\CCC\Utility\ObjectCopier.cs" />
