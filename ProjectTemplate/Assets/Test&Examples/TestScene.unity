@@ -296,14 +296,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _keys:
   - {fileID: 852290295}
-  - {fileID: 0}
   _values:
   - _keys: []
     _values: []
     _target: {fileID: 852290295}
-  - _keys: []
-    _values: []
-    _target: {fileID: 0}
 --- !u!114 &967333607
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -317,32 +313,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _keys:
   - {fileID: 852290295}
-  - {fileID: 0}
   _values:
-  - _keys:
-    - DefaultBehaviorEditor.bank.EditProperty
-    - DefaultBehaviorEditor.addList.EditProperty
-    - DefaultBehaviorEditor.removeList.EditProperty
-    - Bank
-    - Add List
-    - Remove List
-    _values:
-    - _showDropdown: 0
-      _serializedIsActive: 1
-    - _showDropdown: 0
-      _serializedIsActive: 1
-    - _showDropdown: 0
-      _serializedIsActive: 1
-    - _showDropdown: 0
-      _serializedIsActive: 1
-    - _showDropdown: 0
-      _serializedIsActive: 1
-    - _showDropdown: 0
-      _serializedIsActive: 1
-    _target: {fileID: 852290295}
   - _keys: []
     _values: []
-    _target: {fileID: 0}
+    _target: {fileID: 852290295}
 --- !u!4 &967333608
 Transform:
   m_ObjectHideFlags: 1
