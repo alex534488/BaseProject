@@ -137,6 +137,7 @@
     <Compile Include="Assets\CCC\UI\TextSplitter.cs" />
     <Compile Include="Assets\CCC\UI\WindowAnimation.cs" />
     <Compile Include="Assets\CCC\Utility\DesignPatern\ActionQueue.cs" />
+    <Compile Include="Assets\CCC\Utility\DesignPatern\Bank.cs" />
     <Compile Include="Assets\CCC\Utility\DesignPatern\PublicSingleton.cs" />
     <Compile Include="Assets\CCC\Utility\DesignPatern\Singleton.cs" />
     <Compile Include="Assets\CCC\Utility\EscapeToKill.cs" />
