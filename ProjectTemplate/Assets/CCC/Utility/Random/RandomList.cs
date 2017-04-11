@@ -7,32 +7,36 @@ namespace CCC.Utility
 {
     // Structure de données contenant une liste et permettant de la manipulé avec du aléatoire
     [System.Serializable]
-    public class RandomList<T> 
+    public class RandomList<T>
     {
         [SerializeField]
         List<T> list;
 
+        private bool hasPicked = false;
+
         public RandomList()
         {
             list = new List<T>();
+            hasPicked = false;
         }
 
         /// <summary>
         /// Returns a random element (from 0 to count -1). Then put the element at the end of the list, preventing it from being selected twice in a row.
         /// </summary>
-        /// <returns></returns>
         public T Pick()
         {
             if (list.Count > 1)
             {
                 int topIndex = list.Count - 1;
 
-                PlaceInLast(UnityEngine.Random.Range(0, topIndex));
+                PlaceInLast(UnityEngine.Random.Range(0, hasPicked ? topIndex : topIndex + 1));
 
+                hasPicked = true;
                 return list[topIndex];
             }
             else
             {
+                hasPicked = true;
                 return list[0];
             }
         }
