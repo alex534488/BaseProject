@@ -7,7 +7,11 @@ public class PublicSingleton<T> : MonoBehaviour where T : class
 
     void Awake()
     {
-        if (!(this is T)) return;
+        if (!(this is T))
+        {
+            Debug.LogError("Trying to make a Singleton<" + typeof(T).Name + "> but instance is a " + this.GetType().Name + ".");
+            return;
+        }
 
         if (instance == null)
         {
@@ -17,5 +21,13 @@ public class PublicSingleton<T> : MonoBehaviour where T : class
         {
             Destroy(this.gameObject);
         }
+    }
+
+
+
+    void OnDestroy()
+    {
+        if ((object)instance == (object)this)
+            instance = null;
     }
 }

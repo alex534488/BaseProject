@@ -1,26 +1,29 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using System;
 using CCC.Manager;
 using CCC.Utility;
+using FullInspector;
 
-public class TestScript : MonoBehaviour
+public class TestScript : Bank<GameObject>
 {
-    // Variables
+    protected override string Convert(GameObject obj)
+    {
+        if (obj == null)
+            return "null";
+        return obj.name;
+    }
 
-    // Input pour tester
     void Update()
     {
-        // Test 1
         if (Input.GetKeyDown(KeyCode.A))
         {
-
+            TestScript.Add(gameObject);
         }
-
-        // Test 2
-        if (Input.GetKeyDown(KeyCode.B))
+        if (Input.GetKeyDown(KeyCode.R))
         {
-
+            TestScript.Remove(gameObject);
         }
     }
 }

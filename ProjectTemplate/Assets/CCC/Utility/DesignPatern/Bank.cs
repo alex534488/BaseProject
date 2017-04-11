@@ -2,73 +2,114 @@
 using System.Collections;
 using CCC.Utility;
 using System.Collections.Generic;
+using FullInspector;
 
 // Stock tous les items disponible dans le jeu
-public class Bank<T> : Singleton<Bank<T>>
+public abstract class Bank<T> : Singleton<Bank<T>>
 {
-    private List<T> bank = new List<T>(); // Liste des items disponible
+    [InspectorDisabled(), InspectorOrder(0)]
+    public Dictionary<string, T> bank = new Dictionary<string, T>(); // Liste des items disponible
+    [fiInspectorOnly, InspectorOrder(1), InspectorHeader("Editing")]
+    public List<T> addList = new List<T>(); // Liste des items a ajouter
+    [fiInspectorOnly, InspectorOrder(2.5f), InspectorMargin(5)]
+    public List<T> removeList = new List<T>(); // Liste des items a ajouter
+    [fiInspectorOnly, InspectorOrder(3)]
+    public string removeElement;
 
-    static public T GetItem(T item)
+    [InspectorButton(), InspectorOrder(2), InspectorHideIf("HidePushList")]
+    private void PushList()
     {
-        for (int i = 0; i < instance.bank.Count; i++)
+        if (!Application.isEditor)
+            return;
+
+        foreach (T item in addList)
         {
-            if (instance.bank[i].Equals(item))
-            {
-                return instance.bank[i];
-            }
+            LocalAdd(item);
         }
-        return default(T);
+        addList.Clear();
     }
-
-    static public T GetItemByIndex(int index)
+    [InspectorButton(), InspectorOrder(4), InspectorHideIf("HideRemoveFromList")]
+    private void RemoveFromList()
     {
-        return instance.bank[index];
-    }
-
-    static public T GetRandomItem()
-    {
-        return new RandomList<T>(instance.bank).Pick();
-    }
-
-    static public T GetLastItem()
-    {
-        return instance.bank[instance.bank.Count - 1];
-    }
-
-    static public void AddItem(T item)
-    {
-        instance.bank.Add(item);
-    }
-
-    static public void DeleteItem(T item)
-    {
-        instance.bank.Remove(item);
-    }
-
-    static public void DeleteRandomItem()
-    {
-        instance.bank.Remove(GetRandomItem());
-    }
-
-    static public void DeleteItemByIndex(int index)
-    {
-        instance.bank.Remove(instance.bank[index]);
-    }
-
-    static public bool Has(T item)
-    {
-        for (int i = 0; i < instance.bank.Count; i++)
+        if (!Application.isEditor)
+            return;
+        if (LocalRemove(removeElement))
+            removeElement = "";
+        foreach (T item in removeList)
         {
-            if (instance.bank[i].Equals(item))
-            {
-                return true;
-            }
+            LocalRemove(item);
         }
-        return false;
+        removeList.Clear();
+    }
+    [InspectorButton(), InspectorOrder(5)]
+    private void RebuildBankIds()
+    {
+        if (!Application.isEditor)
+            return;
+        Dictionary<string, T> newBank = new Dictionary<string, T>(bank.Count);
+        foreach (T item in bank.Values)
+        {
+            string id = Convert(item);
+            if (string.IsNullOrEmpty(id))
+                Debug.LogWarning("Id is empty. Target item: " + item.ToString());
+            else if (newBank.ContainsKey(id))
+                Debug.LogWarning("Id is already taken. Target item: " + item.ToString());
+            else
+                newBank.Add(id, item);
+        }
+        bank = newBank;
     }
 
-    static public List<T> GetAllBuildings()
+    private bool HidePushList()
     {
-        return instance.bank;
+        return addList.Count <= 0;
     }
+    private bool HideRemoveFromList()
+    {
+        return removeElement == "" && removeList.Count <= 0;
+    }
+
+    private bool LocalRemove(string id)
+    {
+        return bank.Remove(id);
+    }
+    private bool LocalRemove(T obj)
+    {
+        return bank.Remove(Convert(obj));
+    }
+    private void LocalAdd(T item)
+    {
+        string id = Convert(item);
+        if (string.IsNullOrEmpty(id))
+            Debug.LogWarning("Id is empty. Target item: " + item.ToString());
+        else if (bank.ContainsKey(id))
+            Debug.LogWarning("Id is already taken. Target item: " + item.ToString());
+        else
+            bank.Add(id, item);
+    }
+
+    private bool LocalHas(string id)
+    {
+        return bank.ContainsKey(id);
+    }
+    private bool LocalHas(T obj)
+    {
+        return bank.ContainsValue(obj);
+    }
+    private T LocalGet(string id)
+    {
+        if (LocalHas(id))
+            return bank[id];
+        else
+            return default(T);
+    }
+
+    abstract protected string Convert(T obj);
+
+    static public T Get(string id) { return instance.LocalGet(id); }
+    static public void Add(T item) { instance.LocalAdd(item); }
+    static public bool Remove(string id) { return instance.LocalRemove(id); }
+    static public bool Remove(T item) { return instance.LocalRemove(item); }
+    static public bool Has(string id) { return instance.LocalHas(id); }
+    static public bool Has(T item) { return instance.LocalHas(item); }
 }

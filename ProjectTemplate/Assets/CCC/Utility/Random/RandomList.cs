@@ -19,6 +19,12 @@ namespace CCC.Utility
             list = new List<T>();
             hasPicked = false;
         }
+        public RandomList(List<T> listToCopy)
+        {
+            list = new List<T>();
+            hasPicked = false;
+            list.AddRange(listToCopy);
+        }
 
         /// <summary>
         /// Returns a random element (from 0 to count -1). Then put the element at the end of the list, preventing it from being selected twice in a row.
