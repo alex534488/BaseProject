@@ -4,7 +4,6 @@ using CCC.Utility;
 using System.Collections.Generic;
 using FullInspector;
 
-// Stock tous les items disponible dans le jeu
 public abstract class Bank<T> : Singleton<Bank<T>>
 {
     [InspectorDisabled(), InspectorOrder(0)]
