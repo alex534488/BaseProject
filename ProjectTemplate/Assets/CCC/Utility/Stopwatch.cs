@@ -7,6 +7,7 @@ using System.Diagnostics;
 public class Stopwatch
 {
     public enum PrintType { Milliseconds, Ticks}
+
     System.Diagnostics.Stopwatch stopwatch;
     PrintType printType;
 
@@ -24,13 +25,12 @@ public class Stopwatch
         float deltaTicks = stopwatch.ElapsedTicks;
         switch (printType)
         {
+            default:
             case PrintType.Milliseconds:
                 UnityEngine.Debug.Log("Exec time(ms): " + (double)deltaTicks / 10000);
                 break;
             case PrintType.Ticks:
                 UnityEngine.Debug.Log("Exec time(ticks): " + deltaTicks);
-                break;
-            default:
                 break;
         }
         stopwatch.Reset();

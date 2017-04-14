@@ -6,21 +6,18 @@ using CCC.Manager;
 using CCC.Utility;
 using FullInspector;
 
-public class TestScript : BaseBehavior
+public class TestScript : Bank<GameObject>
 {
+    protected override string Convert(GameObject obj)
+    {
+        return obj.name;
+    }
 
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.A))
         {
-            Stopwatch stopwatch = new Stopwatch(Stopwatch.PrintType.Milliseconds);
-
-            for (int i = 0; i < 60000; i++)
-            {
-                i = i - 1 + 1;
-            }
-
-            stopwatch.Print();
+            print(GetRandom());
         }
     }
 }

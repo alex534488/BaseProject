@@ -517,9 +517,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce29cb859d78b634c9d7b447327d88d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _objectReferences: []
-  _serializedStateKeys: []
-  _serializedStateValues: []
+  _objectReferences:
+  - {fileID: 159950103}
+  - {fileID: 1073949382}
+  _serializedStateKeys:
+  - bank
+  - addList
+  - removeList
+  _serializedStateValues:
+  - '{"Directional Light":0,"GameObject toto":1}'
+  - '[]'
+  - '[]'
+  addList: []
+  removeList: []
+  removeElement: 
 --- !u!1 &967333605
 GameObject:
   m_ObjectHideFlags: 1
@@ -568,8 +579,17 @@ MonoBehaviour:
   _keys:
   - {fileID: 867329662}
   _values:
-  - _keys: []
-    _values: []
+  - _keys:
+    - DefaultBehaviorEditor.bank.EditProperty
+    - DefaultBehaviorEditor.addList.EditProperty
+    - DefaultBehaviorEditor.removeList.EditProperty
+    _values:
+    - _showDropdown: 0
+      _serializedIsActive: 1
+    - _showDropdown: 1
+      _serializedIsActive: 1
+    - _showDropdown: 0
+      _serializedIsActive: 1
     _target: {fileID: 867329662}
 --- !u!4 &967333608
 Transform:

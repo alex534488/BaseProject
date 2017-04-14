@@ -9,6 +9,7 @@ public abstract class Bank<T> : Singleton<Bank<T>>
 {
     [InspectorDisabled(), InspectorOrder(0)]
     public Dictionary<string, T> bank = new Dictionary<string, T>(); // Liste des items disponible
+
     [fiInspectorOnly, InspectorOrder(1), InspectorHeader("Editing")]
     public List<T> addList = new List<T>(); // Liste des items a ajouter
     [fiInspectorOnly, InspectorOrder(2.5f), InspectorMargin(5)]
@@ -71,6 +72,8 @@ public abstract class Bank<T> : Singleton<Bank<T>>
 
     private bool LocalRemove(string id)
     {
+        if (string.IsNullOrEmpty(id))
+            return false;
         return bank.Remove(id);
     }
     private bool LocalRemove(T obj)
@@ -103,6 +106,21 @@ public abstract class Bank<T> : Singleton<Bank<T>>
         else
             return default(T);
     }
+    private T LocalGetRandom()
+    {
+        int index = Random.Range(0, bank.Count);
+        Dictionary<string, T>.ValueCollection.Enumerator enumerator = bank.Values.GetEnumerator();
+
+        int i = 0;
+        while(enumerator.MoveNext())
+        {
+            if (i == index)
+                return enumerator.Current;
+            i++;
+        }
+
+        return default(T);
+    }
 
     abstract protected string Convert(T obj);
 
@@ -112,4 +130,5 @@ public abstract class Bank<T> : Singleton<Bank<T>>
     static public bool Remove(T item) { return instance.LocalRemove(item); }
     static public bool Has(string id) { return instance.LocalHas(id); }
     static public bool Has(T item) { return instance.LocalHas(item); }
+    static public T GetRandom() { return instance.LocalGetRandom(); }
 }
