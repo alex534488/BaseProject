@@ -17,7 +17,7 @@ namespace CCC.Utility
         private int counter = 0;
         private int fixedCounter = 0;
 
-        void Update()
+        protected virtual void Update()
         {
             if (skippedUpdates == 0)
             {
