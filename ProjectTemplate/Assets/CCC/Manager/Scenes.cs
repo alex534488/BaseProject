@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 
 namespace CCC.Manager
 {
-    public class Scenes : BaseManager
+    public class Scenes : BaseManager<Scenes>
     {
         class ScenePromise
         {
@@ -24,7 +24,6 @@ namespace CCC.Manager
 
         public override void Init()
         {
-            base.Init();
             SceneManager.sceneLoaded += OnSceneLoading;
             CompleteInit();
         }

@@ -12,9 +12,8 @@ using UnityEditor;
 
 namespace CCC.Manager
 {
-    public class SoundManager : BaseManager
+    public class SoundManager : BaseManager<SoundManager>
     {
-        new static SoundManager instance;
         [System.Serializable]
         public class VolumeSave
         {
@@ -37,7 +36,6 @@ namespace CCC.Manager
 
         public override void Init()
         {
-            base.Init();
             Load();
             CompleteInit();
         }

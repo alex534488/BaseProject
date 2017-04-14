@@ -384,6 +384,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa093b00f2d299c43942743a714fdaa8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _objectReferences: []
+  _serializedStateKeys:
+  - onCompleteInit
+  - save
+  _serializedStateValues:
+  - '{"m_PersistentCalls":{"m_Calls":[]},"m_TypeName":"CCC.Manager.BaseManager+BaseManagerEvent,
+    Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"}'
+  - '{"master":0.0,"voice":0.0,"sfx":0.0,"music":0.0}'
   initComplete: 0
   stdSource: {fileID: 82000013686115900}
   musicSource: {fileID: 82000010634974186}

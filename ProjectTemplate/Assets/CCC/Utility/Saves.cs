@@ -37,6 +37,12 @@ namespace CCC.Utility
 
         static void ThreadLoadMethod(string path, UnityAction<object> onComplete)
         {
+            if (!Exists(path))
+            {
+                onComplete.Invoke(null);
+                return;
+            }
+
             BinaryFormatter bf = new BinaryFormatter();
             FileStream file = File.Open(path, FileMode.Open);
             object obj = bf.Deserialize(file);
@@ -62,6 +68,8 @@ namespace CCC.Utility
 
         static public object InstantLoad(string path)
         {
+            if (!Exists(path))
+                return null;
             BinaryFormatter bf = new BinaryFormatter();
             FileStream file = File.Open(path, FileMode.Open);
             object obj = bf.Deserialize(file);
@@ -74,9 +82,13 @@ namespace CCC.Utility
             return File.Exists(path);
         }
 
-        static public void Delete(string path)
+        static public bool Delete(string path)
         {
+            if (!Exists(path))
+                return false;
+
             File.Delete(path);
+            return true;
         }
     }
 }

@@ -51,6 +51,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c001838f3aa5aa84abffe4a891b117c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _objectReferences: []
+  _serializedStateKeys:
+  - onCompleteInit
+  _serializedStateValues:
+  - '{"m_PersistentCalls":{"m_Calls":[]},"m_TypeName":"CCC.Manager.BaseManager+BaseManagerEvent,
+    Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"}'
   initComplete: 0
 --- !u!114 &114819508062346158
 MonoBehaviour:
@@ -63,4 +69,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c001838f3aa5aa84abffe4a891b117c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _objectReferences: []
+  _serializedStateKeys:
+  - onCompleteInit
+  _serializedStateValues:
+  - '{"m_PersistentCalls":{"m_Calls":[]},"m_TypeName":"CCC.Manager.BaseManager+BaseManagerEvent,
+    Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"}'
   initComplete: 0

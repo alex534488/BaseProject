@@ -1,12 +1,11 @@
 ﻿
 namespace CCC.Manager
 {
-    public class SpriteBankManager : BaseManager
+    public class SpriteBankManager : BaseManager<SpriteBankManager>
     {
         public SpriteBank bank;
         public override void Init()
         {
-            base.Init();
             bank.SetAsInstance();
             CompleteInit();
         }

@@ -1,6 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
-using CCC.Utility;
 using System.Collections.Generic;
 using FullInspector;
 
@@ -17,7 +15,7 @@ public abstract class Bank<T> : Singleton<Bank<T>>
     public string removeElement;
 
     [InspectorButton(), InspectorOrder(2), InspectorHideIf("HidePushList")]
-    private void PushList()
+    protected void PushList()
     {
         if (!Application.isEditor)
             return;
@@ -29,7 +27,7 @@ public abstract class Bank<T> : Singleton<Bank<T>>
         addList.Clear();
     }
     [InspectorButton(), InspectorOrder(4), InspectorHideIf("HideRemoveFromList")]
-    private void RemoveFromList()
+    protected void RemoveFromList()
     {
         if (!Application.isEditor)
             return;
@@ -42,7 +40,7 @@ public abstract class Bank<T> : Singleton<Bank<T>>
         removeList.Clear();
     }
     [InspectorButton(), InspectorOrder(5)]
-    private void RebuildBankIds()
+    protected void RebuildBankIds()
     {
         if (!Application.isEditor)
             return;
@@ -69,17 +67,17 @@ public abstract class Bank<T> : Singleton<Bank<T>>
         return removeElement == "" && removeList.Count <= 0;
     }
 
-    private bool LocalRemove(string id)
+    protected bool LocalRemove(string id)
     {
         if (string.IsNullOrEmpty(id))
             return false;
         return bank.Remove(id);
     }
-    private bool LocalRemove(T obj)
+    protected bool LocalRemove(T obj)
     {
         return bank.Remove(Convert(obj));
     }
-    private void LocalAdd(T item)
+    protected void LocalAdd(T item)
     {
         string id = Convert(item);
         if (string.IsNullOrEmpty(id))
@@ -90,22 +88,22 @@ public abstract class Bank<T> : Singleton<Bank<T>>
             bank.Add(id, item);
     }
 
-    private bool LocalHas(string id)
+    protected bool LocalHas(string id)
     {
         return bank.ContainsKey(id);
     }
-    private bool LocalHas(T obj)
+    protected bool LocalHas(T obj)
     {
         return bank.ContainsValue(obj);
     }
-    private T LocalGet(string id)
+    protected T LocalGet(string id)
     {
         if (LocalHas(id))
             return bank[id];
         else
             return default(T);
     }
-    private T LocalGetRandom()
+    protected T LocalGetRandom()
     {
         int index = Random.Range(0, bank.Count);
         Dictionary<string, T>.ValueCollection.Enumerator enumerator = bank.Values.GetEnumerator();
@@ -120,6 +118,17 @@ public abstract class Bank<T> : Singleton<Bank<T>>
 
         return default(T);
     }
+    protected List<T> LocalToList()
+    {
+        List<T> list = new List<T>(bank.Count);
+        Dictionary<string, T>.ValueCollection.Enumerator enumerator = bank.Values.GetEnumerator();
+        
+        while (enumerator.MoveNext())
+        {
+            list.Add(enumerator.Current);
+        }
+        return list;
+    }
 
     abstract protected string Convert(T obj);
 
@@ -129,5 +138,6 @@ public abstract class Bank<T> : Singleton<Bank<T>>
     static public bool Remove(T item) { return instance.LocalRemove(item); }
     static public bool Has(string id) { return instance.LocalHas(id); }
     static public bool Has(T item) { return instance.LocalHas(item); }
+    static public List<T> ToList() { return instance.LocalToList(); }
     static public T GetRandom() { return instance.LocalGetRandom(); }
 }

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-[CreateAssetMenu(menuName = "SpriteBank")]
+[CreateAssetMenu(menuName = "CCC/SpriteBank")]
 public class SpriteBank : ScriptableObject
 {
     static private SpriteBank instance;

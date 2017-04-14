@@ -1,67 +1,34 @@
-﻿using UnityEngine;
-using System.Collections;
-using UnityEngine.Events;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using CCC.Input;
 
 namespace CCC.Manager
 {
-    public class InputManager : BaseManager
+    public class InputManager : BaseBankManager<InputMapping>
     {
-        [SerializeField]
-        private InputBank bank;
+        public bool overwriteDefaultsOnLaunch = true;
 
         public override void Init()
         {
-            base.Init();
-            bank.SaveAsDefaults();
-            Load();
+            List<InputMapping> startMappings = ToList();
+
+            //Ceci marche parce que le jeu va toujours load avec les parametre preset du scriptableObject
+            if (overwriteDefaultsOnLaunch)
+                foreach (InputMapping mapping in startMappings)
+                {
+                    mapping.SaveAsDefaults();
+                }
+
+            foreach (InputMapping mapping in startMappings)
+            {
+                mapping.Load();
+            }
+
             CompleteInit();
         }
 
-        /// <summary>
-        /// Set the specified key to the specified keycode. This does not save the change permanently. Call Save() if necessary.
-        /// </summary>
-        public void SetKey(Key key, KeyCode to)
+        protected override string Convert(InputMapping obj)
         {
-            bank.SetKey(key, to);
+            return obj.name;
         }
-
-        /// <summary>
-        /// Return TRUE if there is a conlfict.
-        /// </summary>
-        public bool CheckConflict(Key key, KeyCode newKeycode)
-        {
-            foreach(Key akey in bank.keys)
-            {
-                if (akey != key && akey.GetKeyCode() == newKeycode) return true;
-            }
-            return false;
-        }
-
-        public Key GetKeyByName(string name)
-        {
-            return bank.GetKeyByName(name);
-        }
-
-        public List<Key> GetAllKeys() { return bank.keys; }
-
-        #region Load/Save
-
-        public void LoadDefaults()
-        {
-            bank.LoadDefaults();
-        }
-
-        public void Load()
-        {
-            bank.Load();
-        }
-
-        public void Save()
-        {
-            bank.Save();
-        }
-
-        #endregion
     }
 }

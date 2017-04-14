@@ -5,12 +5,11 @@ using UnityEngine.Events;
 
 namespace CCC.Manager
 {
-    public class MainThread : BaseManager
+    public class MainThread : BaseManager<MainThread>
     {
         static List<UnityAction> actionList = new List<UnityAction>();
         public override void Init()
         {
-            base.Init();
             CompleteInit();
         }
 

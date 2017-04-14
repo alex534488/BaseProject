@@ -4,29 +4,26 @@ using UnityEngine.Events;
 
 namespace CCC.Manager
 {
-    public class DelayManager : BaseManager
+    public class DelayManager : BaseManager<DelayManager>
     {
-        static DelayManager manager;
-
         static public void CallTo(UnityAction action, float delay, bool realTime = true)
         {
-            if (manager == null)
+            if (instance == null)
             {
                 Debug.LogError("Tried to call a delay, but the manager is null. Was it properly loaded by MasterManager ?");
                 return;
             }
-            manager.InstanceCallTo(action, delay, realTime);
+            instance.InstanceCallTo(action, delay, realTime);
         }
 
         protected override void Awake()
         {
             base.Awake();
-            manager = this;
+            instance = this;
         }
 
         public override void Init()
         {
-            base.Init();
             CompleteInit();
         }
 
