@@ -6,24 +6,21 @@ using CCC.Manager;
 using CCC.Utility;
 using FullInspector;
 
-public class TestScript : Bank<GameObject>
+public class TestScript : BaseBehavior
 {
-    protected override string Convert(GameObject obj)
-    {
-        if (obj == null)
-            return "null";
-        return obj.name;
-    }
 
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.A))
         {
-            TestScript.Add(gameObject);
-        }
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            TestScript.Remove(gameObject);
+            Stopwatch stopwatch = new Stopwatch(Stopwatch.PrintType.Milliseconds);
+
+            for (int i = 0; i < 60000; i++)
+            {
+                i = i - 1 + 1;
+            }
+
+            stopwatch.Print();
         }
     }
 }
