@@ -34,5 +34,6 @@ public class Stopwatch
                 break;
         }
         stopwatch.Reset();
+        stopwatch.Start();
     }
 }

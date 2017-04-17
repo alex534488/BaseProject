@@ -10,6 +10,9 @@ namespace CCC.Input
     [CreateAssetMenu(menuName = "CCC/InputMapping")]
     public class InputMapping : BaseScriptableObject
     {
+        public string displayName;
+        [InspectorDivider(), fiInspectorOnly]
+        public OpenSavesButton locationButton;
         public Dictionary<string, InputKey> keys;
 
         const string midDefault = "/IM_default_";
@@ -25,14 +28,13 @@ namespace CCC.Input
             get { return Application.persistentDataPath + midDefault + name + ext; }
         }
 
-        [InspectorButton()]
         public void SaveAsDefaults()
         {
             Saves.InstantSave(DefaultPath, keys);
             if (Saves.Exists(NormalPath))
                 Save();
         }
-        [InspectorButton()]
+
         public void Save()
         {
             Saves.InstantSave(NormalPath, keys);
@@ -67,11 +69,17 @@ namespace CCC.Input
             return Saves.Delete(DefaultPath);
         }
 
-        [InspectorButton(), InspectorName("Load Defaults")]
-        public void EditorLoadDefaults()
+        [InspectorButton(), InspectorName("Save")]
+        public void EditorSave()
         {
-            if (!LoadDefaults())
-                Debug.LogWarning("Failed to load defaults. No file found.");
+            Save();
+            Debug.LogWarning("Save successful");
+        }
+        [InspectorButton(), InspectorName("Save as Defaults")]
+        public void EditorSaveDefaults()
+        {
+            SaveAsDefaults();
+            Debug.LogWarning("Default save successful");
         }
 
         [InspectorButton(), InspectorName("Load Save")]
@@ -79,6 +87,13 @@ namespace CCC.Input
         {
             if (!Load())
                 Debug.LogWarning("Failed to load a save. No file found.");
+        }
+
+        [InspectorButton(), InspectorName("Load Defaults")]
+        public void EditorLoadDefaults()
+        {
+            if (!LoadDefaults())
+                Debug.LogWarning("Failed to load defaults. No file found.");
         }
 
         [InspectorButton(), InspectorName("Delete Save")]
@@ -98,6 +113,7 @@ namespace CCC.Input
     [System.Serializable]
     public class InputKey
     {
+        public string displayCategory = "";
         public KeyCombination primary = null;
         public KeyCombination secondary = null;
 
@@ -127,6 +143,7 @@ namespace CCC.Input
     {
         public KeyCode first;
         public KeyCode second;
+        public KeyCombination(KeyCode first, KeyCode second) { this.first = first; this.second = second; }
         public bool Get()
         {
             if (second == KeyCode.None)
@@ -140,6 +157,11 @@ namespace CCC.Input
                 return UnityEngine.Input.GetKeyDown(first);
             else
                 return (UnityEngine.Input.GetKey(first) || UnityEngine.Input.GetKeyDown(first)) && UnityEngine.Input.GetKeyDown(second);
+        }
+        public void Copy(KeyCombination newCombination)
+        {
+            first = newCombination.first;
+            second = newCombination.second;
         }
         public bool GetUp()
         {

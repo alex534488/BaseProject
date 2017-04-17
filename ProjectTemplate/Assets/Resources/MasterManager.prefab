@@ -5,10 +5,10 @@ GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 4: {fileID: 408406}
-  - 114: {fileID: 114000012890733266}
+  - component: {fileID: 408406}
+  - component: {fileID: 114000012890733266}
   m_Layer: 0
   m_Name: MasterManager
   m_TagString: Untagged
@@ -25,10 +25,10 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
@@ -67,5 +67,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 515cb9c8aca8b844ab9f01cfb5d961f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  managersPrefab: []
+  managersPrefab:
+  - {fileID: 114013571490058024, guid: 527ea6377c522924b99d7b47e967edd0, type: 2}
   managers: []

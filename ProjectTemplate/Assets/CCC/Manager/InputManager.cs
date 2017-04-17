@@ -28,7 +28,7 @@ namespace CCC.Manager
 
         protected override string Convert(InputMapping obj)
         {
-            return obj.name;
+            return obj.displayName;
         }
     }
 }

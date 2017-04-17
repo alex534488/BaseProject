@@ -53,6 +53,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _objectReferences:
   - {fileID: 11400000, guid: d128cca74f3a75e48ab9f6d3c5857bc8, type: 2}
+  - {fileID: 11400000, guid: 19b0c9fd3916cdd4eb5898a0dee601cf, type: 2}
+  - {fileID: 11400000, guid: f27f46c8ce906b042a164b3695a23e1c, type: 2}
   _serializedStateKeys:
   - onCompleteInit
   - bank
@@ -61,11 +63,11 @@ MonoBehaviour:
   _serializedStateValues:
   - '{"m_PersistentCalls":{"m_Calls":[]},"m_TypeName":"CCC.Manager.BaseManager+BaseManagerEvent,
     Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"}'
-  - '{"InputMapping_Test":0}'
+  - '{"On Foot":0,"Helicopter":1,"Plane":2}'
   - '[]'
   - '[]'
   initComplete: 0
   addList: []
   removeList: []
   removeElement: 
-  overwriteDefaultsOnLaunch: 1
+  overwriteDefaultsOnLaunch: 0
